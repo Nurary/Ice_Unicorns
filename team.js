@@ -34,7 +34,7 @@ const ZONES = [
       { nick: "Lócitromka", name: "", num: 19, pos: "Csatár", grip: "–", sweet: "–", power: "–", photo: "", bio: "Fő feladata az ellenfél legjobb védőjének kiiktatása." },
       { nick: "Mályvacukor", name: "Köller József", num: 67, pos: "Csatár", grip: "Bal", sweet: "Tiramisu", power: "Cukormázba csomagolt forgalmi akadály.", photo: "assets/Players/Mályvacukor.png", bio: "Mogorva kívül, lágy belül – agresszív, de gólra még vár." },
       { nick: "Villámpatkó", name: "Jakab Zsolt", num: 10, pos: "Csatár", grip: "Jobb", sweet: "JägeresPálinka", power: "A Lesek királya, aki mindig nézi a kék vonalat de sose látja", photo: "assets/Players/VillámPatkó.png", bio: "A korongbedobásnál nem csak édesen mosolyog." },
-      { nick: "Bolyhospofi", name: "Lokár Gábor", num: 22, pos: "Csatár", grip: "–", sweet: "–", power: "–", photo: "assets/Players/Bolyhospofi.png", bio: "Az elszántsága megkérdőjelezhetetlen." },
+      { nick: "Bolyhospofi", name: "Lokár Gábor", num: 84, pos: "Csatár", grip: "Bal", sweet: "Pez cukorka (Unikornis adagolóból)", power: "Lopva figyel, pánikot szül. Szakmája: lesből támadó zavarkeltő", photo: "assets/Players/Bolyhospofi.png", bio: "Az elszántsága megkérdőjelezhetetlen." },
       { nick: "Szikrácska", name: "Varga Istvan Gergely", num: 31, pos: "Csatár", grip: "Jobb", sweet: "Peroni", power: "100% találati arány a kapus fejére bemelegítéskor", photo: "assets/Players/Szikrácska.png", bio: "Tüzes láb, csillámos korcsolya – sosem áll le." },
       { nick: "KristályPatkó", name: "Hegyi Bálint", num: 87, pos: "Csatár", grip: "Jobb", sweet: "Rum-kóla", power: "Olyan egyedi csuklólövésem van, aminek az irányát még a fizika törvényei sem ismerik", photo: "", bio: "" },
     ],
@@ -69,10 +69,10 @@ function goalieStatsFor() {
     let puck;
     if (opts.staff) {
       puck = p.photo
-        ? `<span class="puck has-photo"><img src="${p.photo}" alt="${p.nick}">${badge}</span>`
+        ? `<span class="puck has-photo"><img src="${p.photo}" alt="${p.nick}" loading="lazy" decoding="async">${badge}</span>`
         : `<span class="puck">${p.icon || "🦄"}${badge}</span>`;
     } else if (p.photo) {
-      puck = `<span class="puck has-photo"><img src="${p.photo}" alt="${p.nick}"><span class="num">${p.num}</span>${badge}</span>`;
+      puck = `<span class="puck has-photo"><img src="${p.photo}" alt="${p.nick}" loading="lazy" decoding="async"><span class="num">${p.num}</span>${badge}</span>`;
     } else {
       puck = `<span class="puck">${p.num}${badge}</span>`;
     }
@@ -151,7 +151,7 @@ function goalieStatsFor() {
   function openModal(p, opts = {}) {
     // Photo (fallback: 🦄 / stáb ikon)
     pmPhoto.innerHTML = p.photo
-      ? `<img src="${p.photo}" alt="${p.nick}">`
+      ? `<img src="${p.photo}" alt="${p.nick}" loading="lazy" decoding="async">`
       : opts.staff
       ? p.icon || "🦄"
       : "🦄";
