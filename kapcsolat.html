@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kapcsolat – Ice Unicorns</title>
+  <meta name="description" content="Lépj kapcsolatba az Ice Unicorns csapattal – kérdezz vagy csatlakozz hozzánk!" />
+  <link rel="icon" type="image/jpeg" href="assets/logo/logo.jpg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="app-header"></div>
+
+  <main>
+    <section class="page-hero">
+      <div class="container">
+        <span class="kicker">Kapcsolat</span>
+        <h1>Lépj <span class="grad">kapcsolatba</span> velünk</h1>
+        <p>Kérdésed van, vagy csatlakoznál? Írj nekünk, és hamarosan válaszolunk!</p>
+      </div>
+    </section>
+
+    <section class="section section-alt page-section">
+      <div class="container contact-wrap">
+        <div class="contact-info">
+          <h2>Elérhetőségeink</h2>
+          <p>A leggyorsabban emailben vagy a közösségi oldalunkon érsz el minket.</p>
+          <ul class="contact-list">
+            <li><span>✉️</span> <a href="mailto:info@iceunicorns.hu">info@iceunicorns.hu</a></li>
+            <li><span>📍</span> Székesfehérvár, Magyarország</li>
+            <li><span>📘</span> <a href="https://facebook.com/iceunicorns" target="_blank" rel="noopener">@iceunicorns</a></li>
+          </ul>
+        </div>
+        <form class="contact-form" id="contactForm" novalidate>
+          <div class="field">
+            <label for="name">Név</label>
+            <input type="text" id="name" name="name" placeholder="Teljes neved" required />
+          </div>
+          <div class="field">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="te@email.hu" required />
+          </div>
+          <div class="field">
+            <label for="message">Üzenet</label>
+            <textarea id="message" name="message" rows="4" placeholder="Miben segíthetünk?" required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary btn-block">Üzenet küldése</button>
+          <p class="form-status" id="formStatus" role="status"></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <div id="app-footer"></div>
+  <script src="partials.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Csapat – Ice Unicorns</title>
+  <meta name="description" content="A MÉNES tagjai a jégen – kattints egy játékosra a részletekért és statisztikákért!" />
+  <link rel="icon" type="image/jpeg" href="assets/logo/logo.jpg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="app-header"></div>
+
+  <main>
+    <section class="page-hero">
+      <div class="container">
+        <span class="kicker">Csapat</span>
+        <h1>A <span class="grad">MÉNES</span> a jégen</h1>
+        <p>Így állunk fel a pályán! Kattints bármelyik játékosra – előugrik a kártyája
+          a posztjával, adataival és (hamarosan) a statisztikáival. ✨</p>
+      </div>
+    </section>
+
+    <section class="section section-alt page-section">
+      <div class="container">
+        <div class="rink-wrap">
+          <div class="rink-stage">
+            <div class="rink">
+              <span class="rink-line red"></span>
+              <span class="rink-line blue top"></span>
+              <span class="rink-line blue bottom"></span>
+              <span class="rink-circle"></span>
+              <span class="rink-crease top"></span>
+              <span class="rink-crease bottom"></span>
+              <div class="rink-zones" id="rinkZones"></div>
+            </div>
+
+            <aside class="bench-side">
+              <span class="bench-label">Stáb</span>
+              <div class="bench" id="bench"></div>
+            </aside>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="app-footer"></div>
+  <script src="partials.js" defer></script>
+  <script src="team.js" defer></script>
+</body>
+</html>
