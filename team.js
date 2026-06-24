@@ -14,7 +14,7 @@ const ZONES = [
   {
     label: "Kapus",
     players: [
-      { nick: "Fánkocska", name: "Virág Christof Máté", num: 1, pos: "Kapus", grip: "–", sweet: "–", power: "–", photo: "", bio: "A háló és a győzelem őre." },
+      { nick: "Fánkocska", name: "Virág Christof Máté", num: 69, pos: "Kapus", grip: "–", sweet: "–", power: "–", photo: "", bio: "A háló és a győzelem őre." },
       { nick: "Barackmag", name: "", num: 14, pos: "Kapus", grip: "–", sweet: "–", power: "–", photo: "", bio: "Az ember, aki nem ijed meg a káosztól." },
     ],
   },
@@ -22,19 +22,21 @@ const ZONES = [
     label: "Védő",
     players: [
       { nick: "Patkószörny", name: "Merkl Dominik", num: 4, pos: "Védő", grip: "–", sweet: "–", power: "–", photo: "assets/Players/Patkószörny.png", bio: "Védi a mundér becsületét – a csapat első számú védője." },
-      { nick: "Pöttömke", name: "Zsuzsanna Erdős", num: 8, pos: "Védő", grip: "–", sweet: "–", power: "–", photo: "assets/Players/Pöttömke.png", bio: "Kis termet, nagy hatás. „Most akkor mi támadunk!”" },
+      { nick: "Pöttömke", name: "Zsuzsanna Erdős", num: 9, pos: "Védő", grip: "–", sweet: "–", power: "–", photo: "assets/Players/Pöttömke.png", bio: "Kis termet, nagy hatás. „Most akkor mi támadunk!”" },
+      { nick: "Hópehely", name: "Miklós Galaczi", num: 20, pos: "Védő", grip: "Bal", sweet: "Aranygaluska", power: "–", photo: "", bio: "Ha tehetné még a jégen is biciklivel tekerne" },
     ],
   },
   {
     label: "Csatár",
     players: [
-      { nick: "Pitypang", name: "Kiss Péter Zoltán", num: 10, pos: "Csatár", captain: true, grip: "Bal", sweet: "–", power: "–", photo: "assets/Players/Pitypang.png", bio: "Vezeti és összehangolja a Ménest a pályán." },
-      { nick: "Fecske", name: "Czuppon Attila", num: 11, pos: "Csatár", grip: "–", sweet: "–", power: "–", photo: "assets/Players/Fecske.png", bio: "A támadók szárnyaló vezére." },
+      { nick: "Pitypang", name: "Kiss Péter Zoltán", num: 15, pos: "Csatár", captain: true, grip: "Bal", sweet: "Roséfröccs", power: "Hátrafelé korizva is előre gyorsulok.", photo: "assets/Players/Pitypang.png", bio: "Vezeti és összehangolja a Ménest a pályán." },
+      { nick: "Fecske", name: "Czuppon Attila", num: 14, pos: "Csatár", grip: "–", sweet: "–", power: "–", photo: "assets/Players/Fecske.png", bio: "A támadók szárnyaló vezére." },
       { nick: "Lócitromka", name: "", num: 19, pos: "Csatár", grip: "–", sweet: "–", power: "–", photo: "", bio: "Fő feladata az ellenfél legjobb védőjének kiiktatása." },
       { nick: "Mályvacukor", name: "Köller József", num: 27, pos: "Csatár", grip: "–", sweet: "–", power: "–", photo: "assets/Players/Mályvacukor.png", bio: "Mogorva kívül, lágy belül – agresszív, de gólra még vár." },
       { nick: "Villámpatkó", name: "Jakab Zsolt", num: 77, pos: "Csatár", grip: "–", sweet: "–", power: "–", photo: "assets/Players/VillámPatkó.png", bio: "A korongbedobásnál nem csak édesen mosolyog." },
       { nick: "Bolyhospofi", name: "Lokár Gábor", num: 22, pos: "Csatár", grip: "–", sweet: "–", power: "–", photo: "assets/Players/Bolyhospofi.png", bio: "Az elszántsága megkérdőjelezhetetlen." },
       { nick: "Szikrácska", name: "Istvan Gergely Varga", num: 31, pos: "Csatár", grip: "Jobb", sweet: "Peroni", power: "100% találati arány a kapus fejére bemelegítéskor", photo: "assets/Players/Szikrácska.png", bio: "Tüzes láb, csillámos korcsolya – sosem áll le." },
+      { nick: "KristályPatkó", name: "Hegyi Bálint", num: 87, pos: "Csatár", grip: "Jobb", sweet: "Rum-kóla", power: "Olyan egyedi csuklólövésem van, aminek az irányát még a fizika törvényei sem ismerik", photo: "", bio: "" },
     ],
   },
 ];
