@@ -184,7 +184,27 @@ a { color: inherit; text-decoration: none; }
 .site-footer { padding: 54px 0; text-align: center; }
 .footer-inner { display: flex; flex-direction: column; align-items: center; gap: 10px; }
 .footer-tag { color: var(--on-pink); font-weight: 700; font-family: "Baloo 2", sans-serif; }
+.footer-social { display: flex; gap: 12px; justify-content: center; margin: 6px 0 2px; }
+.social-btn { width: 42px; height: 42px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: rgba(255, 255, 255, 0.16); border: 2px solid rgba(255, 255, 255, 0.42); color: #fff; transition: transform 0.2s var(--bounce), background 0.2s, color 0.2s, border-color 0.2s; }
+.social-btn:hover { transform: translateY(-3px) scale(1.05); background: var(--gold); color: var(--navy); border-color: var(--gold); }
 .copyright { font-size: 0.86rem; color: var(--muted-pink); }
+
+/* Galéria lightbox */
+.lightbox { position: fixed; inset: 0; background: rgba(27, 36, 80, 0.93); z-index: 120; display: flex; align-items: center; justify-content: center; padding: 30px; opacity: 0; pointer-events: none; transition: opacity 0.25s var(--ease); }
+.lightbox.open { opacity: 1; pointer-events: auto; }
+.lb-img { max-width: 92vw; max-height: 86vh; border-radius: 14px; box-shadow: 0 24px 64px -20px rgba(0, 0, 0, 0.7); }
+.lb-close, .lb-nav { position: absolute; border: 0; background: rgba(255, 255, 255, 0.16); color: #fff; cursor: pointer; line-height: 1; display: flex; align-items: center; justify-content: center; transition: background 0.2s, color 0.2s, transform 0.2s var(--bounce); }
+.lb-close { top: 18px; right: 22px; width: 46px; height: 46px; border-radius: 50%; font-size: 1.7rem; }
+.lb-nav { top: 50%; transform: translateY(-50%); width: 52px; height: 52px; border-radius: 50%; font-size: 2rem; }
+.lb-prev { left: 18px; }
+.lb-next { right: 18px; }
+.lb-close:hover, .lb-nav:hover { background: var(--gold); color: var(--navy); }
+.lb-nav:hover { transform: translateY(-50%) scale(1.08); }
+
+/* Vissza a tetejére gomb */
+.to-top { position: fixed; right: 20px; bottom: 20px; width: 50px; height: 50px; border-radius: 50%; border: 0; background: var(--navy); color: #fff; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 60; box-shadow: 0 10px 24px -8px rgba(27, 36, 80, 0.6); opacity: 0; transform: translateY(16px) scale(0.85); pointer-events: none; transition: opacity 0.25s var(--ease), transform 0.25s var(--bounce), background 0.2s; }
+.to-top.show { opacity: 1; transform: none; pointer-events: auto; }
+.to-top:hover { background: var(--pink); }
 
 /* Active nav link */
 .nav a.active { background: rgba(255,255,255,0.22); color: #fff; }
@@ -289,7 +309,11 @@ a.card:hover .card-arrow { transform: translateX(4px); }
 .pm-overlay.open .pm-card { transform: none; }
 
 /* Left: full-height photo with outline */
-.pm-photo { flex: 0 0 240px; align-self: stretch; position: relative; display: flex; align-items: center; justify-content: center; font-size: 4.5rem; background: linear-gradient(160deg, #5ec8ff, #c77dff); overflow: hidden; }
+.pm-photo { flex: 0 0 240px; align-self: stretch; position: relative; display: flex; align-items: center; justify-content: center; font-size: 4.5rem; overflow: hidden;
+  background:
+    repeating-linear-gradient(125deg, rgba(255, 255, 255, 0.12) 0 13px, transparent 13px 34px),
+    linear-gradient(160deg, #5ec8ff, #c77dff);
+}
 .pm-photo img { width: 100%; height: 100%; object-fit: cover; }
 .pm-photo::after { content: ""; position: absolute; inset: 12px; border: 3px solid rgba(255, 255, 255, 0.75); border-radius: 18px; pointer-events: none; }
 
