@@ -19,6 +19,13 @@ erő + a kapus/lövő kiszámíthatatlansága adja a mélységet. A meglévő
 csapat-adatbázisra (`team.js`) épül, így minden játékosnak van **egyedi
 szuperképessége**, ami befolyásolja a játékmenetet.
 
+> **Megrendelői döntések (rögzítve):**
+> - **Hatókör:** csak az **első kör** — egyetlen játékos (ember vs. AI). **Nincs**
+>   2-játékos-egy-eszközön mód és **nincs ranglista** ebben a fázisban.
+> - **Hangvétel:** **vicces, kabalás** — nem kompetitív/komoly. A humor, az
+>   unikornis-poénok és a csillám viszik a hangulatot; a kihívás megvan, de
+>   barátságos. (A nehézségi szintek maradnak, csak a köntös vidám.)
+
 ---
 
 ## 1. Miért illik ez az oldalhoz
@@ -209,13 +216,17 @@ szellemben, a meglévő `styles.css`-re építve – ezt lehet finomítani/átsz
 
 ---
 
-## 12. Nyitott kérdések a megrendelőnek
+## 12. Megrendelői döntések
 
-- [ ] Csak **egyjátékos** (ember vs. AI), vagy később **2 játékos egy eszközön** is?
-- [ ] Kell-e **ranglista** (akár csak helyi, akár később közös)?
-- [ ] Mennyire legyen **kompetitív** vs. **vicces/kabala** a hangvétel?
-- [ ] Belekerüljön-e a játékba **valódi statisztika** (ha lesz adat a `team.js`-ben)?
-- [ ] Kell-e **angol nyelv** is, vagy elég a magyar?
+- [x] **Egyjátékos** (ember vs. AI). 2-játékos-mód **nem kell** ebben a fázisban.
+- [x] **Ranglista nem kell** (a helyi „best score" maradhat motivációnak, de nincs közös lista).
+- [x] Hangvétel: **vicces / kabalás**, nem kompetitív.
+- [ ] Belekerüljön-e a játékba **valódi statisztika** (ha lesz adat a `team.js`-ben)? — *később*
+- [ ] Kell-e **angol nyelv** is, vagy elég a magyar? — *később*
+
+> **Hatókör erre a körre:** működő, vicces, egyjátékos shootout — a fenti
+> mechanikával és nehézségi szintekkel. Minden, ami „2 játékos" vagy „közös
+> ranglista", egy lehetséges jövőbeli bővítés, most kimarad.
 
 ---
 
