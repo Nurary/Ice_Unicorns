@@ -12,7 +12,10 @@
   <meta property="og:image" content="https://iceunicorns.hu/assets/logo/preview.png" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:image" content="https://iceunicorns.hu/assets/logo/preview.png" />
-  <link rel="icon" type="image/jpeg" href="assets/logo/logo.jpg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicons/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/favicons/favicon-16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/favicons/apple-touch-icon.png" />
+  <link rel="manifest" href="assets/favicons/site.webmanifest" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet" />
@@ -32,18 +35,14 @@
 
     <section class="section page-section">
       <div class="container">
-        <div class="gallery-grid">
-          <figure class="g-item g-1"><img src="assets/Galery/Domi-Pityesz-KPZ.jpg" alt="Ice Unicorns – csapatpillanat" loading="lazy" /></figure>
-          <figure class="g-item g-2"><img src="assets/Galery/20241013_210432.jpg" alt="Ice Unicorns a jégen" loading="lazy" /></figure>
-          <figure class="g-item g-3"><img src="assets/Galery/Fánkocska.jfif" alt="Fánkocska – kapus" loading="lazy" /></figure>
-          <figure class="g-item g-5"><img src="assets/Galery/20251228_131616.jpg" alt="Ice Unicorns – debütálás, 2025.12.28" loading="lazy" /></figure>
-        </div>
-        <p class="gallery-note">Több fotó hamarosan – kövess minket a Facebookon! 🦄</p>
+        <div class="gallery-grid" id="galleryGrid"></div>
+        <p class="gallery-note" id="galleryNote">Kattints egy képre a nagyításhoz. 🦄</p>
       </div>
     </section>
   </main>
 
   <div id="app-footer"></div>
   <script src="partials.js" defer></script>
+  <script src="gallery.js" defer></script>
 </body>
 </html>

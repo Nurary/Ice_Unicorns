@@ -7,6 +7,7 @@
     { href: "galeria.html", label: "Galéria" },
     { href: "csapat.html", label: "Csapat" },
     { href: "ob4d.html", label: "OB4D" },
+    { href: "jatek.html", label: "Játék" },
     { href: "kapcsolat.html", label: "Kapcsolat", cta: true },
   ];
 
@@ -149,54 +150,5 @@
     });
   }
 
-  // Galéria lightbox (csak a galéria oldalon)
-  const galleryImgs = Array.from(document.querySelectorAll(".gallery-grid img"));
-  if (galleryImgs.length) {
-    const lb = document.createElement("div");
-    lb.className = "lightbox";
-    lb.innerHTML =
-      '<button class="lb-close" aria-label="Bezárás">×</button>' +
-      '<button class="lb-nav lb-prev" aria-label="Előző kép">‹</button>' +
-      '<img class="lb-img" alt="" />' +
-      '<button class="lb-nav lb-next" aria-label="Következő kép">›</button>';
-    document.body.appendChild(lb);
-    const lbImg = lb.querySelector(".lb-img");
-    let idx = 0;
-    const show = (i) => {
-      idx = (i + galleryImgs.length) % galleryImgs.length;
-      lbImg.src = galleryImgs[idx].currentSrc || galleryImgs[idx].src;
-      lbImg.alt = galleryImgs[idx].alt || "";
-    };
-    const open = (i) => {
-      show(i);
-      lb.classList.add("open");
-      document.body.style.overflow = "hidden";
-    };
-    const close = () => {
-      lb.classList.remove("open");
-      document.body.style.overflow = "";
-    };
-    galleryImgs.forEach((im, i) => {
-      im.style.cursor = "zoom-in";
-      im.addEventListener("click", () => open(i));
-    });
-    lb.querySelector(".lb-close").addEventListener("click", close);
-    lb.querySelector(".lb-prev").addEventListener("click", (e) => {
-      e.stopPropagation();
-      show(idx - 1);
-    });
-    lb.querySelector(".lb-next").addEventListener("click", (e) => {
-      e.stopPropagation();
-      show(idx + 1);
-    });
-    lb.addEventListener("click", (e) => {
-      if (e.target === lb) close();
-    });
-    document.addEventListener("keydown", (e) => {
-      if (!lb.classList.contains("open")) return;
-      if (e.key === "Escape") close();
-      else if (e.key === "ArrowLeft") show(idx - 1);
-      else if (e.key === "ArrowRight") show(idx + 1);
-    });
-  }
+  // (A galéria + lightbox külön a gallery.js-ben van.)
 })();

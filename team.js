@@ -22,8 +22,9 @@ const ZONES = [
     label: "Védő",
     players: [
       { nick: "Patkószörny", name: "Merkl Dominik", num: 13, pos: "Védő", grip: "–", sweet: "–", power: "–", photo: "assets/Players/Patkószörny.png", bio: "Védi a mundér becsületét – a csapat első számú védője." },
-      { nick: "Pöttömke", name: "Zsuzsanna Erdős", num: 9, pos: "Védő", grip: "–", sweet: "–", power: "–", photo: "assets/Players/Pöttömke.png", bio: "Kis termet, nagy hatás. „Most akkor mi támadunk!”" },
+      { nick: "Pöttömke", name: "Erdős Zsuzsanna", num: 9, pos: "Védő", grip: "–", sweet: "–", power: "–", photo: "assets/Players/Pöttömke.png", bio: "Kis termet, nagy hatás. „Most akkor mi támadunk!”" },
       { nick: "Hópehely", name: "Galaczi Miklós", num: 20, pos: "Védő", grip: "Bal", sweet: "Aranygaluska", power: "–", photo: "", bio: "Ha tehetné még a jégen is biciklivel tekerne" },
+      { nick: "Maszat", name: "", num: 44, pos: "Védő", grip: "Bal", sweet: "", power: "", photo: "assets/Players/Maszat.png", bio: "A lengyel srác, akivel inkább ne vitatkozz"}
     ],
   },
   {
@@ -36,7 +37,7 @@ const ZONES = [
       { nick: "Villámpatkó", name: "Jakab Zsolt", num: 10, pos: "Csatár", grip: "Jobb", sweet: "JägeresPálinka", power: "A Lesek királya, aki mindig nézi a kék vonalat de sose látja", photo: "assets/Players/VillámPatkó.png", bio: "A korongbedobásnál nem csak édesen mosolyog." },
       { nick: "Bolyhospofi", name: "Lokár Gábor", num: 84, pos: "Csatár", grip: "Jobb", sweet: "Pez cukorka (Unikornis adagolóból)", power: "Lopva figyel, pánikot szül. Szakmája: lesből támadó zavarkeltő", photo: "assets/Players/Bolyhospofi.png", bio: "Az elszántsága megkérdőjelezhetetlen." },
       { nick: "Szikrácska", name: "Varga Istvan Gergely", num: 31, pos: "Csatár", grip: "Jobb", sweet: "Peroni", power: "100% találati arány a kapus fejére bemelegítéskor", photo: "assets/Players/Szikrácska.png", bio: "Tüzes láb, csillámos korcsolya – sosem áll le." },
-      { nick: "KristályPatkó", name: "Hegyi Bálint", num: 87, pos: "Csatár", grip: "Jobb", sweet: "Rum-kóla", power: "Olyan egyedi csuklólövésem van, aminek az irányát még a fizika törvényei sem ismerik", photo: "", bio: "" },
+      { nick: "KristályPatkó", name: "Hegyi Bálint", num: 87, pos: "Csatár", grip: "Jobb", sweet: "Rum-kóla", power: "Olyan egyedi csuklólövésem van, aminek az irányát még a fizika törvényei sem ismerik", photo: "assets/Players/KristalyPatko.png", bio: "" },
     ],
   },
 ];

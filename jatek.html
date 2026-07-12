@@ -3,12 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Csapat – Ice Unicorns</title>
-  <meta name="description" content="A MÉNES tagjai a jégen – kattints egy játékosra a részletekért és statisztikákért!" />
+  <title>Játék – Ice Unicorns</title>
+  <meta name="description" content="Pöccintős hoki minijáték az Ice Unicorns csapatával – gép ellen vagy helyi, 5 gólig!" />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Ice Unicorns" />
   <meta property="og:locale" content="hu_HU" />
-  <meta property="og:url" content="https://iceunicorns.hu/csapat.html" />
+  <meta property="og:url" content="https://iceunicorns.hu/jatek.html" />
+  <meta property="og:title" content="Pöccintős hoki – Ice Unicorns" />
+  <meta property="og:description" content="Játssz a MÉNES-sel: pöccintős hoki, 5 gólig, gép ellen vagy helyi." />
   <meta property="og:image" content="https://iceunicorns.hu/assets/logo/preview.png" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:image" content="https://iceunicorns.hu/assets/logo/preview.png" />
@@ -27,39 +29,21 @@
   <main>
     <section class="page-hero">
       <div class="container">
-        <span class="kicker">Csapat</span>
-        <h1>A <span class="grad">MÉNES</span> a jégen</h1>
-        <p>Így állunk fel a pályán! Kattints bármelyik játékosra – előugrik a kártyája
-          a posztjával, adataival és (hamarosan) a statisztikáival. ✨</p>
+        <span class="kicker">Játék</span>
+        <h1>Pöccintős <span class="grad">hoki</span></h1>
+        <p>Húzd vissza az egyik játékosodat, engedd el, és lődd be a korongot! Öt gólig tart. 🦄🏒</p>
       </div>
     </section>
 
     <section class="section section-alt page-section">
       <div class="container">
-        <div class="rink-wrap">
-          <div class="rink-stage">
-            <div class="rink">
-              <span class="rink-line red"></span>
-              <span class="rink-line blue top"></span>
-              <span class="rink-line blue bottom"></span>
-              <span class="rink-circle"></span>
-              <span class="rink-crease top"></span>
-              <span class="rink-crease bottom"></span>
-              <div class="rink-zones" id="rinkZones"></div>
-            </div>
-
-            <aside class="bench-side">
-              <span class="bench-label">Stáb</span>
-              <div class="bench" id="bench"></div>
-            </aside>
-          </div>
-        </div>
+        <div id="gameRoot" class="game-root"></div>
       </div>
     </section>
   </main>
 
   <div id="app-footer"></div>
   <script src="partials.js" defer></script>
-  <script src="team.js" defer></script>
+  <script src="jatek.js" defer></script>
 </body>
 </html>

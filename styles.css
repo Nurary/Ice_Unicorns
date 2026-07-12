@@ -342,6 +342,50 @@ a.card:hover .card-arrow { transform: translateX(4px); }
 .pm-close { position: absolute; top: 14px; right: 14px; width: 36px; height: 36px; border-radius: 50%; border: 0; background: rgba(255, 255, 255, 0.32); color: #fff; font-size: 1.3rem; line-height: 1; cursor: pointer; z-index: 3; transition: background 0.2s; }
 .pm-close:hover { background: rgba(255, 255, 255, 0.5); }
 
+/* ===== Pöccintős hoki játék ===== */
+.game-root { max-width: 480px; margin: 0 auto; }
+.g-panel { text-align: center; }
+.g-h { font-family: "Baloo 2", sans-serif; font-size: 1.5rem; color: var(--text); margin-bottom: 6px; }
+.g-note { color: var(--muted); font-size: 0.92rem; font-weight: 600; margin: 8px 0; }
+.g-modes { display: flex; flex-direction: column; gap: 12px; margin: 16px 0; }
+.g-mode { display: flex; flex-direction: column; gap: 3px; align-items: flex-start; text-align: left; padding: 16px 20px; border-radius: var(--radius); border: 2px solid var(--surface-border); background: var(--surface-soft); cursor: pointer; font-family: inherit; transition: transform 0.2s var(--bounce), border-color 0.2s; }
+.g-mode:hover { transform: translateY(-3px); border-color: var(--pink); }
+.g-mode b { font-family: "Baloo 2", sans-serif; font-size: 1.15rem; color: var(--text); }
+.g-mode span { font-size: 0.86rem; color: var(--muted); font-weight: 600; }
+.g-mode.off { opacity: 0.55; cursor: not-allowed; }
+
+.g-picks { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 16px 0; }
+.g-pick { display: flex; flex-direction: column; align-items: center; gap: 5px; padding: 10px 4px; border-radius: 16px; border: 2px solid var(--surface-border); background: var(--surface-soft); cursor: pointer; font-family: inherit; transition: transform 0.2s var(--bounce), border-color 0.2s; }
+.g-pick:hover { transform: translateY(-3px); }
+.g-pick.sel { border-color: var(--pink); background: #fff; box-shadow: 0 8px 18px -8px rgba(255,61,127,0.5); }
+.g-face { width: 52px; height: 52px; border-radius: 50%; background: #fff center/cover no-repeat; border: 2px solid var(--surface-border); }
+.g-pick.sel .g-face { border-color: var(--pink); }
+.g-pn { font-size: 0.74rem; font-weight: 800; color: var(--text); line-height: 1; }
+.g-pnum { font-size: 0.68rem; color: var(--muted); font-weight: 700; }
+
+.g-row { display: flex; gap: 12px; justify-content: center; margin-top: 8px; }
+
+.g-play { display: flex; flex-direction: column; align-items: stretch; }
+.g-hud { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+.g-score { font-family: "Baloo 2", sans-serif; font-weight: 800; font-size: 1.2rem; }
+.g-turn { font-weight: 800; font-size: 0.9rem; color: var(--muted); }
+.g-enrow { display: flex; gap: 10px; margin-bottom: 10px; }
+.g-enbox { flex: 1; display: flex; flex-direction: column; gap: 6px; align-items: center; }
+.g-enlbl { font-weight: 800; font-size: 0.8rem; }
+.g-enbar { width: 100%; height: 8px; border-radius: 6px; background: var(--surface-border); overflow: hidden; }
+.g-enbar i { display: block; height: 100%; width: 0; background: var(--grad); transition: width 0.25s var(--ease); }
+.g-pows { display: flex; gap: 6px; flex-wrap: wrap; justify-content: center; min-height: 20px; }
+.g-pow { font-size: 0.76rem; font-weight: 800; padding: 5px 10px; border-radius: 999px; border: 2px solid var(--gold); background: var(--gold); color: var(--navy); cursor: pointer; font-family: inherit; }
+.g-pow:disabled { opacity: 0.4; cursor: default; background: transparent; }
+.g-armed { font-size: 0.72rem; font-weight: 800; color: #1aa86b; }
+.g-canvas { width: 100%; max-width: 440px; margin: 0 auto; display: block; border-radius: 18px; background: transparent; touch-action: none; box-shadow: 0 18px 40px -18px rgba(27,36,80,0.45); }
+.g-turnpill { display: inline-block; padding: 7px 18px; border-radius: 999px; color: #fff; font-family: "Baloo 2", sans-serif; font-weight: 700; font-size: 0.95rem; box-shadow: 0 6px 14px -6px rgba(27,36,80,0.45); animation: gpulse 1.6s var(--ease) infinite; }
+@keyframes gpulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.06); } }
+.g-tip { text-align: center; color: var(--muted); font-size: 0.86rem; font-weight: 600; margin: 10px 0 0; }
+.g-bigscore { font-family: "Baloo 2", sans-serif; font-weight: 800; font-size: 1.6rem; color: var(--text); margin: 10px 0 18px; }
+
+@media (max-width: 460px) { .g-picks { grid-template-columns: repeat(3, 1fr); } .g-face { width: 46px; height: 46px; } }
+
 /* Reveal on scroll */
 .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s var(--ease), transform 0.7s var(--bounce); }
 .reveal.in { opacity: 1; transform: none; }
