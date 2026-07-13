@@ -24,7 +24,7 @@ const ZONES = [
       { nick: "Patkószörny", name: "Merkl Dominik", num: 13, pos: "Védő", grip: "–", sweet: "–", power: "–", photo: "assets/Players/Patkószörny.png", bio: "Védi a mundér becsületét – a csapat első számú védője." },
       { nick: "Pöttömke", name: "Erdős Zsuzsanna", num: 9, pos: "Védő", grip: "–", sweet: "–", power: "–", photo: "assets/Players/Pöttömke.png", bio: "Kis termet, nagy hatás. „Most akkor mi támadunk!”" },
       { nick: "Hópehely", name: "Galaczi Miklós", num: 20, pos: "Védő", grip: "Bal", sweet: "Aranygaluska", power: "–", photo: "", bio: "Ha tehetné még a jégen is biciklivel tekerne" },
-      { nick: "Maszat", name: "", num: 44, pos: "Védő", grip: "Bal", sweet: "", power: "", photo: "assets/Players/Maszat.png", bio: "A lengyel srác, akivel inkább ne vitatkozz"}
+      { nick: "Maszat", name: "Szymon Wlaszczyk", num: 44, pos: "Védő", grip: "Bal", sweet: "", power: "", photo: "assets/Players/Maszat.png", bio: "A lengyel srác, akivel inkább ne vitatkozz"}
     ],
   },
   {
