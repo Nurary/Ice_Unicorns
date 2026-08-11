@@ -5,7 +5,7 @@
     { href: "rolunk.html", label: "Rólunk" },
     { href: "munkank.html", label: "Munkánk" },
     { href: "galeria.html", label: "Galéria" },
-    { href: "csapat.html", label: "Csapat" },
+    { href: "ob4c.html", label: "OB4C" },
     { href: "ob4d.html", label: "OB4D" },
     { href: "jatek.html", label: "Játék" },
     { href: "kapcsolat.html", label: "Kapcsolat", cta: true },
@@ -121,6 +121,55 @@
     revealTargets.forEach((el) => io.observe(el));
   } else {
     revealTargets.forEach((el) => el.classList.add("in"));
+  }
+
+  // ---- Al-fülek (Bajnokság / Csapat) ----
+  // Egy [data-tabs] konténeren belül a [data-tab] gombok kapcsolgatják az azonos
+  // nevű [data-panel] blokkokat. Egy névhez több panel is tartozhat (pl. hero + tartalom).
+  const tabsRoot = document.querySelector("[data-tabs]");
+  if (tabsRoot) {
+    const buttons = Array.from(tabsRoot.querySelectorAll("[data-tab]"));
+    const panels = Array.from(tabsRoot.querySelectorAll("[data-panel]"));
+    const names = buttons.map((b) => b.dataset.tab);
+
+    const activate = (name, updateHash) => {
+      if (!names.includes(name)) name = names[0];
+      buttons.forEach((b) => {
+        const on = b.dataset.tab === name;
+        b.classList.toggle("active", on);
+        b.setAttribute("aria-selected", String(on));
+        b.tabIndex = on ? 0 : -1;
+      });
+      panels.forEach((p) => {
+        const on = p.dataset.panel === name;
+        p.hidden = !on;
+        p.setAttribute("aria-hidden", String(!on));
+      });
+      // Mélylinkelhető (#csapat / #bajnoksag) – görgetés nélkül
+      if (updateHash && history.replaceState) {
+        history.replaceState(null, "", "#" + name);
+      }
+    };
+
+    buttons.forEach((b) => {
+      b.addEventListener("click", () => activate(b.dataset.tab, true));
+    });
+
+    // Nyilakkal is lehet váltani a füleken
+    tabsRoot.addEventListener("keydown", (e) => {
+      if (!buttons.includes(e.target)) return;
+      if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
+      e.preventDefault();
+      const step = e.key === "ArrowRight" ? 1 : -1;
+      const next = buttons[(buttons.indexOf(e.target) + step + buttons.length) % buttons.length];
+      activate(next.dataset.tab, true);
+      next.focus();
+    });
+
+    activate(location.hash.replace("#", ""), false);
+    window.addEventListener("hashchange", () =>
+      activate(location.hash.replace("#", ""), false)
+    );
   }
 
   // Contact form (Phase 0: mailto fallback)
