@@ -67,14 +67,13 @@ const TEAMS = {
   },
 };
 
-// Statisztika mezők – töltsd fel, ha lesznek adatok (most "–")
-// Mezőnyjátékos: Meccs / Gól / Assziszt / Pont
-function statsFor() {
-  return { M: "–", G: "–", A: "–", P: "–" };
+// A statisztikák a statisztika.js-ből, a mérkőzés-jegyzőkönyvekből számolódnak.
+// Amíg nincs felvitt meccs, minden mező "–".
+function statsFor(p, leagueKey) {
+  return Stats.skater(p.nick, leagueKey);
 }
-// Kapus: Meccs / Kapott gól / Védés % / Shutout
-function goalieStatsFor() {
-  return { M: "–", KG: "–", SV: "–", SO: "–" };
+function goalieStatsFor(p, leagueKey) {
+  return Stats.goalie(p.nick, leagueKey);
 }
 
 (function () {
@@ -111,6 +110,16 @@ function goalieStatsFor() {
       `<span class="sk-role">${p.pos}</span>`;
     btn.addEventListener("click", () => openModal(p, opts));
     return btn;
+  }
+
+  // Elgépelt becenév a jegyzőkönyvekben csendben elnyelné a statisztikát,
+  // ezért mindkét keret neveivel összevetjük (konzol-figyelmeztetés).
+  if (typeof Stats !== "undefined") {
+    const minden = [];
+    Object.values(TEAMS).forEach((t) => {
+      (t.zones || []).forEach((z) => (z.players || []).forEach((p) => minden.push(p.nick)));
+    });
+    Stats.validate(minden);
   }
 
   // Build rink zones
@@ -179,9 +188,24 @@ function goalieStatsFor() {
   const elBio = overlay.querySelector(".pm-bio");
   const elHint = overlay.querySelector(".pm-hint");
 
-  // Mezőnyjátékos és kapus statisztikái eltérnek
-  const STAT_LABELS = { M: "Meccs", G: "Gól", A: "Assziszt", P: "Pont" };
-  const GOALIE_LABELS = { M: "Meccs", KG: "Kapott gól", SV: "Védés %", SO: "Shutout" };
+  // Mezőnyjátékos és kapus statisztikái eltérnek.
+  // A rövidítés a nagy szám alatt, a teljes név a tooltipben (title).
+  const STAT_LABELS = {
+    M: ["M", "Mérkőzés"],
+    G: ["G", "Gól"],
+    A: ["A", "Gólpassz"],
+    P: ["P", "Pont (gól + gólpassz)"],
+    BP: ["BP", "Büntetőperc"],
+    PM: ["+/-", "Plusz/mínusz"],
+  };
+  const GOALIE_LABELS = {
+    M: ["M", "Mérkőzés"],
+    KG: ["KG", "Kapott gól"],
+    V: ["VÉD", "Védés"],
+    SZ: ["VÉD%", "Védési hatékonyság"],
+    KGA: ["KGÁ", "Kapott gól átlag (60 percre)"],
+    SO: ["SO", "Kapott gól nélküli mérkőzés"],
+  };
 
   function addTag(text) {
     const t = document.createElement("span");
@@ -224,16 +248,19 @@ function goalieStatsFor() {
       elHint.style.display = "none";
     } else {
       elStats.style.display = "";
-      elHint.style.display = "";
       const isGoalie = p.pos === "Kapus";
       const labels = isGoalie ? GOALIE_LABELS : STAT_LABELS;
-      const st = isGoalie ? goalieStatsFor(p) : statsFor(p);
+      const st = isGoalie ? goalieStatsFor(p, teamKey) : statsFor(p, teamKey);
       Object.keys(labels).forEach((k) => {
+        const [rovid, teljes] = labels[k];
         const box = document.createElement("div");
         box.className = "pm-stat";
-        box.innerHTML = `<strong>${st[k]}</strong><span>${labels[k]}</span>`;
+        box.title = teljes;
+        box.innerHTML = `<strong>${st[k]}</strong><span>${rovid}</span>`;
         elStats.appendChild(box);
       });
+      // A „hamarosan" megjegyzés csak addig kell, amíg tényleg nincs adat
+      elHint.style.display = st._empty ? "" : "none";
     }
 
     elBio.textContent = p.bio || "";
