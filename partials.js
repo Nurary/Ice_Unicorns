@@ -103,7 +103,7 @@
 
   // Reveal on scroll
   const revealTargets = document.querySelectorAll(
-    ".section-head, .card, .work-item, .g-item, .player, .ob4d-banner, .contact-info, .contact-form, .about-lead, .page-hero"
+    ".section-head, .card, .work-item, .g-item, .player, .cta-banner, .next-match, .league-block, .contact-info, .contact-form, .about-lead, .page-hero"
   );
   revealTargets.forEach((el) => el.classList.add("reveal"));
   if ("IntersectionObserver" in window) {

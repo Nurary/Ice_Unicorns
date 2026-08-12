@@ -46,10 +46,33 @@
       </div>
     </section>
 
-    <div data-panel="bajnoksag">
+    <div data-panel="bajnoksag" data-league="ob4c">
       <section class="section page-section">
         <div class="container">
-          <div class="ob4d-banner">
+          <div class="next-match" data-next-match></div>
+        </div>
+      </section>
+
+      <section class="section section-alt">
+        <div class="container">
+          <div class="league-grid">
+            <div class="league-block">
+              <h2>Menetrend és eredmények</h2>
+              <span class="league-season" data-season>OB4C</span>
+              <div data-matches></div>
+            </div>
+            <div class="league-block">
+              <h2>Tabella</h2>
+              <span class="league-season">Állás a mezőnyben</span>
+              <div data-standings></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section page-section">
+        <div class="container">
+          <div class="cta-banner">
             <div>
               <span class="kicker">OB4C</span>
               <h2>Tartsd velünk a lépést</h2>
@@ -92,6 +115,7 @@
 
   <div id="app-footer"></div>
   <script src="partials.js" defer></script>
+  <script src="bajnoksag.js" defer></script>
   <script src="team.js" defer></script>
 </body>
 </html>
