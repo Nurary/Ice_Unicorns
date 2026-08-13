@@ -61,10 +61,17 @@
               <span class="league-season" data-season>OB4D</span>
               <div data-matches></div>
             </div>
-            <div class="league-block">
-              <h2>Tabella</h2>
-              <span class="league-season">Állás a mezőnyben</span>
-              <div data-standings></div>
+            <div class="league-col">
+              <div class="league-block">
+                <h2>Tabella</h2>
+                <span class="league-season">Állás a mezőnyben</span>
+                <div data-standings></div>
+              </div>
+              <div class="league-block">
+                <h2>Házi pontvadászat</h2>
+                <span class="league-season">A MÉNES legeredményesebbjei</span>
+                <div data-scorers></div>
+              </div>
             </div>
           </div>
         </div>
@@ -115,8 +122,9 @@
 
   <div id="app-footer"></div>
   <script src="partials.js" defer></script>
-  <script src="bajnoksag.js" defer></script>
   <script src="statisztika.js" defer></script>
   <script src="team.js" defer></script>
+  <!-- a bajnoksag.js utoljara: a hazi pontvadaszathoz kell a TEAMS es a Stats -->
+  <script src="bajnoksag.js" defer></script>
 </body>
 </html>

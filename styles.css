@@ -175,6 +175,7 @@ a { color: inherit; text-decoration: none; }
 .nm-when strong { font-family: "Baloo 2", sans-serif; font-size: 1.5rem; color: #fff; line-height: 1.1; white-space: nowrap; }
 .nm-when .nm-time { font-size: 0.86rem; font-weight: 700; color: rgba(255,255,255,0.8); font-variant-numeric: tabular-nums; }
 
+.nm-league { display: inline-block; margin-left: 8px; padding: 2px 10px; border-radius: 999px; background: rgba(255,255,255,0.16); border: 1px solid rgba(255,255,255,0.32); color: #fff; font-size: 0.72rem; letter-spacing: 0.08em; }
 .nm-main { flex: 1; min-width: 240px; }
 .nm-main h2 { font-size: clamp(1.4rem, 3vw, 2.1rem); margin: 4px 0 8px; color: #fff; }
 .nm-main .nm-vs { color: var(--gold); font-size: 0.75em; }
@@ -185,6 +186,9 @@ a { color: inherit; text-decoration: none; }
 /* min-width:0 nélkül a rács-elem kitágulna a tabella szélességére, és a
    html{overflow-x:hidden} levágná a pont-oszlopot ahelyett, hogy görgetne */
 .league-block { min-width: 0; }
+/* A jobb hasábban a tabella alá kerül a pontvadászat – így kitölti azt az
+   üres helyet, ami a hosszabb menetrend-lista mellett maradna. */
+.league-col { display: flex; flex-direction: column; gap: 40px; min-width: 0; }
 .league-block h2 { font-size: 1.45rem; color: var(--text); margin-bottom: 4px; }
 .league-season { display: block; font-size: 0.82rem; font-weight: 700; color: var(--muted); margin-bottom: 18px; }
 .league-empty { color: var(--muted); font-weight: 600; text-align: center; padding: 26px 16px; background: var(--surface-soft); border: 2px dashed var(--surface-border); border-radius: var(--radius); }
@@ -222,6 +226,14 @@ a { color: inherit; text-decoration: none; }
 .standings tbody tr.us { background: var(--surface-soft); }
 .standings tbody tr.us .c-team { color: var(--pink); }
 .standings tbody tr.us .c-pos { color: var(--pink); }
+
+/* Házi pontvadászat – ugyanaz a tábla-stílus, dobogós helyezés-kiemeléssel */
+.scorers .c-pos { font-family: "Baloo 2", sans-serif; font-size: 1rem; }
+.scorers tr.rang1 .c-pos { color: #d9a441; }
+.scorers tr.rang2 .c-pos { color: #9aa3b5; }
+.scorers tr.rang3 .c-pos { color: #c07a4a; }
+.scorers tr.rang1 .c-team { color: var(--text); }
+.scorers tr.rang1 { background: linear-gradient(90deg, rgba(255,207,92,0.22), transparent 70%); }
 
 /* Contact (on light band) */
 .contact-wrap { display: grid; grid-template-columns: 1fr 1.1fr; gap: 56px; align-items: start; }

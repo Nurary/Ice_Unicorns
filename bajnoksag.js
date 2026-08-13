@@ -40,6 +40,8 @@ const LEAGUES = {
   if (!panels.length) return;
 
   const US = "Ice Unicorns";
+  // data-league="mind" → mindkét bajnokság együtt (ezt a kezdőlap használja)
+  const MIND = "mind";
 
   // "2026-02-14" → helyi idejű Date (a sima new Date(iso) UTC-t ért alatta,
   // ami negatív időzónában egy nappal korábbi dátumot mutatna)
@@ -77,30 +79,54 @@ const LEAGUES = {
   }
 
   // ---- Következő meccs (kiemelt kártya) ----
-  function renderNext(host, league) {
-    const upcoming = league.matches
-      .filter((m) => !played(m))
-      .sort((a, b) => parseDate(a.date) - parseDate(b.date))[0];
+  // A kezdőlapon mindkét bajnokság meccsei közül a legközelebbi kell, ezért
+  // a meccsek mellé odatesszük, melyik bajnokságból valók.
+  function matchesOf(key) {
+    if (key === MIND) {
+      return Object.keys(LEAGUES).reduce((all, k) => {
+        const l = LEAGUES[k];
+        return all.concat((l.matches || []).map((m) => ({ m: m, label: l.label })));
+      }, []);
+    }
+    const l = LEAGUES[key];
+    return l ? (l.matches || []).map((m) => ({ m: m, label: l.label })) : [];
+  }
+
+  function renderNext(host, key, label) {
+    const upcoming = matchesOf(key)
+      .filter((x) => !played(x.m))
+      .sort((a, b) => parseDate(a.m.date) - parseDate(b.m.date))[0];
 
     if (!upcoming) {
+      // A kezdőlapon egy üres kártya befejezetlennek hat – ott inkább
+      // eltüntetjük az egész szakaszt.
+      if (host.hasAttribute("data-hide-if-empty")) {
+        const sec = host.closest("section") || host;
+        sec.remove();
+        return;
+      }
       host.classList.add("is-empty");
       host.appendChild(
-        empty(`Az ${league.label} következő fordulójának időpontja hamarosan kiderül. 🗓️`)
+        empty(`Az ${label} következő fordulójának időpontja hamarosan kiderül. 🗓️`)
       );
       return;
     }
 
-    const where = upcoming.home ? "Hazai pálya" : "Idegenben";
+    const u = upcoming.m;
+    const where = u.home ? "Hazai pálya" : "Idegenben";
+    // Csak akkor írjuk ki a bajnokságot, ha egyébként nem derülne ki
+    const badge = key === MIND
+      ? `<span class="nm-league">${upcoming.label}</span>` : "";
     host.innerHTML = `
       <div class="nm-when">
-        <span class="nm-day">${fmtWeekday(upcoming.date)}</span>
-        <strong>${fmtDate(upcoming.date)}</strong>
-        ${upcoming.time ? `<span class="nm-time">${upcoming.time}</span>` : ""}
+        <span class="nm-day">${fmtWeekday(u.date)}</span>
+        <strong>${fmtDate(u.date)}</strong>
+        ${u.time ? `<span class="nm-time">${u.time}</span>` : ""}
       </div>
       <div class="nm-main">
-        <span class="kicker">Következő meccs</span>
-        <h2>Ice Unicorns <span class="nm-vs">vs</span> ${upcoming.opponent}</h2>
-        <p>${where}${upcoming.venue ? ` · ${upcoming.venue}` : ""}</p>
+        <span class="kicker">Következő meccs ${badge}</span>
+        <h2>Ice Unicorns <span class="nm-vs">vs</span> ${u.opponent}</h2>
+        <p>${where}${u.venue ? ` · ${u.venue}` : ""}</p>
       </div>
       <a href="kapcsolat.html" class="btn btn-primary">Gyere el szurkolni</a>`;
   }
@@ -197,20 +223,88 @@ const LEAGUES = {
     host.appendChild(wrap);
   }
 
+  // ---- Házi pontvadászat ----
+  // A saját játékosaink rangsora pont szerint. Külön adat nem kell hozzá:
+  // a keret a team.js-ből, az összesítés a statisztika.js-ből jön.
+  function renderScorers(host, key) {
+    if (typeof TEAMS === "undefined" || typeof Stats === "undefined") return;
+    const team = TEAMS[key];
+    if (!team) return;
+
+    // Kapusok nélkül – nekik saját mutatóik vannak a kártyán
+    const mezony = (team.zones || [])
+      .reduce((all, z) => all.concat(z.players || []), [])
+      .filter((p) => p.pos !== "Kapus");
+
+    const sorok = mezony
+      .map((p) => ({ p: p, st: Stats.skater(p.nick, key) }))
+      .filter((r) => !r.st._empty)
+      .sort((a, b) =>
+        Number(b.st.P) - Number(a.st.P) ||
+        Number(b.st.G) - Number(a.st.G) ||
+        Number(a.st.M) - Number(b.st.M));
+
+    if (!sorok.length) {
+      host.appendChild(empty("Az első meccs után itt jelenik meg a házi pontvadászat. 🥅"));
+      return;
+    }
+
+    const wrap = document.createElement("div");
+    wrap.className = "table-scroll";
+    const table = document.createElement("table");
+    table.className = "standings scorers";
+    table.innerHTML = `
+      <thead>
+        <tr>
+          <th class="c-pos">#</th>
+          <th class="c-team">Játékos</th>
+          <th title="Mérkőzés">M</th>
+          <th title="Gól">G</th>
+          <th title="Gólpassz">A</th>
+          <th class="c-pts" title="Pont">P</th>
+        </tr>
+      </thead>
+      <tbody></tbody>`;
+
+    const tbody = table.querySelector("tbody");
+    sorok.forEach((r, i) => {
+      const tr = document.createElement("tr");
+      if (i < 3) tr.className = "rang" + (i + 1);
+      tr.innerHTML = `
+        <td class="c-pos">${i + 1}</td>
+        <td class="c-team">${r.p.nick}</td>
+        <td>${r.st.M}</td>
+        <td>${r.st.G}</td>
+        <td>${r.st.A}</td>
+        <td class="c-pts">${r.st.P}</td>`;
+      tbody.appendChild(tr);
+    });
+
+    wrap.appendChild(table);
+    host.appendChild(wrap);
+  }
+
   panels.forEach((panel) => {
-    const league = LEAGUES[panel.dataset.league];
+    const key = panel.dataset.league;
+    const league = key === MIND ? { label: "Ice Unicorns" } : LEAGUES[key];
     if (!league) return;
 
     const seasonEl = panel.querySelector("[data-season]");
     if (seasonEl && league.season) seasonEl.textContent = league.season + " szezon";
 
     const next = panel.querySelector("[data-next-match]");
-    if (next) renderNext(next, league);
+    if (next) renderNext(next, key, league.label);
+
+    // A többi blokknak konkrét bajnokság kell – a kezdőlapon nincsenek is meg
+    if (key === MIND) return;
 
     const matches = panel.querySelector("[data-matches]");
     if (matches) renderMatches(matches, league);
 
     const standings = panel.querySelector("[data-standings]");
     if (standings) renderStandings(standings, league);
+
+    const scorers = panel.querySelector("[data-scorers]");
+    if (scorers) renderScorers(scorers, key);
   });
 })();

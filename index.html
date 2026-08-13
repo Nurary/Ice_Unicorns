@@ -55,6 +55,14 @@
       </div>
     </section>
 
+    <!-- Következő meccs – mindkét bajnokságból a legközelebbi.
+         Ha nincs kiírt meccs, a szakasz eltűnik (data-hide-if-empty). -->
+    <section class="section" data-league="mind">
+      <div class="container">
+        <div class="next-match" data-next-match data-hide-if-empty></div>
+      </div>
+    </section>
+
     <!-- Quick links to subpages -->
     <section class="section section-alt" id="explore">
       <div class="container">
@@ -106,5 +114,6 @@
 
   <div id="app-footer"></div>
   <script src="partials.js" defer></script>
+  <script src="bajnoksag.js" defer></script>
 </body>
 </html>
