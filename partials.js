@@ -37,6 +37,10 @@
         <nav class="nav" id="nav">
         ${links}
         </nav>
+        <button class="theme-toggle" id="themeToggle" type="button" aria-label="Sötét mód" aria-pressed="false">
+          <svg class="ic-moon" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></svg>
+          <svg class="ic-sun" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M2 12h2m16 0h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+        </button>
         <button class="nav-toggle" id="navToggle" aria-label="Menü" aria-expanded="false">
           <span></span><span></span><span></span>
         </button>
@@ -91,6 +95,41 @@
   };
   onScroll();
   window.addEventListener("scroll", onScroll, { passive: true });
+
+  // ---- Sötét / világos mód ----
+  // A választás előre, a <head>-ben lévő apró script alkalmazza, hogy ne
+  // villanjon fel a másik mód. Itt már csak a gomb kezelése marad.
+  const themeBtn = document.getElementById("themeToggle");
+  if (themeBtn) {
+    const root = document.documentElement;
+    const rendszerSotet = window.matchMedia("(prefers-color-scheme: dark)");
+
+    // Ha nincs kézi választás, a rendszerbeállítás dönt
+    const aktualis = () =>
+      root.dataset.theme || (rendszerSotet.matches ? "dark" : "light");
+
+    const gombFrissit = () => {
+      const sotet = aktualis() === "dark";
+      themeBtn.classList.toggle("is-dark", sotet);
+      themeBtn.setAttribute("aria-pressed", String(sotet));
+      themeBtn.setAttribute("aria-label", sotet ? "Világos mód" : "Sötét mód");
+      themeBtn.title = sotet ? "Váltás világos módra" : "Váltás sötét módra";
+    };
+
+    themeBtn.addEventListener("click", () => {
+      const uj = aktualis() === "dark" ? "light" : "dark";
+      root.dataset.theme = uj;
+      try { localStorage.setItem("theme", uj); } catch (e) { /* privát mód */ }
+      gombFrissit();
+    });
+
+    // Rendszerbeállítás változása csak akkor számít, ha nincs kézi választás
+    rendszerSotet.addEventListener("change", () => {
+      if (!root.dataset.theme) gombFrissit();
+    });
+
+    gombFrissit();
+  }
 
   const navToggle = document.getElementById("navToggle");
   const nav = document.getElementById("nav");
