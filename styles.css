@@ -13,14 +13,83 @@
   --ice: #5ec8ff;
   --gold: #ffcf5c;        /* unicorn horn */
   --pink: #ff3d7f;
+  /* Rózsaszín szöveghez: a --pink világos felületen csak 3:1 – kevés.
+     A háttérként/keretként használt --pink változatlan marad. */
+  --pink-ink: #c9155a;
   --silver: #c7cdd9;
   --grad: linear-gradient(100deg, #ff2d2d 0%, #ff7a00 17%, #ffce00 34%, #1fc950 51%, #009dff 68%, #6b4bff 85%, #b026ff 100%);
   --rainbow: linear-gradient(100deg, #ff2d2d 0%, #ff7a00 17%, #ffce00 34%, #1fc950 51%, #009dff 68%, #6b4bff 85%, #b026ff 100%);
+  /* Világos felületek, amelyek MINDKÉT módban világosak maradnak:
+     a pálya (jég) és a kispad. Az ezeken ülő szöveg ezért saját, mindig
+     sötét tokent kap – különben sötét módban olvashatatlanná válna. */
+  --rink-1: #e9f6ff;
+  --rink-2: #ffffff;
+  --on-rink: #1b2450;
+  --on-rink-muted: #5a6488;
+  --on-rink-border: rgba(27, 36, 80, 0.12);
+  --bench-1: #f3eee2;
+  --bench-2: #e6dfcd;
+  /* Fejléc és mobilmenü háttere – módfüggő */
+  --header-bg: rgba(255, 61, 127, 0.82);
+  --nav-mobile-bg: rgba(255, 61, 127, 0.97);
+  --blob-opacity: 0.45;
+  --blob-white-opacity: 0.22;
+  color-scheme: light;
   --radius: 24px;
   --maxw: 1140px;
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
   --bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
 }
+
+/* ===== Sötét mód =====
+   A --navy szándékosan változatlan: az oldal alapja sötétebb lesz nála, így a
+   navy kártyák továbbra is kiemelkednek, és a gomb-feliratként használt navy
+   is olvasható marad az arany háttéren. A márkaszínek (pink, arany, jégkék)
+   sem változnak – ezek viszik az arculatot mindkét módban.
+
+   Három állapotot kell lefedni: a rendszerbeállítást (nincs data-theme), és a
+   kézi választás mindkét irányát. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --pink-ink: #ff8fb5;
+    color-scheme: dark;
+    --bg: #080d24;
+    --bg-2: #111838;
+    --surface: #141b3d;
+    --surface-soft: #1b2350;
+    --surface-border: rgba(255, 255, 255, 0.14);
+    --text: #e9ecfb;
+    --on-pink: #f3f5ff;
+    --muted: #9aa4c8;
+    --muted-pink: rgba(233, 236, 251, 0.78);
+    --header-bg: rgba(10, 15, 40, 0.86);
+    --nav-mobile-bg: rgba(10, 15, 40, 0.97);
+    --rink-1: #d7e6f5;
+    --rink-2: #eef5fc;
+    --blob-opacity: 0.3;
+    --blob-white-opacity: 0.1;
+  }
+}
+:root[data-theme="dark"] {
+  --pink-ink: #ff8fb5;
+  color-scheme: dark;
+  --bg: #080d24;
+  --bg-2: #111838;
+  --surface: #141b3d;
+  --surface-soft: #1b2350;
+  --surface-border: rgba(255, 255, 255, 0.14);
+  --text: #e9ecfb;
+  --on-pink: #f3f5ff;
+  --muted: #9aa4c8;
+  --muted-pink: rgba(233, 236, 251, 0.78);
+  --header-bg: rgba(10, 15, 40, 0.86);
+  --nav-mobile-bg: rgba(10, 15, 40, 0.97);
+  --rink-1: #d7e6f5;
+  --rink-2: #eef5fc;
+  --blob-opacity: 0.3;
+  --blob-white-opacity: 0.1;
+}
+:root[data-theme="light"] { color-scheme: light; }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -51,10 +120,10 @@ a { color: inherit; text-decoration: none; }
 
 /* Playful floating background shapes */
 .aurora { position: fixed; inset: 0; z-index: -2; overflow: hidden; background: radial-gradient(120% 110% at 50% -10%, var(--bg-2), var(--bg) 65%); }
-.blob { position: absolute; border-radius: 50%; filter: blur(70px); opacity: 0.45; animation: float 16s var(--ease) infinite alternate; }
+.blob { position: absolute; border-radius: 50%; filter: blur(70px); opacity: var(--blob-opacity); animation: float 16s var(--ease) infinite alternate; }
 .blob-1 { width: 480px; height: 480px; background: var(--gold); top: -140px; left: -100px; }
 .blob-2 { width: 420px; height: 420px; background: var(--ice); top: 30%; right: -130px; animation-delay: -5s; }
-.blob-3 { width: 380px; height: 380px; background: #fff; bottom: -160px; left: 35%; animation-delay: -9s; opacity: 0.22; }
+.blob-3 { width: 380px; height: 380px; background: #fff; bottom: -160px; left: 35%; animation-delay: -9s; opacity: var(--blob-white-opacity); }
 @keyframes float { to { transform: translate3d(40px, 60px, 0) scale(1.12); } }
 
 /* Header */
@@ -63,7 +132,7 @@ a { color: inherit; text-decoration: none; }
   transition: background 0.3s var(--ease), box-shadow 0.3s var(--ease), backdrop-filter 0.3s;
 }
 .site-header.scrolled {
-  background: rgba(255, 61, 127, 0.82);
+  background: var(--header-bg);
   backdrop-filter: blur(14px);
   box-shadow: 0 6px 24px -10px rgba(27, 36, 80, 0.5);
 }
@@ -76,6 +145,15 @@ a { color: inherit; text-decoration: none; }
 .nav a:hover { background: rgba(255,255,255,0.18); transform: translateY(-2px); }
 .nav .nav-cta { background: var(--gold); color: var(--navy); }
 .nav .nav-cta:hover { filter: brightness(1.05); background: var(--gold); }
+
+/* Sötét/világos váltó – a JS a feloldott témát teszi rá .is-dark osztályként,
+   így a CSS-nek nem kell a három állapotot külön kezelnie. */
+.theme-toggle { flex: 0 0 auto; width: 40px; height: 40px; margin-left: 8px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.4); background: rgba(255,255,255,0.16); color: var(--on-pink); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: transform 0.2s var(--bounce), background 0.2s, border-color 0.2s; }
+.theme-toggle:hover { transform: translateY(-2px) scale(1.06); background: rgba(255,255,255,0.28); }
+.theme-toggle:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
+.theme-toggle .ic-sun { display: none; }
+.theme-toggle.is-dark .ic-moon { display: none; }
+.theme-toggle.is-dark .ic-sun { display: block; }
 
 .nav-toggle { display: none; flex-direction: column; gap: 5px; background: none; border: 0; cursor: pointer; padding: 8px; }
 .nav-toggle span { width: 24px; height: 3px; background: var(--on-pink); border-radius: 3px; transition: 0.3s var(--ease); }
@@ -114,7 +192,7 @@ a { color: inherit; text-decoration: none; }
 .section { padding: 100px 0; position: relative; }
 /* Light band breaks up the pink */
 .section-alt { background: var(--surface); border-radius: 48px; margin: 0 16px; }
-.section-alt .kicker { color: var(--pink); }
+.section-alt .kicker { color: var(--pink-ink); }
 .section-alt .section-head h2, .section-alt .section-sub { color: var(--text); }
 
 .section-head { text-align: center; max-width: 680px; margin: 0 auto 54px; }
@@ -156,15 +234,88 @@ a { color: inherit; text-decoration: none; }
 .player span { font-size: 0.82rem; color: var(--muted); font-weight: 700; }
 .player.join .avatar { background: var(--gold); color: var(--navy); }
 
-/* OB4D banner */
-.ob4d-banner { display: flex; align-items: center; justify-content: space-between; gap: 32px; flex-wrap: wrap; background: var(--navy); border-radius: 32px; padding: 50px; box-shadow: 0 24px 48px -20px rgba(27,36,80,0.6); }
-.ob4d-banner .kicker { color: var(--gold); }
-.ob4d-banner h2 { font-size: clamp(1.7rem, 3.5vw, 2.5rem); margin: 4px 0 12px; color: #fff; }
-.ob4d-banner p { color: rgba(255,255,255,0.82); max-width: 540px; font-weight: 600; }
+/* Sötét kiemelt sáv (bajnoksági CTA) */
+.cta-banner { display: flex; align-items: center; justify-content: space-between; gap: 32px; flex-wrap: wrap; background: var(--navy); border-radius: 32px; padding: 50px; box-shadow: 0 24px 48px -20px rgba(27,36,80,0.6); }
+.cta-banner .kicker { color: var(--gold); }
+.cta-banner h2 { font-size: clamp(1.7rem, 3.5vw, 2.5rem); margin: 4px 0 12px; color: #fff; }
+.cta-banner p { color: rgba(255,255,255,0.82); max-width: 540px; font-weight: 600; }
+
+/* ===== Bajnokság ===== */
+/* Következő meccs – sötét kártya a rózsaszín sávon */
+.next-match { display: flex; align-items: center; gap: 30px; flex-wrap: wrap; background: var(--navy); border-radius: 32px; padding: 34px 44px; box-shadow: 0 24px 48px -20px rgba(27,36,80,0.6); }
+.next-match.is-empty { justify-content: center; padding: 30px 34px; }
+.next-match .kicker { color: var(--gold); }
+/* az üres üzenet itt sötét kártyán ül, ezért saját felület-színt kap */
+.next-match .league-empty { margin: 0; color: rgba(255,255,255,0.88); background: rgba(255,255,255,0.07); border-color: rgba(255,255,255,0.28); }
+
+.nm-when { flex: 0 0 auto; display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 16px 22px; border-radius: 22px; background: rgba(255,255,255,0.1); border: 2px solid rgba(255,255,255,0.2); }
+.nm-when .nm-day { font-size: 0.72rem; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ice); }
+.nm-when strong { font-family: "Baloo 2", sans-serif; font-size: 1.5rem; color: #fff; line-height: 1.1; white-space: nowrap; }
+.nm-when .nm-time { font-size: 0.86rem; font-weight: 700; color: rgba(255,255,255,0.8); font-variant-numeric: tabular-nums; }
+
+.nm-league { display: inline-block; margin-left: 8px; padding: 2px 10px; border-radius: 999px; background: rgba(255,255,255,0.16); border: 1px solid rgba(255,255,255,0.32); color: #fff; font-size: 0.72rem; letter-spacing: 0.08em; }
+.nm-main { flex: 1; min-width: 240px; }
+.nm-main h2 { font-size: clamp(1.4rem, 3vw, 2.1rem); margin: 4px 0 8px; color: #fff; }
+.nm-main .nm-vs { color: var(--gold); font-size: 0.75em; }
+.nm-main p { color: rgba(255,255,255,0.82); font-weight: 600; }
+
+/* Két hasáb: menetrend + tabella (a világos sávon) */
+.league-grid { display: grid; grid-template-columns: 1fr 1.15fr; gap: 40px; align-items: start; }
+/* min-width:0 nélkül a rács-elem kitágulna a tabella szélességére, és a
+   html{overflow-x:hidden} levágná a pont-oszlopot ahelyett, hogy görgetne */
+.league-block { min-width: 0; }
+/* A jobb hasábban a tabella alá kerül a pontvadászat – így kitölti azt az
+   üres helyet, ami a hosszabb menetrend-lista mellett maradna. */
+.league-col { display: flex; flex-direction: column; gap: 40px; min-width: 0; }
+.league-block h2 { font-size: 1.45rem; color: var(--text); margin-bottom: 4px; }
+.league-season { display: block; font-size: 0.82rem; font-weight: 700; color: var(--muted); margin-bottom: 18px; }
+.league-empty { color: var(--muted); font-weight: 600; text-align: center; padding: 26px 16px; background: var(--surface-soft); border: 2px dashed var(--surface-border); border-radius: var(--radius); }
+
+/* Menetrend és eredmények */
+.match-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.match-row { display: flex; align-items: center; gap: 14px; background: var(--surface-soft); border: 2px solid var(--surface-border); border-radius: 18px; padding: 12px 16px; transition: border-color 0.2s, transform 0.2s var(--bounce); }
+.match-row:hover { border-color: var(--pink); transform: translateX(3px); }
+.match-row.upcoming { background: var(--surface); border-style: dashed; }
+.match-date { flex: 0 0 62px; display: flex; flex-direction: column; line-height: 1.15; }
+.match-date .md-wd { font-size: 0.68rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: var(--pink-ink); }
+.match-date .md-d { font-weight: 800; font-size: 0.92rem; color: var(--text); white-space: nowrap; }
+.match-teams { flex: 1; min-width: 0; display: flex; flex-direction: column; line-height: 1.2; }
+.match-opp { font-weight: 800; color: var(--text); font-size: 1rem; overflow-wrap: anywhere; }
+.match-where { font-size: 0.76rem; font-weight: 700; color: var(--muted); }
+.match-right { flex: 0 0 auto; display: flex; align-items: center; gap: 10px; }
+.match-score { font-family: "Baloo 2", sans-serif; font-weight: 800; font-size: 1.25rem; color: var(--text); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.match-ot { font-family: "Nunito", sans-serif; font-size: 0.6rem; font-weight: 800; color: var(--muted); margin-left: 4px; vertical-align: super; }
+.match-time { font-weight: 800; color: var(--muted); font-variant-numeric: tabular-nums; }
+.result-pill { width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.76rem; font-weight: 800; color: #fff; }
+.result-pill.gy { background: #1aa86b; }
+.result-pill.d { background: var(--silver); color: var(--navy); }
+.result-pill.v { background: #e8417a; }
+
+/* Tabella */
+.table-scroll { overflow-x: auto; }
+.standings { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+.standings th, .standings td { padding: 10px 8px; text-align: center; font-weight: 700; font-size: 0.9rem; white-space: nowrap; }
+.standings thead th { font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); border-bottom: 2px solid var(--surface-border); }
+.standings tbody tr { border-bottom: 1px solid var(--surface-border); }
+.standings tbody tr:last-child { border-bottom: 0; }
+.standings .c-pos { width: 30px; color: var(--muted); }
+.standings .c-team { text-align: left; color: var(--text); font-weight: 800; white-space: normal; min-width: 130px; }
+.standings .c-pts { color: var(--pink-ink); font-family: "Baloo 2", sans-serif; font-size: 1.05rem; }
+.standings tbody tr.us { background: var(--surface-soft); }
+.standings tbody tr.us .c-team { color: var(--pink-ink); }
+.standings tbody tr.us .c-pos { color: var(--pink-ink); }
+
+/* Házi pontvadászat – ugyanaz a tábla-stílus, dobogós helyezés-kiemeléssel */
+.scorers .c-pos { font-family: "Baloo 2", sans-serif; font-size: 1rem; }
+.scorers tr.rang1 .c-pos { color: #d9a441; }
+.scorers tr.rang2 .c-pos { color: #9aa3b5; }
+.scorers tr.rang3 .c-pos { color: #c07a4a; }
+.scorers tr.rang1 .c-team { color: var(--text); }
+.scorers tr.rang1 { background: linear-gradient(90deg, rgba(255,207,92,0.22), transparent 70%); }
 
 /* Contact (on light band) */
 .contact-wrap { display: grid; grid-template-columns: 1fr 1.1fr; gap: 56px; align-items: start; }
-.contact-info .kicker { color: var(--pink); }
+.contact-info .kicker { color: var(--pink-ink); }
 .contact-info h2 { font-size: clamp(2rem, 4vw, 2.9rem); color: var(--text); }
 .contact-info > p { color: var(--muted); margin: 14px 0 26px; font-weight: 600; }
 .contact-list { list-style: none; display: flex; flex-direction: column; gap: 16px; }
@@ -174,7 +325,7 @@ a { color: inherit; text-decoration: none; }
 .contact-form { background: var(--surface-soft); border: 2px solid var(--surface-border); border-radius: var(--radius); padding: 34px; }
 .field { margin-bottom: 18px; }
 .field label { display: block; font-size: 0.9rem; margin-bottom: 7px; color: var(--text); font-weight: 700; }
-.field input, .field textarea { width: 100%; padding: 13px 16px; background: #fff; border: 2px solid var(--surface-border); border-radius: 14px; color: var(--text); font-family: inherit; font-size: 0.98rem; font-weight: 600; transition: border-color 0.2s, box-shadow 0.2s; resize: vertical; }
+.field input, .field textarea { width: 100%; padding: 13px 16px; background: var(--surface); border: 2px solid var(--surface-border); border-radius: 14px; color: var(--text); font-family: inherit; font-size: 0.98rem; font-weight: 600; transition: border-color 0.2s, box-shadow 0.2s; resize: vertical; }
 .field input:focus, .field textarea:focus { outline: none; border-color: var(--pink); box-shadow: 0 0 0 4px rgba(255,61,127,0.15); }
 .form-status { margin-top: 14px; font-size: 0.92rem; text-align: center; min-height: 1.2em; font-weight: 700; }
 .form-status.ok { color: #1aa86b; }
@@ -217,6 +368,34 @@ a { color: inherit; text-decoration: none; }
 .page-hero p { color: var(--muted-pink); max-width: 640px; margin: 16px auto 0; font-weight: 600; font-size: 1.1rem; }
 .page-section { padding: 20px 0 100px; }
 
+/* Al-fül váltó (Bajnokság / Csapat) */
+.tab-switch {
+  display: inline-flex; gap: 6px; margin: 28px auto 0; padding: 6px;
+  background: rgba(255,255,255,0.18); border: 2px solid rgba(255,255,255,0.42);
+  border-radius: 999px; backdrop-filter: blur(8px);
+  box-shadow: 0 12px 26px -14px rgba(27,36,80,0.55);
+}
+.tab-btn {
+  border: 0; cursor: pointer; padding: 11px 26px; border-radius: 999px;
+  font-family: "Baloo 2", "Nunito", sans-serif; font-weight: 700; font-size: 1rem;
+  background: transparent; color: var(--on-pink); white-space: nowrap;
+  transition: background 0.25s var(--ease), color 0.25s, transform 0.25s var(--bounce), box-shadow 0.25s;
+}
+.tab-btn:hover { background: rgba(255,255,255,0.2); transform: translateY(-2px); }
+.tab-btn.active { background: var(--gold); color: var(--navy); box-shadow: 0 10px 22px -10px rgba(255,207,92,0.85); }
+.tab-btn.active:hover { background: var(--gold); }
+.tab-btn:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+[data-panel][hidden] { display: none; }
+
+/* Üres keret üzenet a pályán */
+.rink-empty {
+  margin: 26px auto; max-width: 420px; text-align: center;
+  color: var(--on-rink); font-family: "Baloo 2", "Nunito", sans-serif; font-weight: 700; font-size: 1.05rem;
+  background: rgba(255,255,255,0.92); border: 2px solid var(--on-rink-border);
+  padding: 18px 26px; border-radius: 999px;
+  box-shadow: 0 8px 20px -10px rgba(27,36,80,0.35);
+}
+
 /* Long-form prose (Rólunk / Munkánk) */
 .prose { max-width: 780px; margin: 0 auto; }
 .prose p { color: var(--text); font-size: 1.07rem; line-height: 1.75; margin-bottom: 18px; font-weight: 500; }
@@ -226,7 +405,7 @@ a { color: inherit; text-decoration: none; }
 
 /* Name chips */
 .tags { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin: 22px auto 0; max-width: 780px; }
-.tag { background: #fff; border: 2px solid var(--surface-border); color: var(--text); padding: 9px 18px; border-radius: 999px; font-weight: 700; font-size: 0.96rem; transition: transform 0.2s var(--bounce), border-color 0.2s; }
+.tag { background: var(--surface); border: 2px solid var(--surface-border); color: var(--text); padding: 9px 18px; border-radius: 999px; font-weight: 700; font-size: 0.96rem; transition: transform 0.2s var(--bounce), border-color 0.2s; }
 .tag:hover { transform: translateY(-3px) rotate(-2deg); border-color: var(--pink); }
 
 /* Auto-fit card grid (e.g. 4 categories) */
@@ -235,7 +414,7 @@ a { color: inherit; text-decoration: none; }
 /* Home quick links */
 .quicklinks { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
 a.card { display: block; color: inherit; }
-a.card .card-arrow { display: inline-block; margin-top: 14px; font-weight: 800; color: var(--pink); font-family: "Baloo 2", sans-serif; }
+a.card .card-arrow { display: inline-block; margin-top: 14px; font-weight: 800; color: var(--pink-ink); font-family: "Baloo 2", sans-serif; }
 a.card:hover .card-arrow { transform: translateX(4px); }
 
 /* ===== Team rink ===== */
@@ -243,7 +422,7 @@ a.card:hover .card-arrow { transform: translateX(4px); }
 .rink {
   position: relative;
   border-radius: 110px / 80px;
-  background: linear-gradient(180deg, #e9f6ff 0%, #ffffff 55%, #e9f6ff 100%);
+  background: linear-gradient(180deg, var(--rink-1) 0%, var(--rink-2) 55%, var(--rink-1) 100%);
   border: 10px solid #fff;
   box-shadow: 0 0 0 3px var(--navy), 0 30px 60px -22px rgba(27, 36, 80, 0.5);
   padding: 46px 26px;
@@ -272,8 +451,8 @@ a.card:hover .card-arrow { transform: translateX(4px); }
 .skater .puck img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
 .skater .puck.has-photo { background: #fff; }
 .skater .puck.has-photo .num { position: absolute; bottom: -6px; right: -6px; width: 24px; height: 24px; border-radius: 50%; background: var(--navy); color: #fff; font-size: 0.7rem; display: flex; align-items: center; justify-content: center; border: 2px solid #fff; z-index: 2; }
-.skater .sk-name { font-weight: 800; font-size: 0.92rem; color: var(--text); line-height: 1.1; }
-.skater .sk-role { font-size: 0.74rem; color: var(--muted); font-weight: 700; }
+.skater .sk-name { font-weight: 800; font-size: 0.92rem; color: var(--on-rink); line-height: 1.1; }
+.skater .sk-role { font-size: 0.74rem; color: var(--on-rink-muted); font-weight: 700; }
 
 /* Pálya + oldalsó cserepad (kispad) */
 .rink-stage { display: flex; align-items: stretch; gap: 16px; }
@@ -283,7 +462,7 @@ a.card:hover .card-arrow { transform: translateX(4px); }
   flex: 0 0 172px; position: relative;
   display: flex; flex-direction: column; align-items: center; gap: 14px;
   padding: 38px 14px 16px;
-  background: linear-gradient(180deg, #f3eee2 0%, #e6dfcd 100%);
+  background: linear-gradient(180deg, var(--bench-1) 0%, var(--bench-2) 100%);
   border: 6px solid #fff; border-left: 5px solid var(--navy);
   border-radius: 26px;
   box-shadow: 0 0 0 3px var(--navy), 0 22px 46px -22px rgba(27, 36, 80, 0.55);
@@ -291,7 +470,7 @@ a.card:hover .card-arrow { transform: translateX(4px); }
 /* Nyílás a palánkon (kapu, ahonnan beugranak) */
 .bench-side::before {
   content: ""; position: absolute; left: -5px; top: 50%; transform: translateY(-50%);
-  width: 5px; height: 70px; background: #f3eee2; z-index: 2;
+  width: 5px; height: 70px; background: var(--bench-1); z-index: 2;
 }
 .bench-label {
   position: absolute; top: -16px; left: 50%; transform: translateX(-50%);
@@ -300,12 +479,12 @@ a.card:hover .card-arrow { transform: translateX(4px); }
   box-shadow: 0 8px 16px -7px rgba(27, 36, 80, 0.7);
 }
 .bench { display: flex; flex-direction: column; flex-wrap: wrap; justify-content: flex-start; align-items: center; gap: 14px; position: relative; z-index: 1; width: 100%; }
-.bench-gatelabel { margin-top: auto; font-size: 0.72rem; font-weight: 700; color: var(--muted); text-align: center; opacity: 0.75; }
+.bench-gatelabel { margin-top: auto; font-size: 0.72rem; font-weight: 700; color: var(--on-rink-muted); text-align: center; opacity: 0.75; }
 
 /* ===== Player modal ===== */
 .pm-overlay { position: fixed; inset: 0; background: rgba(27, 36, 80, 0.55); backdrop-filter: blur(5px); display: flex; align-items: center; justify-content: center; padding: 20px; z-index: 100; opacity: 0; pointer-events: none; transition: opacity 0.25s var(--ease); overflow-y: auto; }
 .pm-overlay.open { opacity: 1; pointer-events: auto; }
-.pm-card { position: relative; display: flex; width: min(700px, 100%); background: #fff; border-radius: 28px; overflow: hidden; box-shadow: 0 30px 70px -18px rgba(27, 36, 80, 0.65); transform: translateY(24px) scale(0.9); transition: transform 0.4s var(--bounce); }
+.pm-card { position: relative; display: flex; width: min(700px, 100%); background: var(--surface); border-radius: 28px; overflow: hidden; box-shadow: 0 30px 70px -18px rgba(27, 36, 80, 0.65); transform: translateY(24px) scale(0.9); transition: transform 0.4s var(--bounce); }
 .pm-overlay.open .pm-card { transform: none; }
 
 /* Left: full-height photo with outline */
@@ -333,10 +512,10 @@ a.card:hover .card-arrow { transform: translateX(4px); }
 .pm-body { padding: 20px 26px 26px; flex: 1; }
 .pm-meta { display: flex; gap: 10px; justify-content: flex-start; flex-wrap: wrap; margin-bottom: 16px; }
 .pm-tag { background: var(--surface-soft); border: 2px solid var(--surface-border); border-radius: 999px; padding: 6px 14px; font-weight: 700; font-size: 0.84rem; color: var(--text); }
-.pm-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 16px; }
-.pm-stat { background: var(--surface-soft); border: 2px solid var(--surface-border); border-radius: 14px; padding: 11px 4px; text-align: center; }
-.pm-stat strong { display: block; font-family: "Baloo 2", sans-serif; font-size: 1.35rem; color: var(--pink); line-height: 1; }
-.pm-stat span { font-size: 0.66rem; color: var(--muted); font-weight: 700; }
+.pm-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 16px; }
+.pm-stat { background: var(--surface-soft); border: 2px solid var(--surface-border); border-radius: 14px; padding: 11px 4px; text-align: center; cursor: help; }
+.pm-stat strong { display: block; font-family: "Baloo 2", sans-serif; font-size: 1.3rem; color: var(--pink-ink); line-height: 1; font-variant-numeric: tabular-nums; }
+.pm-stat span { font-size: 0.68rem; color: var(--muted); font-weight: 800; letter-spacing: 0.04em; }
 .pm-bio { color: var(--muted); font-weight: 600; text-align: left; font-size: 0.97rem; }
 .pm-hint { text-align: left; font-size: 0.78rem; color: var(--muted); opacity: 0.7; margin-top: 12px; }
 .pm-close { position: absolute; top: 14px; right: 14px; width: 36px; height: 36px; border-radius: 50%; border: 0; background: rgba(255, 255, 255, 0.32); color: #fff; font-size: 1.3rem; line-height: 1; cursor: pointer; z-index: 3; transition: background 0.2s; }
@@ -358,7 +537,7 @@ a.card:hover .card-arrow { transform: translateX(4px); }
 .g-pick { display: flex; flex-direction: column; align-items: center; gap: 5px; padding: 10px 4px; border-radius: 16px; border: 2px solid var(--surface-border); background: var(--surface-soft); cursor: pointer; font-family: inherit; transition: transform 0.2s var(--bounce), border-color 0.2s; }
 .g-pick:hover { transform: translateY(-3px); }
 .g-pick.sel { border-color: var(--pink); background: #fff; box-shadow: 0 8px 18px -8px rgba(255,61,127,0.5); }
-.g-face { width: 52px; height: 52px; border-radius: 50%; background: #fff center/cover no-repeat; border: 2px solid var(--surface-border); }
+.g-face { width: 52px; height: 52px; border-radius: 50%; background: var(--surface) center/cover no-repeat; border: 2px solid var(--surface-border); }
 .g-pick.sel .g-face { border-color: var(--pink); }
 .g-pn { font-size: 0.74rem; font-weight: 800; color: var(--text); line-height: 1; }
 .g-pnum { font-size: 0.68rem; color: var(--muted); font-weight: 700; }
@@ -392,14 +571,15 @@ a.card:hover .card-arrow { transform: translateX(4px); }
 
 /* Responsive */
 @media (max-width: 900px) {
-  .feature-cards, .work-grid, .quicklinks { grid-template-columns: 1fr; }
+  .feature-cards, .work-grid, .quicklinks, .league-grid { grid-template-columns: 1fr; }
+  .league-grid { gap: 44px; }
   .card-grid, .team-grid { grid-template-columns: repeat(2, 1fr); }
   .contact-wrap { grid-template-columns: 1fr; gap: 36px; }
   .gallery-grid { columns: 2 200px; }
 }
 
 @media (max-width: 720px) {
-  .nav { position: fixed; inset: 76px 0 auto; flex-direction: column; gap: 0; background: rgba(255,61,127,0.97); backdrop-filter: blur(16px); box-shadow: 0 12px 24px -10px rgba(27,36,80,0.5); padding: 16px 24px 28px; transform: translateY(-130%); transition: transform 0.35s var(--ease); }
+  .nav { position: fixed; inset: 76px 0 auto; flex-direction: column; gap: 0; background: var(--nav-mobile-bg); backdrop-filter: blur(16px); box-shadow: 0 12px 24px -10px rgba(27,36,80,0.5); padding: 16px 24px 28px; transform: translateY(-130%); transition: transform 0.35s var(--ease); }
   .nav.open { transform: translateY(0); }
   .nav a { width: 100%; padding: 14px; font-size: 1.05rem; }
   .nav .nav-cta { text-align: center; margin-top: 8px; }
@@ -407,7 +587,14 @@ a.card:hover .card-arrow { transform: translateX(4px); }
   .section { padding: 76px 0; }
   .section-alt { margin: 0 8px; border-radius: 32px; }
   .hero-stats { gap: 32px; }
-  .ob4d-banner { padding: 34px; }
+  .cta-banner { padding: 34px; }
+  .next-match { padding: 26px; gap: 20px; }
+  .nm-when { flex-direction: row; align-items: baseline; gap: 8px; padding: 10px 16px; }
+  /* szűkebb tabella, hogy a pont-oszlop is elférjen görgetés nélkül */
+  .standings th, .standings td { padding: 9px 4px; font-size: 0.84rem; }
+  .standings .c-team { min-width: 88px; font-size: 0.82rem; }
+  .standings .c-pos { width: 20px; }
+  .standings .c-pts { font-size: 1rem; }
   .rink { padding: 34px 14px; border-radius: 70px / 54px; }
   .rink-zone { gap: 14px 16px; }
   .rink-stage { flex-direction: column; gap: 0; }
@@ -415,6 +602,7 @@ a.card:hover .card-arrow { transform: translateX(4px); }
   .bench-side::before { left: 50%; top: -5px; transform: translateX(-50%); width: 70px; height: 5px; }
   .bench { flex-direction: row; flex-wrap: wrap; gap: 14px 16px; }
   .bench-gatelabel { display: none; }
+  .tab-btn { padding: 10px 18px; font-size: 0.94rem; }
   .skater { width: 74px; }
   .skater .puck { width: 56px; height: 56px; font-size: 1.15rem; }
   .card-grid { grid-template-columns: 1fr; }
@@ -422,7 +610,8 @@ a.card:hover .card-arrow { transform: translateX(4px); }
   .pm-card { flex-direction: column; max-height: 90vh; overflow-y: auto; -webkit-overflow-scrolling: touch; width: 100%; }
   .pm-photo { flex: 0 0 auto; align-self: stretch; height: 230px; }
   .pm-photo img { object-position: center top; }
-  .pm-stats { grid-template-columns: repeat(2, 1fr); }
+  .pm-stats { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .pm-stat { padding: 10px 2px; }
   /* Teljesítmény: ne animáljanak a háttér-blobok mobilon (görgetés-akadozás) */
   .blob { animation: none !important; }
 }

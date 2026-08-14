@@ -5,7 +5,7 @@
     { href: "rolunk.html", label: "Rólunk" },
     { href: "munkank.html", label: "Munkánk" },
     { href: "galeria.html", label: "Galéria" },
-    { href: "csapat.html", label: "Csapat" },
+    { href: "ob4c.html", label: "OB4C" },
     { href: "ob4d.html", label: "OB4D" },
     { href: "jatek.html", label: "Játék" },
     { href: "kapcsolat.html", label: "Kapcsolat", cta: true },
@@ -37,6 +37,10 @@
         <nav class="nav" id="nav">
         ${links}
         </nav>
+        <button class="theme-toggle" id="themeToggle" type="button" aria-label="Sötét mód" aria-pressed="false">
+          <svg class="ic-moon" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></svg>
+          <svg class="ic-sun" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M2 12h2m16 0h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+        </button>
         <button class="nav-toggle" id="navToggle" aria-label="Menü" aria-expanded="false">
           <span></span><span></span><span></span>
         </button>
@@ -92,6 +96,41 @@
   onScroll();
   window.addEventListener("scroll", onScroll, { passive: true });
 
+  // ---- Sötét / világos mód ----
+  // A választás előre, a <head>-ben lévő apró script alkalmazza, hogy ne
+  // villanjon fel a másik mód. Itt már csak a gomb kezelése marad.
+  const themeBtn = document.getElementById("themeToggle");
+  if (themeBtn) {
+    const root = document.documentElement;
+    const rendszerSotet = window.matchMedia("(prefers-color-scheme: dark)");
+
+    // Ha nincs kézi választás, a rendszerbeállítás dönt
+    const aktualis = () =>
+      root.dataset.theme || (rendszerSotet.matches ? "dark" : "light");
+
+    const gombFrissit = () => {
+      const sotet = aktualis() === "dark";
+      themeBtn.classList.toggle("is-dark", sotet);
+      themeBtn.setAttribute("aria-pressed", String(sotet));
+      themeBtn.setAttribute("aria-label", sotet ? "Világos mód" : "Sötét mód");
+      themeBtn.title = sotet ? "Váltás világos módra" : "Váltás sötét módra";
+    };
+
+    themeBtn.addEventListener("click", () => {
+      const uj = aktualis() === "dark" ? "light" : "dark";
+      root.dataset.theme = uj;
+      try { localStorage.setItem("theme", uj); } catch (e) { /* privát mód */ }
+      gombFrissit();
+    });
+
+    // Rendszerbeállítás változása csak akkor számít, ha nincs kézi választás
+    rendszerSotet.addEventListener("change", () => {
+      if (!root.dataset.theme) gombFrissit();
+    });
+
+    gombFrissit();
+  }
+
   const navToggle = document.getElementById("navToggle");
   const nav = document.getElementById("nav");
   if (navToggle && nav) {
@@ -103,7 +142,7 @@
 
   // Reveal on scroll
   const revealTargets = document.querySelectorAll(
-    ".section-head, .card, .work-item, .g-item, .player, .ob4d-banner, .contact-info, .contact-form, .about-lead, .page-hero"
+    ".section-head, .card, .work-item, .g-item, .player, .cta-banner, .next-match, .league-block, .contact-info, .contact-form, .about-lead, .page-hero"
   );
   revealTargets.forEach((el) => el.classList.add("reveal"));
   if ("IntersectionObserver" in window) {
@@ -121,6 +160,55 @@
     revealTargets.forEach((el) => io.observe(el));
   } else {
     revealTargets.forEach((el) => el.classList.add("in"));
+  }
+
+  // ---- Al-fülek (Bajnokság / Csapat) ----
+  // Egy [data-tabs] konténeren belül a [data-tab] gombok kapcsolgatják az azonos
+  // nevű [data-panel] blokkokat. Egy névhez több panel is tartozhat (pl. hero + tartalom).
+  const tabsRoot = document.querySelector("[data-tabs]");
+  if (tabsRoot) {
+    const buttons = Array.from(tabsRoot.querySelectorAll("[data-tab]"));
+    const panels = Array.from(tabsRoot.querySelectorAll("[data-panel]"));
+    const names = buttons.map((b) => b.dataset.tab);
+
+    const activate = (name, updateHash) => {
+      if (!names.includes(name)) name = names[0];
+      buttons.forEach((b) => {
+        const on = b.dataset.tab === name;
+        b.classList.toggle("active", on);
+        b.setAttribute("aria-selected", String(on));
+        b.tabIndex = on ? 0 : -1;
+      });
+      panels.forEach((p) => {
+        const on = p.dataset.panel === name;
+        p.hidden = !on;
+        p.setAttribute("aria-hidden", String(!on));
+      });
+      // Mélylinkelhető (#csapat / #bajnoksag) – görgetés nélkül
+      if (updateHash && history.replaceState) {
+        history.replaceState(null, "", "#" + name);
+      }
+    };
+
+    buttons.forEach((b) => {
+      b.addEventListener("click", () => activate(b.dataset.tab, true));
+    });
+
+    // Nyilakkal is lehet váltani a füleken
+    tabsRoot.addEventListener("keydown", (e) => {
+      if (!buttons.includes(e.target)) return;
+      if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
+      e.preventDefault();
+      const step = e.key === "ArrowRight" ? 1 : -1;
+      const next = buttons[(buttons.indexOf(e.target) + step + buttons.length) % buttons.length];
+      activate(next.dataset.tab, true);
+      next.focus();
+    });
+
+    activate(location.hash.replace("#", ""), false);
+    window.addEventListener("hashchange", () =>
+      activate(location.hash.replace("#", ""), false)
+    );
   }
 
   // Contact form (Phase 0: mailto fallback)

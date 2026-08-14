@@ -4,62 +4,47 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Csapat – Ice Unicorns</title>
-  <meta name="description" content="A MÉNES tagjai a jégen – kattints egy játékosra a részletekért és statisztikákért!" />
-  <meta property="og:type" content="website" />
-  <meta property="og:site_name" content="Ice Unicorns" />
-  <meta property="og:locale" content="hu_HU" />
-  <meta property="og:url" content="https://iceunicorns.hu/csapat.html" />
-  <meta property="og:image" content="https://iceunicorns.hu/assets/logo/preview.png" />
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:image" content="https://iceunicorns.hu/assets/logo/preview.png" />
+  <meta name="description" content="A csapat átköltözött: a keret az OB4D és az OB4C oldal „Csapat” fülén található." />
+  <meta name="robots" content="noindex, follow" />
+  <link rel="canonical" href="https://iceunicorns.hu/ob4d.html" />
+  <meta http-equiv="refresh" content="0; url=ob4d.html#csapat" />
   <link rel="icon" type="image/png" sizes="32x32" href="assets/favicons/favicon-32.png" />
   <link rel="icon" type="image/png" sizes="16x16" href="assets/favicons/favicon-16.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="assets/favicons/apple-touch-icon.png" />
-  <link rel="manifest" href="assets/favicons/site.webmanifest" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet" />
+  <script>
+    /* A mentett téma alkalmazása még az első festés előtt – enélkül
+       egy pillanatra felvillanna a másik mód. */
+    try {
+      var t = localStorage.getItem("theme");
+      if (t === "dark" || t === "light") document.documentElement.dataset.theme = t;
+    } catch (e) {}
+  </script>
   <link rel="stylesheet" href="styles.css" />
+  <script>location.replace("ob4d.html#csapat");</script>
 </head>
 <body>
-  <div id="app-header"></div>
+  <div class="aurora" aria-hidden="true">
+    <span class="blob blob-1"></span>
+    <span class="blob blob-2"></span>
+    <span class="blob blob-3"></span>
+  </div>
 
   <main>
     <section class="page-hero">
       <div class="container">
         <span class="kicker">Csapat</span>
-        <h1>A <span class="grad">MÉNES</span> a jégen</h1>
-        <p>Így állunk fel a pályán! Kattints bármelyik játékosra – előugrik a kártyája
-          a posztjával, adataival és (hamarosan) a statisztikáival. ✨</p>
-      </div>
-    </section>
-
-    <section class="section section-alt page-section">
-      <div class="container">
-        <div class="rink-wrap">
-          <div class="rink-stage">
-            <div class="rink">
-              <span class="rink-line red"></span>
-              <span class="rink-line blue top"></span>
-              <span class="rink-line blue bottom"></span>
-              <span class="rink-circle"></span>
-              <span class="rink-crease top"></span>
-              <span class="rink-crease bottom"></span>
-              <div class="rink-zones" id="rinkZones"></div>
-            </div>
-
-            <aside class="bench-side">
-              <span class="bench-label">Stáb</span>
-              <div class="bench" id="bench"></div>
-            </aside>
-          </div>
+        <h1>A keret <span class="grad">átköltözött</span></h1>
+        <p>A MÉNES mostantól bajnokságonként külön oldalon látható – az OB4D és az OB4C
+          oldal „Csapat” fülén. Mindjárt átirányítunk!</p>
+        <div class="hero-actions">
+          <a href="ob4d.html#csapat" class="btn btn-primary">OB4D csapat</a>
+          <a href="ob4c.html#csapat" class="btn btn-ghost">OB4C csapat</a>
         </div>
       </div>
     </section>
   </main>
-
-  <div id="app-footer"></div>
-  <script src="partials.js" defer></script>
-  <script src="team.js" defer></script>
 </body>
 </html>

@@ -21,14 +21,14 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://iceunicorns.hu/csapat.html</loc>
+    <loc>https://iceunicorns.hu/ob4c.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://iceunicorns.hu/ob4d.html</loc>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://iceunicorns.hu/kapcsolat.html</loc>
