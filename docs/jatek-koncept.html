@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shootout mini-játék – Vizuális koncepció · Ice Unicorns</title>
+  <meta name="robots" content="noindex" />
+  <link rel="icon" type="image/jpeg" href="../assets/logo/logo.jpg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles.css" />
+  <style>
+    /* ===== Csak a koncepció-vázlathoz – a végleges játék ezt finomítja ===== */
+    .concept-note {
+      max-width: 920px; margin: 96px auto 0; padding: 18px 24px;
+      background: rgba(255,255,255,0.16); border: 2px dashed rgba(255,255,255,0.5);
+      border-radius: var(--radius); color: var(--on-pink); text-align: center; font-weight: 700;
+    }
+    .screens { max-width: 1180px; margin: 0 auto; padding: 40px 20px 100px; display: grid; gap: 36px; }
+    @media (min-width: 920px) { .screens { grid-template-columns: 1fr 1fr; } }
+    .screen {
+      background: var(--surface); border-radius: 28px; padding: 26px;
+      box-shadow: 0 24px 60px -28px rgba(27,36,80,0.55); position: relative; overflow: hidden;
+    }
+    .screen h2 { color: var(--text); font-size: 1.15rem; margin-bottom: 4px; }
+    .screen .tag { display:inline-block; font-size:0.72rem; font-weight:800; letter-spacing:.04em;
+      text-transform:uppercase; color: var(--pink); background: var(--surface-soft);
+      padding: 4px 12px; border-radius: 999px; margin-bottom: 14px; }
+
+    /* Stage / pálya nézet */
+    .stage {
+      position: relative; aspect-ratio: 4/3; border-radius: 20px; overflow: hidden;
+      background:
+        radial-gradient(120% 90% at 50% 120%, #bfeaff 0%, #eaf8ff 45%, #ffffff 100%);
+      border: 3px solid var(--navy);
+    }
+    .ice-line { position:absolute; left:0; right:0; height:3px; background: rgba(255,61,127,.5); }
+    .ice-line.blue { background: rgba(94,200,255,.9); }
+    .crease { position:absolute; bottom:0; left:50%; transform:translateX(-50%);
+      width:60%; height:34%; background: rgba(94,200,255,.45);
+      border:2px solid rgba(27,36,80,.5); border-bottom:0; border-radius: 50% 50% 0 0 / 100% 100% 0 0; }
+
+    /* Kapu + 3x3 célzórács */
+    .goal { position:absolute; top:16%; left:50%; transform:translateX(-50%);
+      width:64%; aspect-ratio: 16/9; }
+    .net { position:absolute; inset:0; border:5px solid #e23b76; border-radius:6px;
+      background:
+        repeating-linear-gradient(0deg, rgba(27,36,80,.13) 0 1px, transparent 1px 11px),
+        repeating-linear-gradient(90deg, rgba(27,36,80,.13) 0 1px, transparent 1px 11px),
+        rgba(255,255,255,.65); }
+    .grid3 { position:absolute; inset:0; display:grid; grid-template-columns:repeat(3,1fr);
+      grid-template-rows:repeat(3,1fr); }
+    .grid3 span { border:1px dashed rgba(27,36,80,.22); }
+    .grid3 .hot { background: var(--rainbow); opacity:.85; border:0; box-shadow: inset 0 0 16px rgba(255,255,255,.6); }
+    .keeper { position:absolute; bottom:8%; left:42%; font-size: 2.6rem; filter: drop-shadow(0 4px 6px rgba(27,36,80,.3)); }
+    .puck { position:absolute; bottom:6%; left:50%; transform:translateX(-50%);
+      width:26px; height:26px; border-radius:50%; background: var(--navy);
+      box-shadow: 0 6px 10px rgba(27,36,80,.4), inset 0 2px 2px rgba(255,255,255,.25); }
+
+    /* HUD */
+    .hud { display:flex; justify-content:space-between; align-items:center; gap:10px;
+      margin-top:14px; font-family:"Baloo 2",sans-serif; }
+    .hud .pill { background: var(--surface-soft); color: var(--navy); border-radius:999px;
+      padding:6px 14px; font-weight:800; font-size:.82rem; }
+    .hud .score { color: var(--pink); }
+
+    /* Erőmérő */
+    .power { margin-top:12px; }
+    .power small { color: var(--muted); font-weight:700; font-size:.72rem; }
+    .power .bar { height:16px; border-radius:999px; background: var(--rainbow);
+      position:relative; box-shadow: inset 0 0 0 2px rgba(27,36,80,.15); }
+    .power .needle { position:absolute; top:-5px; bottom:-5px; width:4px; left:64%;
+      background: var(--navy); border-radius:3px; box-shadow:0 0 0 2px #fff; }
+    .power .sweet { position:absolute; top:0; bottom:0; left:58%; width:14%;
+      background: rgba(27,36,80,.18); border-radius:6px; }
+
+    /* Választó kártyák */
+    .pick { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
+    .pick .p { background: var(--surface-soft); border-radius:18px; padding:12px; text-align:center;
+      border:2px solid transparent; }
+    .pick .p.sel { border-color: var(--gold); box-shadow:0 10px 22px -10px rgba(255,207,92,.8); }
+    .pick .p .av { font-size:1.8rem; }
+    .pick .p strong { display:block; color:var(--navy); font-size:.86rem; margin-top:4px; font-family:"Baloo 2",sans-serif; }
+    .pick .p .perk { display:block; font-size:.68rem; color:var(--muted); margin-top:4px; line-height:1.3; }
+
+    .modebtns { display:flex; gap:12px; flex-wrap:wrap; margin-top:8px; }
+
+    /* Eredmény */
+    .result { text-align:center; padding:10px 0; }
+    .result .big { font-family:"Baloo 2",sans-serif; font-weight:800; font-size:3.4rem; line-height:1; }
+    .confetti { position:absolute; inset:0; pointer-events:none; overflow:hidden; }
+    .confetti i { position:absolute; width:8px; height:14px; border-radius:2px; opacity:.9; }
+    .legend { color: var(--muted); font-size:.8rem; }
+  </style>
+</head>
+<body>
+  <div class="aurora" aria-hidden="true">
+    <span class="blob blob-1"></span><span class="blob blob-2"></span><span class="blob blob-3"></span>
+  </div>
+
+  <div class="concept-note">
+    🎨 <strong>Vizuális koncepció-vázlat</strong> a Shootout mini-játékhoz — statikus, nem interaktív.
+    A meglévő <code>styles.css</code> tokenjeire épül. Részletek: <code>docs/jatek-handover.md</code>.
+  </div>
+
+  <div class="screens">
+
+    <!-- 1. KEZDŐ -->
+    <section class="screen">
+      <span class="tag">1 · Kezdőképernyő</span>
+      <h2>Ki a MÉNES legjobb lövője? 🦄🏒</h2>
+      <p class="legend">Válassz szerepet, majd nehézséget. A legjobb eredményed elmentjük.</p>
+      <div class="modebtns">
+        <a class="btn btn-primary" href="#">🏒 Lövök</a>
+        <a class="btn btn-ghost" style="--on-pink:var(--navy);border-color:var(--surface-border)" href="#">🧤 Védek</a>
+      </div>
+      <div class="hud" style="margin-top:18px">
+        <span class="pill">Nehézség: 🟡 Normál</span>
+        <span class="pill score">🏆 Rekord: 720</span>
+      </div>
+    </section>
+
+    <!-- 2. VÁLASZTÓ -->
+    <section class="screen">
+      <span class="tag">2 · Játékos-választó</span>
+      <h2>Válaszd ki a lövődet</h2>
+      <p class="legend">Minden játékosnak egyedi perkje van (a <code>team.js</code> „power" mezőjéből).</p>
+      <div class="pick" style="margin-top:12px">
+        <div class="p sel"><div class="av">⚡</div><strong>Szikrácska</strong><span class="perk">Szélesebb sweet-spot, szűkebb célzás</span></div>
+        <div class="p"><div class="av">💎</div><strong>KristályPatkó</strong><span class="perk">Görbülő csuklólövés</span></div>
+        <div class="p"><div class="av">🌀</div><strong>Villámpatkó</strong><span class="perk">Gyorsabb, meglepő célkereszt</span></div>
+      </div>
+    </section>
+
+    <!-- 3. JÁTÉK -->
+    <section class="screen">
+      <span class="tag">3 · Játék — Lövő mód</span>
+      <h2>Célozz · Erő · Csel</h2>
+      <div class="stage">
+        <span class="ice-line blue" style="top:30%"></span>
+        <span class="ice-line" style="top:62%"></span>
+        <div class="goal">
+          <div class="net"></div>
+          <div class="grid3">
+            <span></span><span></span><span class="hot"></span>
+            <span></span><span></span><span></span>
+            <span></span><span></span><span></span>
+          </div>
+        </div>
+        <div class="crease"></div>
+        <div class="keeper">🧤🦄</div>
+        <div class="puck"></div>
+      </div>
+      <div class="hud">
+        <span class="pill">Kör 3/5</span>
+        <span class="pill">🔥 Sorozat ×3</span>
+        <span class="pill score">⭐ 480</span>
+      </div>
+      <div class="power">
+        <small>ERŐ — találd el a sweet-spotot</small>
+        <div class="bar"><span class="sweet"></span><span class="needle"></span></div>
+      </div>
+    </section>
+
+    <!-- 4. EREDMÉNY -->
+    <section class="screen">
+      <span class="tag">4 · Eredmény</span>
+      <div class="confetti">
+        <i style="left:12%;top:14%;background:#ff2d2d"></i>
+        <i style="left:28%;top:8%;background:#ffce00"></i>
+        <i style="left:54%;top:20%;background:#1fc950"></i>
+        <i style="left:70%;top:10%;background:#009dff"></i>
+        <i style="left:86%;top:24%;background:#b026ff"></i>
+      </div>
+      <div class="result">
+        <p class="legend">Tökéletes párbaj! 5/5 🦄</p>
+        <div class="big grad">GÓL ×5</div>
+        <p class="hud" style="justify-content:center"><span class="pill score">⭐ 1240 pont · ×2 bónusz</span></p>
+        <div class="modebtns" style="justify-content:center;margin-top:14px">
+          <a class="btn btn-primary" href="#">↻ Újra</a>
+          <a class="btn btn-ghost" style="--on-pink:var(--navy);border-color:var(--surface-border)" href="#">🔁 Másik játékos</a>
+          <a class="btn btn-ghost" style="--on-pink:var(--navy);border-color:var(--surface-border)" href="#">📤 Megosztom</a>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</body>
+</html>
