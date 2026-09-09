@@ -171,6 +171,10 @@ function goalieStatsFor(p, leagueKey) {
         <div class="pm-body">
           <div class="pm-meta"></div>
           <div class="pm-stats"></div>
+          <div class="pm-games">
+            <h4 class="pm-games-title">Meccsenkénti bontás</h4>
+            <div class="pm-games-list"></div>
+          </div>
           <p class="pm-bio"></p>
           <p class="pm-hint">📊 A statisztikák hamarosan érkeznek!</p>
         </div>
@@ -185,8 +189,52 @@ function goalieStatsFor(p, leagueKey) {
   const elRole = overlay.querySelector(".pm-role");
   const elMeta = overlay.querySelector(".pm-meta");
   const elStats = overlay.querySelector(".pm-stats");
+  const elGames = overlay.querySelector(".pm-games");
+  const elGamesList = overlay.querySelector(".pm-games-list");
   const elBio = overlay.querySelector(".pm-bio");
   const elHint = overlay.querySelector(".pm-hint");
+
+  // "2026-09-20" → "szept. 20." – rövid dátum a meccssorokhoz
+  function fmtGameDate(iso) {
+    const [y, m, d] = String(iso).split("-").map(Number);
+    return new Date(y, (m || 1) - 1, d || 1).toLocaleDateString("hu-HU", {
+      month: "short",
+      day: "numeric",
+    });
+  }
+
+  // Egy gól-/védésvideó linkje – amíg nincs clips adat, ez sose fut le
+  function clipLink(c) {
+    const isSave = c.type === "vedes";
+    const icon = isSave ? "🧤" : "🥅";
+    const title = (isSave ? "Védés" : "Gól") + (c.time ? " – " + c.time : "") + (c.note ? " (" + c.note + ")" : "");
+    return `<a class="pmg-clip" href="${c.url}" target="_blank" rel="noopener" title="${title}">${icon}${c.time ? " " + c.time : ""}</a>`;
+  }
+
+  // Egy meccssor: dátum, ellenfél, eredmény, a játékos aznapi statja,
+  // és – ha van hozzá felvéve – a gól-/védésvideó linkje.
+  function gameRow(row, isGoalie, nick) {
+    const g = row.game;
+    const line = row.line;
+    const result = typeof g.us === "number" && typeof g.them === "number" ? `${g.us}–${g.them}` : "–";
+    const statText = isGoalie
+      ? `${line.ga ?? 0} KG · ${line.sv ?? 0} véd`
+      : `${line.g ?? 0} G · ${line.a ?? 0} A`;
+    const clips = (g.clips || []).filter((c) => c.player === nick);
+    const clipsHtml = clips.length
+      ? `<div class="pmg-clips">${clips.map(clipLink).join("")}</div>`
+      : "";
+    return `
+      <div class="pmg-row">
+        <div class="pmg-date">${fmtGameDate(g.date)}</div>
+        <div class="pmg-info">
+          <span class="pmg-opp">${g.home ? "" : "@ "}${g.opponent}</span>
+          <span class="pmg-meta">${g.home ? "hazai" : "idegenben"} · ${result}</span>
+        </div>
+        <div class="pmg-stat">${statText}</div>
+        ${clipsHtml}
+      </div>`;
+  }
 
   // Mezőnyjátékos és kapus statisztikái eltérnek.
   // A rövidítés a nagy szám alatt, a teljes név a tooltipben (title).
@@ -243,8 +291,10 @@ function goalieStatsFor(p, leagueKey) {
 
     // Stats – kapusoknál más mezők, mint a mezőnyjátékosoknál
     elStats.innerHTML = "";
+    elGamesList.innerHTML = "";
     if (opts.staff) {
       elStats.style.display = "none";
+      elGames.style.display = "none";
       elHint.style.display = "none";
     } else {
       elStats.style.display = "";
@@ -259,6 +309,16 @@ function goalieStatsFor(p, leagueKey) {
         box.innerHTML = `<strong>${st[k]}</strong><span>${rovid}</span>`;
         elStats.appendChild(box);
       });
+
+      // Meccsenkénti bontás – csak akkor jelenik meg, ha már van felvitt meccs
+      const rows = typeof Stats !== "undefined" ? Stats.rowsOf(p.nick, teamKey) : [];
+      if (rows.length) {
+        elGames.style.display = "";
+        elGamesList.innerHTML = rows.map((row) => gameRow(row, isGoalie, p.nick)).join("");
+      } else {
+        elGames.style.display = "none";
+      }
+
       // A „hamarosan" megjegyzés csak addig kell, amíg tényleg nincs adat
       elHint.style.display = st._empty ? "" : "none";
     }

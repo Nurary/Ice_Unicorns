@@ -24,12 +24,13 @@
 //       min  – a jégen töltött perc (a kapott gól átlaghoz kell)
 //       w    – true, ha ő volt a győztes kapus (elhagyható)
 //
-//   clips    – KÉSŐBBRE: gól- és védésvideók ehhez a meccshez.
-//              Tervezett alak, még nincs megjelenítve:
+//   clips    – KÉSŐBBRE: gól- és védésvideók ehhez a meccshez (elhagyható).
+//              Alakja:
 //                { player: "Pitypang", type: "gol" | "vedes",
 //                  time: "12:34", url: "https://…", note: "" }
-//              A `player` a becenév, így a videó automatikusan a megfelelő
-//              játékos kártyájára fog kerülni.
+//              A `player` a becenév – a játékos kártyáján, a meccsenkénti
+//              bontásban (team.js) automatikusan megjelenik a linkje, amint
+//              felkerül ide.
 //
 // Ha egy becenév elgépelt, a böngésző konzoljába figyelmeztetés kerül,
 // hogy ne vesszen el csendben a statisztika.

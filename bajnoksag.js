@@ -9,29 +9,104 @@
 //   opponent – az ellenfél neve
 //   home     – true = hazai pálya, false = idegenben
 //   venue    – helyszín (elhagyható)
+//   logo     – ellenfél embléma URL-je (elhagyható, ha nincs)
 //   us/them  – lőtt / kapott gól. Amíg null, a meccs még nem volt lejátszva.
 //   ot       – true, ha hosszabbításban vagy szétlövésben dőlt el (elhagyható)
 //
 // Egy TABELLA-SOR mezői:
 //   team – csapatnév, gp – meccs, w – győzelem, d – döntetlen, v – vereség,
 //   gf – lőtt gól, ga – kapott gól, pts – pont
+//   logo – csapatembléma URL-je (elhagyható, ha nincs)
 //   us: true – ez a mi sorunk, kiemelve jelenik meg
+//
+// A tabella két csoportra oszlik (groups: [{ name, standings }, ...]),
+// mert az OB4D és az OB4C is A/B csoportban zajlik. A menetrend (matches)
+// viszont csak a mi csapatunk meccseit tartalmazza – az az érdekes belőle.
 //
 // Amíg a listák üresek, az oldalon barátságos „hamarosan" üzenet látszik,
 // tehát nyugodtan lehet fokozatosan feltölteni.
 const LEAGUES = {
   ob4d: {
     label: "OB4D",
-    season: "",
-    matches: [],
-    standings: [],
+    season: "2026-2027",
+    matches: [
+      { date: "2026-10-04", opponent: "Tatabányai Polipok", home: true, venue: "Ifj. Ocskay Gábor Jégcsarnok, C pálya", logo: "https://ivr-api.icehockey.hu/storage/media/108705/conversions/profile_photo-thumb-cropped.png", us: null, them: null },
+      { date: "2026-10-18", opponent: "Vénfarkasok", home: false, venue: "Pesterzsébet Jégcsarnok", logo: "https://ivr-api.icehockey.hu/storage/media/81640/conversions/profile_photo-thumb-cropped.png", us: null, them: null },
+      { date: "2026-11-08", opponent: "DJK SE", home: true, venue: "Ifj. Ocskay Gábor Jégcsarnok, C pálya", us: null, them: null },
+      { date: "2026-11-22", opponent: "ESMTK Jégpárducok B", home: false, venue: "Pesterzsébet Jégcsarnok", logo: "https://ivr-api.icehockey.hu/storage/media/116508/conversions/profile_photo-thumb-cropped.png", us: null, them: null },
+      { date: "2026-12-20", opponent: "Korongozoo VALOR", home: true, venue: "Ifj. Ocskay Gábor Jégcsarnok, C pálya", logo: "https://ivr-api.icehockey.hu/storage/media/149297/conversions/profile_photo-thumb-cropped.png", us: null, them: null },
+      { date: "2027-01-17", opponent: "Ligeti Jégkásák B", home: false, venue: "FTC Sátras Jégpálya", logo: "https://ivr-api.icehockey.hu/storage/media/117234/conversions/profile_photo-thumb-cropped.png", us: null, them: null },
+      { date: "2027-01-31", opponent: "Lizards", home: true, venue: "Ifj. Ocskay Gábor Jégcsarnok, C pálya", logo: "https://ivr-api.icehockey.hu/storage/media/37406/conversions/profile_photo-thumb-cropped.png", us: null, them: null },
+      { date: "2027-02-07", opponent: "Óbudai Gepárd D", home: false, venue: "Óbudai Jégcsarnok - Nagypálya", logo: "https://ivr-api.icehockey.hu/storage/media/84113/conversions/profile_photo-thumb-cropped.png", us: null, them: null },
+    ],
+    groups: [
+      {
+        name: "A csoport",
+        standings: [
+          { team: "Alba Trashers Jégkorong Klub", gp: 0, w: 0, d: 0, v: 0, gf: 0, ga: 0, pts: 0, logo: "https://ivr-api.icehockey.hu/storage/media/117431/conversions/profile_photo-thumb-cropped.png" },
+          { team: "Angels", gp: 0, w: 0, d: 0, v: 0, gf: 0, ga: 0, pts: 0, logo: "https://ivr-api.icehockey.hu/storage/media/116503/conversions/profile_photo-thumb-cropped.png" },
+          { team: "DVTK Jegesmedvék", gp: 0, w: 0, d: 0, v: 0, gf: 0, ga: 0, pts: 0, logo: "https://ivr-api.icehockey.hu/storage/media/116499/conversions/profile_photo-thumb-cropped.png" },
+          { team: "ESMTK Jégkockák", gp: 0, w: 0, d: 0, v: 0, gf: 0, ga: 0, pts: 0, logo: "https://ivr-api.icehockey.hu/storage/media/116508/conversions/profile_photo-thumb-cropped.png" },
+          { team: "HKB Flashes II", gp: 0, w: 0, d: 0, v: 0, gf: 0, ga: 0, pts: 0, logo: "https://ivr-api.icehockey.hu/storage/media/133381/conversions/profile_photo-thumb-cropped.png" },
+          { team: "Ligeti Jégkásák A", gp: 0, w: 0, d: 0, v: 0, gf: 0, ga: 0, pts: 0, logo: "https://ivr-api.icehockey.hu/storage/media/117234/conversions/profile_photo-thumb-cropped.png" },
+          { team: "VIP Blazing Blades", gp: 0, w: 0, d: 0, v: 0, gf: 0, ga: 0, pts: 0 },
+          { team: "Zempléni Hiúzok", gp: 0, w: 0, d: 0, v: 0, gf: 0, ga: 0, pts: 0, logo: "https://ivr-api.icehockey.hu/storage/media/83407/conversions/profile_photo-thumb-cropped.png" },
+        ],
+      },
+      {
+        name: "B csoport",
+        standings: [
+          { team: "DJK SE", gp: 0, w: 0, d: 0, v: 0, gf: 0, ga: 0, pts: 0 },
+          { team: "ESMTK Jégpárducok B", gp: 0, w: 0, d: 0, v: 0, gf: 0, ga: 0, pts: 0, logo: "https://ivr-api.icehockey.hu/storage/media/116508/conversions/profile_photo-thumb-cropped.png" },
+          { team: "Ice Unicorns", gp: 0, w: 0, d: 0, v: 0, gf: 0, ga: 0, pts: 0, logo: "assets/logo/logo.jpg", us: true },
+          { team: "Korongozoo VALOR", gp: 0, w: 0, d: 0, v: 0, gf: 0, ga: 0, pts: 0, logo: "https://ivr-api.icehockey.hu/storage/media/149297/conversions/profile_photo-thumb-cropped.png" },
+          { team: "Ligeti Jégkásák B", gp: 0, w: 0, d: 0, v: 0, gf: 0, ga: 0, pts: 0, logo: "https://ivr-api.icehockey.hu/storage/media/117234/conversions/profile_photo-thumb-cropped.png" },
+          { team: "Lizards", gp: 0, w: 0, d: 0, v: 0, gf: 0, ga: 0, pts: 0, logo: "https://ivr-api.icehockey.hu/storage/media/37406/conversions/profile_photo-thumb-cropped.png" },
+          { team: "Tatabányai Polipok", gp: 0, w: 0, d: 0, v: 0, gf: 0, ga: 0, pts: 0, logo: "https://ivr-api.icehockey.hu/storage/media/108705/conversions/profile_photo-thumb-cropped.png" },
+          { team: "Vénfarkasok", gp: 0, w: 0, d: 0, v: 0, gf: 0, ga: 0, pts: 0, logo: "https://ivr-api.icehockey.hu/storage/media/81640/conversions/profile_photo-thumb-cropped.png" },
+          { team: "Óbudai Gepárd D", gp: 0, w: 0, d: 0, v: 0, gf: 0, ga: 0, pts: 0, logo: "https://ivr-api.icehockey.hu/storage/media/84113/conversions/profile_photo-thumb-cropped.png" },
+        ],
+      },
+    ],
   },
 
   ob4c: {
     label: "OB4C",
-    season: "",
-    matches: [],
-    standings: [],
+    season: "2026-2027",
+    matches: [
+      { date: "2026-10-10", time: "19:00", opponent: "Séra Team", home: false, venue: "Mátyásföldi Jégcsarnok", logo: "https://ivr-api.icehockey.hu/storage/media/155507/conversions/profile_photo-thumb-cropped.png", us: null, them: null },
+      { date: "2026-10-25", opponent: "Kohász", home: true, venue: "Ifj. Ocskay Gábor Jégcsarnok, C pálya", logo: "https://ivr-api.icehockey.hu/storage/media/117416/conversions/profile_photo-thumb-cropped.png", us: null, them: null },
+      { date: "2026-11-15", opponent: "FTC-Telekom", home: false, venue: "FTC Sátras Jégpálya", logo: "https://ivr-api.icehockey.hu/storage/media/106284/conversions/profile_photo-thumb-cropped.png", us: null, them: null },
+      { date: "2026-11-29", opponent: "Újpesti Ragadozók", home: true, venue: "Ifj. Ocskay Gábor Jégcsarnok, C pálya", logo: "https://ivr-api.icehockey.hu/storage/media/114727/conversions/profile_photo-thumb-cropped.png", us: null, them: null },
+      { date: "2026-12-13", opponent: "Lehel HC Amatőr", home: false, venue: "Jászberényi Jégcsarnok", us: null, them: null },
+      { date: "2027-01-24", opponent: "ESMTK Jégtörők", home: true, venue: "Ifj. Ocskay Gábor Jégcsarnok, C pálya", logo: "https://ivr-api.icehockey.hu/storage/media/116508/conversions/profile_photo-thumb-cropped.png", us: null, them: null },
+    ],
+    groups: [
+      {
+        name: "A csoport",
+        standings: [
+          { team: "Algyői Olajosok", gp: 0, w: 0, d: 0, v: 0, gf: 0, ga: 0, pts: 0, logo: "https://ivr-api.icehockey.hu/storage/media/142328/conversions/profile_photo-thumb-cropped.png" },
+          { team: "ESMTK Jégpárducok", gp: 0, w: 0, d: 0, v: 0, gf: 0, ga: 0, pts: 0, logo: "https://ivr-api.icehockey.hu/storage/media/116508/conversions/profile_photo-thumb-cropped.png" },
+          { team: "HKB Flashes I", gp: 0, w: 0, d: 0, v: 0, gf: 0, ga: 0, pts: 0, logo: "https://ivr-api.icehockey.hu/storage/media/133381/conversions/profile_photo-thumb-cropped.png" },
+          { team: "Kárpáti Farkasok", gp: 0, w: 0, d: 0, v: 0, gf: 0, ga: 0, pts: 0 },
+          { team: "VIP Crazy Zombies", gp: 0, w: 0, d: 0, v: 0, gf: 0, ga: 0, pts: 0, logo: "https://ivr-api.icehockey.hu/storage/media/151684/conversions/profile_photo-thumb-cropped.png" },
+          { team: "VIP Wizards", gp: 0, w: 0, d: 0, v: 0, gf: 0, ga: 0, pts: 0 },
+          { team: "Óbudai Gepárd C", gp: 0, w: 0, d: 0, v: 0, gf: 0, ga: 0, pts: 0, logo: "https://ivr-api.icehockey.hu/storage/media/84113/conversions/profile_photo-thumb-cropped.png" },
+        ],
+      },
+      {
+        name: "B csoport",
+        standings: [
+          { team: "ESMTK Jégtörők", gp: 0, w: 0, d: 0, v: 0, gf: 0, ga: 0, pts: 0, logo: "https://ivr-api.icehockey.hu/storage/media/116508/conversions/profile_photo-thumb-cropped.png" },
+          { team: "FTC-Telekom", gp: 0, w: 0, d: 0, v: 0, gf: 0, ga: 0, pts: 0, logo: "https://ivr-api.icehockey.hu/storage/media/106284/conversions/profile_photo-thumb-cropped.png" },
+          { team: "Ice Unicorns", gp: 0, w: 0, d: 0, v: 0, gf: 0, ga: 0, pts: 0, logo: "assets/logo/logo.jpg", us: true },
+          { team: "Kohász", gp: 0, w: 0, d: 0, v: 0, gf: 0, ga: 0, pts: 0, logo: "https://ivr-api.icehockey.hu/storage/media/117416/conversions/profile_photo-thumb-cropped.png" },
+          { team: "Lehel HC Amatőr", gp: 0, w: 0, d: 0, v: 0, gf: 0, ga: 0, pts: 0 },
+          { team: "Séra Team", gp: 0, w: 0, d: 0, v: 0, gf: 0, ga: 0, pts: 0, logo: "https://ivr-api.icehockey.hu/storage/media/155507/conversions/profile_photo-thumb-cropped.png" },
+          { team: "Újpesti Ragadozók", gp: 0, w: 0, d: 0, v: 0, gf: 0, ga: 0, pts: 0, logo: "https://ivr-api.icehockey.hu/storage/media/114727/conversions/profile_photo-thumb-cropped.png" },
+        ],
+      },
+    ],
   },
 };
 
@@ -71,11 +146,38 @@ const LEAGUES = {
     return { key: "d", label: "D" };
   }
 
+  // A tabella rendezése: pont, majd gólkülönbség szerint. Két helyen kell
+  // (tabella + gyorsstatisztika), ezért közös.
+  function standingsSort(a, b) {
+    return (b.pts || 0) - (a.pts || 0) ||
+      ((b.gf || 0) - (b.ga || 0)) - ((a.gf || 0) - (a.ga || 0));
+  }
+
+  // Egy meccs kezdő időpontja Date-ként. Ha nincs pontos idő megadva,
+  // este 20:00-ra saccolunk (a legtöbb amatőr meccs esti).
+  function matchStart(m) {
+    const d = parseDate(m.date);
+    if (m.time) {
+      const [h, mi] = String(m.time).split(":").map(Number);
+      d.setHours(h || 0, mi || 0, 0, 0);
+    } else {
+      d.setHours(20, 0, 0, 0);
+    }
+    return d;
+  }
+
   function empty(text) {
     const p = document.createElement("p");
     p.className = "league-empty";
     p.textContent = text;
     return p;
+  }
+
+  // Csapatembléma <img> – ha nincs logo mező, üres string (nem jelenik meg semmi)
+  function teamLogo(url, extraClass) {
+    if (!url) return "";
+    const cls = "team-logo" + (extraClass ? " " + extraClass : "");
+    return `<img class="${cls}" src="${url}" alt="" loading="lazy" onerror="this.remove()">`;
   }
 
   // ---- Következő meccs (kiemelt kártya) ----
@@ -117,6 +219,13 @@ const LEAGUES = {
     // Csak akkor írjuk ki a bajnokságot, ha egyébként nem derülne ki
     const badge = key === MIND
       ? `<span class="nm-league">${upcoming.label}</span>` : "";
+    const target = matchStart(u).getTime();
+    // A gomb a helyszínhez navigál Google Maps-en – ha nincs megadva
+    // helyszín, marad a kapcsolat oldal tartaléknak.
+    const ctaHref = u.venue
+      ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(u.venue + ", Magyarország")}`
+      : "kapcsolat.html";
+    const ctaTarget = u.venue ? ` target="_blank" rel="noopener"` : "";
     host.innerHTML = `
       <div class="nm-when">
         <span class="nm-day">${fmtWeekday(u.date)}</span>
@@ -125,14 +234,158 @@ const LEAGUES = {
       </div>
       <div class="nm-main">
         <span class="kicker">Következő meccs ${badge}</span>
-        <h2>Ice Unicorns <span class="nm-vs">vs</span> ${u.opponent}</h2>
+        <h2>
+          <span class="nm-team">${teamLogo("assets/logo/logo.jpg", "nm-logo")}Ice Unicorns</span>
+          <span class="nm-vs">vs</span>
+          <span class="nm-team">${teamLogo(u.logo, "nm-logo")}${u.opponent}</span>
+        </h2>
         <p>${where}${u.venue ? ` · ${u.venue}` : ""}</p>
+        <div class="nm-count" data-countdown="${target}" role="timer" aria-label="Visszaszámlálás a meccsig">
+          <div><strong data-cd="d">–</strong><span>nap</span></div>
+          <div><strong data-cd="h">–</strong><span>óra</span></div>
+          <div><strong data-cd="m">–</strong><span>perc</span></div>
+          <div><strong data-cd="s">–</strong><span>mp</span></div>
+        </div>
       </div>
-      <a href="kapcsolat.html" class="btn btn-primary">Gyere el szurkolni</a>`;
+      <a href="${ctaHref}"${ctaTarget} class="btn btn-primary">Gyere el szurkolni</a>`;
+  }
+
+  // ---- Élő visszaszámláló ----
+  // Minden [data-countdown] elemet frissít (a cél időpont ezredmásodpercben
+  // a data-countdown attribútumban ül), másodpercenként.
+  function tickCountdowns() {
+    const now = Date.now();
+    let van = false;
+    document.querySelectorAll("[data-countdown]").forEach((el) => {
+      van = true;
+      let diff = Number(el.dataset.countdown) - now;
+      const live = diff <= 0;
+      if (diff < 0) diff = 0;
+      const s = Math.floor(diff / 1000);
+      const set = (k, v) =>
+        (el.querySelector('[data-cd="' + k + '"]').textContent =
+          String(v).padStart(2, "0"));
+      set("d", Math.floor(s / 86400));
+      set("h", Math.floor((s % 86400) / 3600));
+      set("m", Math.floor((s % 3600) / 60));
+      set("s", s % 60);
+      el.classList.toggle("is-live", live);
+    });
+    return van;
+  }
+
+  function startCountdowns() {
+    if (!tickCountdowns()) return; // nincs mit számolni
+    setInterval(tickCountdowns, 1000);
+  }
+
+  // ---- Meccs jegyzőkönyv popup ----
+  // Egy meccssorra kattintva megnyílik, és a statisztika.js GAME_STATS-jából
+  // (a `clips` mezővel együtt) építi fel a gólszerzők/kapusok bontását.
+  // Amíg egy meccshez nincs feltöltve jegyzőkönyv, barátságos üres állapotot mutat.
+  const gmOverlay = document.createElement("div");
+  gmOverlay.className = "gm-overlay";
+  gmOverlay.innerHTML = `
+    <div class="gm-card" role="dialog" aria-modal="true">
+      <button class="gm-close" type="button" aria-label="Bezárás">×</button>
+      <div class="gm-head">
+        <span class="gm-date"></span>
+        <h3 class="gm-title"></h3>
+        <span class="gm-score"></span>
+      </div>
+      <div class="gm-body"></div>
+    </div>`;
+  document.body.appendChild(gmOverlay);
+
+  const gmDate = gmOverlay.querySelector(".gm-date");
+  const gmTitle = gmOverlay.querySelector(".gm-title");
+  const gmScore = gmOverlay.querySelector(".gm-score");
+  const gmBody = gmOverlay.querySelector(".gm-body");
+
+  function closeGameModal() {
+    gmOverlay.classList.remove("open");
+    document.body.style.overflow = "";
+  }
+  gmOverlay.querySelector(".gm-close").addEventListener("click", closeGameModal);
+  gmOverlay.addEventListener("click", (e) => {
+    if (e.target === gmOverlay) closeGameModal();
+  });
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") closeGameModal();
+  });
+
+  // Egy gól-/védésvideó gombja egy jegyzőkönyv-sorban
+  function gmClipBtn(c) {
+    const isSave = c.type === "vedes";
+    const icon = isSave ? "🧤" : "🥅";
+    const title = (isSave ? "Védés" : "Gól") + (c.time ? " – " + c.time : "") + (c.note ? " (" + c.note + ")" : "");
+    return `<a class="gm-clip" href="${c.url}" target="_blank" rel="noopener" title="${title}">${icon}${c.time ? " " + c.time : ""}</a>`;
+  }
+
+  function gmRow(nick, statText, clips) {
+    const clipsHtml = clips.length ? `<div class="gm-clips">${clips.map(gmClipBtn).join("")}</div>` : "";
+    return `
+      <div class="gm-row">
+        <span class="gm-nick">${nick}</span>
+        <span class="gm-stat">${statText}</span>
+        ${clipsHtml}
+      </div>`;
+  }
+
+  function openGameModal(leagueKey, m) {
+    const record =
+      typeof GAME_STATS !== "undefined"
+        ? GAME_STATS.find((g) => g.league === leagueKey && g.date === m.date && g.opponent === m.opponent)
+        : null;
+
+    gmDate.textContent = fmtWeekday(m.date) + " · " + fmtDate(m.date);
+    gmTitle.innerHTML = `
+      <span class="nm-team">${teamLogo("assets/logo/logo.jpg", "nm-logo")}Ice Unicorns</span>
+      <span class="nm-vs">${m.home ? "vs" : "@"}</span>
+      <span class="nm-team">${teamLogo(m.logo, "nm-logo")}${m.opponent}</span>`;
+    gmScore.textContent = played(m) ? `${m.us}–${m.them}` : "Még nem játszották le";
+
+    let html = "";
+    if (record) {
+      const clips = record.clips || [];
+      const scorers = Object.entries(record.skaters || {})
+        .filter(([, l]) => l.g || l.a)
+        .sort((a, b) => (b[1].g || 0) - (a[1].g || 0));
+      const goalies = Object.entries(record.goalies || {});
+
+      if (scorers.length) {
+        html += `<div class="gm-section"><h4>Gólszerzők</h4>${scorers
+          .map(([nick, l]) =>
+            gmRow(
+              nick,
+              `${l.g || 0} gól · ${l.a || 0} assziszt`,
+              clips.filter((c) => c.player === nick && c.type === "gol")
+            )
+          )
+          .join("")}</div>`;
+      }
+      if (goalies.length) {
+        html += `<div class="gm-section"><h4>Kapusok</h4>${goalies
+          .map(([nick, l]) =>
+            gmRow(
+              nick,
+              `${l.ga ?? 0} kapott gól · ${l.sv ?? 0} védés`,
+              clips.filter((c) => c.player === nick && c.type === "vedes")
+            )
+          )
+          .join("")}</div>`;
+      }
+    }
+
+    gmBody.innerHTML =
+      html || `<p class="gm-empty">A jegyzőkönyv ehhez a meccshez még nem érkezett meg. 📋</p>`;
+
+    gmOverlay.classList.add("open");
+    document.body.style.overflow = "hidden";
   }
 
   // ---- Menetrend és eredmények ----
-  function renderMatches(host, league) {
+  function renderMatches(host, league, leagueKey) {
     if (!league.matches.length) {
       host.appendChild(empty("Amint kijön a menetrend, itt látod majd a fordulókat. 🏒"));
       return;
@@ -151,6 +404,9 @@ const LEAGUES = {
     sorted.forEach((m) => {
       const li = document.createElement("li");
       li.className = "match-row" + (played(m) ? "" : " upcoming");
+      li.tabIndex = 0;
+      li.setAttribute("role", "button");
+      li.setAttribute("aria-label", "Jegyzőkönyv: Ice Unicorns – " + m.opponent);
 
       const right = played(m)
         ? `<span class="match-score">${m.us}–${m.them}${
@@ -165,10 +421,17 @@ const LEAGUES = {
           <span class="md-d">${fmtDate(m.date)}</span>
         </span>
         <span class="match-teams">
-          <span class="match-opp">${m.opponent}</span>
+          <span class="match-opp">${teamLogo(m.logo)}${m.opponent}</span>
           <span class="match-where">${m.home ? "hazai" : "idegenben"}</span>
         </span>
         <span class="match-right">${right}</span>`;
+      li.addEventListener("click", () => openGameModal(leagueKey, m));
+      li.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          openGameModal(leagueKey, m);
+        }
+      });
       list.appendChild(li);
     });
 
@@ -176,16 +439,17 @@ const LEAGUES = {
   }
 
   // ---- Tabella ----
-  function renderStandings(host, league) {
-    if (!league.standings.length) {
-      host.appendChild(empty("A tabella a szezon rajtja után jelenik meg. 📊"));
-      return;
-    }
+  // A bajnokság A/B csoportra oszlik, ezért csoportonként külön táblázat
+  // jelenik meg, saját címmel.
+  function renderStandingsGroup(host, group) {
+    const rows = group.standings.slice().sort(standingsSort);
 
-    const rows = league.standings
-      .slice()
-      .sort((a, b) => (b.pts || 0) - (a.pts || 0) ||
-                      ((b.gf || 0) - (b.ga || 0)) - ((a.gf || 0) - (a.ga || 0)));
+    if (group.name) {
+      const title = document.createElement("h3");
+      title.className = "standings-group-title";
+      title.textContent = group.name;
+      host.appendChild(title);
+    }
 
     const wrap = document.createElement("div");
     wrap.className = "table-scroll";
@@ -209,7 +473,7 @@ const LEAGUES = {
       if (r.us || r.team === US) tr.className = "us";
       tr.innerHTML = `
         <td class="c-pos">${i + 1}</td>
-        <td class="c-team">${r.team}</td>
+        <td class="c-team"><span class="team-cell">${teamLogo(r.logo)}${r.team}</span></td>
         <td>${r.gp ?? "–"}</td>
         <td>${r.w ?? "–"}</td>
         <td>${r.d ?? "–"}</td>
@@ -221,6 +485,51 @@ const LEAGUES = {
 
     wrap.appendChild(table);
     host.appendChild(wrap);
+  }
+
+  function renderStandings(host, league) {
+    const groups = (league.groups || []).filter((g) => g.standings && g.standings.length);
+    if (!groups.length) {
+      host.appendChild(empty("A tabella a szezon rajtja után jelenik meg. 📊"));
+      return;
+    }
+
+    groups.forEach((g) => renderStandingsGroup(host, g));
+  }
+
+  // ---- Gyorsstatisztika-csempék (helyezés / mérleg / pont / gólkülönbség) ----
+  // A tabellából számoljuk, külön adat nem kell hozzá. Ha még nincs tabella,
+  // vagy nincs benne a mi sorunk, a csempesor eltűnik (nem hagyunk üres dobozt).
+  function renderSummary(host, league) {
+    // A helyezés csak a saját csoportunkon belül értelmes, ezért azt a
+    // csoportot keressük meg, amelyikben a mi sorunk szerepel.
+    const groups = league.groups || [];
+    let rows = null;
+    let idx = -1;
+    for (const g of groups) {
+      const sorted = (g.standings || []).slice().sort(standingsSort);
+      const i = sorted.findIndex((r) => r.us || r.team === US);
+      if (i >= 0) {
+        rows = sorted;
+        idx = i;
+        break;
+      }
+    }
+    if (!rows) {
+      host.remove();
+      return;
+    }
+    const r = rows[idx];
+    const gd = (r.gf || 0) - (r.ga || 0);
+    const tiles = [
+      { v: idx + 1 + ".", l: "Helyezés" },
+      { v: (r.w ?? 0) + "–" + (r.d ?? 0) + "–" + (r.v ?? 0), l: "Gy–D–V" },
+      { v: r.pts ?? 0, l: "Pont" },
+      { v: (gd > 0 ? "+" : "") + gd, l: "Gólkülönbség" },
+    ];
+    host.innerHTML = tiles
+      .map((t) => `<div class="ls-tile"><strong>${t.v}</strong><span>${t.l}</span></div>`)
+      .join("");
   }
 
   // ---- Házi pontvadászat ----
@@ -298,8 +607,11 @@ const LEAGUES = {
     // A többi blokknak konkrét bajnokság kell – a kezdőlapon nincsenek is meg
     if (key === MIND) return;
 
+    const summary = panel.querySelector("[data-summary]");
+    if (summary) renderSummary(summary, league);
+
     const matches = panel.querySelector("[data-matches]");
-    if (matches) renderMatches(matches, league);
+    if (matches) renderMatches(matches, league, key);
 
     const standings = panel.querySelector("[data-standings]");
     if (standings) renderStandings(standings, league);
@@ -307,4 +619,7 @@ const LEAGUES = {
     const scorers = panel.querySelector("[data-scorers]");
     if (scorers) renderScorers(scorers, key);
   });
+
+  // A következő-meccs kártyák kirajzolása után indul a visszaszámláló.
+  startCountdowns();
 })();
