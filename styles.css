@@ -255,9 +255,26 @@ a { color: inherit; text-decoration: none; }
 
 .nm-league { display: inline-block; margin-left: 8px; padding: 2px 10px; border-radius: 999px; background: rgba(255,255,255,0.16); border: 1px solid rgba(255,255,255,0.32); color: #fff; font-size: 0.72rem; letter-spacing: 0.08em; }
 .nm-main { flex: 1; min-width: 240px; }
-.nm-main h2 { font-size: clamp(1.4rem, 3vw, 2.1rem); margin: 4px 0 8px; color: #fff; }
+.nm-main h2 { font-size: clamp(1.4rem, 3vw, 2.1rem); margin: 4px 0 8px; color: #fff; display: flex; align-items: center; flex-wrap: wrap; gap: 6px 10px; }
+.nm-team { display: inline-flex; align-items: center; gap: 10px; }
+img.nm-logo { width: 44px; height: 44px; object-fit: contain; border-radius: 10px; flex-shrink: 0; }
 .nm-main .nm-vs { color: var(--gold); font-size: 0.75em; }
 .nm-main p { color: rgba(255,255,255,0.82); font-weight: 600; }
+
+/* Élő visszaszámláló a következő-meccs kártyán */
+.nm-count { display: flex; gap: 10px; margin-top: 16px; flex-wrap: wrap; }
+.nm-count > div { display: flex; flex-direction: column; align-items: center; min-width: 54px; padding: 8px 10px; border-radius: 16px; background: rgba(255,255,255,0.1); border: 2px solid rgba(255,255,255,0.2); }
+.nm-count strong { font-family: "Baloo 2", sans-serif; font-size: 1.4rem; color: #fff; line-height: 1; font-variant-numeric: tabular-nums; }
+.nm-count span { font-size: 0.62rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ice); margin-top: 5px; }
+.nm-count.is-live > div { border-color: var(--gold); animation: nm-pulse 1.2s ease-in-out infinite; }
+@keyframes nm-pulse { 0%, 100% { background: rgba(255,255,255,0.1); } 50% { background: rgba(255,207,92,0.28); } }
+
+/* Gyorsstatisztika-csempék (helyezés / mérleg / pont / gólkülönbség) */
+.league-summary { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 26px; }
+.league-summary:empty { display: none; }
+.ls-tile { text-align: center; background: var(--surface-soft); border: 2px solid var(--surface-border); border-radius: var(--radius); padding: 22px 12px; }
+.ls-tile strong { display: block; font-family: "Baloo 2", sans-serif; font-size: 2rem; color: var(--pink-ink); line-height: 1; font-variant-numeric: tabular-nums; }
+.ls-tile span { display: block; margin-top: 9px; font-size: 0.7rem; font-weight: 800; letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted); }
 
 /* Két hasáb: menetrend + tabella (a világos sávon) */
 .league-grid { display: grid; grid-template-columns: 1fr 1.15fr; gap: 40px; align-items: start; }
@@ -273,14 +290,15 @@ a { color: inherit; text-decoration: none; }
 
 /* Menetrend és eredmények */
 .match-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
-.match-row { display: flex; align-items: center; gap: 14px; background: var(--surface-soft); border: 2px solid var(--surface-border); border-radius: 18px; padding: 12px 16px; transition: border-color 0.2s, transform 0.2s var(--bounce); }
-.match-row:hover { border-color: var(--pink); transform: translateX(3px); }
+.match-row { display: flex; align-items: center; gap: 14px; background: var(--surface-soft); border: 2px solid var(--surface-border); border-radius: 18px; padding: 12px 16px; cursor: pointer; transition: border-color 0.2s, transform 0.2s var(--bounce); }
+.match-row:hover, .match-row:focus-visible { border-color: var(--pink); transform: translateX(3px); }
+.match-row:focus-visible { outline: 2px solid var(--pink); outline-offset: 2px; }
 .match-row.upcoming { background: var(--surface); border-style: dashed; }
 .match-date { flex: 0 0 62px; display: flex; flex-direction: column; line-height: 1.15; }
 .match-date .md-wd { font-size: 0.68rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: var(--pink-ink); }
 .match-date .md-d { font-weight: 800; font-size: 0.92rem; color: var(--text); white-space: nowrap; }
 .match-teams { flex: 1; min-width: 0; display: flex; flex-direction: column; line-height: 1.2; }
-.match-opp { font-weight: 800; color: var(--text); font-size: 1rem; overflow-wrap: anywhere; }
+.match-opp { display: inline-flex; align-items: center; gap: 8px; font-weight: 800; color: var(--text); font-size: 1rem; overflow-wrap: anywhere; }
 .match-where { font-size: 0.76rem; font-weight: 700; color: var(--muted); }
 .match-right { flex: 0 0 auto; display: flex; align-items: center; gap: 10px; }
 .match-score { font-family: "Baloo 2", sans-serif; font-weight: 800; font-size: 1.25rem; color: var(--text); font-variant-numeric: tabular-nums; white-space: nowrap; }
@@ -291,6 +309,29 @@ a { color: inherit; text-decoration: none; }
 .result-pill.d { background: var(--silver); color: var(--navy); }
 .result-pill.v { background: #e8417a; }
 
+/* Meccs jegyzőkönyv popup */
+.gm-overlay { position: fixed; inset: 0; background: rgba(27, 36, 80, 0.55); backdrop-filter: blur(5px); display: flex; align-items: center; justify-content: center; padding: 20px; z-index: 100; opacity: 0; pointer-events: none; transition: opacity 0.25s var(--ease); overflow-y: auto; }
+.gm-overlay.open { opacity: 1; pointer-events: auto; }
+.gm-card { position: relative; width: min(640px, 100%); max-height: 85vh; overflow-y: auto; background: var(--surface); border-radius: 28px; box-shadow: 0 30px 70px -18px rgba(27, 36, 80, 0.65); transform: translateY(24px) scale(0.9); transition: transform 0.4s var(--bounce); }
+.gm-overlay.open .gm-card { transform: none; }
+.gm-close { position: absolute; top: 16px; right: 16px; width: 40px; height: 40px; border-radius: 50%; border: 0; background: rgba(255, 255, 255, 0.32); color: #fff; font-size: 1.4rem; line-height: 1; cursor: pointer; z-index: 3; transition: background 0.2s; }
+.gm-close:hover { background: rgba(255, 255, 255, 0.5); }
+.gm-head { position: relative; padding: 28px 32px 22px; background: var(--navy); background-image: linear-gradient(135deg, var(--navy), #2a3670); }
+.gm-head::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 5px; background: var(--rainbow); }
+.gm-date { display: block; font-size: 0.8rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gold); }
+.gm-title { color: #fff; font-size: 1.6rem; margin: 6px 0 8px; line-height: 1.2; display: flex; align-items: center; flex-wrap: wrap; gap: 8px 12px; }
+.gm-score { font-family: "Baloo 2", sans-serif; font-size: 1.9rem; font-weight: 800; color: #fff; }
+.gm-body { padding: 24px 32px 32px; }
+.gm-section + .gm-section { margin-top: 18px; }
+.gm-section h4 { font-size: 0.78rem; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+.gm-row { display: flex; align-items: center; gap: 10px; background: var(--surface-soft); border: 2px solid var(--surface-border); border-radius: 14px; padding: 12px 16px; font-size: 0.98rem; flex-wrap: wrap; margin-bottom: 8px; }
+.gm-nick { flex: 1; min-width: 100px; font-weight: 800; color: var(--text); }
+.gm-stat { flex: 0 0 auto; font-weight: 700; color: var(--pink-ink); font-variant-numeric: tabular-nums; }
+.gm-clips { flex: 0 0 100%; display: flex; gap: 6px; flex-wrap: wrap; }
+.gm-clip { display: inline-flex; align-items: center; gap: 4px; background: var(--navy); color: #fff; border-radius: 999px; padding: 3px 10px; font-size: 0.74rem; font-weight: 700; text-decoration: none; }
+.gm-clip:hover { background: var(--pink); }
+.gm-empty { color: var(--muted); font-weight: 600; text-align: center; padding: 10px 4px; }
+
 /* Tabella */
 .table-scroll { overflow-x: auto; }
 .standings { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
@@ -300,10 +341,15 @@ a { color: inherit; text-decoration: none; }
 .standings tbody tr:last-child { border-bottom: 0; }
 .standings .c-pos { width: 30px; color: var(--muted); }
 .standings .c-team { text-align: left; color: var(--text); font-weight: 800; white-space: normal; min-width: 130px; }
+.team-cell { display: inline-flex; align-items: center; gap: 8px; }
+.team-logo { width: 22px; height: 22px; object-fit: contain; border-radius: 50%; background: #fff; border: 1px solid var(--surface-border); flex-shrink: 0; }
 .standings .c-pts { color: var(--pink-ink); font-family: "Baloo 2", sans-serif; font-size: 1.05rem; }
 .standings tbody tr.us { background: var(--surface-soft); }
 .standings tbody tr.us .c-team { color: var(--pink-ink); }
 .standings tbody tr.us .c-pos { color: var(--pink-ink); }
+
+.standings-group-title { font-size: 1rem; margin: 18px 0 8px; color: var(--text); }
+.standings-group-title:first-child { margin-top: 0; }
 
 /* Házi pontvadászat – ugyanaz a tábla-stílus, dobogós helyezés-kiemeléssel */
 .scorers .c-pos { font-family: "Baloo 2", sans-serif; font-size: 1rem; }
@@ -516,6 +562,20 @@ a.card:hover .card-arrow { transform: translateX(4px); }
 .pm-stat { background: var(--surface-soft); border: 2px solid var(--surface-border); border-radius: 14px; padding: 11px 4px; text-align: center; cursor: help; }
 .pm-stat strong { display: block; font-family: "Baloo 2", sans-serif; font-size: 1.3rem; color: var(--pink-ink); line-height: 1; font-variant-numeric: tabular-nums; }
 .pm-stat span { font-size: 0.68rem; color: var(--muted); font-weight: 800; letter-spacing: 0.04em; }
+
+/* Meccsenkénti bontás a játékos kártyáján */
+.pm-games { margin-bottom: 16px; }
+.pm-games-title { font-size: 0.78rem; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+.pm-games-list { display: flex; flex-direction: column; gap: 6px; max-height: 220px; overflow-y: auto; }
+.pmg-row { display: flex; align-items: center; gap: 10px; background: var(--surface-soft); border: 2px solid var(--surface-border); border-radius: 12px; padding: 8px 12px; font-size: 0.84rem; flex-wrap: wrap; }
+.pmg-date { flex: 0 0 auto; font-weight: 800; color: var(--muted); min-width: 52px; }
+.pmg-info { flex: 1; min-width: 100px; display: flex; flex-direction: column; line-height: 1.25; }
+.pmg-opp { font-weight: 800; color: var(--text); }
+.pmg-meta { font-size: 0.72rem; font-weight: 700; color: var(--muted); }
+.pmg-stat { flex: 0 0 auto; font-weight: 800; color: var(--pink-ink); font-variant-numeric: tabular-nums; }
+.pmg-clips { flex: 0 0 100%; display: flex; gap: 6px; flex-wrap: wrap; }
+.pmg-clip { display: inline-flex; align-items: center; gap: 4px; background: var(--navy); color: #fff; border-radius: 999px; padding: 3px 10px; font-size: 0.74rem; font-weight: 700; text-decoration: none; }
+.pmg-clip:hover { background: var(--pink); }
 .pm-bio { color: var(--muted); font-weight: 600; text-align: left; font-size: 0.97rem; }
 .pm-hint { text-align: left; font-size: 0.78rem; color: var(--muted); opacity: 0.7; margin-top: 12px; }
 .pm-close { position: absolute; top: 14px; right: 14px; width: 36px; height: 36px; border-radius: 50%; border: 0; background: rgba(255, 255, 255, 0.32); color: #fff; font-size: 1.3rem; line-height: 1; cursor: pointer; z-index: 3; transition: background 0.2s; }
@@ -590,6 +650,9 @@ a.card:hover .card-arrow { transform: translateX(4px); }
   .cta-banner { padding: 34px; }
   .next-match { padding: 26px; gap: 20px; }
   .nm-when { flex-direction: row; align-items: baseline; gap: 8px; padding: 10px 16px; }
+  .league-summary { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .ls-tile { padding: 18px 10px; }
+  .ls-tile strong { font-size: 1.7rem; }
   /* szűkebb tabella, hogy a pont-oszlop is elférjen görgetés nélkül */
   .standings th, .standings td { padding: 9px 4px; font-size: 0.84rem; }
   .standings .c-team { min-width: 88px; font-size: 0.82rem; }
