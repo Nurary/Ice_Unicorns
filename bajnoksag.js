@@ -79,6 +79,65 @@ const LEAGUES = (typeof window !== "undefined" && window.LEAGUES) || {};
   const otWins = (r) => (r.otw || 0) + (r.sow || 0);
   const otLosses = (r) => (r.otl || 0) + (r.sol || 0);
 
+  // ---- Forma ----
+  // A generált adat MINDEN meccset tartalmaz (league.games), nem csak a
+  // mieinket, ezért bármelyik csapat legutóbbi eredményeit ki tudjuk rakni.
+  const FORM_LEN = 5;
+
+  const gamePlayed = (g) =>
+    g.hs !== null && g.hs !== undefined && g.as !== null && g.as !== undefined;
+
+  // Egy csapat utolsó néhány meccse, időrendben (a legrégebbi elöl).
+  // Telt karika = rendes játékidőben dőlt el, üres = hosszabbítás/szétlövés.
+  //
+  // Csak az alapszakasz meccsei számítanak: a rájátszás párharcai külön
+  // "csoportban" futnak (9-12., 13-16. stb.), és ha azokat is beleszámolnánk,
+  // egy nyeretlen csapat mellett is zöld karikák jelennének meg – a tabella
+  // számaihoz képest ez értelmezhetetlen lenne.
+  function formOf(league, team, len) {
+    const info = (league.teams || {})[team];
+    const group = info ? info.group : null;
+    return (league.games || [])
+      .filter(
+        (g) =>
+          gamePlayed(g) &&
+          (g.home === team || g.away === team) &&
+          (!group || g.group === group)
+      )
+      .slice(-(len || FORM_LEN))
+      .map((g) => {
+        const home = g.home === team;
+        const our = home ? g.hs : g.as;
+        const their = home ? g.as : g.hs;
+        const win = our > their;
+        const opponent = home ? g.away : g.home;
+        return {
+          key: g.ot ? (win ? "hgy" : "hv") : win ? "gy" : "v",
+          title:
+            `${fmtDate(g.date)} · ${home ? "" : "@"}${opponent} ` +
+            `${our}–${their}${g.ot ? " (h.u.)" : ""}`,
+        };
+      });
+  }
+
+  function formDots(entries) {
+    if (!entries || !entries.length) return "";
+    const dots = entries
+      .map((e) => `<i class="fd ${e.key}" title="${e.title}"></i>`)
+      .join("");
+    return `<span class="form-dots" aria-label="Legutóbbi eredmények">${dots}</span>`;
+  }
+
+  // Egy csapat helyezése és tabellasora a saját csoportjában
+  function standingOf(league, team) {
+    for (const g of league.groups || []) {
+      const sorted = (g.standings || []).slice().sort(standingsSort);
+      const i = sorted.findIndex((r) => r.team === team);
+      if (i >= 0) return { row: sorted[i], pos: i + 1, group: g.name };
+    }
+    return null;
+  }
+
   // A tabella rendezése: pont, majd gólkülönbség szerint. Két helyen kell
   // (tabella + gyorsstatisztika), ezért közös.
   function standingsSort(a, b) {
@@ -106,6 +165,30 @@ const LEAGUES = (typeof window !== "undefined" && window.LEAGUES) || {};
     return p;
   }
 
+  // Kezdőbetűs korong azoknak a csapatoknak, amelyeknek nincs emblémája
+  function teamChip(name) {
+    return `<span class="team-chip" title="${name}">${(name || "?").charAt(0)}</span>`;
+  }
+
+  // Ha egy embléma nem jön be (az MJSZ-nél akad néhány halott link), a
+  // kezdőbetűs korong lép a helyére. Ott használjuk, ahol a csapatot csak a
+  // logó jelöli, és üresen maradna a helye.
+  //
+  // A betöltés már a src beállításakor elindul, tehát a hiba akár azelőtt
+  // megtörténhet, hogy ideérnénk – ezért a figyelő mellett a már befejezett
+  // (complete, de nulla széles) képeket is meg kell néznünk.
+  function chipOnError(img) {
+    const swap = () => {
+      const span = document.createElement("span");
+      span.className = "team-chip";
+      span.title = img.alt;
+      span.textContent = (img.alt || "?").charAt(0);
+      img.replaceWith(span);
+    };
+    img.addEventListener("error", swap);
+    if (img.complete && img.naturalWidth === 0) swap();
+  }
+
   // Csapatembléma <img> – ha nincs logo mező, üres string (nem jelenik meg semmi)
   function teamLogo(url, extraClass) {
     if (!url) return "";
@@ -120,11 +203,13 @@ const LEAGUES = (typeof window !== "undefined" && window.LEAGUES) || {};
     if (key === MIND) {
       return Object.keys(LEAGUES).reduce((all, k) => {
         const l = LEAGUES[k];
-        return all.concat((l.matches || []).map((m) => ({ m: m, label: l.label })));
+        return all.concat(
+          (l.matches || []).map((m) => ({ m: m, label: l.label, key: k }))
+        );
       }, []);
     }
     const l = LEAGUES[key];
-    return l ? (l.matches || []).map((m) => ({ m: m, label: l.label })) : [];
+    return l ? (l.matches || []).map((m) => ({ m: m, label: l.label, key: key })) : [];
   }
 
   function renderNext(host, key, label) {
@@ -159,6 +244,22 @@ const LEAGUES = (typeof window !== "undefined" && window.LEAGUES) || {};
       ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(u.venue + ", Magyarország")}`
       : "kapcsolat.html";
     const ctaTarget = u.venue ? ` target="_blank" rel="noopener"` : "";
+
+    // Mit tudunk az ellenfélről? Helyezést csak akkor írunk ki, ha már
+    // játszott – a szezon elején mindenki holtversenyben első, annak
+    // semmi értelme nem lenne.
+    const oppLeague = LEAGUES[upcoming.key];
+    const oppStanding = oppLeague ? standingOf(oppLeague, u.opponent) : null;
+    const oppForm = oppLeague ? formOf(oppLeague, u.opponent) : [];
+    const oppPos =
+      oppStanding && (oppStanding.row.gp || 0) > 0
+        ? `<strong title="${oppStanding.group}">${oppStanding.pos}. helyezett</strong>`
+        : "";
+    const oppInfo =
+      oppPos || oppForm.length
+        ? `<p class="nm-form"><span>Az ellenfél</span>${oppPos}${formDots(oppForm)}</p>`
+        : "";
+
     host.innerHTML = `
       <div class="nm-when">
         <span class="nm-day">${fmtWeekday(u.date)}</span>
@@ -173,6 +274,7 @@ const LEAGUES = (typeof window !== "undefined" && window.LEAGUES) || {};
           <span class="nm-team">${teamLogo(u.logo, "nm-logo")}${u.opponent}</span>
         </h2>
         <p>${where}${u.venue ? ` · ${u.venue}` : ""}</p>
+        ${oppInfo}
         <div class="nm-count" data-countdown="${target}" role="timer" aria-label="Visszaszámlálás a meccsig">
           <div><strong data-cd="d">–</strong><span>nap</span></div>
           <div><strong data-cd="h">–</strong><span>óra</span></div>
@@ -374,8 +476,10 @@ const LEAGUES = (typeof window !== "undefined" && window.LEAGUES) || {};
   // ---- Tabella ----
   // A bajnokság A/B csoportra oszlik, ezért csoportonként külön táblázat
   // jelenik meg, saját címmel.
-  function renderStandingsGroup(host, group) {
+  function renderStandingsGroup(host, group, league) {
     const rows = group.standings.slice().sort(standingsSort);
+    // A formaoszlop csak akkor kerül ki, ha van már lejátszott meccs.
+    const anyForm = rows.some((r) => (r.gp || 0) > 0);
 
     if (group.name) {
       const title = document.createElement("h3");
@@ -400,6 +504,7 @@ const LEAGUES = (typeof window !== "undefined" && window.LEAGUES) || {};
           <th title="Vereség rendes játékidőben">V</th>
           <th title="Lőtt és kapott gól">LG–KG</th>
           <th class="c-pts" title="Pont">P</th>
+          ${anyForm ? '<th class="c-form" title="Az utolsó öt meccs">Forma</th>' : ""}
         </tr>
       </thead>
       <tbody></tbody>`;
@@ -418,7 +523,8 @@ const LEAGUES = (typeof window !== "undefined" && window.LEAGUES) || {};
         <td class="c-ot">${otLosses(r)}</td>
         <td>${r.v ?? "–"}</td>
         <td>${(r.gf ?? "–") + "–" + (r.ga ?? "–")}</td>
-        <td class="c-pts">${r.pts ?? "–"}</td>`;
+        <td class="c-pts">${r.pts ?? "–"}</td>
+        ${anyForm ? `<td class="c-form">${formDots(formOf(league, r.team))}</td>` : ""}`;
       tbody.appendChild(tr);
     });
 
@@ -433,7 +539,108 @@ const LEAGUES = (typeof window !== "undefined" && window.LEAGUES) || {};
       return;
     }
 
-    groups.forEach((g) => renderStandingsGroup(host, g));
+    groups.forEach((g) => renderStandingsGroup(host, g, league));
+  }
+
+  // ---- A csoport eredményei ----
+  // A saját csoportunk összes lejátszott meccse, a legfrissebbel elöl –
+  // nemcsak a mieink, hanem a riválisoké is.
+  const GROUP_RESULTS_LEN = 10;
+
+  function renderGroupResults(host, league) {
+    const played = (league.games || [])
+      .filter(
+        (g) => gamePlayed(g) && (!league.ourGroup || g.group === league.ourGroup)
+      )
+      .reverse()
+      .slice(0, GROUP_RESULTS_LEN);
+
+    // Szezon elején nincs mit mutatni – az egész szakasz eltűnik, hogy ne
+    // maradjon ott egy üres doboz.
+    if (!played.length) {
+      (host.closest(".league-block") || host).hidden = true;
+      return;
+    }
+
+    const teams = league.teams || {};
+    const logoOf = (name) => teamLogo(teams[name] && teams[name].logo);
+
+    host.innerHTML = played
+      .map((g) => {
+        const ours = g.home === US || g.away === US;
+        const homeWon = g.hs > g.as;
+        return `
+          <div class="gr-row${ours ? " is-us" : ""}">
+            <span class="gr-date">${fmtDate(g.date)}</span>
+            <span class="gr-team gr-home${homeWon ? " won" : ""}">
+              <span class="gr-name">${g.home}</span>${logoOf(g.home)}
+            </span>
+            <span class="gr-score">${g.hs}–${g.as}${
+          g.ot ? '<span class="match-ot">h.u.</span>' : ""
+        }</span>
+            <span class="gr-team gr-away${!homeWon ? " won" : ""}">
+              ${logoOf(g.away)}<span class="gr-name">${g.away}</span>
+            </span>
+          </div>`;
+      })
+      .join("");
+  }
+
+  // ---- Bajnoki pontverseny ----
+  // A saját csoportunk legjobb pontszerzői – a mi játékosaink kiemelve,
+  // hogy egy pillantással látszódjon, hol állnak a mezőnyben.
+  function renderLeagueScorers(host, league) {
+    const rows = league.scorers || [];
+    if (!rows.length) {
+      (host.closest(".league-block") || host).hidden = true;
+      return;
+    }
+
+    const teams = league.teams || {};
+    const wrap = document.createElement("div");
+    wrap.className = "table-scroll";
+    const table = document.createElement("table");
+    table.className = "standings scorers";
+    table.innerHTML = `
+      <thead>
+        <tr>
+          <th class="c-pos">#</th>
+          <th class="c-team">Játékos</th>
+          <th class="c-club" title="Csapat">Csapat</th>
+          <th title="Lejátszott meccs">M</th>
+          <th title="Gól">G</th>
+          <th title="Gólpassz">A</th>
+          <th class="c-pts" title="Pont">P</th>
+        </tr>
+      </thead>
+      <tbody></tbody>`;
+
+    const tbody = table.querySelector("tbody");
+    rows.forEach((r, i) => {
+      const tr = document.createElement("tr");
+      if (r.us) tr.className = "us";
+      const club = teams[r.team] && teams[r.team].logo;
+      tr.innerHTML = `
+        <td class="c-pos">${i + 1}</td>
+        <td class="c-team">${r.name}</td>
+        <td class="c-club">${
+          club
+            ? `<img class="team-logo" src="${club}" alt="${r.team}" title="${r.team}" loading="lazy">`
+            : teamChip(r.team)
+        }</td>
+        <td>${r.gp}</td>
+        <td>${r.g}</td>
+        <td>${r.a}</td>
+        <td class="c-pts">${r.pts}</td>`;
+      tbody.appendChild(tr);
+    });
+
+    // Itt a csapatot csak az embléma jelöli, ezért a halott linkeket
+    // kezdőbetűs koronggal pótoljuk – különben üres maradna a cella.
+    tbody.querySelectorAll(".c-club img").forEach(chipOnError);
+
+    wrap.appendChild(table);
+    host.appendChild(wrap);
   }
 
   // ---- Gyorsstatisztika-csempék (helyezés / mérleg / pont / gólkülönbség) ----
@@ -470,11 +677,24 @@ const LEAGUES = (typeof window !== "undefined" && window.LEAGUES) || {};
       { v: r.pts ?? 0, l: "Pont" },
       { v: (gd > 0 ? "+" : "") + gd, l: "Gólkülönbség" },
     ];
+    // A nézőszám csak akkor kerül ki, ha az MJSZ fel is töltötte –
+    // egy „0 néző” csempe rosszabb, mint a semmi.
+    const att = league.attendance;
+    if (att && att.totalAvg) {
+      tiles.push({
+        v: att.totalAvg,
+        l: "Néző / meccs",
+        title:
+          `Hazai átlag: ${att.homeAvg} · idegenben: ${att.awayAvg} · ` +
+          `összesen ${att.total} néző`,
+      });
+    }
     host.innerHTML = tiles
       .map(
         (t) =>
-          `<div class="ls-tile${t.cls ? " " + t.cls : ""}">` +
-          `<strong>${t.v}</strong><span>${t.l}</span></div>`
+          `<div class="ls-tile${t.cls ? " " + t.cls : ""}"${
+            t.title ? ` title="${t.title}"` : ""
+          }>` + `<strong>${t.v}</strong><span>${t.l}</span></div>`
       )
       .join("");
   }
@@ -565,6 +785,12 @@ const LEAGUES = (typeof window !== "undefined" && window.LEAGUES) || {};
 
     const scorers = panel.querySelector("[data-scorers]");
     if (scorers) renderScorers(scorers, key);
+
+    const groupResults = panel.querySelector("[data-group-results]");
+    if (groupResults) renderGroupResults(groupResults, league);
+
+    const leagueScorers = panel.querySelector("[data-league-scorers]");
+    if (leagueScorers) renderLeagueScorers(leagueScorers, league);
   });
 
   // A következő-meccs kártyák kirajzolása után indul a visszaszámláló.

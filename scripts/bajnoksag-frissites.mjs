@@ -31,6 +31,7 @@ const ORIGIN = process.env.MJSZ_ORIGIN || "https://www.jegkorongszovetseg.hu";
 const SEASON = process.env.SZEZON || "2026-2027";
 const OUR_TEAM = "Ice Unicorns";
 const OUR_LOGO = "assets/logo/logo.jpg"; // a saját emblémánk, nem az IVR-es
+const SCORERS_LIMIT = 15; // hányan kerüljenek be a csoport pontversenyébe
 
 // Melyik oldal melyik MJSZ-bajnokságból töltődik.
 // A kulcs (ob4d / ob4c) a HTML-ben lévő data-league értéke.
@@ -193,11 +194,130 @@ async function fetchLeague(cfg) {
       // Ha van alcsoport, az adja a címet ("A csoport"), különben a
       // szakasz neve ("Alapszakasz") – egycsoportos bajnokságra is jó.
       const name = phase.group ? `${phase.group} csoport` : phase.name;
-      groups.push({ name, standings });
+      groups.push({ name, group: phase.group, standings });
     }
   }
 
-  return { label: cfg.label, season: SEASON, championshipId, matches, groups };
+  // Melyik alcsoportban játszunk? A saját meccseink mondják meg. Ez kell a
+  // pontversenyhez és a nézőszámhoz, mert azokat szakaszonként kéri az API.
+  const ourGame = games.find(
+    (g) => g.homeTeam.longName === OUR_TEAM || g.awayTeam.longName === OUR_TEAM
+  );
+  const ourGroup = ourGame?.divisionStage3Name || null;
+  const ourPhase = phases.find((p) => p.group === ourGroup) || phases[0];
+
+  return {
+    label: cfg.label,
+    season: SEASON,
+    championshipId,
+    ourGroup,
+    matches,
+    groups,
+    // A bajnokság minden csapata egy helyen: innen jön a logó a
+    // formasorokhoz és az eredménylistához, hogy ne kelljen minden
+    // meccsnél újra kiírni ugyanazt az URL-t.
+    teams: teamIndex(games, groups),
+    // MINDEN meccs, nem csak a mienk – ebből számoljuk a formát és ebből
+    // lesz a „csoport eredményei” lista.
+    games: games.map(toGame).sort((a, b) => (a.date < b.date ? -1 : 1)),
+    scorers: await fetchScorers(championshipId, ourPhase),
+    attendance: await fetchAttendance(championshipId, ourPhase),
+  };
+}
+
+// Csapatnév → { logo, group }. A logó lehet null, azt a megjelenítés kezeli.
+// A csoportot a tabellából vesszük, nem a meccsekből: egy csapat első
+// meccse lehet rájátszás is, az meg nem az alapszakasz-csoportja.
+function teamIndex(games, groups) {
+  const groupOf = {};
+  (groups || []).forEach((grp) =>
+    (grp.standings || []).forEach((r) => {
+      groupOf[r.team] = grp.group;
+    })
+  );
+
+  const out = {};
+  games.forEach((g) => {
+    [g.homeTeam, g.awayTeam].forEach((t) => {
+      if (!out[t.longName]) {
+        out[t.longName] = {
+          logo: t.longName === OUR_TEAM ? OUR_LOGO : t.logo || null,
+          group: groupOf[t.longName] || null,
+        };
+      }
+    });
+  });
+  return out;
+}
+
+// Egy meccs semlegesen (nem a mi szemszögünkből) – a formasorhoz és a
+// csoport eredménylistájához. Szándékosan rövid mezőnevek: ez a tömb a
+// generált fájl legnagyobb része.
+function toGame(g) {
+  const { date, time } = splitGameDate(g.gameDate);
+  const played = isPlayed(g);
+  const out = { date, group: g.divisionStage3Name || null };
+  if (time) out.time = time;
+  out.home = g.homeTeam.longName;
+  out.away = g.awayTeam.longName;
+  if (played) {
+    out.hs = g.homeTeamScore;
+    out.as = g.awayTeamScore;
+    if (g.isOvertime || g.isShootout) out.ot = true;
+  }
+  return out;
+}
+
+// A saját csoportunk pontversenye. A szezon elején üres listát ad vissza –
+// a megjelenítés ilyenkor elrejti a szakaszt.
+async function fetchScorers(championshipId, phase) {
+  if (!phase) return [];
+  const rows = await api("/players-stats", {
+    championshipId,
+    phaseId: phase.phaseId,
+  });
+  return rows
+    .filter((r) => (r.points ?? 0) > 0 || (r.gp ?? 0) > 0)
+    .sort(
+      (a, b) =>
+        (b.points ?? 0) - (a.points ?? 0) ||
+        (b.goals ?? 0) - (a.goals ?? 0) ||
+        (a.gp ?? 0) - (b.gp ?? 0)
+    )
+    .slice(0, SCORERS_LIMIT)
+    .map((r) => {
+      const p = r.player || {};
+      const row = {
+        name: `${p.lastName || ""} ${p.firstName || ""}`.trim(),
+        team: r.team?.longName || "",
+        gp: r.gp ?? 0,
+        g: r.goals ?? 0,
+        a: r.assists ?? 0,
+        pts: r.points ?? 0,
+        pim: r.pim ?? 0,
+      };
+      if (row.team === OUR_TEAM) row.us = true;
+      return row;
+    });
+}
+
+// A saját csapatunk nézőszámai. Ha nincs még adat, null – nem rajzolunk
+// csempét nulla nézőről.
+async function fetchAttendance(championshipId, phase) {
+  if (!phase) return null;
+  const rows = await api("/team-attendance", {
+    championshipId,
+    phaseId: phase.phaseId,
+  });
+  const ours = rows.find((r) => r.team?.longName === OUR_TEAM);
+  if (!ours || !ours.totalAttendance) return null;
+  return {
+    homeGames: ours.homeGame ?? 0,
+    homeAvg: ours.homeAttendanceAvg ?? 0,
+    awayAvg: ours.awayAttendanceAvg ?? 0,
+    total: ours.totalAttendance ?? 0,
+    totalAvg: ours.totalAttendanceAvg ?? 0,
+  };
 }
 
 // ---- Kiírás ----
