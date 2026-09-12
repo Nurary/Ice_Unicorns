@@ -275,6 +275,9 @@ img.nm-logo { width: 44px; height: 44px; object-fit: contain; border-radius: 10p
 .ls-tile { text-align: center; background: var(--surface-soft); border: 2px solid var(--surface-border); border-radius: var(--radius); padding: 22px 12px; }
 .ls-tile strong { display: block; font-family: "Baloo 2", sans-serif; font-size: 2rem; color: var(--pink-ink); line-height: 1; font-variant-numeric: tabular-nums; }
 .ls-tile span { display: block; margin-top: 9px; font-size: 0.7rem; font-weight: 800; letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted); }
+/* a mérleg-csempén négy szám áll egymás mellett, ezért szűkebb betű kell */
+.ls-tile.is-record strong { font-size: 1.5rem; letter-spacing: -0.01em; }
+.ls-tile.is-record span { letter-spacing: 0.02em; }
 
 /* Két hasáb: menetrend + tabella (a világos sávon) */
 .league-grid { display: grid; grid-template-columns: 1fr 1.15fr; gap: 40px; align-items: start; }
@@ -343,6 +346,9 @@ img.nm-logo { width: 44px; height: 44px; object-fit: contain; border-radius: 10p
 .standings .c-team { text-align: left; color: var(--text); font-weight: 800; white-space: normal; min-width: 130px; }
 .team-cell { display: inline-flex; align-items: center; gap: 8px; }
 .team-logo { width: 22px; height: 22px; object-fit: contain; border-radius: 50%; background: #fff; border: 1px solid var(--surface-border); flex-shrink: 0; }
+/* hosszabbításos oszlopok: halványabbak, hogy a Gy és a V maradjon a fő ritmus */
+.standings .c-ot { color: var(--muted); font-weight: 600; }
+.standings thead th.c-ot { font-size: 0.62rem; }
 .standings .c-pts { color: var(--pink-ink); font-family: "Baloo 2", sans-serif; font-size: 1.05rem; }
 .standings tbody tr.us { background: var(--surface-soft); }
 .standings tbody tr.us .c-team { color: var(--pink-ink); }
@@ -653,9 +659,12 @@ a.card:hover .card-arrow { transform: translateX(4px); }
   .league-summary { grid-template-columns: repeat(2, 1fr); gap: 12px; }
   .ls-tile { padding: 18px 10px; }
   .ls-tile strong { font-size: 1.7rem; }
+  .ls-tile.is-record strong { font-size: 1.3rem; }
   /* szűkebb tabella, hogy a pont-oszlop is elférjen görgetés nélkül */
-  .standings th, .standings td { padding: 9px 4px; font-size: 0.84rem; }
-  .standings .c-team { min-width: 88px; font-size: 0.82rem; }
+  .standings th, .standings td { padding: 9px 3px; font-size: 0.84rem; }
+  /* a hosszabbításos oszlopok szűkebbek, hogy a tabella kiférjen a telefonra */
+  .standings .c-ot { padding-left: 2px; padding-right: 2px; font-size: 0.78rem; }
+  .standings .c-team { min-width: 80px; font-size: 0.82rem; }
   .standings .c-pos { width: 20px; }
   .standings .c-pts { font-size: 1rem; }
   .rink { padding: 34px 14px; border-radius: 70px / 54px; }

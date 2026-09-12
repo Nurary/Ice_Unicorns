@@ -1,0 +1,48 @@
+name: Bajnoksági adatok frissítése
+
+on:
+  schedule:
+    # Naponta kétszer, UTC-ben megadva (a GitHub mindig UTC-vel dolgozik):
+    #   21:00 UTC → 22:00 / 23:00 budapesti idő – az esti meccsek eredménye
+    #                még aznap éjjel felkerül
+    #   05:00 UTC → 06:00 / 07:00 budapesti idő – reggelre minden friss
+    - cron: "0 5,21 * * *"
+  workflow_dispatch: # kézi indítás az Actions fülről
+
+permissions:
+  contents: write
+
+# Ne fusson egyszerre két frissítés – ütköznének a pusholásnál.
+concurrency:
+  group: bajnoksag-frissites
+
+jobs:
+  frissites:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Adatok lekérése
+        env:
+          # Mindkettő elhagyható: ha nincs beállítva, a script a
+          # jegkorongszovetseg.hu nyilvános kulcsát használja.
+          MJSZ_API_KEY: ${{ secrets.MJSZ_API_KEY }}
+          MJSZ_ORIGIN: ${{ vars.MJSZ_ORIGIN }}
+          SZEZON: ${{ vars.SZEZON }}
+        run: node scripts/bajnoksag-frissites.mjs
+
+      - name: Commit, ha változott
+        run: |
+          if [ -z "$(git status --porcelain -- bajnoksag-adatok.js)" ]; then
+            echo "Nincs változás, nincs mit commitolni."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add bajnoksag-adatok.js
+          git commit -m "Bajnoksági adatok frissítése (automatikus)"
+          git push
