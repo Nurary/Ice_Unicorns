@@ -1,4 +1,8 @@
-// ===== Ice Unicorns – bajnoksági adatok =====
+// ===== Ice Unicorns – bajnokság megjelenítés =====
+// Maguk az adatok a bajnoksag-adatok.js fájlban vannak (window.LEAGUES),
+// azt a scripts/bajnoksag-frissites.mjs generálja az MJSZ nyilvános
+// API-jából – kézzel nem kell szerkeszteni.
+//
 // Bajnokságonként külön blokk. A rendszer abból tudja, melyiket rajzolja,
 // hogy a Bajnokság-panelen milyen data-league érték áll
 // (ob4d.html → data-league="ob4d", ob4c.html → data-league="ob4c").
@@ -14,7 +18,13 @@
 //   ot       – true, ha hosszabbításban vagy szétlövésben dőlt el (elhagyható)
 //
 // Egy TABELLA-SOR mezői:
-//   team – csapatnév, gp – meccs, w – győzelem, d – döntetlen, v – vereség,
+//   team – csapatnév, gp – lejátszott meccs
+//   Nincs döntetlen: ami rendes játékidőben nem dől el, azt hosszabbítás
+//   vagy szétlövés zárja le, és a pontozás is eszerint megy (3-2-1-0).
+//   w   – győzelem rendes játékidőben (3 pont)
+//   otw / sow – győzelem hosszabbításban / szétlövésben (2 pont)
+//   otl / sol – vereség hosszabbításban / szétlövésben (1 pont)
+//   v   – vereség rendes játékidőben (0 pont)
 //   gf – lőtt gól, ga – kapott gól, pts – pont
 //   logo – csapatembléma URL-je (elhagyható, ha nincs)
 //   us: true – ez a mi sorunk, kiemelve jelenik meg
@@ -24,91 +34,8 @@
 // viszont csak a mi csapatunk meccseit tartalmazza – az az érdekes belőle.
 //
 // Amíg a listák üresek, az oldalon barátságos „hamarosan" üzenet látszik,
-// tehát nyugodtan lehet fokozatosan feltölteni.
-const LEAGUES = {
-  ob4d: {
-    label: "OB4D",
-    season: "2026-2027",
-    matches: [
-      { date: "2026-10-04", opponent: "Tatabányai Polipok", home: true, venue: "Ifj. Ocskay Gábor Jégcsarnok, C pálya", logo: "https://ivr-api.icehockey.hu/storage/media/108705/conversions/profile_photo-thumb-cropped.png", us: null, them: null },
-      { date: "2026-10-18", opponent: "Vénfarkasok", home: false, venue: "Pesterzsébet Jégcsarnok", logo: "https://ivr-api.icehockey.hu/storage/media/81640/conversions/profile_photo-thumb-cropped.png", us: null, them: null },
-      { date: "2026-11-08", opponent: "DJK SE", home: true, venue: "Ifj. Ocskay Gábor Jégcsarnok, C pálya", us: null, them: null },
-      { date: "2026-11-22", opponent: "ESMTK Jégpárducok B", home: false, venue: "Pesterzsébet Jégcsarnok", logo: "https://ivr-api.icehockey.hu/storage/media/116508/conversions/profile_photo-thumb-cropped.png", us: null, them: null },
-      { date: "2026-12-20", opponent: "Korongozoo VALOR", home: true, venue: "Ifj. Ocskay Gábor Jégcsarnok, C pálya", logo: "https://ivr-api.icehockey.hu/storage/media/149297/conversions/profile_photo-thumb-cropped.png", us: null, them: null },
-      { date: "2027-01-17", opponent: "Ligeti Jégkásák B", home: false, venue: "FTC Sátras Jégpálya", logo: "https://ivr-api.icehockey.hu/storage/media/117234/conversions/profile_photo-thumb-cropped.png", us: null, them: null },
-      { date: "2027-01-31", opponent: "Lizards", home: true, venue: "Ifj. Ocskay Gábor Jégcsarnok, C pálya", logo: "https://ivr-api.icehockey.hu/storage/media/37406/conversions/profile_photo-thumb-cropped.png", us: null, them: null },
-      { date: "2027-02-07", opponent: "Óbudai Gepárd D", home: false, venue: "Óbudai Jégcsarnok - Nagypálya", logo: "https://ivr-api.icehockey.hu/storage/media/84113/conversions/profile_photo-thumb-cropped.png", us: null, them: null },
-    ],
-    groups: [
-      {
-        name: "A csoport",
-        standings: [
-          { team: "Alba Trashers Jégkorong Klub", gp: 0, w: 0, d: 0, v: 0, gf: 0, ga: 0, pts: 0, logo: "https://ivr-api.icehockey.hu/storage/media/117431/conversions/profile_photo-thumb-cropped.png" },
-          { team: "Angels", gp: 0, w: 0, d: 0, v: 0, gf: 0, ga: 0, pts: 0, logo: "https://ivr-api.icehockey.hu/storage/media/116503/conversions/profile_photo-thumb-cropped.png" },
-          { team: "DVTK Jegesmedvék", gp: 0, w: 0, d: 0, v: 0, gf: 0, ga: 0, pts: 0, logo: "https://ivr-api.icehockey.hu/storage/media/116499/conversions/profile_photo-thumb-cropped.png" },
-          { team: "ESMTK Jégkockák", gp: 0, w: 0, d: 0, v: 0, gf: 0, ga: 0, pts: 0, logo: "https://ivr-api.icehockey.hu/storage/media/116508/conversions/profile_photo-thumb-cropped.png" },
-          { team: "HKB Flashes II", gp: 0, w: 0, d: 0, v: 0, gf: 0, ga: 0, pts: 0, logo: "https://ivr-api.icehockey.hu/storage/media/133381/conversions/profile_photo-thumb-cropped.png" },
-          { team: "Ligeti Jégkásák A", gp: 0, w: 0, d: 0, v: 0, gf: 0, ga: 0, pts: 0, logo: "https://ivr-api.icehockey.hu/storage/media/117234/conversions/profile_photo-thumb-cropped.png" },
-          { team: "VIP Blazing Blades", gp: 0, w: 0, d: 0, v: 0, gf: 0, ga: 0, pts: 0 },
-          { team: "Zempléni Hiúzok", gp: 0, w: 0, d: 0, v: 0, gf: 0, ga: 0, pts: 0, logo: "https://ivr-api.icehockey.hu/storage/media/83407/conversions/profile_photo-thumb-cropped.png" },
-        ],
-      },
-      {
-        name: "B csoport",
-        standings: [
-          { team: "DJK SE", gp: 0, w: 0, d: 0, v: 0, gf: 0, ga: 0, pts: 0 },
-          { team: "ESMTK Jégpárducok B", gp: 0, w: 0, d: 0, v: 0, gf: 0, ga: 0, pts: 0, logo: "https://ivr-api.icehockey.hu/storage/media/116508/conversions/profile_photo-thumb-cropped.png" },
-          { team: "Ice Unicorns", gp: 0, w: 0, d: 0, v: 0, gf: 0, ga: 0, pts: 0, logo: "assets/logo/logo.jpg", us: true },
-          { team: "Korongozoo VALOR", gp: 0, w: 0, d: 0, v: 0, gf: 0, ga: 0, pts: 0, logo: "https://ivr-api.icehockey.hu/storage/media/149297/conversions/profile_photo-thumb-cropped.png" },
-          { team: "Ligeti Jégkásák B", gp: 0, w: 0, d: 0, v: 0, gf: 0, ga: 0, pts: 0, logo: "https://ivr-api.icehockey.hu/storage/media/117234/conversions/profile_photo-thumb-cropped.png" },
-          { team: "Lizards", gp: 0, w: 0, d: 0, v: 0, gf: 0, ga: 0, pts: 0, logo: "https://ivr-api.icehockey.hu/storage/media/37406/conversions/profile_photo-thumb-cropped.png" },
-          { team: "Tatabányai Polipok", gp: 0, w: 0, d: 0, v: 0, gf: 0, ga: 0, pts: 0, logo: "https://ivr-api.icehockey.hu/storage/media/108705/conversions/profile_photo-thumb-cropped.png" },
-          { team: "Vénfarkasok", gp: 0, w: 0, d: 0, v: 0, gf: 0, ga: 0, pts: 0, logo: "https://ivr-api.icehockey.hu/storage/media/81640/conversions/profile_photo-thumb-cropped.png" },
-          { team: "Óbudai Gepárd D", gp: 0, w: 0, d: 0, v: 0, gf: 0, ga: 0, pts: 0, logo: "https://ivr-api.icehockey.hu/storage/media/84113/conversions/profile_photo-thumb-cropped.png" },
-        ],
-      },
-    ],
-  },
-
-  ob4c: {
-    label: "OB4C",
-    season: "2026-2027",
-    matches: [
-      { date: "2026-10-10", time: "19:00", opponent: "Séra Team", home: false, venue: "Mátyásföldi Jégcsarnok", logo: "https://ivr-api.icehockey.hu/storage/media/155507/conversions/profile_photo-thumb-cropped.png", us: null, them: null },
-      { date: "2026-10-25", opponent: "Kohász", home: true, venue: "Ifj. Ocskay Gábor Jégcsarnok, C pálya", logo: "https://ivr-api.icehockey.hu/storage/media/117416/conversions/profile_photo-thumb-cropped.png", us: null, them: null },
-      { date: "2026-11-15", opponent: "FTC-Telekom", home: false, venue: "FTC Sátras Jégpálya", logo: "https://ivr-api.icehockey.hu/storage/media/106284/conversions/profile_photo-thumb-cropped.png", us: null, them: null },
-      { date: "2026-11-29", opponent: "Újpesti Ragadozók", home: true, venue: "Ifj. Ocskay Gábor Jégcsarnok, C pálya", logo: "https://ivr-api.icehockey.hu/storage/media/114727/conversions/profile_photo-thumb-cropped.png", us: null, them: null },
-      { date: "2026-12-13", opponent: "Lehel HC Amatőr", home: false, venue: "Jászberényi Jégcsarnok", us: null, them: null },
-      { date: "2027-01-24", opponent: "ESMTK Jégtörők", home: true, venue: "Ifj. Ocskay Gábor Jégcsarnok, C pálya", logo: "https://ivr-api.icehockey.hu/storage/media/116508/conversions/profile_photo-thumb-cropped.png", us: null, them: null },
-    ],
-    groups: [
-      {
-        name: "A csoport",
-        standings: [
-          { team: "Algyői Olajosok", gp: 0, w: 0, d: 0, v: 0, gf: 0, ga: 0, pts: 0, logo: "https://ivr-api.icehockey.hu/storage/media/142328/conversions/profile_photo-thumb-cropped.png" },
-          { team: "ESMTK Jégpárducok", gp: 0, w: 0, d: 0, v: 0, gf: 0, ga: 0, pts: 0, logo: "https://ivr-api.icehockey.hu/storage/media/116508/conversions/profile_photo-thumb-cropped.png" },
-          { team: "HKB Flashes I", gp: 0, w: 0, d: 0, v: 0, gf: 0, ga: 0, pts: 0, logo: "https://ivr-api.icehockey.hu/storage/media/133381/conversions/profile_photo-thumb-cropped.png" },
-          { team: "Kárpáti Farkasok", gp: 0, w: 0, d: 0, v: 0, gf: 0, ga: 0, pts: 0 },
-          { team: "VIP Crazy Zombies", gp: 0, w: 0, d: 0, v: 0, gf: 0, ga: 0, pts: 0, logo: "https://ivr-api.icehockey.hu/storage/media/151684/conversions/profile_photo-thumb-cropped.png" },
-          { team: "VIP Wizards", gp: 0, w: 0, d: 0, v: 0, gf: 0, ga: 0, pts: 0 },
-          { team: "Óbudai Gepárd C", gp: 0, w: 0, d: 0, v: 0, gf: 0, ga: 0, pts: 0, logo: "https://ivr-api.icehockey.hu/storage/media/84113/conversions/profile_photo-thumb-cropped.png" },
-        ],
-      },
-      {
-        name: "B csoport",
-        standings: [
-          { team: "ESMTK Jégtörők", gp: 0, w: 0, d: 0, v: 0, gf: 0, ga: 0, pts: 0, logo: "https://ivr-api.icehockey.hu/storage/media/116508/conversions/profile_photo-thumb-cropped.png" },
-          { team: "FTC-Telekom", gp: 0, w: 0, d: 0, v: 0, gf: 0, ga: 0, pts: 0, logo: "https://ivr-api.icehockey.hu/storage/media/106284/conversions/profile_photo-thumb-cropped.png" },
-          { team: "Ice Unicorns", gp: 0, w: 0, d: 0, v: 0, gf: 0, ga: 0, pts: 0, logo: "assets/logo/logo.jpg", us: true },
-          { team: "Kohász", gp: 0, w: 0, d: 0, v: 0, gf: 0, ga: 0, pts: 0, logo: "https://ivr-api.icehockey.hu/storage/media/117416/conversions/profile_photo-thumb-cropped.png" },
-          { team: "Lehel HC Amatőr", gp: 0, w: 0, d: 0, v: 0, gf: 0, ga: 0, pts: 0 },
-          { team: "Séra Team", gp: 0, w: 0, d: 0, v: 0, gf: 0, ga: 0, pts: 0, logo: "https://ivr-api.icehockey.hu/storage/media/155507/conversions/profile_photo-thumb-cropped.png" },
-          { team: "Újpesti Ragadozók", gp: 0, w: 0, d: 0, v: 0, gf: 0, ga: 0, pts: 0, logo: "https://ivr-api.icehockey.hu/storage/media/114727/conversions/profile_photo-thumb-cropped.png" },
-        ],
-      },
-    ],
-  },
-};
+// tehát a szezon eleji üres tabella sem törik el.
+const LEAGUES = (typeof window !== "undefined" && window.LEAGUES) || {};
 
 (function () {
   const panels = document.querySelectorAll("[data-league]");
@@ -145,6 +72,12 @@ const LEAGUES = {
     if (m.us < m.them) return { key: "v", label: "V" };
     return { key: "d", label: "D" };
   }
+
+  // A hosszabbításban és a szétlövésben született eredményt egy oszlopban
+  // mutatjuk: a bajnokság pontozása szempontjából a kettő egyet ér
+  // (2, illetve 1 pont), és így nem hízik hétoszlopossá a tabella.
+  const otWins = (r) => (r.otw || 0) + (r.sow || 0);
+  const otLosses = (r) => (r.otl || 0) + (r.sol || 0);
 
   // A tabella rendezése: pont, majd gólkülönbség szerint. Két helyen kell
   // (tabella + gyorsstatisztika), ezért közös.
@@ -460,8 +393,13 @@ const LEAGUES = {
         <tr>
           <th class="c-pos">#</th>
           <th class="c-team">Csapat</th>
-          <th>M</th><th>Gy</th><th>D</th><th>V</th>
-          <th>LG–KG</th><th class="c-pts">P</th>
+          <th title="Lejátszott meccs">M</th>
+          <th title="Győzelem rendes játékidőben">Gy</th>
+          <th class="c-ot" title="Győzelem hosszabbításban vagy szétlövésben">H.Gy</th>
+          <th class="c-ot" title="Vereség hosszabbításban vagy szétlövésben">H.V</th>
+          <th title="Vereség rendes játékidőben">V</th>
+          <th title="Lőtt és kapott gól">LG–KG</th>
+          <th class="c-pts" title="Pont">P</th>
         </tr>
       </thead>
       <tbody></tbody>`;
@@ -476,7 +414,8 @@ const LEAGUES = {
         <td class="c-team"><span class="team-cell">${teamLogo(r.logo)}${r.team}</span></td>
         <td>${r.gp ?? "–"}</td>
         <td>${r.w ?? "–"}</td>
-        <td>${r.d ?? "–"}</td>
+        <td class="c-ot">${otWins(r)}</td>
+        <td class="c-ot">${otLosses(r)}</td>
         <td>${r.v ?? "–"}</td>
         <td>${(r.gf ?? "–") + "–" + (r.ga ?? "–")}</td>
         <td class="c-pts">${r.pts ?? "–"}</td>`;
@@ -523,12 +462,20 @@ const LEAGUES = {
     const gd = (r.gf || 0) - (r.ga || 0);
     const tiles = [
       { v: idx + 1 + ".", l: "Helyezés" },
-      { v: (r.w ?? 0) + "–" + (r.d ?? 0) + "–" + (r.v ?? 0), l: "Gy–D–V" },
+      {
+        v: [r.w ?? 0, otWins(r), otLosses(r), r.v ?? 0].join("–"),
+        l: "Gy–H.Gy–H.V–V",
+        cls: "is-record", // négy szám, ezért kicsit kisebb betű
+      },
       { v: r.pts ?? 0, l: "Pont" },
       { v: (gd > 0 ? "+" : "") + gd, l: "Gólkülönbség" },
     ];
     host.innerHTML = tiles
-      .map((t) => `<div class="ls-tile"><strong>${t.v}</strong><span>${t.l}</span></div>`)
+      .map(
+        (t) =>
+          `<div class="ls-tile${t.cls ? " " + t.cls : ""}">` +
+          `<strong>${t.v}</strong><span>${t.l}</span></div>`
+      )
       .join("");
   }
 
