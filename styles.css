@@ -347,6 +347,9 @@ img.nm-logo { width: 44px; height: 44px; object-fit: contain; border-radius: 10p
 .gr-name { min-width: 0; line-height: 1.2; overflow-wrap: anywhere; }
 .gr-row .team-logo { width: 20px; height: 20px; }
 .gr-score { font-family: "Baloo 2", sans-serif; font-weight: 800; font-size: 1rem; color: var(--text); font-variant-numeric: tabular-nums; white-space: nowrap; }
+/* még le nem játszott forduló: halkabb, hogy az eredmények vigyék a hangsúlyt */
+.gr-row.upcoming .gr-score { font-family: "Nunito", sans-serif; font-size: 0.8rem; font-weight: 800; color: var(--muted); }
+.gr-row.upcoming .gr-team { color: var(--muted); }
 
 /* Meccs jegyzőkönyv popup */
 .gm-overlay { position: fixed; inset: 0; background: rgba(27, 36, 80, 0.55); backdrop-filter: blur(5px); display: flex; align-items: center; justify-content: center; padding: 20px; z-index: 100; opacity: 0; pointer-events: none; transition: opacity 0.25s var(--ease); overflow-y: auto; }
