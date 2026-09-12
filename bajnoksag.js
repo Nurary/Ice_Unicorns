@@ -542,22 +542,24 @@ const LEAGUES = (typeof window !== "undefined" && window.LEAGUES) || {};
     groups.forEach((g) => renderStandingsGroup(host, g, league));
   }
 
-  // ---- A csoport eredményei ----
-  // A saját csoportunk összes lejátszott meccse, a legfrissebbel elöl –
-  // nemcsak a mieink, hanem a riválisoké is.
+  // ---- A csoport fordulói ----
+  // A saját csoportunk meccsei – nemcsak a mieink, hanem a riválisoké is.
+  // Elsősorban a már lejátszottak érdekesek (a legfrissebbel elöl), de amíg
+  // azokból nincs elég, a soron következő fordulókkal töltjük fel a listát.
+  // Így a szezon rajtja előtt is van mit mutatni.
   const GROUP_RESULTS_LEN = 10;
 
   function renderGroupResults(host, league) {
-    const played = (league.games || [])
-      .filter(
-        (g) => gamePlayed(g) && (!league.ourGroup || g.group === league.ourGroup)
-      )
-      .reverse()
-      .slice(0, GROUP_RESULTS_LEN);
+    const ours = (league.games || []).filter(
+      (g) => !league.ourGroup || g.group === league.ourGroup
+    );
+    const played = ours.filter(gamePlayed).reverse();
+    const upcoming = ours.filter((g) => !gamePlayed(g));
+    const list = played
+      .slice(0, GROUP_RESULTS_LEN)
+      .concat(upcoming.slice(0, Math.max(0, GROUP_RESULTS_LEN - played.length)));
 
-    // Szezon elején nincs mit mutatni – az egész szakasz eltűnik, hogy ne
-    // maradjon ott egy üres doboz.
-    if (!played.length) {
+    if (!list.length) {
       (host.closest(".league-block") || host).hidden = true;
       return;
     }
@@ -565,20 +567,24 @@ const LEAGUES = (typeof window !== "undefined" && window.LEAGUES) || {};
     const teams = league.teams || {};
     const logoOf = (name) => teamLogo(teams[name] && teams[name].logo);
 
-    host.innerHTML = played
+    host.innerHTML = list
       .map((g) => {
-        const ours = g.home === US || g.away === US;
-        const homeWon = g.hs > g.as;
+        const mine = g.home === US || g.away === US;
+        const done = gamePlayed(g);
+        const homeWon = done && g.hs > g.as;
+        // Lejátszott meccsnél az eredmény, előtte a kezdés ideje áll
+        // ugyanott – ha még az sincs kiírva, egy halvány „vs”.
+        const middle = done
+          ? `${g.hs}–${g.as}${g.ot ? '<span class="match-ot">h.u.</span>' : ""}`
+          : g.time || "vs";
         return `
-          <div class="gr-row${ours ? " is-us" : ""}">
+          <div class="gr-row${mine ? " is-us" : ""}${done ? "" : " upcoming"}">
             <span class="gr-date">${fmtDate(g.date)}</span>
             <span class="gr-team gr-home${homeWon ? " won" : ""}">
               <span class="gr-name">${g.home}</span>${logoOf(g.home)}
             </span>
-            <span class="gr-score">${g.hs}–${g.as}${
-          g.ot ? '<span class="match-ot">h.u.</span>' : ""
-        }</span>
-            <span class="gr-team gr-away${!homeWon ? " won" : ""}">
+            <span class="gr-score">${middle}</span>
+            <span class="gr-team gr-away${done && !homeWon ? " won" : ""}">
               ${logoOf(g.away)}<span class="gr-name">${g.away}</span>
             </span>
           </div>`;
@@ -591,8 +597,13 @@ const LEAGUES = (typeof window !== "undefined" && window.LEAGUES) || {};
   // hogy egy pillantással látszódjon, hol állnak a mezőnyben.
   function renderLeagueScorers(host, league) {
     const rows = league.scorers || [];
+    // A szezon rajtja előtt nincs kit rangsorolni. A szakaszt viszont nem
+    // rejtjük el: ugyanúgy barátságos üzenet áll benne, mint a házi
+    // pontvadászatnál, hogy látsszon, mi fog majd ide kerülni.
     if (!rows.length) {
-      (host.closest(".league-block") || host).hidden = true;
+      host.appendChild(
+        empty("Az első forduló után itt jelenik meg a csoport pontversenye. 🏒")
+      );
       return;
     }
 
