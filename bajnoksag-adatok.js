@@ -6,7 +6,7 @@
 // pedig időzítve lefuttatja, és commitolja, ha változott valami.
 //
 // Szezon: 2026-2027
-// Utolsó frissítés: 2026-09-12T11:58:37.800Z
+// Utolsó frissítés: 2026-09-16T23:33:29.208Z
 //
 // A mezők jelentését a bajnoksag.js tetején lévő leírás mondja el.
 
@@ -460,6 +460,13 @@ window.LEAGUES = {
         "away": "Lizards"
       },
       {
+        "date": "2026-10-10",
+        "group": "B",
+        "time": "17:00",
+        "home": "Korongozoo VALOR",
+        "away": "Tatabányai Polipok"
+      },
+      {
         "date": "2026-10-18",
         "group": "A",
         "home": "DVTK Jegesmedvék",
@@ -482,12 +489,6 @@ window.LEAGUES = {
         "group": "A",
         "home": "ESMTK Jégkockák",
         "away": "HKB Flashes II"
-      },
-      {
-        "date": "2026-10-18",
-        "group": "B",
-        "home": "Korongozoo VALOR",
-        "away": "Tatabányai Polipok"
       },
       {
         "date": "2026-10-18",
@@ -1386,4 +1387,4 @@ window.LEAGUES = {
   }
 };
 
-window.LEAGUES_FRISSITVE = "2026-09-12T11:58:37.800Z";
+window.LEAGUES_FRISSITVE = "2026-09-16T23:33:29.208Z";
