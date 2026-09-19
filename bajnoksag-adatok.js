@@ -6,7 +6,7 @@
 // pedig időzítve lefuttatja, és commitolja, ha változott valami.
 //
 // Szezon: 2026-2027
-// Utolsó frissítés: 2026-09-19T09:12:36.166Z
+// Utolsó frissítés: 2026-09-19T22:41:40.538Z
 //
 // A mezők jelentését a bajnoksag.js tetején lévő leírás mondja el.
 
@@ -389,20 +389,20 @@ window.LEAGUES = {
         "logo": "https://ivr-api.icehockey.hu/storage/media/108705/conversions/profile_photo-thumb-cropped.png",
         "group": "B"
       },
-      "Óbudai Gepárd D": {
-        "logo": "https://ivr-api.icehockey.hu/storage/media/84113/conversions/profile_photo-thumb-cropped.png",
-        "group": "B"
-      },
-      "Korongozoo VALOR": {
-        "logo": "https://ivr-api.icehockey.hu/storage/media/149297/conversions/profile_photo-thumb-cropped.png",
-        "group": "B"
-      },
       "Ligeti Jégkásák B": {
         "logo": "https://ivr-api.icehockey.hu/storage/media/117234/conversions/profile_photo-thumb-cropped.png",
         "group": "B"
       },
       "Lizards": {
         "logo": "https://ivr-api.icehockey.hu/storage/media/37406/conversions/profile_photo-thumb-cropped.png",
+        "group": "B"
+      },
+      "Óbudai Gepárd D": {
+        "logo": "https://ivr-api.icehockey.hu/storage/media/84113/conversions/profile_photo-thumb-cropped.png",
+        "group": "B"
+      },
+      "Korongozoo VALOR": {
+        "logo": "https://ivr-api.icehockey.hu/storage/media/149297/conversions/profile_photo-thumb-cropped.png",
         "group": "B"
       },
       "DJK SE": {
@@ -450,14 +450,15 @@ window.LEAGUES = {
       {
         "date": "2026-10-04",
         "group": "B",
-        "home": "Óbudai Gepárd D",
-        "away": "Korongozoo VALOR"
+        "home": "Ligeti Jégkásák B",
+        "away": "Lizards"
       },
       {
         "date": "2026-10-04",
         "group": "B",
-        "home": "Ligeti Jégkásák B",
-        "away": "Lizards"
+        "time": "17:45",
+        "home": "Óbudai Gepárd D",
+        "away": "Korongozoo VALOR"
       },
       {
         "date": "2026-10-10",
@@ -1388,4 +1389,4 @@ window.LEAGUES = {
   }
 };
 
-window.LEAGUES_FRISSITVE = "2026-09-19T09:12:36.166Z";
+window.LEAGUES_FRISSITVE = "2026-09-19T22:41:40.538Z";
