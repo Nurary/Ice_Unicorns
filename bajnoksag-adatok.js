@@ -6,7 +6,7 @@
 // pedig időzítve lefuttatja, és commitolja, ha változott valami.
 //
 // Szezon: 2026-2027
-// Utolsó frissítés: 2026-09-16T23:33:29.208Z
+// Utolsó frissítés: 2026-09-19T09:12:36.166Z
 //
 // A mezők jelentését a bajnoksag.js tetején lévő leírás mondja el.
 
@@ -1070,6 +1070,14 @@ window.LEAGUES = {
       }
     ],
     "teams": {
+      "Kárpáti Farkasok": {
+        "logo": null,
+        "group": "A"
+      },
+      "Óbudai Gepárd C": {
+        "logo": "https://ivr-api.icehockey.hu/storage/media/84113/conversions/profile_photo-thumb-cropped.png",
+        "group": "A"
+      },
       "Séra Team": {
         "logo": "https://ivr-api.icehockey.hu/storage/media/155507/conversions/profile_photo-thumb-cropped.png",
         "group": "B"
@@ -1092,14 +1100,6 @@ window.LEAGUES = {
       },
       "HKB Flashes I": {
         "logo": "https://ivr-api.icehockey.hu/storage/media/133381/conversions/profile_photo-thumb-cropped.png",
-        "group": "A"
-      },
-      "Kárpáti Farkasok": {
-        "logo": null,
-        "group": "A"
-      },
-      "Óbudai Gepárd C": {
-        "logo": "https://ivr-api.icehockey.hu/storage/media/84113/conversions/profile_photo-thumb-cropped.png",
         "group": "A"
       },
       "Újpesti Ragadozók": {
@@ -1130,6 +1130,13 @@ window.LEAGUES = {
     "games": [
       {
         "date": "2026-10-10",
+        "group": "A",
+        "time": "17:00",
+        "home": "Kárpáti Farkasok",
+        "away": "Óbudai Gepárd C"
+      },
+      {
+        "date": "2026-10-10",
         "group": "B",
         "time": "19:00",
         "home": "Séra Team",
@@ -1146,12 +1153,6 @@ window.LEAGUES = {
         "group": "A",
         "home": "VIP Crazy Zombies",
         "away": "HKB Flashes I"
-      },
-      {
-        "date": "2026-10-11",
-        "group": "A",
-        "home": "Kárpáti Farkasok",
-        "away": "Óbudai Gepárd C"
       },
       {
         "date": "2026-10-11",
@@ -1387,4 +1388,4 @@ window.LEAGUES = {
   }
 };
 
-window.LEAGUES_FRISSITVE = "2026-09-16T23:33:29.208Z";
+window.LEAGUES_FRISSITVE = "2026-09-19T09:12:36.166Z";
