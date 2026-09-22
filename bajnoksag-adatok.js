@@ -6,7 +6,7 @@
 // pedig időzítve lefuttatja, és commitolja, ha változott valami.
 //
 // Szezon: 2026-2027
-// Utolsó frissítés: 2026-09-19T22:41:40.538Z
+// Utolsó frissítés: 2026-09-22T23:30:18.077Z
 //
 // A mezők jelentését a bajnoksag.js tetején lévő leírás mondja el.
 
@@ -341,14 +341,6 @@ window.LEAGUES = {
       }
     ],
     "teams": {
-      "DVTK Jegesmedvék": {
-        "logo": "https://ivr-api.icehockey.hu/storage/media/116499/conversions/profile_photo-thumb-cropped.png",
-        "group": "A"
-      },
-      "HKB Flashes II": {
-        "logo": "https://ivr-api.icehockey.hu/storage/media/133381/conversions/profile_photo-thumb-cropped.png",
-        "group": "A"
-      },
       "Ligeti Jégkásák A": {
         "logo": "https://ivr-api.icehockey.hu/storage/media/117234/conversions/profile_photo-thumb-cropped.png",
         "group": "A"
@@ -397,6 +389,14 @@ window.LEAGUES = {
         "logo": "https://ivr-api.icehockey.hu/storage/media/37406/conversions/profile_photo-thumb-cropped.png",
         "group": "B"
       },
+      "DVTK Jegesmedvék": {
+        "logo": "https://ivr-api.icehockey.hu/storage/media/116499/conversions/profile_photo-thumb-cropped.png",
+        "group": "A"
+      },
+      "HKB Flashes II": {
+        "logo": "https://ivr-api.icehockey.hu/storage/media/133381/conversions/profile_photo-thumb-cropped.png",
+        "group": "A"
+      },
       "Óbudai Gepárd D": {
         "logo": "https://ivr-api.icehockey.hu/storage/media/84113/conversions/profile_photo-thumb-cropped.png",
         "group": "B"
@@ -411,12 +411,6 @@ window.LEAGUES = {
       }
     },
     "games": [
-      {
-        "date": "2026-10-04",
-        "group": "A",
-        "home": "DVTK Jegesmedvék",
-        "away": "HKB Flashes II"
-      },
       {
         "date": "2026-10-04",
         "group": "A",
@@ -452,6 +446,13 @@ window.LEAGUES = {
         "group": "B",
         "home": "Ligeti Jégkásák B",
         "away": "Lizards"
+      },
+      {
+        "date": "2026-10-04",
+        "group": "A",
+        "time": "11:30",
+        "home": "DVTK Jegesmedvék",
+        "away": "HKB Flashes II"
       },
       {
         "date": "2026-10-04",
@@ -809,7 +810,7 @@ window.LEAGUES = {
     "matches": [
       {
         "date": "2026-10-10",
-        "time": "19:00",
+        "time": "17:00",
         "opponent": "Séra Team",
         "home": false,
         "venue": "Mátyásföldi Jégcsarnok",
@@ -1139,7 +1140,7 @@ window.LEAGUES = {
       {
         "date": "2026-10-10",
         "group": "B",
-        "time": "19:00",
+        "time": "17:00",
         "home": "Séra Team",
         "away": "Ice Unicorns"
       },
@@ -1389,4 +1390,4 @@ window.LEAGUES = {
   }
 };
 
-window.LEAGUES_FRISSITVE = "2026-09-19T22:41:40.538Z";
+window.LEAGUES_FRISSITVE = "2026-09-22T23:30:18.077Z";
