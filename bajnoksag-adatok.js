@@ -6,7 +6,7 @@
 // pedig időzítve lefuttatja, és commitolja, ha változott valami.
 //
 // Szezon: 2026-2027
-// Utolsó frissítés: 2026-09-23T09:46:10.336Z
+// Utolsó frissítés: 2026-09-23T23:26:26.358Z
 //
 // A mezők jelentését a bajnoksag.js tetején lévő leírás mondja el.
 
@@ -326,14 +326,6 @@ window.LEAGUES = {
         "logo": "https://ivr-api.icehockey.hu/storage/media/116508/conversions/profile_photo-thumb-cropped.png",
         "group": "A"
       },
-      "Ligeti Jégkásák A": {
-        "logo": "https://ivr-api.icehockey.hu/storage/media/117234/conversions/profile_photo-thumb-cropped.png",
-        "group": "A"
-      },
-      "Alba Trashers Jégkorong Klub": {
-        "logo": "https://ivr-api.icehockey.hu/storage/media/117431/conversions/profile_photo-thumb-cropped.png",
-        "group": "A"
-      },
       "VIP Blazing Blades": {
         "logo": null,
         "group": "A"
@@ -374,6 +366,14 @@ window.LEAGUES = {
         "logo": "https://ivr-api.icehockey.hu/storage/media/149297/conversions/profile_photo-thumb-cropped.png",
         "group": "B"
       },
+      "Ligeti Jégkásák A": {
+        "logo": "https://ivr-api.icehockey.hu/storage/media/117234/conversions/profile_photo-thumb-cropped.png",
+        "group": "A"
+      },
+      "Alba Trashers Jégkorong Klub": {
+        "logo": "https://ivr-api.icehockey.hu/storage/media/117431/conversions/profile_photo-thumb-cropped.png",
+        "group": "A"
+      },
       "ESMTK Jégpárducok B": {
         "logo": "https://ivr-api.icehockey.hu/storage/media/116508/conversions/profile_photo-thumb-cropped.png",
         "group": "B"
@@ -389,12 +389,6 @@ window.LEAGUES = {
         "group": "A",
         "home": "Vénfarkasok",
         "away": "ESMTK Jégkockák"
-      },
-      {
-        "date": "2026-10-04",
-        "group": "A",
-        "home": "Ligeti Jégkásák A",
-        "away": "Alba Trashers Jégkorong Klub"
       },
       {
         "date": "2026-10-04",
@@ -427,6 +421,13 @@ window.LEAGUES = {
         "time": "17:45",
         "home": "Óbudai Gepárd D",
         "away": "Korongozoo VALOR"
+      },
+      {
+        "date": "2026-10-07",
+        "group": "A",
+        "time": "20:30",
+        "home": "Ligeti Jégkásák A",
+        "away": "Alba Trashers Jégkorong Klub"
       },
       {
         "date": "2026-10-10",
@@ -1013,6 +1014,14 @@ window.LEAGUES = {
         "logo": "assets/logo/logo.jpg",
         "group": "B"
       },
+      "Újpesti Ragadozók": {
+        "logo": "https://ivr-api.icehockey.hu/storage/media/114727/conversions/profile_photo-thumb-cropped.png",
+        "group": "B"
+      },
+      "FTC-Telekom": {
+        "logo": "https://ivr-api.icehockey.hu/storage/media/106284/conversions/profile_photo-thumb-cropped.png",
+        "group": "B"
+      },
       "ESMTK Jégpárducok": {
         "logo": "https://ivr-api.icehockey.hu/storage/media/116508/conversions/profile_photo-thumb-cropped.png",
         "group": "A"
@@ -1028,14 +1037,6 @@ window.LEAGUES = {
       "HKB Flashes I": {
         "logo": "https://ivr-api.icehockey.hu/storage/media/133381/conversions/profile_photo-thumb-cropped.png",
         "group": "A"
-      },
-      "Újpesti Ragadozók": {
-        "logo": "https://ivr-api.icehockey.hu/storage/media/114727/conversions/profile_photo-thumb-cropped.png",
-        "group": "B"
-      },
-      "FTC-Telekom": {
-        "logo": "https://ivr-api.icehockey.hu/storage/media/106284/conversions/profile_photo-thumb-cropped.png",
-        "group": "B"
       },
       "Kohász": {
         "logo": "https://ivr-api.icehockey.hu/storage/media/117416/conversions/profile_photo-thumb-cropped.png",
@@ -1070,6 +1071,13 @@ window.LEAGUES = {
         "away": "Ice Unicorns"
       },
       {
+        "date": "2026-10-10",
+        "group": "B",
+        "time": "20:45",
+        "home": "Újpesti Ragadozók",
+        "away": "FTC-Telekom"
+      },
+      {
         "date": "2026-10-11",
         "group": "A",
         "home": "ESMTK Jégpárducok",
@@ -1080,12 +1088,6 @@ window.LEAGUES = {
         "group": "A",
         "home": "VIP Crazy Zombies",
         "away": "HKB Flashes I"
-      },
-      {
-        "date": "2026-10-11",
-        "group": "B",
-        "home": "Újpesti Ragadozók",
-        "away": "FTC-Telekom"
       },
       {
         "date": "2026-10-11",
@@ -1315,4 +1317,4 @@ window.LEAGUES = {
   }
 };
 
-window.LEAGUES_FRISSITVE = "2026-09-23T09:46:10.336Z";
+window.LEAGUES_FRISSITVE = "2026-09-23T23:26:26.358Z";
