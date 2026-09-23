@@ -6,7 +6,7 @@
 // pedig időzítve lefuttatja, és commitolja, ha változott valami.
 //
 // Szezon: 2026-2027
-// Utolsó frissítés: 2026-09-22T23:30:18.077Z
+// Utolsó frissítés: 2026-09-23T09:46:10.336Z
 //
 // A mezők jelentését a bajnoksag.js tetején lévő leírás mondja el.
 
@@ -27,19 +27,10 @@ window.LEAGUES = {
         "them": null
       },
       {
-        "date": "2026-10-18",
-        "opponent": "Vénfarkasok",
-        "home": false,
-        "venue": "Pesterzsébet Jégcsarnok",
-        "logo": "https://ivr-api.icehockey.hu/storage/media/81640/conversions/profile_photo-thumb-cropped.png",
-        "us": null,
-        "them": null
-      },
-      {
         "date": "2026-11-08",
         "opponent": "DJK SE",
-        "home": true,
-        "venue": "Ifj. Ocskay Gábor Jégcsarnok, C pálya",
+        "home": false,
+        "venue": "Debrecen, Centerpálya",
         "us": null,
         "them": null
       },
@@ -179,6 +170,20 @@ window.LEAGUES = {
             "logo": "https://ivr-api.icehockey.hu/storage/media/117234/conversions/profile_photo-thumb-cropped.png"
           },
           {
+            "team": "Vénfarkasok",
+            "gp": 0,
+            "w": 0,
+            "otw": 0,
+            "sow": 0,
+            "otl": 0,
+            "sol": 0,
+            "v": 0,
+            "gf": 0,
+            "ga": 0,
+            "pts": 0,
+            "logo": "https://ivr-api.icehockey.hu/storage/media/81640/conversions/profile_photo-thumb-cropped.png"
+          },
+          {
             "team": "VIP Blazing Blades",
             "gp": 0,
             "w": 0,
@@ -190,20 +195,6 @@ window.LEAGUES = {
             "gf": 0,
             "ga": 0,
             "pts": 0
-          },
-          {
-            "team": "Zempléni Hiúzok",
-            "gp": 0,
-            "w": 0,
-            "otw": 0,
-            "sow": 0,
-            "otl": 0,
-            "sol": 0,
-            "v": 0,
-            "gf": 0,
-            "ga": 0,
-            "pts": 0,
-            "logo": "https://ivr-api.icehockey.hu/storage/media/83407/conversions/profile_photo-thumb-cropped.png"
           }
         ]
       },
@@ -322,25 +313,19 @@ window.LEAGUES = {
             "ga": 0,
             "pts": 0,
             "logo": "https://ivr-api.icehockey.hu/storage/media/108705/conversions/profile_photo-thumb-cropped.png"
-          },
-          {
-            "team": "Vénfarkasok",
-            "gp": 0,
-            "w": 0,
-            "otw": 0,
-            "sow": 0,
-            "otl": 0,
-            "sol": 0,
-            "v": 0,
-            "gf": 0,
-            "ga": 0,
-            "pts": 0,
-            "logo": "https://ivr-api.icehockey.hu/storage/media/81640/conversions/profile_photo-thumb-cropped.png"
           }
         ]
       }
     ],
     "teams": {
+      "Vénfarkasok": {
+        "logo": "https://ivr-api.icehockey.hu/storage/media/81640/conversions/profile_photo-thumb-cropped.png",
+        "group": "A"
+      },
+      "ESMTK Jégkockák": {
+        "logo": "https://ivr-api.icehockey.hu/storage/media/116508/conversions/profile_photo-thumb-cropped.png",
+        "group": "A"
+      },
       "Ligeti Jégkásák A": {
         "logo": "https://ivr-api.icehockey.hu/storage/media/117234/conversions/profile_photo-thumb-cropped.png",
         "group": "A"
@@ -356,22 +341,6 @@ window.LEAGUES = {
       "Angels": {
         "logo": "https://ivr-api.icehockey.hu/storage/media/116503/conversions/profile_photo-thumb-cropped.png",
         "group": "A"
-      },
-      "Zempléni Hiúzok": {
-        "logo": "https://ivr-api.icehockey.hu/storage/media/83407/conversions/profile_photo-thumb-cropped.png",
-        "group": "A"
-      },
-      "ESMTK Jégkockák": {
-        "logo": "https://ivr-api.icehockey.hu/storage/media/116508/conversions/profile_photo-thumb-cropped.png",
-        "group": "A"
-      },
-      "ESMTK Jégpárducok B": {
-        "logo": "https://ivr-api.icehockey.hu/storage/media/116508/conversions/profile_photo-thumb-cropped.png",
-        "group": "B"
-      },
-      "Vénfarkasok": {
-        "logo": "https://ivr-api.icehockey.hu/storage/media/81640/conversions/profile_photo-thumb-cropped.png",
-        "group": "B"
       },
       "Ice Unicorns": {
         "logo": "assets/logo/logo.jpg",
@@ -405,12 +374,22 @@ window.LEAGUES = {
         "logo": "https://ivr-api.icehockey.hu/storage/media/149297/conversions/profile_photo-thumb-cropped.png",
         "group": "B"
       },
+      "ESMTK Jégpárducok B": {
+        "logo": "https://ivr-api.icehockey.hu/storage/media/116508/conversions/profile_photo-thumb-cropped.png",
+        "group": "B"
+      },
       "DJK SE": {
         "logo": null,
         "group": "B"
       }
     },
     "games": [
+      {
+        "date": "2026-10-04",
+        "group": "A",
+        "home": "Vénfarkasok",
+        "away": "ESMTK Jégkockák"
+      },
       {
         "date": "2026-10-04",
         "group": "A",
@@ -422,18 +401,6 @@ window.LEAGUES = {
         "group": "A",
         "home": "VIP Blazing Blades",
         "away": "Angels"
-      },
-      {
-        "date": "2026-10-04",
-        "group": "A",
-        "home": "Zempléni Hiúzok",
-        "away": "ESMTK Jégkockák"
-      },
-      {
-        "date": "2026-10-04",
-        "group": "B",
-        "home": "ESMTK Jégpárducok B",
-        "away": "Vénfarkasok"
       },
       {
         "date": "2026-10-04",
@@ -471,6 +438,18 @@ window.LEAGUES = {
       {
         "date": "2026-10-18",
         "group": "A",
+        "home": "Angels",
+        "away": "Vénfarkasok"
+      },
+      {
+        "date": "2026-10-18",
+        "group": "B",
+        "home": "ESMTK Jégpárducok B",
+        "away": "DJK SE"
+      },
+      {
+        "date": "2026-10-18",
+        "group": "A",
         "home": "DVTK Jegesmedvék",
         "away": "Ligeti Jégkásák A"
       },
@@ -479,12 +458,6 @@ window.LEAGUES = {
         "group": "A",
         "home": "Alba Trashers Jégkorong Klub",
         "away": "VIP Blazing Blades"
-      },
-      {
-        "date": "2026-10-18",
-        "group": "A",
-        "home": "Angels",
-        "away": "Zempléni Hiúzok"
       },
       {
         "date": "2026-10-18",
@@ -499,28 +472,22 @@ window.LEAGUES = {
         "away": "Ligeti Jégkásák B"
       },
       {
-        "date": "2026-10-18",
-        "group": "B",
+        "date": "2026-11-08",
+        "group": "A",
         "home": "Vénfarkasok",
-        "away": "Ice Unicorns"
+        "away": "Alba Trashers Jégkorong Klub"
       },
       {
-        "date": "2026-10-18",
+        "date": "2026-11-08",
         "group": "B",
         "home": "DJK SE",
-        "away": "ESMTK Jégpárducok B"
+        "away": "Ice Unicorns"
       },
       {
         "date": "2026-11-08",
         "group": "A",
         "home": "VIP Blazing Blades",
         "away": "DVTK Jegesmedvék"
-      },
-      {
-        "date": "2026-11-08",
-        "group": "A",
-        "home": "Zempléni Hiúzok",
-        "away": "Alba Trashers Jégkorong Klub"
       },
       {
         "date": "2026-11-08",
@@ -543,25 +510,13 @@ window.LEAGUES = {
       {
         "date": "2026-11-08",
         "group": "B",
-        "home": "Korongozoo VALOR",
-        "away": "Vénfarkasok"
-      },
-      {
-        "date": "2026-11-08",
-        "group": "B",
-        "home": "Ice Unicorns",
-        "away": "DJK SE"
-      },
-      {
-        "date": "2026-11-08",
-        "group": "B",
         "home": "Lizards",
         "away": "Óbudai Gepárd D"
       },
       {
         "date": "2026-11-22",
         "group": "A",
-        "home": "Zempléni Hiúzok",
+        "home": "Vénfarkasok",
         "away": "DVTK Jegesmedvék"
       },
       {
@@ -585,12 +540,6 @@ window.LEAGUES = {
       {
         "date": "2026-11-22",
         "group": "B",
-        "home": "Vénfarkasok",
-        "away": "Ligeti Jégkásák B"
-      },
-      {
-        "date": "2026-11-22",
-        "group": "B",
         "home": "Tatabányai Polipok",
         "away": "Lizards"
       },
@@ -609,6 +558,12 @@ window.LEAGUES = {
       {
         "date": "2026-12-06",
         "group": "A",
+        "home": "HKB Flashes II",
+        "away": "Vénfarkasok"
+      },
+      {
+        "date": "2026-12-06",
+        "group": "A",
         "home": "ESMTK Jégkockák",
         "away": "DVTK Jegesmedvék"
       },
@@ -621,20 +576,8 @@ window.LEAGUES = {
       {
         "date": "2026-12-06",
         "group": "A",
-        "home": "HKB Flashes II",
-        "away": "Zempléni Hiúzok"
-      },
-      {
-        "date": "2026-12-06",
-        "group": "A",
         "home": "Ligeti Jégkásák A",
         "away": "VIP Blazing Blades"
-      },
-      {
-        "date": "2026-12-06",
-        "group": "B",
-        "home": "Lizards",
-        "away": "Vénfarkasok"
       },
       {
         "date": "2026-12-06",
@@ -663,12 +606,6 @@ window.LEAGUES = {
       {
         "date": "2026-12-20",
         "group": "B",
-        "home": "Vénfarkasok",
-        "away": "Óbudai Gepárd D"
-      },
-      {
-        "date": "2026-12-20",
-        "group": "B",
         "home": "ESMTK Jégpárducok B",
         "away": "Ligeti Jégkásák B"
       },
@@ -677,6 +614,12 @@ window.LEAGUES = {
         "group": "B",
         "home": "Ice Unicorns",
         "away": "Korongozoo VALOR"
+      },
+      {
+        "date": "2027-01-17",
+        "group": "A",
+        "home": "Ligeti Jégkásák A",
+        "away": "Vénfarkasok"
       },
       {
         "date": "2027-01-17",
@@ -698,12 +641,6 @@ window.LEAGUES = {
       },
       {
         "date": "2027-01-17",
-        "group": "A",
-        "home": "Ligeti Jégkásák A",
-        "away": "Zempléni Hiúzok"
-      },
-      {
-        "date": "2027-01-17",
         "group": "B",
         "home": "Lizards",
         "away": "ESMTK Jégpárducok B"
@@ -721,10 +658,10 @@ window.LEAGUES = {
         "away": "DJK SE"
       },
       {
-        "date": "2027-01-17",
-        "group": "B",
-        "home": "Tatabányai Polipok",
-        "away": "Vénfarkasok"
+        "date": "2027-01-31",
+        "group": "A",
+        "home": "Vénfarkasok",
+        "away": "VIP Blazing Blades"
       },
       {
         "date": "2027-01-31",
@@ -743,12 +680,6 @@ window.LEAGUES = {
         "group": "A",
         "home": "HKB Flashes II",
         "away": "Ligeti Jégkásák A"
-      },
-      {
-        "date": "2027-01-31",
-        "group": "A",
-        "home": "Zempléni Hiúzok",
-        "away": "VIP Blazing Blades"
       },
       {
         "date": "2027-01-31",
@@ -791,12 +722,6 @@ window.LEAGUES = {
         "group": "B",
         "home": "Tatabányai Polipok",
         "away": "ESMTK Jégpárducok B"
-      },
-      {
-        "date": "2027-02-07",
-        "group": "B",
-        "home": "Vénfarkasok",
-        "away": "DJK SE"
       }
     ],
     "scorers": [],
@@ -1390,4 +1315,4 @@ window.LEAGUES = {
   }
 };
 
-window.LEAGUES_FRISSITVE = "2026-09-22T23:30:18.077Z";
+window.LEAGUES_FRISSITVE = "2026-09-23T09:46:10.336Z";
