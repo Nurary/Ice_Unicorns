@@ -6,7 +6,7 @@
 // pedig időzítve lefuttatja, és commitolja, ha változott valami.
 //
 // Szezon: 2026-2027
-// Utolsó frissítés: 2026-09-28T11:27:55.127Z
+// Utolsó frissítés: 2026-09-29T11:08:56.058Z
 //
 // A mezők jelentését a bajnoksag.js tetején lévő leírás mondja el.
 
@@ -334,14 +334,6 @@ window.LEAGUES = {
         "logo": "https://ivr-api.icehockey.hu/storage/media/108705/conversions/profile_photo-thumb-cropped.png",
         "group": "B"
       },
-      "Ligeti Jégkásák B": {
-        "logo": "https://ivr-api.icehockey.hu/storage/media/117234/conversions/profile_photo-thumb-cropped.png",
-        "group": "B"
-      },
-      "Lizards": {
-        "logo": "https://ivr-api.icehockey.hu/storage/media/37406/conversions/profile_photo-thumb-cropped.png",
-        "group": "B"
-      },
       "DVTK Jegesmedvék": {
         "logo": "https://ivr-api.icehockey.hu/storage/media/116499/conversions/profile_photo-thumb-cropped.png",
         "group": "A"
@@ -374,6 +366,14 @@ window.LEAGUES = {
         "logo": "https://ivr-api.icehockey.hu/storage/media/117431/conversions/profile_photo-thumb-cropped.png",
         "group": "A"
       },
+      "Ligeti Jégkásák B": {
+        "logo": "https://ivr-api.icehockey.hu/storage/media/117234/conversions/profile_photo-thumb-cropped.png",
+        "group": "B"
+      },
+      "Lizards": {
+        "logo": "https://ivr-api.icehockey.hu/storage/media/37406/conversions/profile_photo-thumb-cropped.png",
+        "group": "B"
+      },
       "ESMTK Jégpárducok B": {
         "logo": "https://ivr-api.icehockey.hu/storage/media/116508/conversions/profile_photo-thumb-cropped.png",
         "group": "B"
@@ -396,12 +396,6 @@ window.LEAGUES = {
         "group": "B",
         "home": "Ice Unicorns",
         "away": "Tatabányai Polipok"
-      },
-      {
-        "date": "2026-10-04",
-        "group": "B",
-        "home": "Ligeti Jégkásák B",
-        "away": "Lizards"
       },
       {
         "date": "2026-10-04",
@@ -437,6 +431,13 @@ window.LEAGUES = {
         "time": "17:00",
         "home": "Korongozoo VALOR",
         "away": "Tatabányai Polipok"
+      },
+      {
+        "date": "2026-10-11",
+        "group": "B",
+        "time": "15:45",
+        "home": "Ligeti Jégkásák B",
+        "away": "Lizards"
       },
       {
         "date": "2026-10-18",
@@ -1319,4 +1320,4 @@ window.LEAGUES = {
   }
 };
 
-window.LEAGUES_FRISSITVE = "2026-09-28T11:27:55.127Z";
+window.LEAGUES_FRISSITVE = "2026-09-29T11:08:56.058Z";
