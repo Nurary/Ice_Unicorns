@@ -6,9 +6,10 @@
 // pedig időzítve lefuttatja, és commitolja, ha változott valami.
 //
 // Szezon: 2026-2027
-// Utolsó frissítés: 2026-09-30T20:15:03.859Z
+// Utolsó frissítés: 2026-09-30T21:05:46.927Z
 //
-// A mezők jelentését a bajnoksag.js tetején lévő leírás mondja el.
+// A LEAGUES mezőinek jelentését a bajnoksag.js, a GAME_STATS-ét a
+// statisztika.js tetején lévő leírás mondja el.
 
 window.LEAGUES = {
   "ob4d": {
@@ -18,6 +19,7 @@ window.LEAGUES = {
     "ourGroup": "B",
     "matches": [
       {
+        "id": 88464,
         "date": "2026-10-03",
         "time": "18:50",
         "opponent": "Tatabányai Polipok",
@@ -28,6 +30,7 @@ window.LEAGUES = {
         "them": null
       },
       {
+        "id": 88942,
         "date": "2026-11-08",
         "opponent": "DJK SE",
         "home": false,
@@ -36,6 +39,7 @@ window.LEAGUES = {
         "them": null
       },
       {
+        "id": 88478,
         "date": "2026-11-22",
         "opponent": "ESMTK Jégpárducok B",
         "home": false,
@@ -45,6 +49,7 @@ window.LEAGUES = {
         "them": null
       },
       {
+        "id": 88486,
         "date": "2026-12-20",
         "opponent": "Korongozoo VALOR",
         "home": true,
@@ -54,6 +59,7 @@ window.LEAGUES = {
         "them": null
       },
       {
+        "id": 88488,
         "date": "2027-01-17",
         "opponent": "Ligeti Jégkásák B",
         "home": false,
@@ -63,6 +69,7 @@ window.LEAGUES = {
         "them": null
       },
       {
+        "id": 88491,
         "date": "2027-01-31",
         "opponent": "Lizards",
         "home": true,
@@ -72,6 +79,7 @@ window.LEAGUES = {
         "them": null
       },
       {
+        "id": 88495,
         "date": "2027-02-07",
         "opponent": "Óbudai Gepárd D",
         "home": false,
@@ -740,6 +748,7 @@ window.LEAGUES = {
     "ourGroup": "B",
     "matches": [
       {
+        "id": 88415,
         "date": "2026-10-10",
         "time": "17:00",
         "opponent": "Séra Team",
@@ -750,6 +759,7 @@ window.LEAGUES = {
         "them": null
       },
       {
+        "id": 88419,
         "date": "2026-10-25",
         "opponent": "Kohász",
         "home": true,
@@ -759,6 +769,7 @@ window.LEAGUES = {
         "them": null
       },
       {
+        "id": 88422,
         "date": "2026-11-15",
         "opponent": "FTC-Telekom",
         "home": false,
@@ -768,6 +779,7 @@ window.LEAGUES = {
         "them": null
       },
       {
+        "id": 88424,
         "date": "2026-11-29",
         "opponent": "Újpesti Ragadozók",
         "home": true,
@@ -777,6 +789,7 @@ window.LEAGUES = {
         "them": null
       },
       {
+        "id": 88426,
         "date": "2026-12-13",
         "opponent": "Lehel HC Amatőr",
         "home": false,
@@ -785,6 +798,7 @@ window.LEAGUES = {
         "them": null
       },
       {
+        "id": 88432,
         "date": "2027-01-24",
         "opponent": "ESMTK Jégtörők",
         "home": true,
@@ -1323,4 +1337,7 @@ window.LEAGUES = {
   }
 };
 
-window.LEAGUES_FRISSITVE = "2026-09-30T20:15:03.859Z";
+// A saját meccseink jegyzőkönyve – ebből számolódnak a játékoskártyák.
+window.GAME_STATS = [];
+
+window.LEAGUES_FRISSITVE = "2026-09-30T21:05:46.927Z";

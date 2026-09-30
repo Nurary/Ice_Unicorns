@@ -1,0 +1,53 @@
+name: Képek optimalizálása és galérialista
+
+# Minden képfeltöltés után: a nagy képeket átméretezi és újratömöríti
+# (a fájlnév és a formátum marad), majd frissíti a galéria manifest.json-jét.
+# Így új galériaképhez elég bemásolni a fájlt az assets/Galery mappába.
+on:
+  push:
+    branches: [main]
+    paths:
+      - "assets/Galery/**"
+      - "assets/Players/**"
+      - "assets/logo/**"
+      - "assets/Errors/**"
+      - "assets/favicons/**"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: kepek
+
+jobs:
+  kepek:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+
+      - run: npm ci --no-audit --no-fund
+
+      - name: Képek optimalizálása
+        run: node scripts/kepek-optimalizalasa.mjs
+
+      - name: Galérialista frissítése
+        run: node scripts/galeria-manifest.mjs
+
+      - name: Commit, ha változott
+        run: |
+          if [ -z "$(git status --porcelain -- assets)" ]; then
+            echo "Nincs változás, nincs mit commitolni."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets
+          git commit -m "Képek optimalizálása, galérialista frissítése (automatikus)"
+          git pull --rebase
+          git push

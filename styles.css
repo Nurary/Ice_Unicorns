@@ -301,6 +301,12 @@ img.nm-logo { width: 44px; height: 44px; object-fit: contain; border-radius: 10p
 .league-season { display: block; font-size: 0.82rem; font-weight: 700; color: var(--muted); margin-bottom: 18px; }
 .league-empty { color: var(--muted); font-weight: 600; text-align: center; padding: 26px 16px; background: var(--surface-soft); border: 2px dashed var(--surface-border); border-radius: var(--radius); }
 
+/* Feliratkozás a meccsnaptárra (naptar/*.ics) */
+.cal-links { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 16px; }
+.cal-title { flex-basis: 100%; font-size: 0.85rem; font-weight: 700; color: var(--muted); }
+.cal-link { display: inline-flex; align-items: center; padding: 7px 14px; border-radius: 999px; background: var(--surface-soft); border: 2px solid var(--surface-border); color: var(--text); font-weight: 700; font-size: 0.88rem; text-decoration: none; transition: border-color 0.2s, transform 0.2s var(--bounce); }
+.cal-link:hover, .cal-link:focus-visible { border-color: var(--pink); transform: translateY(-2px); }
+
 /* Menetrend és eredmények */
 .match-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
 .match-row { display: flex; align-items: center; gap: 14px; background: var(--surface-soft); border: 2px solid var(--surface-border); border-radius: 18px; padding: 12px 16px; cursor: pointer; transition: border-color 0.2s, transform 0.2s var(--bounce); }

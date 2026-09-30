@@ -11,6 +11,7 @@ on:
 
 permissions:
   contents: write
+  issues: write # hibaértesítő issue nyitásához / lezárásához
 
 # Ne fusson egyszerre két frissítés – ütköznének a pusholásnál.
 concurrency:
@@ -25,8 +26,9 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "20"
+          cache: npm
 
-      - name: Adatok lekérése
+      - name: Adatok, jegyzőkönyvek és naptár lekérése
         env:
           # Mindkettő elhagyható: ha nincs beállítva, a script a
           # jegkorongszovetseg.hu nyilvános kulcsát használja.
@@ -35,14 +37,61 @@ jobs:
           SZEZON: ${{ vars.SZEZON }}
         run: node scripts/bajnoksag-frissites.mjs
 
+      # A megosztási kép csak „szépítés”: ha nem sikerül, a friss adatok
+      # attól még felkerülnek (a futás összefoglalójában figyelmeztetés látszik).
+      - name: Megosztási kép a következő meccsről
+        continue-on-error: true
+        run: |
+          npm ci --no-audit --no-fund
+          node scripts/og-kep.mjs
+
       - name: Commit, ha változott
         run: |
-          if [ -z "$(git status --porcelain -- bajnoksag-adatok.js)" ]; then
+          FILES="bajnoksag-adatok.js naptar assets/og"
+          if [ -z "$(git status --porcelain -- $FILES)" ]; then
             echo "Nincs változás, nincs mit commitolni."
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add bajnoksag-adatok.js
+          git add $FILES
           git commit -m "Bajnoksági adatok frissítése (automatikus)"
+          # Ha közben más is pusholt (pl. a képoptimalizáló), rá kell ülni
+          git pull --rebase
           git push
+
+      # ---- Értesítés ----
+      # Ha a frissítés elhasal (pl. lejárt az API-kulcs), egy issue nyílik –
+      # erről a GitHub e-mailt küld. Amíg nyitva van, az újabb hibák csak
+      # hozzászólásként kerülnek bele; az első sikeres futás lezárja.
+      - name: Hibaértesítő issue
+        if: failure()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          RUN_URL="$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
+          gh label create frissites-hiba --color d73a4a \
+            --description "Az automatikus bajnoksági frissítés hibára futott" --force
+          NUM=$(gh issue list --label frissites-hiba --state open --json number --jq '.[0].number')
+          if [ -n "$NUM" ]; then
+            gh issue comment "$NUM" --body "Most is hibára futott: $RUN_URL"
+          else
+            gh issue create --label frissites-hiba \
+              --title "Nem sikerült frissíteni a bajnoksági adatokat" \
+              --body "Az automatikus frissítés hibára futott: $RUN_URL
+
+          A weboldalon addig a legutóbbi sikeres frissítés adatai látszanak.
+          Gyakori ok: lejárt vagy letiltották az MJSZ API-kulcsot (lásd a
+          scripts/bajnoksag-frissites.mjs tetején), vagy az API épp nem elérhető.
+
+          Ez az issue magától lezárul, amint egy frissítés újra sikerül."
+          fi
+
+      - name: Hibaértesítő lezárása
+        if: success()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          for NUM in $(gh issue list --label frissites-hiba --state open --json number --jq '.[].number'); do
+            gh issue close "$NUM" --comment "A frissítés újra sikerült: $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
+          done

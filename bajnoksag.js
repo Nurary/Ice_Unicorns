@@ -404,7 +404,7 @@ const LEAGUES = (typeof window !== "undefined" && window.LEAGUES) || {};
           .map(([nick, l]) =>
             gmRow(
               nick,
-              `${l.ga ?? 0} kapott gól · ${l.sv ?? 0} védés`,
+              `${l.ga ?? 0} kapott gól` + (typeof l.sv === "number" ? ` · ${l.sv} védés` : ""),
               clips.filter((c) => c.player === nick && c.type === "vedes")
             )
           )
@@ -771,6 +771,57 @@ const LEAGUES = (typeof window !== "undefined" && window.LEAGUES) || {};
     host.appendChild(wrap);
   }
 
+  // ---- Strukturált adat a keresőknek (schema.org SportsEvent) ----
+  // A Google a JavaScripttel beszúrt JSON-LD-t is feldolgozza, így a
+  // meccseink eseményként jelenhetnek meg a találatok között.
+
+  // Budapesti időeltolódás egy adott napra ("+02:00" nyáron, "+01:00" télen)
+  function budapestOffset(iso) {
+    try {
+      const part = new Intl.DateTimeFormat("en-US", {
+        timeZone: "Europe/Budapest",
+        timeZoneName: "shortOffset",
+      })
+        .formatToParts(new Date(iso + "T12:00:00Z"))
+        .find((p) => p.type === "timeZoneName");
+      const m = part && part.value.match(/GMT([+-])(\d+)/);
+      if (m) return `${m[1]}${m[2].padStart(2, "0")}:00`;
+    } catch (e) {}
+    return "+01:00";
+  }
+
+  function addStructuredData(league, key) {
+    const team = (name) => ({ "@type": "SportsTeam", name: name });
+    const events = (league.matches || []).map((m) => {
+      const ev = {
+        "@type": "SportsEvent",
+        name: m.home ? `${US} – ${m.opponent}` : `${m.opponent} – ${US}`,
+        sport: "Ice hockey",
+        // Pontos kezdés nélkül csak a nap ismert
+        startDate: m.time ? `${m.date}T${m.time}:00${budapestOffset(m.date)}` : m.date,
+        eventStatus: "https://schema.org/EventScheduled",
+        eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
+        homeTeam: team(m.home ? US : m.opponent),
+        awayTeam: team(m.home ? m.opponent : US),
+        url: `https://iceunicorns.hu/${key}.html`,
+        description: `${league.label} bajnoki mérkőzés, ${league.season} szezon`,
+      };
+      if (m.venue) {
+        ev.location = {
+          "@type": "Place",
+          name: m.venue,
+          address: { "@type": "PostalAddress", addressCountry: "HU" },
+        };
+      }
+      return ev;
+    });
+    if (!events.length) return;
+    const s = document.createElement("script");
+    s.type = "application/ld+json";
+    s.textContent = JSON.stringify({ "@context": "https://schema.org", "@graph": events });
+    document.head.appendChild(s);
+  }
+
   panels.forEach((panel) => {
     const key = panel.dataset.league;
     const league = key === MIND ? { label: "Ice Unicorns" } : LEAGUES[key];
@@ -784,6 +835,8 @@ const LEAGUES = (typeof window !== "undefined" && window.LEAGUES) || {};
 
     // A többi blokknak konkrét bajnokság kell – a kezdőlapon nincsenek is meg
     if (key === MIND) return;
+
+    addStructuredData(league, key);
 
     const summary = panel.querySelector("[data-summary]");
     if (summary) renderSummary(summary, league);

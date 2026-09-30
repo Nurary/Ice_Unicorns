@@ -1,0 +1,23 @@
+name: Ellenőrzés
+
+# Törött linkek és képek (kis-/nagybetű-helyesen), JavaScript-szintaxis,
+# sablonból generált oldalak – részletek: scripts/ellenorzes.mjs
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  ellenorzes:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      # Külső csomag nem kell hozzá, ezért npm ci sincs
+      - run: node scripts/ellenorzes.mjs

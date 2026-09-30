@@ -7,22 +7,22 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>OB4D – Ice Unicorns</title>
-  <meta name="description" content="Az Ice Unicorns OB4D csapata: a bajnokság és a keret egy helyen." />
+  <title>{{label}} – Ice Unicorns</title>
+  <meta name="description" content="{{description}}" />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Ice Unicorns" />
   <meta property="og:locale" content="hu_HU" />
-  <meta property="og:url" content="https://iceunicorns.hu/ob4d.html" />
-  <meta property="og:title" content="OB4D – Ice Unicorns" />
-  <meta property="og:description" content="Az Ice Unicorns OB4D csapata: a bajnokság és a keret egy helyen." />
+  <meta property="og:url" content="https://iceunicorns.hu/{{key}}.html" />
+  <meta property="og:title" content="{{label}} – Ice Unicorns" />
+  <meta property="og:description" content="{{description}}" />
   <!-- A kép a következő meccset mutatja; a scripts/og-kep.mjs frissíti -->
-  <meta property="og:image" content="https://iceunicorns.hu/assets/og/ob4d.png" />
+  <meta property="og:image" content="https://iceunicorns.hu/assets/og/{{key}}.png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="OB4D – Ice Unicorns" />
-  <meta name="twitter:description" content="Az Ice Unicorns OB4D csapata: a bajnokság és a keret egy helyen." />
-  <meta name="twitter:image" content="https://iceunicorns.hu/assets/og/ob4d.png" />
+  <meta name="twitter:title" content="{{label}} – Ice Unicorns" />
+  <meta name="twitter:description" content="{{description}}" />
+  <meta name="twitter:image" content="https://iceunicorns.hu/assets/og/{{key}}.png" />
   <link rel="icon" type="image/png" sizes="32x32" href="assets/favicons/favicon-32.png" />
   <link rel="icon" type="image/png" sizes="16x16" href="assets/favicons/favicon-16.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="assets/favicons/apple-touch-icon.png" />
@@ -43,29 +43,29 @@
 <body>
   <div id="app-header"></div>
 
-  <main data-tabs="ob4d">
+  <main data-tabs="{{key}}">
     <section class="page-hero">
       <div class="container">
-        <span class="kicker">OB4D</span>
+        <span class="kicker">{{label}}</span>
 
         <div data-panel="bajnoksag">
-          <h1>Bajnokság, ahol <span class="grad">bizonyítunk</span></h1>
-          <p>Az Ice Unicorns az OB4D mezőnyében méri össze tudását más amatőr csapatokkal.</p>
+          <h1>Bajnokság, ahol <span class="grad">{{h1}}</span></h1>
+          <p>{{lead}}</p>
         </div>
         <div data-panel="csapat" hidden>
-          <h1>Az OB4D <span class="grad">MÉNES</span> a jégen</h1>
+          <h1>Az {{label}} <span class="grad">MÉNES</span> a jégen</h1>
           <p>Így állunk fel a pályán! Kattints bármelyik játékosra – előugrik a kártyája
             a posztjával, adataival és (hamarosan) a statisztikáival. ✨</p>
         </div>
 
-        <div class="tab-switch" role="tablist" aria-label="OB4D nézetek">
+        <div class="tab-switch" role="tablist" aria-label="{{label}} nézetek">
           <button type="button" class="tab-btn" role="tab" data-tab="bajnoksag" aria-selected="true">🏆 Bajnokság</button>
           <button type="button" class="tab-btn" role="tab" data-tab="csapat" aria-selected="false">🦄 Csapat</button>
         </div>
       </div>
     </section>
 
-    <div data-panel="bajnoksag" data-league="ob4d">
+    <div data-panel="bajnoksag" data-league="{{key}}">
       <section class="section page-section">
         <div class="container">
           <div class="next-match" data-next-match></div>
@@ -79,13 +79,13 @@
             <div class="league-col">
               <div class="league-block">
                 <h2>Menetrend és eredmények</h2>
-                <span class="league-season" data-season>OB4D</span>
+                <span class="league-season" data-season>{{label}}</span>
                 <div data-matches></div>
                 <div class="cal-links">
                   <span class="cal-title">📅 Tedd be a naptáradba – az időpont-változások is maguktól frissülnek:</span>
-                  <a class="cal-link" href="https://calendar.google.com/calendar/render?cid=webcal%3A%2F%2Ficeunicorns.hu%2Fnaptar%2Fob4d.ics" target="_blank" rel="noopener">Google Naptár</a>
-                  <a class="cal-link" href="webcal://iceunicorns.hu/naptar/ob4d.ics">Apple / Outlook</a>
-                  <a class="cal-link" href="naptar/ob4d.ics" download>.ics fájl</a>
+                  <a class="cal-link" href="https://calendar.google.com/calendar/render?cid=webcal%3A%2F%2Ficeunicorns.hu%2Fnaptar%2F{{key}}.ics" target="_blank" rel="noopener">Google Naptár</a>
+                  <a class="cal-link" href="webcal://iceunicorns.hu/naptar/{{key}}.ics">Apple / Outlook</a>
+                  <a class="cal-link" href="naptar/{{key}}.ics" download>.ics fájl</a>
                 </div>
               </div>
               <div class="league-block">
@@ -128,7 +128,7 @@
                 <span class="rink-circle"></span>
                 <span class="rink-crease top"></span>
                 <span class="rink-crease bottom"></span>
-                <div class="rink-zones" id="rinkZones" data-team="ob4d"></div>
+                <div class="rink-zones" id="rinkZones" data-team="{{key}}"></div>
               </div>
 
               <aside class="bench-side">

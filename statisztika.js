@@ -1,40 +1,49 @@
 // ===== Ice Unicorns – mérkőzés-statisztikák =====
 //
-// A felépítés MECCS-KÖZPONTÚ: egy meccs után egyben viszed fel az egész
-// jegyzőkönyvet. Ebből számoljuk a játékosok szezonösszesítését (a kártyán
-// ez látszik), és ugyanebből jön majd a meccsenkénti részletes bontás és a
-// gól-/védésvideók helye is – tehát nem kell később átszervezni az adatokat.
+// A meccsek jegyzőkönyvei AUTOMATIKUSAN jönnek: a scripts/bajnoksag-frissites.mjs
+// minden lejátszott saját meccsünk jegyzőkönyvét lekéri az MJSZ API-jából, és
+// a bajnoksag-adatok.js-be írja (window.GAME_STATS). Kézzel nem kell felvinni.
+// Ebből számoljuk a játékosok szezonösszesítését (a kártyán ez látszik) és a
+// meccsenkénti bontást.
 //
-// EGY MECCS:
+// A játékosokat a team.js keretével párosítjuk: a polgári név (`name`), vagy
+// ha az nincs, az egyértelmű mezszám (`num`) alapján. Aki így sem található,
+// az a polgári nevével szerepel – a frissítés naplója figyelmeztet rá.
+//
+// EGY MECCS (generált):
+//   id       – az MJSZ meccsazonosítója
 //   date     – "2026-09-20" (ISO)
 //   league   – "ob4d" | "ob4c"  (melyik csapat meccse)
 //   opponent – ellenfél neve
 //   home     – true = hazai
 //   us/them  – végeredmény
 //   skaters  – mezőnyjátékosok sorai, a JÁTÉKOS BECENEVÉVEL kulcsolva
-//              (pontosan úgy, ahogy a team.js-ben a `nick` szerepel!)
 //       g    – gól
 //       a    – gólpassz (assziszt)
 //       pim  – büntetőperc
 //       pm   – plusz/mínusz (+2, -1, 0 …)
-//       sog  – kapura lövés (elhagyható)
+//       sog  – kapura lövés (csak ha vezették)
 //   goalies  – kapusok sorai, szintén becenévvel kulcsolva
 //       ga   – kapott gól
-//       sv   – védés
+//       sv   – védés (csak ha a kapura lövéseket is vezették)
 //       min  – a jégen töltött perc (a kapott gól átlaghoz kell)
-//       w    – true, ha ő volt a győztes kapus (elhagyható)
+//       w    – true, ha ő volt a győztes kapus
 //
-//   clips    – KÉSŐBBRE: gól- és védésvideók ehhez a meccshez (elhagyható).
-//              Alakja:
-//                { player: "Pitypang", type: "gol" | "vedes",
-//                  time: "12:34", url: "https://…", note: "" }
-//              A `player` a becenév – a játékos kártyáján, a meccsenkénti
-//              bontásban (team.js) automatikusan megjelenik a linkje, amint
-//              felkerül ide.
+// GÓL- ÉS VÉDÉSVIDEÓK – ezeket továbbra is kézzel kell felvenni, az alábbi
+// KLIPPEK tömbbe. A meccset a dátum és a bajnokság azonosítja:
+//   { date: "2026-10-03", league: "ob4d", player: "Pitypang",
+//     type: "gol" | "vedes", time: "12:34", url: "https://…", note: "" }
+// A `player` a becenév – a meccs felugró ablakában és a játékos kártyáján
+// a meccsenkénti bontásban automatikusan megjelenik a linkje.
 //
 // Ha egy becenév elgépelt, a böngésző konzoljába figyelmeztetés kerül,
 // hogy ne vesszen el csendben a statisztika.
-const GAME_STATS = [];
+const KLIPPEK = [];
+
+const GAME_STATS = ((typeof window !== "undefined" && window.GAME_STATS) || []).map((g) => {
+  const clips = KLIPPEK.filter((c) => c.date === g.date && c.league === g.league);
+  return clips.length ? Object.assign({}, g, { clips: clips }) : g;
+});
 
 const Stats = (function () {
   const num = (v) => (typeof v === "number" && isFinite(v) ? v : 0);
@@ -89,9 +98,13 @@ const Stats = (function () {
     }
 
     const KG = rows.reduce((s, r) => s + num(r.ga), 0);
-    const V = rows.reduce((s, r) => s + num(r.sv), 0);
     const MIN = rows.reduce((s, r) => s + num(r.min), 0);
-    const lovesek = V + KG; // kapura kapott lövés
+    // Védést csak ott vezetnek, ahol a kapura lövéseket is számolják. A
+    // hatékonyságot ezért csak azokból a meccsekből számoljuk, ahol van
+    // védésszám – különben a hiányzó adat 0%-nak látszana.
+    const svRows = rows.filter((r) => typeof r.sv === "number");
+    const V = svRows.reduce((s, r) => s + r.sv, 0);
+    const lovesek = V + svRows.reduce((s, r) => s + num(r.ga), 0); // kapura lövés
     // Kapott gól átlag = kapott gól / 60 perc
     const KGA = MIN > 0 ? ((KG * 60) / MIN).toFixed(2) : "–";
     // Védési hatékonyság = védés / kapura lövés
@@ -101,7 +114,7 @@ const Stats = (function () {
     return {
       M: String(rows.length),
       KG: String(KG),
-      V: String(V),
+      V: svRows.length ? String(V) : "–",
       SZ: SZ,
       KGA: KGA,
       SO: String(SO),
@@ -118,8 +131,9 @@ const Stats = (function () {
     });
     if (bad.size) {
       console.warn(
-        "[statisztika] Ismeretlen becenév a GAME_STATS-ban, ezek a sorok nem " +
-        "jelennek meg sehol: " + Array.from(bad).join(", ")
+        "[statisztika] Ezek a játékosok nincsenek a team.js keretben, ezért a " +
+        "statisztikájuk csak a meccsek jegyzőkönyvében látszik, a kártyákon nem " +
+        "(töltsd ki a name mezőjüket): " + Array.from(bad).join(", ")
       );
     }
   }

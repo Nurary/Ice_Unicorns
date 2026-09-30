@@ -5,13 +5,17 @@
 //
 // A játékos mezők jelentése:
 //   nick   – fantázia/becenév (ez látszik a pályán)
-//   name   – POLGÁRI (civil) név, ez jelenik meg a pop-up címében (most üres → becenév látszik)
-//   num    – mezszám (most helykitöltő)
+//   name   – POLGÁRI (civil) név, ez jelenik meg a pop-up címében (most üres → becenév látszik).
+//            FONTOS: ez alapján párosítjuk a játékost az MJSZ jegyzőkönyvével, ebből
+//            jönnek a statisztikái. Úgy írd, ahogy a szövetségnél szerepel (a sorrend
+//            és az ékezetek nem számítanak, a második keresztnév elhagyható).
+//   num    – mezszám. Ha a name üres, ez alapján próbáljuk párosítani – de csak ha
+//            a keretben egyedül ő viseli ezt a számot.
 //   pos    – poszt: "Kapus" | "Védő" | "Csatár"
 //   grip   – ütőfogás: "bal" | "jobb"  (most "–")
 //   sweet  – kedvenc édesség (most "–")
 //   power  – szuperképesség (most "–")
-//   photo  – kép útvonala, pl. "assets/players/fankocska.jpg"  (most üres → 🦄 / mezszám)
+//   photo  – kép útvonala, pl. "assets/Players/Fankocska.png" (a kis- és nagybetű számít!)  (most üres → 🦄 / mezszám)
 //   bio    – a bolondos leírás (az eredeti oldalról)
 // Új játékos: csak vegyél fel egy objektumot a megfelelő csapat megfelelő zónájába – a pálya tördel.
 const TEAMS = {
@@ -218,7 +222,7 @@ function goalieStatsFor(p, leagueKey) {
     const line = row.line;
     const result = typeof g.us === "number" && typeof g.them === "number" ? `${g.us}–${g.them}` : "–";
     const statText = isGoalie
-      ? `${line.ga ?? 0} KG · ${line.sv ?? 0} véd`
+      ? `${line.ga ?? 0} KG` + (typeof line.sv === "number" ? ` · ${line.sv} véd` : "")
       : `${line.g ?? 0} G · ${line.a ?? 0} A`;
     const clips = (g.clips || []).filter((c) => c.player === nick);
     const clipsHtml = clips.length

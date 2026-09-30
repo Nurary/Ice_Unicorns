@@ -1,4 +1,8 @@
 <!DOCTYPE html>
+<!--
+  GENERÁLT FÁJL – ne szerkeszd kézzel!
+  Sablon: scripts/sablonok/bajnoksag.html · Generátor: node scripts/oldalak-generalasa.mjs
+-->
 <html lang="hu">
 <head>
   <meta charset="UTF-8" />
@@ -9,9 +13,16 @@
   <meta property="og:site_name" content="Ice Unicorns" />
   <meta property="og:locale" content="hu_HU" />
   <meta property="og:url" content="https://iceunicorns.hu/ob4c.html" />
-  <meta property="og:image" content="https://iceunicorns.hu/assets/logo/preview.png" />
+  <meta property="og:title" content="OB4C – Ice Unicorns" />
+  <meta property="og:description" content="Az Ice Unicorns OB4C csapata: a bajnokság és a keret egy helyen." />
+  <!-- A kép a következő meccset mutatja; a scripts/og-kep.mjs frissíti -->
+  <meta property="og:image" content="https://iceunicorns.hu/assets/og/ob4c.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:image" content="https://iceunicorns.hu/assets/logo/preview.png" />
+  <meta name="twitter:title" content="OB4C – Ice Unicorns" />
+  <meta name="twitter:description" content="Az Ice Unicorns OB4C csapata: a bajnokság és a keret egy helyen." />
+  <meta name="twitter:image" content="https://iceunicorns.hu/assets/og/ob4c.png" />
   <link rel="icon" type="image/png" sizes="32x32" href="assets/favicons/favicon-32.png" />
   <link rel="icon" type="image/png" sizes="16x16" href="assets/favicons/favicon-16.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="assets/favicons/apple-touch-icon.png" />
@@ -70,6 +81,12 @@
                 <h2>Menetrend és eredmények</h2>
                 <span class="league-season" data-season>OB4C</span>
                 <div data-matches></div>
+                <div class="cal-links">
+                  <span class="cal-title">📅 Tedd be a naptáradba – az időpont-változások is maguktól frissülnek:</span>
+                  <a class="cal-link" href="https://calendar.google.com/calendar/render?cid=webcal%3A%2F%2Ficeunicorns.hu%2Fnaptar%2Fob4c.ics" target="_blank" rel="noopener">Google Naptár</a>
+                  <a class="cal-link" href="webcal://iceunicorns.hu/naptar/ob4c.ics">Apple / Outlook</a>
+                  <a class="cal-link" href="naptar/ob4c.ics" download>.ics fájl</a>
+                </div>
               </div>
               <div class="league-block">
                 <h2>A csoport fordulói</h2>
@@ -127,10 +144,12 @@
 
   <div id="app-footer"></div>
   <script src="partials.js" defer></script>
+  <!-- az adatok elől: a statisztika.js a GAME_STATS-ot, a bajnoksag.js a
+       LEAGUES-t olvassa belőle; a bajnoksag.js utolsó, mert a házi
+       pontvadászathoz kell a TEAMS és a Stats is -->
+  <script src="bajnoksag-adatok.js" defer></script>
   <script src="statisztika.js" defer></script>
   <script src="team.js" defer></script>
-  <!-- a bajnoksag.js utoljara: a hazi pontvadaszathoz kell a TEAMS es a Stats -->
-  <script src="bajnoksag-adatok.js" defer></script>
   <script src="bajnoksag.js" defer></script>
 </body>
 </html>

@@ -3,7 +3,8 @@
 //
 // Lekéri az MJSZ nyilvános bajnoksági API-járól (ugyanaz, amiből a
 // jegkorongszovetseg.hu bajnokság-oldalai is dolgoznak) az OB4C és OB4D
-// menetrendjét és tabelláját, majd újraírja a bajnoksag-adatok.js fájlt.
+// menetrendjét, tabelláját és a saját meccseink jegyzőkönyvét, majd
+// újraírja a bajnoksag-adatok.js fájlt és a naptar/ mappa .ics fájljait.
 //
 // Futtatás kézzel:   node scripts/bajnoksag-frissites.mjs
 // Automatikusan:     .github/workflows/bajnoksag-frissites.yml (időzítve)
@@ -16,20 +17,25 @@
 //   MJSZ_ORIGIN  – ehhez a domainhez van engedélyezve a kulcs. A sajátunk
 //                  megérkezésekor ez lesz https://iceunicorns.hu.
 //   SZEZON       – pl. "2026-2027". Alapból az alábbi SEASON.
+//   CSAPAT       – csak teszteléshez: más csapat nevével egy korábbi szezon
+//                  adatain is ki lehet próbálni a scriptet.
 
-import { readFileSync, writeFileSync } from "node:fs";
+import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
+import { loadTeams, nameTokens, playersOf } from "./keret.mjs";
+import { renderIcs } from "./naptar.mjs";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const OUT_FILE = join(ROOT, "bajnoksag-adatok.js");
+const ICS_DIR = join(ROOT, "naptar");
 
 const API_BASE = "https://api.icehockey.hu/vbr/v2";
 const API_KEY = process.env.MJSZ_API_KEY || "7b4f4d1b466b5a3572990ae24452abf2a086e7ee";
 const ORIGIN = process.env.MJSZ_ORIGIN || "https://www.jegkorongszovetseg.hu";
 
 const SEASON = process.env.SZEZON || "2026-2027";
-const OUR_TEAM = "Ice Unicorns";
+const OUR_TEAM = process.env.CSAPAT || "Ice Unicorns";
 const OUR_LOGO = "assets/logo/logo.jpg"; // a saját emblémánk, nem az IVR-es
 const SCORERS_LIMIT = 15; // hányan kerüljenek be a csoport pontversenyébe
 
@@ -87,7 +93,9 @@ function toMatch(g) {
   const { date, time } = splitGameDate(g.gameDate);
   const played = isPlayed(g);
 
-  const match = { date };
+  // Az MJSZ meccsazonosítója: ezzel köti össze a naptár az eseményt, ha
+  // később módosul az időpont.
+  const match = { id: g.gameId, date };
   if (time) match.time = time;
   match.opponent = opp.longName;
   match.home = home;
@@ -145,7 +153,7 @@ function teamsFromGames(games, group) {
 
 // ---- Egy bajnokság összeszedése ----
 
-async function fetchLeague(cfg) {
+async function fetchLeague(key, cfg, ctx) {
   const seasons = await api("/championship-seasons", {
     championshipName: cfg.championshipName,
   });
@@ -222,6 +230,8 @@ async function fetchLeague(cfg) {
     games: games.map(toGame).sort((a, b) => (a.date < b.date ? -1 : 1)),
     scorers: await fetchScorers(championshipId, ourPhase),
     attendance: await fetchAttendance(championshipId, ourPhase),
+    // Ez nem kerül a LEAGUES-be, külön GAME_STATS tömb lesz belőle
+    gameStats: await fetchGameStats(key, games, ctx),
   };
 }
 
@@ -320,6 +330,140 @@ async function fetchAttendance(championshipId, phase) {
   };
 }
 
+// ---- Meccsjegyzőkönyvek → játékosstatisztika ----
+//
+// Minden lejátszott saját meccsünk jegyzőkönyvét lekérjük (/game-stats), és
+// a statisztika.js által várt GAME_STATS alakra hozzuk. A játékosokat a
+// team.js kerettel párosítjuk, hogy a becenevükkel szerepeljenek:
+//   1. polgári név alapján (ékezet, sorrend és kis-nagybetű nem számít,
+//      és az is elég, ha az egyik név a másik része – pl. hiányzó
+//      második keresztnév),
+//   2. ha a név nem egyértelmű vagy nincs kitöltve, a mezszám alapján –
+//      de csak akkor, ha azt a számot egyetlen játékos viseli a keretben.
+// Akit egyik módon sem találunk meg, az a polgári nevével kerül be: a meccs
+// jegyzőkönyvében így is látszik, a játékoskártyákon viszont nem – a futás
+// végén figyelmeztetés jelzi, kinek kell kitölteni a `name` mezőjét.
+
+function rosterIndex(players) {
+  const byNum = new Map();
+  players.forEach((p) => {
+    const k = String(p.num);
+    byNum.set(k, byNum.has(k) ? null : p); // null = több játékosé is
+  });
+  return {
+    byName(tokens) {
+      const set = new Set(tokens);
+      const hits = players.filter((p) => {
+        const own = nameTokens(p.name);
+        if (!own.length) return false;
+        const ownSet = new Set(own);
+        return own.every((t) => set.has(t)) || tokens.every((t) => ownSet.has(t));
+      });
+      return hits.length === 1 ? hits[0] : null;
+    },
+    byNum: (num) => byNum.get(String(num)) || null,
+  };
+}
+
+function makeResolver(teams, key) {
+  const own = rosterIndex(playersOf(teams?.[key]));
+  // Aki a másik csapat keretében szerepel (pl. besegít), azt is felismerjük
+  const all = rosterIndex(Object.values(teams || {}).flatMap(playersOf));
+  return (player, number) => {
+    const tokens = nameTokens(`${player.lastName || ""} ${player.firstName || ""}`);
+    const p =
+      (tokens.length && (own.byName(tokens) || all.byName(tokens))) ||
+      (number != null && number !== "" ? own.byNum(number) : null);
+    return p ? p.nick : null;
+  };
+}
+
+async function fetchGameStats(key, games, ctx) {
+  const resolve = makeResolver(ctx.teams, key);
+  const ours = games.filter(
+    (g) =>
+      isPlayed(g) &&
+      (g.homeTeam.longName === OUR_TEAM || g.awayTeam.longName === OUR_TEAM)
+  );
+
+  const out = [];
+  for (const g of ours) {
+    const home = g.homeTeam.longName === OUR_TEAM;
+    const ourTeamId = String((home ? g.homeTeam : g.awayTeam).id);
+    let data;
+    try {
+      data = await api("/game-stats", { gameId: g.gameId });
+    } catch (err) {
+      // Egy hibás jegyzőkönyv miatt ne vesszen el a többi: ha korábban már
+      // megvolt, azt tartjuk meg.
+      const prev = ctx.previousStats.find((r) => r.id === g.gameId);
+      ctx.warnings.push(
+        `Jegyzőkönyv (${g.gameId}): ${err.message}` + (prev ? " – marad a korábbi." : "")
+      );
+      if (prev) out.push(prev);
+      continue;
+    }
+
+    const skaterRows = data?.players?.[ourTeamId] || [];
+    const goalieRows = (data?.goalies?.[ourTeamId] || []).filter((r) => (r.mip ?? 0) > 0);
+    // Amíg a jegyzőkönyvet nem töltötték fel, nincs mit átvenni – a meccs
+    // felugró ablaka ilyenkor a „még nem érkezett meg” üzenetet mutatja.
+    if (!skaterRows.length && !goalieRows.length) continue;
+
+    const { date } = splitGameDate(g.gameDate);
+    const us = home ? g.homeTeamScore : g.awayTeamScore;
+    const them = home ? g.awayTeamScore : g.homeTeamScore;
+    const keyOf = (player, number) => {
+      const nick = resolve(player || {}, number);
+      if (nick) return nick;
+      const civil = `${player?.lastName || ""} ${player?.firstName || ""}`.trim();
+      ctx.unmatched.add(`${civil} (${LEAGUE_CONFIG[key].label})`);
+      return civil;
+    };
+
+    const skaters = {};
+    skaterRows.forEach((r) => {
+      const line = {
+        g: r.goal ?? 0,
+        a: r.assist ?? 0,
+        pim: r.pim ?? 0,
+        pm: r.plusMinus ?? 0,
+      };
+      // A lövésszámot nem minden jegyzőkönyvbe vezetik: 0 = nincs adat
+      if (r.shots > 0) line.sog = r.shots;
+      skaters[keyOf(r.player, r.number)] = line;
+    });
+
+    // Győztes kapus: győzelemnél az, aki a legtöbbet volt a jégen
+    const winner =
+      us > them
+        ? goalieRows.reduce((a, b) => ((b.mip ?? 0) > (a?.mip ?? 0) ? b : a), null)
+        : null;
+    const goalies = {};
+    goalieRows.forEach((r) => {
+      const line = { ga: r.ga ?? 0, min: Math.round((r.mip ?? 0) / 60) };
+      // Védésszám csak akkor van, ha a kapura lövéseket is vezették (a
+      // jegyzőkönyv enélkül negatív „védést” számol – azt nem vesszük át).
+      if ((r.sog ?? 0) > 0 && (r.svs ?? -1) >= 0) line.sv = r.svs;
+      if (r === winner) line.w = true;
+      goalies[keyOf(r.player, r.jerseyNumber)] = line;
+    });
+
+    out.push({
+      id: g.gameId,
+      date,
+      league: key,
+      opponent: (home ? g.awayTeam : g.homeTeam).longName,
+      home,
+      us,
+      them,
+      skaters,
+      goalies,
+    });
+  }
+  return out;
+}
+
 // ---- Kiírás ----
 
 // A korábbi adatok – ha egy bajnokság lekérése üresen jönne vissza, inkább
@@ -327,14 +471,21 @@ async function fetchAttendance(championshipId, phase) {
 function readPrevious() {
   try {
     const src = readFileSync(OUT_FILE, "utf8");
-    const m = src.match(/window\.LEAGUES\s*=\s*(\{[\s\S]*?\});\s*\n/);
-    return m ? JSON.parse(m[1]) : null;
+    const leagues = src.match(/window\.LEAGUES\s*=\s*(\{[\s\S]*?\});\s*\n/);
+    if (!leagues) return null;
+    const stats = src.match(/window\.GAME_STATS\s*=\s*(\[[\s\S]*?\]);\s*\n/);
+    const at = src.match(/window\.LEAGUES_FRISSITVE\s*=\s*"([^"]*)"/);
+    return {
+      leagues: JSON.parse(leagues[1]),
+      stats: stats ? JSON.parse(stats[1]) : [],
+      generatedAt: at ? at[1] : null,
+    };
   } catch {
     return null;
   }
 }
 
-function render(leagues, generatedAt) {
+function render(leagues, gameStats, generatedAt) {
   return `// ===== Ice Unicorns – bajnoksági adatok (GENERÁLT FÁJL) =====
 //
 // EZT A FÁJLT NE SZERKESZD KÉZZEL – minden futásnál felülíródik.
@@ -345,46 +496,100 @@ function render(leagues, generatedAt) {
 // Szezon: ${SEASON}
 // Utolsó frissítés: ${generatedAt}
 //
-// A mezők jelentését a bajnoksag.js tetején lévő leírás mondja el.
+// A LEAGUES mezőinek jelentését a bajnoksag.js, a GAME_STATS-ét a
+// statisztika.js tetején lévő leírás mondja el.
 
 window.LEAGUES = ${JSON.stringify(leagues, null, 2)};
+
+// A saját meccseink jegyzőkönyve – ebből számolódnak a játékoskártyák.
+window.GAME_STATS = ${JSON.stringify(gameStats, null, 2)};
 
 window.LEAGUES_FRISSITVE = ${JSON.stringify(generatedAt)};
 `;
 }
 
+// A naptárfájlok: bajnokságonként egy, és egy közös az összes meccsel
+function writeCalendars(leagues, generatedAt) {
+  mkdirSync(ICS_DIR, { recursive: true });
+  const files = {
+    "ice-unicorns.ics": { name: "Ice Unicorns – meccsek", leagues },
+  };
+  for (const [key, league] of Object.entries(leagues)) {
+    files[`${key}.ics`] = {
+      name: `Ice Unicorns – ${league.label}`,
+      leagues: { [key]: league },
+    };
+  }
+  for (const [file, cfg] of Object.entries(files)) {
+    writeFileSync(join(ICS_DIR, file), renderIcs(cfg.leagues, { name: cfg.name, generatedAt }), "utf8");
+  }
+}
+
+// GitHub Actions alatt a figyelmeztetés a futás összefoglalójában is
+// megjelenik, nem csak a naplóban.
+const warn = (msg) =>
+  console.warn(process.env.GITHUB_ACTIONS ? `::warning::${msg}` : `FIGYELEM: ${msg}`);
+
 async function main() {
   const previous = readPrevious();
   const leagues = {};
-  const warnings = [];
+  const gameStats = [];
+  const ctx = {
+    teams: loadTeams(ROOT),
+    previousStats: previous?.stats || [],
+    warnings: [],
+    unmatched: new Set(),
+  };
 
   for (const [key, cfg] of Object.entries(LEAGUE_CONFIG)) {
-    const league = await fetchLeague(cfg);
+    const { gameStats: stats, ...league } = await fetchLeague(key, cfg, ctx);
 
-    if (!league.matches.length && !league.groups.length && previous?.[key]) {
-      warnings.push(`${cfg.label}: üres választ kaptunk, marad a korábbi adat.`);
-      leagues[key] = previous[key];
+    if (!league.matches.length && !league.groups.length && previous?.leagues?.[key]) {
+      ctx.warnings.push(`${cfg.label}: üres választ kaptunk, marad a korábbi adat.`);
+      leagues[key] = previous.leagues[key];
+      gameStats.push(...ctx.previousStats.filter((g) => g.league === key));
       continue;
     }
     leagues[key] = league;
+    gameStats.push(...stats);
     console.log(
       `${cfg.label}: ${league.matches.length} saját meccs, ` +
         `${league.groups.length} csoport ` +
-        `(${league.groups.map((g) => g.standings.length).join("+")} csapat)`
+        `(${league.groups.map((g) => g.standings.length).join("+")} csapat), ` +
+        `${stats.length} jegyzőkönyv`
+    );
+  }
+  gameStats.sort((a, b) => (a.date < b.date ? -1 : a.date > b.date ? 1 : 0));
+
+  ctx.warnings.forEach(warn);
+  if (ctx.unmatched.size) {
+    warn(
+      "Ezeket a játékosokat nem találtuk a team.js keretben, ezért a " +
+        "kártyájukon nem jelenik meg a statisztikájuk (töltsd ki a `name` " +
+        "mezőjüket, vagy vedd fel őket): " +
+        [...ctx.unmatched].join("; ")
     );
   }
 
-  warnings.forEach((w) => console.warn("FIGYELEM: " + w));
-
   // A frissítés időpontja mindig változik, ezért a „történt-e változás”
   // kérdést a tényleges adatokon döntjük el – így nem lesz felesleges commit.
-  if (previous && JSON.stringify(previous) === JSON.stringify(leagues)) {
+  const changed =
+    !previous ||
+    JSON.stringify(previous.leagues) !== JSON.stringify(leagues) ||
+    JSON.stringify(previous.stats) !== JSON.stringify(gameStats);
+  const generatedAt = changed ? new Date().toISOString() : previous.generatedAt;
+
+  if (changed) {
+    writeFileSync(OUT_FILE, render(leagues, gameStats, generatedAt), "utf8");
+    console.log(`Frissítve: ${OUT_FILE}`);
+  } else {
     console.log("Nincs változás az adatokban.");
-    return;
   }
 
-  writeFileSync(OUT_FILE, render(leagues, new Date().toISOString()), "utf8");
-  console.log(`Frissítve: ${OUT_FILE}`);
+  // A naptárat mindig kiírjuk: ugyanabból az adatból bájtra ugyanaz jön ki,
+  // tehát ha nem változott semmi, git szerint sem lesz változás – viszont
+  // ha a naptárfájl még nem létezik (vagy a formátuma változott), elkészül.
+  writeCalendars(leagues, generatedAt || new Date(0).toISOString());
 }
 
 main().catch((err) => {
