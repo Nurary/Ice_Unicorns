@@ -6,7 +6,7 @@
 // pedig időzítve lefuttatja, és commitolja, ha változott valami.
 //
 // Szezon: 2026-2027
-// Utolsó frissítés: 2026-09-30T00:04:53.467Z
+// Utolsó frissítés: 2026-09-30T20:15:03.859Z
 //
 // A mezők jelentését a bajnoksag.js tetején lévő leírás mondja el.
 
@@ -18,7 +18,8 @@ window.LEAGUES = {
     "ourGroup": "B",
     "matches": [
       {
-        "date": "2026-10-04",
+        "date": "2026-10-03",
+        "time": "18:50",
         "opponent": "Tatabányai Polipok",
         "home": true,
         "venue": "Ifj. Ocskay Gábor Jégcsarnok, C pálya",
@@ -392,8 +393,9 @@ window.LEAGUES = {
         "away": "Angels"
       },
       {
-        "date": "2026-10-04",
+        "date": "2026-10-03",
         "group": "B",
+        "time": "18:50",
         "home": "Ice Unicorns",
         "away": "Tatabányai Polipok"
       },
@@ -1321,4 +1323,4 @@ window.LEAGUES = {
   }
 };
 
-window.LEAGUES_FRISSITVE = "2026-09-30T00:04:53.467Z";
+window.LEAGUES_FRISSITVE = "2026-09-30T20:15:03.859Z";
