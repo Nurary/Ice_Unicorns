@@ -6,7 +6,7 @@
 // pedig időzítve lefuttatja, és commitolja, ha változott valami.
 //
 // Szezon: 2026-2027
-// Utolsó frissítés: 2026-09-29T11:08:56.058Z
+// Utolsó frissítés: 2026-09-30T00:04:53.467Z
 //
 // A mezők jelentését a bajnoksag.js tetején lévő leírás mondja el.
 
@@ -1025,14 +1025,6 @@ window.LEAGUES = {
         "logo": "https://ivr-api.icehockey.hu/storage/media/106284/conversions/profile_photo-thumb-cropped.png",
         "group": "B"
       },
-      "ESMTK Jégpárducok": {
-        "logo": "https://ivr-api.icehockey.hu/storage/media/116508/conversions/profile_photo-thumb-cropped.png",
-        "group": "A"
-      },
-      "VIP Wizards": {
-        "logo": null,
-        "group": "A"
-      },
       "VIP Crazy Zombies": {
         "logo": "https://ivr-api.icehockey.hu/storage/media/151684/conversions/profile_photo-thumb-cropped.png",
         "group": "A"
@@ -1048,6 +1040,14 @@ window.LEAGUES = {
       "Lehel HC Amatőr": {
         "logo": null,
         "group": "B"
+      },
+      "ESMTK Jégpárducok": {
+        "logo": "https://ivr-api.icehockey.hu/storage/media/116508/conversions/profile_photo-thumb-cropped.png",
+        "group": "A"
+      },
+      "VIP Wizards": {
+        "logo": null,
+        "group": "A"
       },
       "Algyői Olajosok": {
         "logo": "https://ivr-api.icehockey.hu/storage/media/142328/conversions/profile_photo-thumb-cropped.png",
@@ -1083,12 +1083,6 @@ window.LEAGUES = {
       {
         "date": "2026-10-11",
         "group": "A",
-        "home": "ESMTK Jégpárducok",
-        "away": "VIP Wizards"
-      },
-      {
-        "date": "2026-10-11",
-        "group": "A",
         "home": "VIP Crazy Zombies",
         "away": "HKB Flashes I"
       },
@@ -1097,6 +1091,13 @@ window.LEAGUES = {
         "group": "B",
         "home": "Kohász",
         "away": "Lehel HC Amatőr"
+      },
+      {
+        "date": "2026-10-11",
+        "group": "A",
+        "time": "11:15",
+        "home": "ESMTK Jégpárducok",
+        "away": "VIP Wizards"
       },
       {
         "date": "2026-10-25",
@@ -1320,4 +1321,4 @@ window.LEAGUES = {
   }
 };
 
-window.LEAGUES_FRISSITVE = "2026-09-29T11:08:56.058Z";
+window.LEAGUES_FRISSITVE = "2026-09-30T00:04:53.467Z";
