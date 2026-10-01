@@ -6,7 +6,7 @@
 // pedig időzítve lefuttatja, és commitolja, ha változott valami.
 //
 // Szezon: 2026-2027
-// Utolsó frissítés: 2026-09-30T21:05:46.927Z
+// Utolsó frissítés: 2026-10-01T11:23:54.315Z
 //
 // A LEAGUES mezőinek jelentését a bajnoksag.js, a GAME_STATS-ét a
 // statisztika.js tetején lévő leírás mondja el.
@@ -1033,14 +1033,6 @@ window.LEAGUES = {
         "logo": "assets/logo/logo.jpg",
         "group": "B"
       },
-      "Újpesti Ragadozók": {
-        "logo": "https://ivr-api.icehockey.hu/storage/media/114727/conversions/profile_photo-thumb-cropped.png",
-        "group": "B"
-      },
-      "FTC-Telekom": {
-        "logo": "https://ivr-api.icehockey.hu/storage/media/106284/conversions/profile_photo-thumb-cropped.png",
-        "group": "B"
-      },
       "VIP Crazy Zombies": {
         "logo": "https://ivr-api.icehockey.hu/storage/media/151684/conversions/profile_photo-thumb-cropped.png",
         "group": "A"
@@ -1048,6 +1040,14 @@ window.LEAGUES = {
       "HKB Flashes I": {
         "logo": "https://ivr-api.icehockey.hu/storage/media/133381/conversions/profile_photo-thumb-cropped.png",
         "group": "A"
+      },
+      "Újpesti Ragadozók": {
+        "logo": "https://ivr-api.icehockey.hu/storage/media/114727/conversions/profile_photo-thumb-cropped.png",
+        "group": "B"
+      },
+      "FTC-Telekom": {
+        "logo": "https://ivr-api.icehockey.hu/storage/media/106284/conversions/profile_photo-thumb-cropped.png",
+        "group": "B"
       },
       "Kohász": {
         "logo": "https://ivr-api.icehockey.hu/storage/media/117416/conversions/profile_photo-thumb-cropped.png",
@@ -1091,16 +1091,17 @@ window.LEAGUES = {
       },
       {
         "date": "2026-10-10",
+        "group": "A",
+        "time": "19:40",
+        "home": "VIP Crazy Zombies",
+        "away": "HKB Flashes I"
+      },
+      {
+        "date": "2026-10-10",
         "group": "B",
         "time": "20:45",
         "home": "Újpesti Ragadozók",
         "away": "FTC-Telekom"
-      },
-      {
-        "date": "2026-10-11",
-        "group": "A",
-        "home": "VIP Crazy Zombies",
-        "away": "HKB Flashes I"
       },
       {
         "date": "2026-10-11",
@@ -1340,4 +1341,4 @@ window.LEAGUES = {
 // A saját meccseink jegyzőkönyve – ebből számolódnak a játékoskártyák.
 window.GAME_STATS = [];
 
-window.LEAGUES_FRISSITVE = "2026-09-30T21:05:46.927Z";
+window.LEAGUES_FRISSITVE = "2026-10-01T11:23:54.315Z";
