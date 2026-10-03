@@ -6,7 +6,7 @@
 // pedig időzítve lefuttatja, és commitolja, ha változott valami.
 //
 // Szezon: 2026-2027
-// Utolsó frissítés: 2026-10-01T11:23:54.315Z
+// Utolsó frissítés: 2026-10-03T00:10:41.333Z
 //
 // A LEAGUES mezőinek jelentését a bajnoksag.js, a GAME_STATS-ét a
 // statisztika.js tetején lévő leírás mondja el.
@@ -457,12 +457,6 @@ window.LEAGUES = {
       },
       {
         "date": "2026-10-18",
-        "group": "B",
-        "home": "ESMTK Jégpárducok B",
-        "away": "DJK SE"
-      },
-      {
-        "date": "2026-10-18",
         "group": "A",
         "home": "DVTK Jegesmedvék",
         "away": "Ligeti Jégkásák A"
@@ -484,6 +478,12 @@ window.LEAGUES = {
         "group": "B",
         "home": "Óbudai Gepárd D",
         "away": "Ligeti Jégkásák B"
+      },
+      {
+        "date": "2026-10-18",
+        "group": "B",
+        "home": "ESMTK Jégpárducok B",
+        "away": "DJK SE"
       },
       {
         "date": "2026-11-08",
@@ -1341,4 +1341,4 @@ window.LEAGUES = {
 // A saját meccseink jegyzőkönyve – ebből számolódnak a játékoskártyák.
 window.GAME_STATS = [];
 
-window.LEAGUES_FRISSITVE = "2026-10-01T11:23:54.315Z";
+window.LEAGUES_FRISSITVE = "2026-10-03T00:10:41.333Z";
