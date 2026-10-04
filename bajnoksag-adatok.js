@@ -6,7 +6,7 @@
 // pedig időzítve lefuttatja, és commitolja, ha változott valami.
 //
 // Szezon: 2026-2027
-// Utolsó frissítés: 2026-10-03T23:32:56.519Z
+// Utolsó frissítés: 2026-10-04T10:55:54.262Z
 //
 // A LEAGUES mezőinek jelentését a bajnoksag.js, a GAME_STATS-ét a
 // statisztika.js tetején lévő leírás mondja el.
@@ -249,7 +249,9 @@ window.LEAGUES = {
         "group": "A",
         "time": "11:30",
         "home": "DVTK Jegesmedvék",
-        "away": "HKB Flashes II"
+        "away": "HKB Flashes II",
+        "hs": 3,
+        "as": 10
       },
       {
         "date": "2026-10-04",
@@ -1450,4 +1452,4 @@ window.GAME_STATS = [
   }
 ];
 
-window.LEAGUES_FRISSITVE = "2026-10-03T23:32:56.519Z";
+window.LEAGUES_FRISSITVE = "2026-10-04T10:55:54.262Z";
