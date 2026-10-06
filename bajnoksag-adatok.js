@@ -6,7 +6,7 @@
 // pedig időzítve lefuttatja, és commitolja, ha változott valami.
 //
 // Szezon: 2026-2027
-// Utolsó frissítés: 2026-10-05T12:04:00.803Z
+// Utolsó frissítés: 2026-10-05T23:44:17.172Z
 //
 // A LEAGUES mezőinek jelentését a bajnoksag.js, a GAME_STATS-ét a
 // statisztika.js tetején lévő leírás mondja el.
@@ -378,6 +378,12 @@ window.LEAGUES = {
       },
       {
         "date": "2026-10-18",
+        "group": "B",
+        "home": "ESMTK Jégpárducok B",
+        "away": "DJK SE"
+      },
+      {
+        "date": "2026-10-18",
         "group": "A",
         "home": "Angels",
         "away": "Vénfarkasok"
@@ -405,12 +411,6 @@ window.LEAGUES = {
         "group": "B",
         "home": "Óbudai Gepárd D",
         "away": "Ligeti Jégkásák B"
-      },
-      {
-        "date": "2026-10-18",
-        "group": "B",
-        "home": "ESMTK Jégpárducok B",
-        "away": "DJK SE"
       },
       {
         "date": "2026-11-08",
@@ -1088,14 +1088,6 @@ window.LEAGUES = {
       }
     ],
     "teams": {
-      "Séra Team": {
-        "logo": "https://ivr-api.icehockey.hu/storage/media/155507/conversions/profile_photo-thumb-cropped.png",
-        "group": "B"
-      },
-      "Ice Unicorns": {
-        "logo": "assets/logo/logo.jpg",
-        "group": "B"
-      },
       "Kárpáti Farkasok": {
         "logo": null,
         "group": "A"
@@ -1103,6 +1095,14 @@ window.LEAGUES = {
       "Óbudai Gepárd C": {
         "logo": "https://ivr-api.icehockey.hu/storage/media/84113/conversions/profile_photo-thumb-cropped.png",
         "group": "A"
+      },
+      "Séra Team": {
+        "logo": "https://ivr-api.icehockey.hu/storage/media/155507/conversions/profile_photo-thumb-cropped.png",
+        "group": "B"
+      },
+      "Ice Unicorns": {
+        "logo": "assets/logo/logo.jpg",
+        "group": "B"
       },
       "VIP Crazy Zombies": {
         "logo": "https://ivr-api.icehockey.hu/storage/media/151684/conversions/profile_photo-thumb-cropped.png",
@@ -1148,17 +1148,17 @@ window.LEAGUES = {
     "games": [
       {
         "date": "2026-10-10",
-        "group": "B",
-        "time": "17:00",
-        "home": "Séra Team",
-        "away": "Ice Unicorns"
-      },
-      {
-        "date": "2026-10-10",
         "group": "A",
         "time": "17:00",
         "home": "Kárpáti Farkasok",
         "away": "Óbudai Gepárd C"
+      },
+      {
+        "date": "2026-10-10",
+        "group": "B",
+        "time": "17:00",
+        "home": "Séra Team",
+        "away": "Ice Unicorns"
       },
       {
         "date": "2026-10-10",
@@ -1529,8 +1529,362 @@ window.GAME_STATS = [
         "min": 60,
         "sv": 28
       }
-    }
+    },
+    "periods": [
+      {
+        "p": "1",
+        "us": 1,
+        "them": 4
+      },
+      {
+        "p": "2",
+        "us": 1,
+        "them": 1
+      },
+      {
+        "p": "3",
+        "us": 1,
+        "them": 2
+      }
+    ],
+    "shots": {
+      "us": [
+        4,
+        7,
+        8
+      ],
+      "them": [
+        12,
+        12,
+        11
+      ]
+    },
+    "pp": {
+      "n": 3,
+      "g": 0,
+      "t": 314
+    },
+    "pk": {
+      "n": 2,
+      "ga": 0,
+      "t": 194
+    },
+    "oppGk": {
+      "sv": 16,
+      "ga": 3
+    },
+    "lines": [
+      {
+        "row": "gk",
+        "players": [
+          {
+            "pos": "gk",
+            "nick": "Baróta Gábor",
+            "num": 39,
+            "pic": "https://ivr-api.icehockey.hu/storage/media/147875/conversions/profile_photo-thumb-cropped.png"
+          }
+        ]
+      },
+      {
+        "row": "1",
+        "players": [
+          {
+            "pos": "ld",
+            "nick": "Mádi Tamás",
+            "num": 1,
+            "cap": "A",
+            "pic": "https://ivr-api.icehockey.hu/storage/media/97889/conversions/profile_photo-thumb-cropped.png"
+          },
+          {
+            "pos": "rd",
+            "nick": "Gévai Ádám",
+            "num": 6,
+            "pic": "https://ivr-api.icehockey.hu/storage/media/147811/conversions/profile_photo-thumb-cropped.png"
+          },
+          {
+            "pos": "lw",
+            "nick": "Szikrácska",
+            "num": 31,
+            "pic": "https://ivr-api.icehockey.hu/storage/media/147724/conversions/profile_photo-thumb-cropped.png"
+          },
+          {
+            "pos": "c",
+            "nick": "KristályPatkó",
+            "num": 87,
+            "pic": "https://ivr-api.icehockey.hu/storage/media/148033/conversions/profile_photo-thumb-cropped.png"
+          },
+          {
+            "pos": "rw",
+            "nick": "Villámpatkó",
+            "num": 10,
+            "pic": "https://ivr-api.icehockey.hu/storage/media/147771/conversions/profile_photo-thumb-cropped.png"
+          }
+        ]
+      },
+      {
+        "row": "2",
+        "players": [
+          {
+            "pos": "ld",
+            "nick": "Hópehely",
+            "num": 20,
+            "cap": "A",
+            "pic": "https://ivr-api.icehockey.hu/storage/media/98447/conversions/profile_photo-thumb-cropped.png"
+          },
+          {
+            "pos": "rd",
+            "nick": "Patkószörny",
+            "num": 13,
+            "pic": "https://ivr-api.icehockey.hu/storage/media/147767/conversions/profile_photo-thumb-cropped.png"
+          },
+          {
+            "pos": "lw",
+            "nick": "Mályvacukor",
+            "num": 67,
+            "pic": "https://ivr-api.icehockey.hu/storage/media/147789/conversions/profile_photo-thumb-cropped.png"
+          },
+          {
+            "pos": "c",
+            "nick": "Tóth Dávid",
+            "num": 86,
+            "pic": "https://ivr-api.icehockey.hu/storage/media/149995/conversions/profile_photo-thumb-cropped.png"
+          },
+          {
+            "pos": "rw",
+            "nick": "Incze Péter",
+            "num": 28,
+            "pic": "https://ivr-api.icehockey.hu/storage/media/81396/conversions/profile_photo-thumb-cropped.png"
+          }
+        ]
+      },
+      {
+        "row": "3",
+        "players": [
+          {
+            "pos": "ld",
+            "nick": "Küzdy László",
+            "num": 77,
+            "pic": "https://ivr-api.icehockey.hu/storage/media/82169/conversions/profile_photo-thumb-cropped.png"
+          },
+          {
+            "pos": "rd",
+            "nick": "Vajda Krisztián",
+            "num": 16,
+            "pic": "https://ivr-api.icehockey.hu/storage/media/95307/conversions/profile_photo-thumb-cropped.png"
+          },
+          {
+            "pos": "lw",
+            "nick": "Visnyei-Beron Cecilia",
+            "num": 72,
+            "pic": "https://ivr-api.icehockey.hu/storage/media/161693/conversions/profile_photo-thumb-cropped.png"
+          },
+          {
+            "pos": "c",
+            "nick": "Fecske",
+            "num": 14,
+            "cap": "C",
+            "pic": "https://ivr-api.icehockey.hu/storage/media/147799/conversions/profile_photo-thumb-cropped.png"
+          },
+          {
+            "pos": "rw",
+            "nick": "Pitypang",
+            "num": 15,
+            "pic": "https://ivr-api.icehockey.hu/storage/media/147463/conversions/profile_photo-thumb-cropped.png"
+          }
+        ]
+      },
+      {
+        "row": "4",
+        "players": [
+          {
+            "pos": "lw",
+            "nick": "Pöttömke",
+            "num": 9,
+            "pic": "https://ivr-api.icehockey.hu/storage/media/147743/conversions/profile_photo-thumb-cropped.png"
+          }
+        ]
+      }
+    ],
+    "events": [
+      {
+        "per": "1",
+        "t": "01:37",
+        "kind": "gol",
+        "us": false,
+        "who": "Makszim Zsombor",
+        "num": 32,
+        "score": [
+          0,
+          1
+        ]
+      },
+      {
+        "per": "1",
+        "t": "03:25",
+        "kind": "gol",
+        "us": false,
+        "who": "Varga Dávid Ferenc",
+        "num": 82,
+        "score": [
+          0,
+          2
+        ]
+      },
+      {
+        "per": "1",
+        "t": "06:22",
+        "kind": "gol",
+        "us": false,
+        "who": "Végh Ádám",
+        "num": 24,
+        "score": [
+          0,
+          3
+        ],
+        "a": [
+          "Csóka Kristóf"
+        ]
+      },
+      {
+        "per": "1",
+        "t": "07:18",
+        "kind": "gol",
+        "us": true,
+        "who": "Incze Péter",
+        "num": 28,
+        "score": [
+          1,
+          3
+        ]
+      },
+      {
+        "per": "1",
+        "t": "18:54",
+        "kind": "gol",
+        "us": false,
+        "who": "Végh Ádám",
+        "num": 24,
+        "score": [
+          1,
+          4
+        ],
+        "a": [
+          "Vancsó Arnold"
+        ],
+        "gwg": true
+      },
+      {
+        "per": "1",
+        "t": "20:00",
+        "kind": "kiall",
+        "us": true,
+        "who": "Vajda Krisztián",
+        "num": 16,
+        "min": 2,
+        "cause": "magasan tartott bot"
+      },
+      {
+        "per": "2",
+        "t": "23:39",
+        "kind": "kiall",
+        "us": false,
+        "who": "Péter Gábor",
+        "num": 70,
+        "min": 2,
+        "cause": "keresztbe tartott bot"
+      },
+      {
+        "per": "2",
+        "t": "24:53",
+        "kind": "kiall",
+        "us": true,
+        "who": "Hópehely",
+        "num": 20,
+        "min": 2,
+        "cause": "gáncsolás"
+      },
+      {
+        "per": "2",
+        "t": "29:23",
+        "kind": "gol",
+        "us": false,
+        "who": "Végh Ádám",
+        "num": 24,
+        "score": [
+          1,
+          5
+        ]
+      },
+      {
+        "per": "2",
+        "t": "29:34",
+        "kind": "gol",
+        "us": true,
+        "who": "Incze Péter",
+        "num": 28,
+        "score": [
+          2,
+          5
+        ]
+      },
+      {
+        "per": "3",
+        "t": "40:15",
+        "kind": "gol",
+        "us": true,
+        "who": "Tóth Dávid",
+        "num": 86,
+        "score": [
+          3,
+          5
+        ]
+      },
+      {
+        "per": "3",
+        "t": "42:27",
+        "kind": "kiall",
+        "us": false,
+        "who": "Makszim Zsombor",
+        "num": 32,
+        "min": 2,
+        "cause": "gáncsolás"
+      },
+      {
+        "per": "3",
+        "t": "44:59",
+        "kind": "gol",
+        "us": false,
+        "who": "Makszim Zsombor",
+        "num": 32,
+        "score": [
+          3,
+          6
+        ]
+      },
+      {
+        "per": "3",
+        "t": "45:43",
+        "kind": "kiall",
+        "us": false,
+        "who": "Vancsó Arnold",
+        "num": 75,
+        "min": 2,
+        "cause": "szabálytalan test-test elleni játék"
+      },
+      {
+        "per": "3",
+        "t": "56:15",
+        "kind": "gol",
+        "us": false,
+        "who": "Csaplár Krisztián",
+        "num": 81,
+        "score": [
+          3,
+          7
+        ]
+      }
+    ]
   }
 ];
 
-window.LEAGUES_FRISSITVE = "2026-10-05T12:04:00.803Z";
+window.LEAGUES_FRISSITVE = "2026-10-05T23:44:17.172Z";

@@ -196,6 +196,17 @@ const LEAGUES = (typeof window !== "undefined" && window.LEAGUES) || {};
     return `<img class="${cls}" src="${url}" alt="" loading="lazy" onerror="this.remove()">`;
   }
 
+  // Eredményjelző-oszlop egy csapatnak: kerek logó-jelvény, név, hazai/vendég.
+  // Logó nélkül a név kezdőbetűje kerül a jelvénybe (CSS: data-init).
+  const escHtml = (v) =>
+    String(v ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  function boardTeam(logo, name, side) {
+    return (
+      `<span class="gm-team-logo" data-init="${escHtml(String(name).charAt(0))}">${teamLogo(logo, "gm-logo")}</span>` +
+      `<span class="gm-team-name">${escHtml(name)}</span><span class="gm-team-side">${side}</span>`
+    );
+  }
+
   // ---- Következő meccs (kiemelt kártya) ----
   // A kezdőlapon mindkét bajnokság meccsei közül a legközelebbi kell, ezért
   // a meccsek mellé odatesszük, melyik bajnokságból valók.
@@ -233,7 +244,6 @@ const LEAGUES = (typeof window !== "undefined" && window.LEAGUES) || {};
     }
 
     const u = upcoming.m;
-    const where = u.home ? "Hazai pálya" : "Idegenben";
     // Csak akkor írjuk ki a bajnokságot, ha egyébként nem derülne ki
     const badge = key === MIND
       ? `<span class="nm-league">${upcoming.label}</span>` : "";
@@ -260,21 +270,20 @@ const LEAGUES = (typeof window !== "undefined" && window.LEAGUES) || {};
         ? `<p class="nm-form"><span>Az ellenfél</span>${oppPos}${formDots(oppForm)}</p>`
         : "";
 
+    // Ugyanaz az eredményjelző-elrendezés, mint a jegyzőkönyv fejlécében:
+    // mi balra, az ellenfél jobbra, középen a „VS”
     host.innerHTML = `
-      <div class="nm-when">
-        <span class="nm-day">${fmtWeekday(u.date)}</span>
-        <strong>${fmtDate(u.date)}</strong>
-        ${u.time ? `<span class="nm-time">${u.time}</span>` : ""}
-      </div>
-      <div class="nm-main">
+      <div class="nm-top">
         <span class="kicker">Következő meccs ${badge}</span>
-        <h2>
-          <span class="nm-team">${teamLogo("assets/logo/logo.jpg", "nm-logo")}Ice Unicorns</span>
-          <span class="nm-vs">vs</span>
-          <span class="nm-team">${teamLogo(u.logo, "nm-logo")}${u.opponent}</span>
+        <span class="nm-date">${[fmtWeekday(u.date), fmtDate(u.date), u.time].filter(Boolean).join(" · ")}</span>
+        ${u.venue ? `<span class="nm-venue">${escHtml(u.venue)}</span>` : ""}
+      </div>
+      <div class="nm-mid">
+        <h2 class="nm-board">
+          <span class="gm-team">${boardTeam("assets/logo/logo.jpg", "Ice Unicorns", u.home ? "hazai" : "vendég")}</span>
+          <span class="nm-center"><span class="nm-vs">VS</span></span>
+          <span class="gm-team">${boardTeam(u.logo, u.opponent, u.home ? "vendég" : "hazai")}</span>
         </h2>
-        <p>${where}${u.venue ? ` · ${u.venue}` : ""}</p>
-        ${oppInfo}
         <div class="nm-count" data-countdown="${target}" role="timer" aria-label="Visszaszámlálás a meccsig">
           <div><strong data-cd="d">–</strong><span>nap</span></div>
           <div><strong data-cd="h">–</strong><span>óra</span></div>
@@ -282,7 +291,10 @@ const LEAGUES = (typeof window !== "undefined" && window.LEAGUES) || {};
           <div><strong data-cd="s">–</strong><span>mp</span></div>
         </div>
       </div>
-      <a href="${ctaHref}"${ctaTarget} class="btn btn-primary">Gyere el szurkolni</a>`;
+      <div class="nm-side">
+        ${oppInfo}
+        <a href="${ctaHref}"${ctaTarget} class="btn btn-primary">Gyere el szurkolni</a>
+      </div>`;
   }
 
   // ---- Élő visszaszámláló ----
@@ -316,7 +328,8 @@ const LEAGUES = (typeof window !== "undefined" && window.LEAGUES) || {};
 
   // ---- Meccs jegyzőkönyv popup ----
   // Egy meccssorra kattintva megnyílik, és a statisztika.js GAME_STATS-jából
-  // (a `clips` mezővel együtt) építi fel a gólszerzők/kapusok bontását.
+  // (a `clips` mezővel együtt) építi fel: harmadok, meccsstatisztika,
+  // gól- és kiállításnapló, valamint a sorok felállása.
   // Amíg egy meccshez nincs feltöltve jegyzőkönyv, barátságos üres állapotot mutat.
   const gmOverlay = document.createElement("div");
   gmOverlay.className = "gm-overlay";
@@ -325,17 +338,26 @@ const LEAGUES = (typeof window !== "undefined" && window.LEAGUES) || {};
       <button class="gm-close" type="button" aria-label="Bezárás">×</button>
       <div class="gm-head">
         <span class="gm-date"></span>
-        <h3 class="gm-title"></h3>
-        <span class="gm-score"></span>
+        <span class="gm-venue"></span>
+        <h3 class="gm-title">
+          <span class="gm-team us"></span>
+          <span class="gm-center"><span class="gm-score"></span><span class="gm-result"></span></span>
+          <span class="gm-team them"></span>
+        </h3>
+        <div class="gm-periods"></div>
       </div>
       <div class="gm-body"></div>
     </div>`;
   document.body.appendChild(gmOverlay);
 
   const gmDate = gmOverlay.querySelector(".gm-date");
-  const gmTitle = gmOverlay.querySelector(".gm-title");
+  const gmVenue = gmOverlay.querySelector(".gm-venue");
+  const gmUs = gmOverlay.querySelector(".gm-team.us");
+  const gmThem = gmOverlay.querySelector(".gm-team.them");
   const gmScore = gmOverlay.querySelector(".gm-score");
+  const gmResult = gmOverlay.querySelector(".gm-result");
   const gmBody = gmOverlay.querySelector(".gm-body");
+  const gmPers = gmOverlay.querySelector(".gm-periods");
 
   function closeGameModal() {
     gmOverlay.classList.remove("open");
@@ -367,55 +389,438 @@ const LEAGUES = (typeof window !== "undefined" && window.LEAGUES) || {};
       </div>`;
   }
 
+  const esc = (s) =>
+    String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  const sum = (arr) => (arr || []).reduce((s, n) => s + (n || 0), 0);
+  const perLabel = (p) => (p === "OT" ? "Hosszabbítás" : p === "SO" ? "Szétlövés" : p + ". harmad");
+
+  // A team.js keretéből a játékos saját fotója (ha van) – a sorok
+  // korongjaihoz. Ha nincs, az MJSZ-es profilképét használjuk.
+  const rosterPhoto = (() => {
+    const map = {};
+    if (typeof TEAMS !== "undefined") {
+      Object.values(TEAMS).forEach((t) =>
+        (t.zones || []).forEach((z) => (z.players || []).forEach((p) => { if (p.photo) map[p.nick] = p.photo; }))
+      );
+    }
+    return (nick) => map[nick] || null;
+  })();
+
+  // A komoly csapatoknál (team.js: komoly: true) a jegyzőkönyvben is a
+  // polgári név látszik. Az openGameModal állítja be az adott bajnoksághoz.
+  let gmName = (nick) => nick;
+  function namesFor(leagueKey) {
+    const team = typeof TEAMS !== "undefined" ? TEAMS[leagueKey] : null;
+    if (!team || !team.komoly) return (nick) => nick;
+    const map = {};
+    (team.zones || []).forEach((z) => (z.players || []).forEach((p) => { if (p.name) map[p.nick] = p.name; }));
+    return (nick) => map[nick] || nick;
+  }
+
+  // Fejléc alatti harmad-bontás: „1–4 · 1–1 · 1–2”
+  function gmPeriods(record) {
+    if (!record || !(record.periods || []).length) return "";
+    return record.periods
+      .map((p) => {
+        const cls = p.us > p.them ? " won" : p.us < p.them ? " lost" : "";
+        const lbl = p.p === "OT" ? "H" : p.p === "SO" ? "SZL" : p.p + ".";
+        return `<span class="gm-per${cls}"><small>${lbl}</small>${p.us}–${p.them}</span>`;
+      })
+      .join("");
+  }
+
+  // „Meccs számokban” – egymással szembeállított sávok (mi balra, ők jobbra),
+  // az állás alakulása időben, és néhány érdekesség a jegyzőkönyvből
+  const pct = (a, b) => (b > 0 ? (a / b) * 100 : null);
+  const fmtPct = (v) => v.toFixed(1).replace(".", ",") + "%";
+  const toSec = (t) => {
+    const [m, s] = String(t || "").split(":").map(Number);
+    return (m || 0) * 60 + (s || 0);
+  };
+  const fmtSec = (sec) => Math.floor(sec / 60) + ":" + String(Math.round(sec % 60)).padStart(2, "0");
+
+  function gmCompare(record) {
+    const ev = record.events || [];
+    const goals = ev.filter((e) => e.kind === "gol");
+    const shotsUs = record.shots ? sum(record.shots.us) : 0;
+    const shotsThem = record.shots ? sum(record.shots.them) : 0;
+    const ourGk = Object.values(record.goalies || {}).filter((l) => typeof l.sv === "number");
+    const ourSv = ourGk.reduce((s, l) => s + l.sv, 0);
+
+    // [címke, mi, ők, kiírás(mi), kiírás(ők)]
+    const rows = [];
+    if (record.shots) {
+      rows.push(["Kapura lövés", shotsUs, shotsThem]);
+      const a = pct(record.us, shotsUs);
+      const b = pct(record.them, shotsThem);
+      if (a !== null && b !== null) rows.push(["Lövéshatékonyság", a, b, fmtPct(a), fmtPct(b)]);
+    }
+    if (ourGk.length && record.oppGk) {
+      const a = pct(ourSv, ourSv + record.them);
+      const b = pct(record.oppGk.sv, record.oppGk.sv + record.oppGk.ga);
+      if (a !== null && b !== null) rows.push(["Védési hatékonyság", a, b, fmtPct(a), fmtPct(b)]);
+    }
+    if (ev.length) {
+      const pim = (us) => ev.filter((e) => e.kind === "kiall" && e.us === us).reduce((s, e) => s + (e.min || 0), 0);
+      rows.push(["Kiállítás (perc)", pim(true), pim(false)]);
+    }
+
+    const bars = rows
+      .map(([label, us, them, usTxt, themTxt]) => {
+        const tot = us + them || 1;
+        return `
+        <div class="gm-cmp">
+          <b class="gm-cmp-us">${usTxt ?? us}</b>
+          <span class="gm-cmp-lbl">${label}</span>
+          <b class="gm-cmp-them">${themTxt ?? them}</b>
+          <div class="gm-cmp-bar"><i style="width:${(us / tot) * 100}%"></i></div>
+        </div>`;
+      })
+      .join("");
+
+    // Lövések harmadonként
+    let perShots = "";
+    if (record.shots && record.shots.us.length > 1) {
+      perShots = `<div class="gm-split-h">Kapura lövés harmadonként</div><div class="gm-pershots">${record.shots.us
+        .map((n, i) => {
+          const p = (record.periods || [])[i];
+          const lbl = p ? (p.p === "OT" ? "H" : p.p + ".") : i + 1 + ".";
+          return `<span><small>${lbl} harmad</small><b>${n}–${record.shots.them[i] ?? 0}</b></span>`;
+        })
+        .join("")}</div>`;
+    }
+
+    // Az állás alakulása: mennyi ideig vezettünk / volt döntetlen / voltunk hátrányban
+    let split = "";
+    if (goals.length && goals.every((g) => g.score)) {
+      const end = Math.max(3600, ...ev.map((e) => toSec(e.t)));
+      const time = { lead: 0, tie: 0, trail: 0 };
+      let at = 0;
+      let diff = 0;
+      goals.forEach((g) => {
+        const t = toSec(g.t);
+        time[diff > 0 ? "lead" : diff < 0 ? "trail" : "tie"] += t - at;
+        at = t;
+        diff = g.score[0] - g.score[1];
+      });
+      time[diff > 0 ? "lead" : diff < 0 ? "trail" : "tie"] += end - at;
+      const seg = (k) => (time[k] > 0 ? `<i class="${k}" style="flex:${time[k]}"></i>` : "");
+      split = `
+        <div class="gm-split-h">Az állás alakulása</div>
+        <div class="gm-split">${seg("lead")}${seg("tie")}${seg("trail")}</div>
+        <div class="gm-split-lg">
+          <span class="lead">Vezettünk <b>${fmtSec(time.lead)}</b></span>
+          <span class="tie">Döntetlen <b>${fmtSec(time.tie)}</b></span>
+          <span class="trail">Hátrányban <b>${fmtSec(time.trail)}</b></span>
+        </div>`;
+    }
+
+    // Érdekességek
+    const facts = [];
+    if (record.pp) {
+      facts.push(
+        `Emberelőny: <b>${record.pp.g}/${record.pp.n}</b>` + (record.pp.t ? ` (${fmtSec(record.pp.t)} perc)` : "")
+      );
+      facts.push(`Emberhátrány kivédve: <b>${record.pk.n - record.pk.ga}/${record.pk.n}</b>`);
+    }
+    const ourGoals = goals.filter((g) => g.us);
+    if (ourGoals.length) {
+      facts.push(`Gólpasszos gólunk: <b>${ourGoals.filter((g) => (g.a || []).length).length}/${ourGoals.length}</b>`);
+    }
+    if (goals.length) {
+      const first = goals[0];
+      facts.push(`Első gól: <b>${first.us ? "a miénk" : "az ellenfélé"}</b> (${esc(first.t)})`);
+    }
+    // Leggyorsabb válaszunk egy kapott gólra
+    let best = null;
+    goals.forEach((g, i) => {
+      const prev = goals[i - 1];
+      if (g.us && prev && !prev.us) {
+        const gap = toSec(g.t) - toSec(prev.t);
+        if (gap >= 0 && (!best || gap < best.gap)) best = { gap, g };
+      }
+    });
+    if (best && best.gap <= 120) {
+      facts.push(`Válaszgól: <b>${best.gap} mp-cel</b> a kapott gól után – ${esc(gmName(best.g.who))}`);
+    }
+
+    if (!bars && !split && !facts.length) return "";
+    return `<div class="gm-section"><h4>Meccs számokban</h4>${bars}${perShots}${split}${
+      facts.length ? `<div class="gm-facts">${facts.map((f) => `<span>${f}</span>`).join("")}</div>` : ""
+    }</div>`;
+  }
+
+  // Gól- és kiállításnapló harmadonként, futó állással
+  function gmTimeline(record, clips) {
+    const ev = record.events || [];
+    if (!ev.length) return "";
+    const pers = [];
+    ev.forEach((e) => { if (!pers.includes(e.per)) pers.push(e.per); });
+    const perScore = {};
+    (record.periods || []).forEach((p) => (perScore[p.p] = `${p.us}–${p.them}`));
+
+    const item = (e) => {
+      const side = e.us ? "us" : "them";
+      const num = e.num != null ? `<span class="gm-ev-num">#${e.num}</span>` : "";
+      if (e.kind === "kiall") {
+        return `
+          <li class="gm-ev pen ${side}">
+            <span class="gm-ev-t">${esc(e.t)}</span>
+            <span class="gm-ev-ic" aria-hidden="true">⏱</span>
+            <span class="gm-ev-txt"><b>${esc(e.us ? gmName(e.who) : e.who) || "Csapatbüntetés"}</b>${num}
+              <small>${e.min} perc${e.cause ? " · " + esc(e.cause) : ""}</small></span>
+          </li>`;
+      }
+      const tags = [];
+      if (e.adv && /^PP/.test(e.adv)) tags.push("emberelőny");
+      else if (e.adv && /^SH/.test(e.adv)) tags.push("emberhátrány");
+      if (e.en) tags.push("üres kapu");
+      if (e.ps) tags.push("büntetőlövés");
+      if (e.gwg) tags.push("győztes gól");
+      const assists = (e.a || []).map((n) => esc(e.us ? gmName(n) : n)).join(", ");
+      const vids = e.us
+        ? clips.filter((c) => c.type === "gol" && c.player === e.who && (!c.time || c.time === e.t)).map(gmClipBtn).join("")
+        : "";
+      return `
+        <li class="gm-ev goal ${side}">
+          <span class="gm-ev-t">${esc(e.t)}</span>
+          <span class="gm-ev-ic" aria-hidden="true">${e.us ? "🦄" : "🥅"}</span>
+          <span class="gm-ev-txt"><b>${esc(e.us ? gmName(e.who) : e.who)}</b>${num}
+            <small>${assists ? "Assz.: " + assists : "önálló gól"}${tags.length ? " · " + tags.join(" · ") : ""}</small>
+            ${vids ? `<span class="gm-clips">${vids}</span>` : ""}</span>
+          ${e.score ? `<span class="gm-ev-sc">${e.score[0]}–${e.score[1]}</span>` : ""}
+        </li>`;
+    };
+
+    return `<div class="gm-section"><h4>Gólok és kiállítások</h4>${pers
+      .map(
+        (p) => `
+        <div class="gm-period">
+          <div class="gm-period-h"><span>${perLabel(p)}</span>${perScore[p] ? `<b>${perScore[p]}</b>` : ""}</div>
+          <ol class="gm-evs">${ev.filter((e) => e.per === p).map(item).join("")}</ol>
+        </div>`
+      )
+      .join("")}</div>`;
+  }
+
+  // Egy játékos korongja a sorok nézetben
+  function gmPuck(p, line) {
+    const photo = rosterPhoto(p.nick) || p.pic;
+    const face = photo
+      ? `<img src="${esc(photo)}" alt="" loading="lazy" onerror="this.remove()"><span class="gm-pk-num">${p.num}</span>`
+      : `<span class="gm-pk-only">${p.num}</span>`;
+    const badges = [];
+    if (line) {
+      if (line.g) badges.push(`<b class="gm-bd g" title="${line.g} gól">${line.g} G</b>`);
+      if (line.a) badges.push(`<b class="gm-bd a" title="${line.a} gólpassz">${line.a} A</b>`);
+      if (line.pim) badges.push(`<b class="gm-bd p" title="${line.pim} büntetőperc">${line.pim}'</b>`);
+    }
+    return `
+      <div class="gm-pk${line && (line.g || line.a) ? " hot" : ""}">
+        <span class="gm-pk-face">${face}${p.cap ? `<span class="gm-pk-cap">${p.cap}</span>` : ""}</span>
+        <span class="gm-pk-nick">${esc(gmName(p.nick))}</span>
+        ${badges.length ? `<span class="gm-bds">${badges.join("")}</span>` : ""}
+      </div>`;
+  }
+
+  // Felállás: kapus(ok), majd soronként a csatárhármas és a védőpár
+  function gmLines(record) {
+    const lines = record.lines || [];
+    if (!lines.length) return "";
+    const order = (list, pos) => pos.map((k) => list.find((p) => p.pos === k)).filter(Boolean);
+    const sk = record.skaters || {};
+
+    const html = lines
+      .map((ln) => {
+        if (ln.row === "gk") {
+          return ln.players
+            .map((p) => {
+              const g = (record.goalies || {})[p.nick];
+              const stat = g
+                ? `${typeof g.sv === "number" ? `<b>${g.sv}</b> védés · ` : ""}<b>${g.ga}</b> kapott gól` +
+                  (g.min ? ` · ${g.min} perc` : "")
+                : "nem lépett jégre";
+              return `
+                <div class="gm-line gk">
+                  <span class="gm-line-h">Kapus</span>
+                  <div class="gm-gk">${gmPuck(p)}<span class="gm-gk-stat">${stat}</span></div>
+                </div>`;
+            })
+            .join("");
+        }
+        const fwd = order(ln.players, ["lw", "c", "rw"]);
+        const def = order(ln.players, ["ld", "rd"]);
+        const rest = ln.players.filter((p) => !fwd.includes(p) && !def.includes(p));
+        const g = ln.players.reduce((s, p) => s + ((sk[p.nick] || {}).g || 0), 0);
+        const pts = ln.players.reduce((s, p) => s + ((sk[p.nick] || {}).g || 0) + ((sk[p.nick] || {}).a || 0), 0);
+        const row = (ps, cls) =>
+          ps.length ? `<div class="gm-line-row ${cls}">${ps.map((p) => gmPuck(p, sk[p.nick])).join("")}</div>` : "";
+        return `
+          <div class="gm-line">
+            <span class="gm-line-h">${esc(ln.row)}. sor${g || pts ? `<em>${g} gól · ${pts} pont</em>` : ""}</span>
+            ${row(fwd.concat(rest), "fwd")}${row(def, "def")}
+          </div>`;
+      })
+      .join("");
+    return `<div class="gm-section"><h4>Felállás</h4><div class="gm-lines">${html}</div></div>`;
+  }
+
+  // A régi (sorok és gólnapló nélküli) jegyzőkönyvekhez: egyszerű listák
+  function gmSimple(record) {
+    const clips = record.clips || [];
+    const scorers = Object.entries(record.skaters || {})
+      .filter(([, l]) => l.g || l.a)
+      .sort((a, b) => (b[1].g || 0) - (a[1].g || 0));
+    const goalies = Object.entries(record.goalies || {});
+    let html = "";
+    if (scorers.length) {
+      html += `<div class="gm-section"><h4>Gólszerzők</h4>${scorers
+        .map(([nick, l]) =>
+          gmRow(
+            esc(gmName(nick)),
+            `${l.g || 0} gól · ${l.a || 0} assziszt`,
+            clips.filter((c) => c.player === nick && c.type === "gol")
+          )
+        )
+        .join("")}</div>`;
+    }
+    if (goalies.length) {
+      html += `<div class="gm-section"><h4>Kapusok</h4>${goalies
+        .map(([nick, l]) =>
+          gmRow(
+            esc(gmName(nick)),
+            `${l.ga ?? 0} kapott gól` + (typeof l.sv === "number" ? ` · ${l.sv} védés` : ""),
+            clips.filter((c) => c.player === nick && c.type === "vedes")
+          )
+        )
+        .join("")}</div>`;
+    }
+    return html;
+  }
+
+  // Összefoglaló: a mi pontszerzőink és a kapus egy pillantásra
+  function gmLeaders(record) {
+    const sk = Object.entries(record.skaters || {})
+      .filter(([, l]) => l.g || l.a)
+      .sort((a, b) => (b[1].g || 0) + (b[1].a || 0) - ((a[1].g || 0) + (a[1].a || 0)) || (b[1].g || 0) - (a[1].g || 0));
+    const gk = Object.entries(record.goalies || {});
+    if (!sk.length && !gk.length) return "";
+    const chip = (name, stat) => `<span class="gm-ldr"><b>${esc(gmName(name))}</b>${stat}</span>`;
+    return `<div class="gm-section"><h4>Pontszerzőink</h4><div class="gm-ldrs">${
+      sk.map(([n, l]) => chip(n, [l.g ? l.g + " G" : "", l.a ? l.a + " A" : ""].filter(Boolean).join(" · "))).join("") ||
+      '<span class="gm-ldr-none">Ezen a meccsen nem szereztünk pontot.</span>'
+    }</div>${
+      gk.length
+        ? `<h4>Kapus</h4><div class="gm-ldrs">${gk
+            .map(([n, l]) => chip(n, (typeof l.sv === "number" ? l.sv + " védés · " : "") + (l.ga ?? 0) + " kapott gól"))
+            .join("")}</div>`
+        : ""
+    }</div>`;
+  }
+
+  // Fülsor és panelek. Egyetlen fülnél nincs fülsor, csak a tartalom.
+  function gmTabs(tabs) {
+    if (!tabs.length) return "";
+    if (tabs.length === 1) return tabs[0].html;
+    const bar = tabs
+      .map(
+        (t, i) =>
+          `<button type="button" role="tab" class="gm-tab" id="gm-tab-${t.id}" aria-controls="gm-panel-${t.id}" aria-selected="${i === 0}" tabindex="${i === 0 ? 0 : -1}">${t.label}</button>`
+      )
+      .join("");
+    const panels = tabs
+      .map(
+        (t, i) =>
+          `<div class="gm-panel" role="tabpanel" id="gm-panel-${t.id}" aria-labelledby="gm-tab-${t.id}"${i === 0 ? "" : " hidden"}>${t.html}</div>`
+      )
+      .join("");
+    return `<div class="gm-tabs" role="tablist" aria-label="Jegyzőkönyv">${bar}</div>${panels}`;
+  }
+
+  function gmSelectTab(btn, focus) {
+    const card = gmOverlay.querySelector(".gm-card");
+    gmBody.querySelectorAll(".gm-tab").forEach((b) => {
+      const on = b === btn;
+      b.setAttribute("aria-selected", on);
+      b.tabIndex = on ? 0 : -1;
+      gmBody.querySelector("#" + b.getAttribute("aria-controls")).hidden = !on;
+    });
+    if (focus) btn.focus();
+    // Fülváltáskor a panel elejére ugrunk (ha a fülsor már feljebb görgött)
+    const bar = gmBody.querySelector(".gm-tabs");
+    if (card.scrollTop > bar.offsetTop) card.scrollTop = bar.offsetTop;
+  }
+
+  gmBody.addEventListener("click", (e) => {
+    const btn = e.target.closest(".gm-tab");
+    if (btn) gmSelectTab(btn);
+  });
+  // Nyilakkal is lehet lépkedni a fülek között
+  gmBody.addEventListener("keydown", (e) => {
+    const btn = e.target.closest(".gm-tab");
+    if (!btn || (e.key !== "ArrowRight" && e.key !== "ArrowLeft")) return;
+    const all = [...gmBody.querySelectorAll(".gm-tab")];
+    const i = all.indexOf(btn) + (e.key === "ArrowRight" ? 1 : -1);
+    gmSelectTab(all[(i + all.length) % all.length], true);
+    e.preventDefault();
+  });
+
   function openGameModal(leagueKey, m) {
     const record =
       typeof GAME_STATS !== "undefined"
         ? GAME_STATS.find((g) => g.league === leagueKey && g.date === m.date && g.opponent === m.opponent)
         : null;
 
-    gmDate.textContent = fmtWeekday(m.date) + " · " + fmtDate(m.date);
-    gmTitle.innerHTML = `
-      <span class="nm-team">${teamLogo("assets/logo/logo.jpg", "nm-logo")}Ice Unicorns</span>
-      <span class="nm-vs">${m.home ? "vs" : "@"}</span>
-      <span class="nm-team">${teamLogo(m.logo, "nm-logo")}${m.opponent}</span>`;
-    gmScore.textContent = played(m) ? `${m.us}–${m.them}` : "Még nem játszották le";
+    // Eredményjelző: mi mindig balra, az ellenfél jobbra, köztük az eredmény
+    gmDate.textContent = [fmtWeekday(m.date), fmtDate(m.date), m.time].filter(Boolean).join(" · ");
+    gmVenue.textContent = m.venue || "";
+    gmUs.innerHTML = boardTeam("assets/logo/logo.jpg", "Ice Unicorns", m.home ? "hazai" : "vendég");
+    gmThem.innerHTML = boardTeam(m.logo, m.opponent, m.home ? "vendég" : "hazai");
+    if (played(m)) {
+      const o = outcome(m);
+      gmScore.innerHTML = `<b>${m.us}</b><i>–</i><b>${m.them}</b>`;
+      gmResult.className = "gm-result " + o.key;
+      gmResult.textContent =
+        { gy: "Győzelem", v: "Vereség", d: "Döntetlen" }[o.key] + (m.ot ? " · h.u." : "");
+    } else {
+      gmScore.innerHTML = `<span class="gm-vs">vs</span>`;
+      gmResult.className = "gm-result";
+      gmResult.textContent = "Közelgő meccs";
+    }
+    gmPers.innerHTML = gmPeriods(record);
+    gmName = namesFor(leagueKey);
 
     let html = "";
-    if (record) {
+    if (record && (record.lines || record.events)) {
+      // Részletes jegyzőkönyv: fülekre bontva, hogy ne egy hosszú lista legyen
       const clips = record.clips || [];
-      const scorers = Object.entries(record.skaters || {})
-        .filter(([, l]) => l.g || l.a)
-        .sort((a, b) => (b[1].g || 0) - (a[1].g || 0));
-      const goalies = Object.entries(record.goalies || {});
-
-      if (scorers.length) {
-        html += `<div class="gm-section"><h4>Gólszerzők</h4>${scorers
-          .map(([nick, l]) =>
-            gmRow(
-              nick,
-              `${l.g || 0} gól · ${l.a || 0} assziszt`,
-              clips.filter((c) => c.player === nick && c.type === "gol")
-            )
-          )
-          .join("")}</div>`;
-      }
-      if (goalies.length) {
-        html += `<div class="gm-section"><h4>Kapusok</h4>${goalies
-          .map(([nick, l]) =>
-            gmRow(
-              nick,
-              `${l.ga ?? 0} kapott gól` + (typeof l.sv === "number" ? ` · ${l.sv} védés` : ""),
-              clips.filter((c) => c.player === nick && c.type === "vedes")
-            )
-          )
-          .join("")}</div>`;
-      }
+      const tabs = [
+        { id: "osszegzes", label: "Összefoglaló", html: gmCompare(record) + gmLeaders(record) },
+        { id: "naplo", label: "Meccsnapló", html: gmTimeline(record, clips) },
+        { id: "felallas", label: "Felállás", html: gmLines(record) },
+        {
+          id: "videok",
+          label: "Videók",
+          html: clips.length
+            ? `<div class="gm-section"><h4>Videók</h4>${clips
+                .map((c) => gmRow(esc(gmName(c.player)), c.type === "vedes" ? "védés" : "gól", [c]))
+                .join("")}</div>`
+            : "",
+        },
+      ].filter((t) => t.html);
+      html = gmTabs(tabs);
+    } else if (record) {
+      html = gmSimple(record);
     }
 
     gmBody.innerHTML =
-      html || `<p class="gm-empty">A jegyzőkönyv ehhez a meccshez még nem érkezett meg. 📋</p>`;
+      html ||
+      (played(m)
+        ? `<p class="gm-empty">A jegyzőkönyv ehhez a meccshez még nem érkezett meg. 📋</p>`
+        : `<p class="gm-empty">A meccs után itt lesz a jegyzőkönyv: eredmény, gólok és felállás. 🏒</p>`);
 
     gmOverlay.classList.add("open");
+    gmOverlay.querySelector(".gm-card").scrollTop = 0;
     document.body.style.overflow = "hidden";
   }
 

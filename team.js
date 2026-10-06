@@ -11,6 +11,7 @@
 //            és az ékezetek nem számítanak, a második keresztnév elhagyható).
 //   num    – mezszám. Ha a name üres, ez alapján próbáljuk párosítani – de csak ha
 //            a keretben egyedül ő viseli ezt a számot.
+//   captain   – true = kapitány (C), alternate – true = kapitányhelyettes (A)
 //   pos    – poszt: "Kapus" | "Védő" | "Csatár"
 //   grip   – ütőfogás: "bal" | "jobb"  (most "–")
 //   sweet  – kedvenc édesség (most "–")
@@ -25,8 +26,7 @@ const TEAMS = {
       {
         label: "Kapus",
         players: [
-          { nick: "Fánkocska", name: "Virág Christof Máté", num: 69, pos: "Kapus", grip: "–", sweet: "–", power: "–", photo: "", bio: "A háló és a győzelem őre." },
-          { nick: "Barackmag", name: "", num: 14, pos: "Kapus", grip: "–", sweet: "–", power: "–", photo: "", bio: "Az ember, aki nem ijed meg a káosztól." },
+          { nick: "Baróta Gábor", name: "Baróta Gábor", num: 39, pos: "Kapus", grip: "–", sweet: "–", power: "–", photo: "", bio: "" }, // TODO: becenév
         ],
       },
       {
@@ -34,21 +34,27 @@ const TEAMS = {
         players: [
           { nick: "Patkószörny", name: "Merkl Dominik", num: 13, pos: "Védő", grip: "–", sweet: "–", power: "–", photo: "assets/Players/Patkószörny.png", bio: "Védi a mundér becsületét – a csapat első számú védője." },
           { nick: "Pöttömke", name: "Erdős Zsuzsanna", num: 9, pos: "Védő", grip: "–", sweet: "–", power: "–", photo: "assets/Players/Pöttömke.png", bio: "Kis termet, nagy hatás. „Most akkor mi támadunk!”" },
-          { nick: "Hópehely", name: "Galaczi Miklós", num: 20, pos: "Védő", grip: "Bal", sweet: "Aranygaluska", power: "–", photo: "", bio: "Ha tehetné még a jégen is biciklivel tekerne" },
-          { nick: "Maszat", name: "Szymon Wlaszczyk", num: 44, pos: "Védő", grip: "Bal", sweet: "", power: "", photo: "assets/Players/Maszat.png", bio: "A lengyel srác, akivel inkább ne vitatkozz" },
+          { nick: "Hópehely", name: "Galaczi Miklós", num: 20, pos: "Védő", alternate: true, grip: "Bal", sweet: "Aranygaluska", power: "–", photo: "", bio: "Ha tehetné még a jégen is biciklivel tekerne" },
+          { nick: "Mádi Tamás", name: "Mádi Tamás", num: 1, pos: "Védő", alternate: true, grip: "–", sweet: "–", power: "–", photo: "", bio: "" }, // TODO: becenév
+          { nick: "Gévai Ádám", name: "Gévai Ádám", num: 6, pos: "Védő", grip: "–", sweet: "–", power: "–", photo: "", bio: "" }, // TODO: becenév
+          { nick: "Küzdy László", name: "Küzdy László", num: 77, pos: "Védő", grip: "–", sweet: "–", power: "–", photo: "", bio: "" }, // TODO: becenév
+          { nick: "Vajda Krisztián", name: "Vajda Krisztián", num: 16, pos: "Védő", grip: "–", sweet: "–", power: "–", photo: "", bio: "" }, // TODO: becenév
         ],
       },
       {
         label: "Csatár",
         players: [
-          { nick: "Pitypang", name: "Kiss Péter Zoltán", num: 15, pos: "Csatár", captain: true, grip: "Bal", sweet: "Roséfröccs", power: "Hátrafelé korizva is előre gyorsulok.", photo: "assets/Players/Pitypang.png", bio: "Vezeti és összehangolja a Ménest a pályán." },
-          { nick: "Fecske", name: "Czuppon Attila", num: 14, pos: "Csatár", grip: "–", sweet: "–", power: "–", photo: "assets/Players/Fecske.png", bio: "A támadók szárnyaló vezére." },
+          { nick: "Pitypang", name: "Kiss Péter Zoltán", num: 15, pos: "Csatár", grip: "Bal", sweet: "Roséfröccs", power: "Hátrafelé korizva is előre gyorsulok.", photo: "assets/Players/Pitypang.png", bio: "Vezeti és összehangolja a Ménest a pályán." },
+          { nick: "Fecske", name: "Czuppon Attila", num: 14, pos: "Csatár", captain: true, grip: "–", sweet: "–", power: "–", photo: "assets/Players/Fecske.png", bio: "A támadók szárnyaló vezére." },
           { nick: "Lócitromka", name: "", num: 19, pos: "Csatár", grip: "–", sweet: "–", power: "–", photo: "", bio: "Fő feladata az ellenfél legjobb védőjének kiiktatása." },
           { nick: "Mályvacukor", name: "Köller József", num: 67, pos: "Csatár", grip: "Bal", sweet: "Tiramisu", power: "Cukormázba csomagolt forgalmi akadály.", photo: "assets/Players/Mályvacukor.png", bio: "Mogorva kívül, lágy belül – agresszív, de gólra még vár." },
           { nick: "Villámpatkó", name: "Jakab Zsolt", num: 10, pos: "Csatár", grip: "Jobb", sweet: "JägeresPálinka", power: "A Lesek királya, aki mindig nézi a kék vonalat de sose látja", photo: "assets/Players/VillámPatkó.png", bio: "A korongbedobásnál nem csak édesen mosolyog." },
           { nick: "Bolyhospofi", name: "Lokár Gábor", num: 84, pos: "Csatár", grip: "Jobb", sweet: "Pez cukorka (Unikornis adagolóból)", power: "Lopva figyel, pánikot szül. Szakmája: lesből támadó zavarkeltő", photo: "assets/Players/Bolyhospofi.png", bio: "Az elszántsága megkérdőjelezhetetlen." },
           { nick: "Szikrácska", name: "Varga Istvan Gergely", num: 31, pos: "Csatár", grip: "Jobb", sweet: "Peroni", power: "100% találati arány a kapus fejére bemelegítéskor", photo: "assets/Players/Szikrácska.png", bio: "Tüzes láb, csillámos korcsolya – sosem áll le." },
           { nick: "KristályPatkó", name: "Hegyi Bálint", num: 87, pos: "Csatár", grip: "Jobb", sweet: "Rum-kóla", power: "Olyan egyedi csuklólövésem van, aminek az irányát még a fizika törvényei sem ismerik", photo: "assets/Players/KristalyPatko.png", bio: "" },
+          { nick: "Incze Péter", name: "Incze Péter", num: 28, pos: "Csatár", grip: "–", sweet: "–", power: "–", photo: "", bio: "" }, // TODO: becenév
+          { nick: "Tóth Dávid", name: "Tóth Dávid", num: 86, pos: "Csatár", grip: "–", sweet: "–", power: "–", photo: "", bio: "" }, // TODO: becenév
+          { nick: "Visnyei-Beron Cecilia", name: "Visnyei-Beron Cecilia", num: 72, pos: "Csatár", grip: "–", sweet: "–", power: "–", photo: "", bio: "" }, // TODO: becenév
         ],
       },
     ],
@@ -60,12 +66,27 @@ const TEAMS = {
 
   // ⬇️ OB4C keret – ide kerülnek a játékosok, ha összeállt a névsor.
   // Ugyanaz a formátum, mint fent; amíg üres, a pályán egy „hamarosan” üzenet látszik.
+  // komoly: true → a C-s csapat visszafogottabb: mindenhol (pálya, kártya,
+  // meccs-jegyzőkönyv) a polgári név látszik, és a kártyán nincs kedvenc
+  // édesség, szuperképesség és bolondos leírás. A nick ettől még kell: ez
+  // köti össze a játékost a statisztikájával.
   ob4c: {
     label: "OB4C",
+    komoly: true,
     zones: [
       { label: "Kapus", players: [] },
-      { label: "Védő", players: [] },
-      { label: "Csatár", players: [] },
+      {
+        label: "Védő",
+        players: [
+          { nick: "Maszat", name: "Szymon Wlaszczyk", num: 44, pos: "Védő", grip: "Bal", sweet: "", power: "", photo: "assets/Players/Maszat.png", bio: "A lengyel srác, akivel inkább ne vitatkozz" },
+        ],
+      },
+      {
+        label: "Csatár",
+        players: [
+          { nick: "KristályPatkó", name: "Hegyi Bálint", num: 87, pos: "Csatár", grip: "Jobb", sweet: "Rum-kóla", power: "Olyan egyedi csuklólövésem van, aminek az irányát még a fizika törvényei sem ismerik", photo: "assets/Players/KristalyPatko.png", bio: "" },
+        ],
+      },
     ],
     staff: [],
   },
@@ -92,25 +113,32 @@ function goalieStatsFor(p, leagueKey) {
   const zones = team.zones || [];
   const staff = team.staff || [];
   const hasPlayers = zones.some((z) => (z.players || []).length);
+  const komoly = !!team.komoly;
+  // A pályán és a kártya címében megjelenő név
+  const shown = (p) => (komoly && p.name ? p.name : p.nick);
 
   function skaterButton(p, opts = {}) {
     const btn = document.createElement("button");
     btn.className = "skater" + (p.captain ? " captain" : "") + (opts.staff ? " staff" : "");
     btn.type = "button";
-    const badge = p.captain ? '<span class="cbadge">C</span>' : "";
+    const badge = p.captain
+      ? '<span class="cbadge">C</span>'
+      : p.alternate
+        ? '<span class="cbadge">A</span>'
+        : "";
     let puck;
     if (opts.staff) {
       puck = p.photo
         ? `<span class="puck has-photo"><img src="${p.photo}" alt="${p.nick}" loading="lazy" decoding="async">${badge}</span>`
         : `<span class="puck">${p.icon || "🦄"}${badge}</span>`;
     } else if (p.photo) {
-      puck = `<span class="puck has-photo"><img src="${p.photo}" alt="${p.nick}" loading="lazy" decoding="async"><span class="num">${p.num}</span>${badge}</span>`;
+      puck = `<span class="puck has-photo"><img src="${p.photo}" alt="${shown(p)}" loading="lazy" decoding="async"><span class="num">${p.num}</span>${badge}</span>`;
     } else {
       puck = `<span class="puck">${p.num}${badge}</span>`;
     }
     btn.innerHTML =
       puck +
-      `<span class="sk-name">${p.nick}</span>` +
+      `<span class="sk-name">${shown(p)}</span>` +
       `<span class="sk-role">${p.pos}</span>`;
     btn.addEventListener("click", () => openModal(p, opts));
     return btn;
@@ -269,18 +297,22 @@ function goalieStatsFor(p, leagueKey) {
   function openModal(p, opts = {}) {
     // Photo (fallback: 🦄 / stáb ikon)
     pmPhoto.innerHTML = p.photo
-      ? `<img src="${p.photo}" alt="${p.nick}" loading="lazy" decoding="async">`
+      ? `<img src="${p.photo}" alt="${shown(p)}" loading="lazy" decoding="async">`
       : opts.staff
       ? p.icon || "🦄"
+      : komoly
+      ? "#" + p.num
       : "🦄";
 
     elNum.textContent = opts.staff ? "" : "#" + p.num;
 
     // Unikornis név (cím) + civil (polgári) név külön sorban
     const civil = (p.name || "").trim();
-    elName.textContent = p.nick;
+    elName.textContent = shown(p);
     elCivil.textContent = civil ? "🪪 " + civil : "🪪 Polgári név: –";
-    elRole.textContent = p.pos + (p.captain ? " · Kapitány" : "");
+    // Komoly csapatnál a cím már a polgári név, nem kell még egyszer
+    elCivil.style.display = komoly && civil ? "none" : "";
+    elRole.textContent = p.pos + (p.captain ? " · Kapitány" : p.alternate ? " · Kapitányhelyettes" : "");
 
     // Meta: Ütőfogás + Születési idő (csak játékosnál)
     elMeta.innerHTML = "";
@@ -288,9 +320,13 @@ function goalieStatsFor(p, leagueKey) {
       elMeta.style.display = "none";
     } else {
       elMeta.style.display = "";
-      addTag("🏒 Ütőfogás: " + (p.grip || "–"));
-      addTag("🍩 Kedvenc édesség: " + (p.sweet || "–"));
-      addTag("✨ Szuperképesség: " + (p.power || "–"));
+      if (komoly) {
+        addTag("Ütőfogás: " + (p.grip || "–"));
+      } else {
+        addTag("🏒 Ütőfogás: " + (p.grip || "–"));
+        addTag("🍩 Kedvenc édesség: " + (p.sweet || "–"));
+        addTag("✨ Szuperképesség: " + (p.power || "–"));
+      }
     }
 
     // Stats – kapusoknál más mezők, mint a mezőnyjátékosoknál
@@ -327,7 +363,7 @@ function goalieStatsFor(p, leagueKey) {
       elHint.style.display = st._empty ? "" : "none";
     }
 
-    elBio.textContent = p.bio || "";
+    elBio.textContent = komoly && !opts.staff ? "" : p.bio || "";
     overlay.classList.add("open");
     document.body.style.overflow = "hidden";
   }

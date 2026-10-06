@@ -449,7 +449,7 @@ async function fetchGameStats(key, games, ctx) {
       goalies[keyOf(r.player, r.jerseyNumber)] = line;
     });
 
-    out.push({
+    const record = {
       id: g.gameId,
       date,
       league: key,
@@ -459,8 +459,155 @@ async function fetchGameStats(key, games, ctx) {
       them,
       skaters,
       goalies,
-    });
+    };
+    // A jegyzőkönyv részletei (sorok, gólok, kiállítások, harmadok). Ha ezek
+    // lekérése elhasal, a meccs alapstatisztikája ettől még megmarad.
+    try {
+      Object.assign(record, await fetchGameDetails(g.gameId, ourTeamId, home, data, keyOf));
+    } catch (err) {
+      ctx.warnings.push(`Meccsrészletek (${g.gameId}): ${err.message}`);
+    }
+    out.push(record);
   }
+  return out;
+}
+
+// A kiállítások okai az MJSZ kódjaiból. Ami nincs a listában, az ok nélkül
+// jelenik meg („2 perc”), nem a nyers kóddal.
+const PENALTY_CAUSES = {
+  trip: "gáncsolás",
+  hook: "akasztás",
+  slash: "ütés bottal",
+  cross: "keresztbe tartott bot",
+  hi_st: "magasan tartott bot",
+  hold: "visszatartás",
+  hold_st: "bot lefogása",
+  int: "szabálytalan akadályozás",
+  rough: "durvaság",
+  charg: "szabálytalan test-test elleni játék",
+  board: "palánkra lökés",
+  elbow: "könyöklés",
+  knee: "térdelés",
+  spear: "döfés bottal",
+  butt: "szúrás a bot végével",
+  check_head: "fejre irányuló ütközés",
+  check_beh: "hátulról ütközés",
+  delay: "játék késleltetése",
+  too_m: "túl sok játékos a jégen",
+  unsp: "sportszerűtlen viselkedés",
+  fight: "verekedés",
+  misc: "fegyelmi büntetés",
+};
+
+// Az MJSZ "1:4" alakú (hazai:vendég) eredményéből a mi szemszögünk
+const ourScore = (s, home) => {
+  const m = /^(\d+):(\d+)$/.exec(String(s || "").trim());
+  if (!m) return null;
+  const [h, a] = [Number(m[1]), Number(m[2])];
+  return home ? [h, a] : [a, h];
+};
+
+// Sorok, gól- és kiállításnapló, harmadonkénti eredmény és lövések, emberelőny.
+// Rövid mezőnevek: ez a generált fájl jelentős része lesz.
+//   periods – [{ p: "1" | "OT" | "SO", us, them }]
+//   shots   – { us: [harmadonként], them: [...] }  (csak ha vezették)
+//   pp / pk – emberelőny: { n: lehetőség, g: gól, t: mp }, emberhátrány: { n, ga, t }
+//   oppGk   – az ellenfél kapusai összesen: { sv: védés, ga: kapott gól }
+//   lines   – [{ row: "1" | "gk", players: [{ pos, nick, num, cap?, pic? }] }]
+//   events  – időrendben: { per, t, kind: "gol" | "kiall", us, who, num,
+//             score?, a?, adv?, en?, ps?, gwg?, min?, cause? }
+async function fetchGameDetails(gameId, ourTeamId, home, stats, keyOf) {
+  const [events, info] = await Promise.all([
+    api("/game-events", { gameId }),
+    api("/game-data", { gameId }),
+  ]);
+  const civil = (p) => `${p?.lastName || ""} ${p?.firstName || ""}`.trim();
+  const isOurs = (team) => String(team?.id ?? team) === ourTeamId;
+  const out = {};
+
+  // Harmadok
+  const spr = info?.structuredPeriodResults || {};
+  out.periods = ["1", "2", "3", "ot", "so"]
+    .map((p) => ({ p: p.toUpperCase(), sc: ourScore(spr[p], home) }))
+    .filter((r) => r.sc)
+    .map((r) => ({ p: r.p, us: r.sc[0], them: r.sc[1] }));
+
+  // Kapura lövések harmadonként. A csapat sorában a KAPUJÁRA leadott
+  // lövések állnak (a védésekkel együtt), ezért a mi sorunk az ellenfélé.
+  const shots = { us: [], them: [] };
+  (stats?.teamSOG || []).forEach((per) => {
+    Object.entries(per || {}).forEach(([teamId, r]) => {
+      shots[isOurs(teamId) ? "them" : "us"].push(r?.shots ?? 0);
+    });
+  });
+  if (shots.us.some((n) => n > 0) || shots.them.some((n) => n > 0)) out.shots = shots;
+
+  // Emberelőny / emberhátrány
+  const pp = stats?.teamPowerPlay?.[home ? "home" : "away"];
+  if (pp) {
+    out.pp = { n: pp.adv ?? 0, g: pp.ppgf ?? 0, t: pp.advTime ?? 0 };
+    out.pk = { n: pp.dvg ?? 0, ga: pp.ppga ?? 0, t: pp.dvgTime ?? 0 };
+  }
+
+  // Az ellenfél kapusainak összesített védése – a védési hatékonyság
+  // összevetéséhez (csak ha a lövéseket vezették)
+  const oppGk = Object.entries(stats?.goalies || {})
+    .filter(([teamId]) => !isOurs(teamId))
+    .flatMap(([, rows]) => rows || [])
+    .filter((r) => (r.sog ?? 0) > 0 && (r.svs ?? -1) >= 0);
+  if (oppGk.length) {
+    out.oppGk = {
+      sv: oppGk.reduce((n, r) => n + r.svs, 0),
+      ga: oppGk.reduce((n, r) => n + (r.ga ?? 0), 0),
+    };
+  }
+
+  // Sorok – a jegyzőkönyv beosztása szerint (1., 2., … sor és a kapusok)
+  const byRow = new Map();
+  (stats?.players?.[ourTeamId] || []).forEach((r) => {
+    const row = r.position === "gk" || r.row === "gk" ? "gk" : String(r.row || "?");
+    const p = { pos: r.position || "", nick: keyOf(r.player, r.number), num: Number(r.number) || r.number };
+    if (r.isPlayerC) p.cap = "C";
+    else if (r.isPlayerA) p.cap = "A";
+    if (r.player?.picture) p.pic = r.player.picture;
+    if (!byRow.has(row)) byRow.set(row, []);
+    byRow.get(row).push(p);
+  });
+  out.lines = [...byRow.entries()]
+    .sort(([a], [b]) => (a === "gk" ? -1 : b === "gk" ? 1 : a.localeCompare(b, "hu", { numeric: true })))
+    .map(([row, players]) => ({ row, players }));
+
+  // Gólok és kiállítások
+  const who = (e, ours) => (ours ? keyOf(e, e.jerseyNumber) : civil(e));
+  const assist = (a, ours) => (a && a.lastName ? who(a, ours) : null);
+  out.events = (Array.isArray(events) ? events : [])
+    .filter((e) => e.type === "Gól" || e.type === "Kiállítás")
+    .map((e) => {
+      const us = isOurs(e.team);
+      const ev = {
+        per: String(e.eventPeriod || "").replace(/^p/, "").toUpperCase(),
+        t: e.eventTime,
+        kind: e.type === "Gól" ? "gol" : "kiall",
+        us,
+        who: e.lastName ? who(e, us) : "",
+      };
+      if (e.jerseyNumber) ev.num = Number(e.jerseyNumber) || e.jerseyNumber;
+      if (ev.kind === "gol") {
+        const sc = ourScore(e.score, home);
+        if (sc) ev.score = sc;
+        const a = [assist(e.assists1, us), assist(e.assists2, us)].filter(Boolean);
+        if (a.length) ev.a = a;
+        if (e.advantage && e.advantage !== "EQ") ev.adv = e.advantage;
+        if (e.en) ev.en = true;
+        if (e.ps) ev.ps = true;
+        if (e.gwg) ev.gwg = true;
+      } else {
+        ev.min = Number(e.penaltyLength) || 0;
+        if (PENALTY_CAUSES[e.penaltyCause]) ev.cause = PENALTY_CAUSES[e.penaltyCause];
+      }
+      return ev;
+    });
+
   return out;
 }
 
