@@ -16,7 +16,10 @@
 //                  lehet kérni (lásd https://api.icehockey.hu/widgets/docs/v2/vbr-api/).
 //   MJSZ_ORIGIN  – ehhez a domainhez van engedélyezve a kulcs. A sajátunk
 //                  megérkezésekor ez lesz https://iceunicorns.hu.
-//   SZEZON       – pl. "2026-2027". Alapból az alábbi SEASON.
+//   SZEZON       – pl. "2026-2027". Alapból a dátumból számoljuk (júliustól
+//                  már az új szezon), és ha az MJSZ azt még nem írta ki,
+//                  a legutóbbi elérhető szezon marad – így évente nem kell
+//                  kézzel átírni.
 //   CSAPAT       – csak teszteléshez: más csapat nevével egy korábbi szezon
 //                  adatain is ki lehet próbálni a scriptet.
 
@@ -34,7 +37,12 @@ const API_BASE = "https://api.icehockey.hu/vbr/v2";
 const API_KEY = process.env.MJSZ_API_KEY || "7b4f4d1b466b5a3572990ae24452abf2a086e7ee";
 const ORIGIN = process.env.MJSZ_ORIGIN || "https://www.jegkorongszovetseg.hu";
 
-const SEASON = process.env.SZEZON || "2026-2027";
+// A szezon ősztől tavaszig tart: júliustól már a következőt keressük
+function currentSeason(d = new Date()) {
+  const y = d.getFullYear();
+  return d.getMonth() >= 6 ? `${y}-${y + 1}` : `${y - 1}-${y}`;
+}
+const SEASON = process.env.SZEZON || currentSeason();
 const OUR_TEAM = process.env.CSAPAT || "Ice Unicorns";
 const OUR_LOGO = "assets/logo/logo.jpg"; // a saját emblémánk, nem az IVR-es
 const SCORERS_LIMIT = 15; // hányan kerüljenek be a csoport pontversenyébe
@@ -167,7 +175,17 @@ async function fetchLeague(key, cfg, ctx) {
   const seasons = await api("/championship-seasons", {
     championshipName: cfg.championshipName,
   });
-  const season = seasons.find((s) => s.seasonName === SEASON);
+  let season = seasons.find((s) => s.seasonName === SEASON);
+  // Nyáron az új szezon még nincs kiírva: addig a legutóbbi marad fent.
+  // (Ha a SZEZON-t kézzel adtad meg, nincs tartalék – akkor hiba legyen.)
+  if (!season && !process.env.SZEZON) {
+    season = seasons
+      .filter((s) => s.seasonName < SEASON)
+      .sort((a, b) => b.seasonName.localeCompare(a.seasonName))[0];
+    if (season) {
+      console.log(`${cfg.championshipName}: a(z) ${SEASON} szezon még nincs kiírva, marad a(z) ${season.seasonName}.`);
+    }
+  }
   if (!season) {
     throw new Error(
       `${cfg.championshipName}: nincs "${SEASON}" szezon ` +
@@ -226,7 +244,7 @@ async function fetchLeague(key, cfg, ctx) {
 
   return {
     label: cfg.label,
-    season: SEASON,
+    season: season.seasonName,
     championshipId,
     ourGroup,
     matches,
@@ -657,7 +675,7 @@ function render(leagues, gameStats, generatedAt) {
 // bajnoksági API-jából, a .github/workflows/bajnoksag-frissites.yml
 // pedig időzítve lefuttatja, és commitolja, ha változott valami.
 //
-// Szezon: ${SEASON}
+// Szezon: ${[...new Set(Object.values(leagues).map((l) => l.season))].join(", ") || SEASON}
 // Utolsó frissítés: ${generatedAt}
 //
 // A LEAGUES mezőinek jelentését a bajnoksag.js, a GAME_STATS-ét a
