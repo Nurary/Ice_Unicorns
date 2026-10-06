@@ -316,6 +316,97 @@ a { color: inherit; text-decoration: none; }
 .cal-link { display: inline-flex; align-items: center; padding: 7px 14px; border-radius: 999px; background: var(--surface-soft); border: 2px solid var(--surface-border); color: var(--text); font-weight: 700; font-size: 0.88rem; text-decoration: none; transition: border-color 0.2s, transform 0.2s var(--bounce); }
 .cal-link:hover, .cal-link:focus-visible { border-color: var(--pink); transform: translateY(-2px); }
 
+/* ---- Bajnokság al-fülei: Menetrend / Tabella / Pontverseny / Fordulók ---- */
+.lg-tabs { display: flex; gap: 6px; padding: 6px; margin: 0 auto 30px; width: fit-content; max-width: 100%; overflow-x: auto; scrollbar-width: none; background: var(--surface); border: 2px solid var(--surface-border); border-radius: 999px; }
+.lg-tab { flex: 0 0 auto; padding: 10px 20px; border: 0; border-radius: 999px; background: transparent; color: var(--muted); font: inherit; font-weight: 800; font-size: 0.95rem; cursor: pointer; transition: background 0.2s, color 0.2s; }
+.lg-tab:hover { color: var(--text); background: var(--surface-soft); }
+.lg-tab[aria-selected="true"] { background: var(--pink); color: #fff; }
+.lg-tab:focus-visible { outline: 3px solid var(--ice); outline-offset: 2px; }
+.lg-panel { max-width: 860px; margin: 0 auto; }
+.lg-panel .lg-two { grid-template-columns: 1fr 1fr; }
+.lg-panel:has(.lg-two) { max-width: none; }
+/* Al-cím a listákon belül, darabszámmal */
+.lg-sub { display: flex; align-items: center; gap: 8px; margin: 22px 0 10px; font-size: 0.82rem; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+.lg-sub:first-child { margin-top: 0; }
+.lg-sub span { padding: 1px 8px; border-radius: 999px; background: var(--surface-soft); border: 1px solid var(--surface-border); font-size: 0.72rem; letter-spacing: 0; }
+.lg-legend { margin-top: 14px; font-size: 0.78rem; font-weight: 600; line-height: 1.6; color: var(--muted); }
+.lg-legend b { color: var(--text); }
+/* Lenyitható kiegészítés (másik csoport tabellája, teljes sorsolás) */
+.lg-more { margin-top: 18px; border: 2px solid var(--surface-border); border-radius: 18px; background: var(--surface); }
+.lg-more > summary { padding: 12px 16px; font-weight: 800; color: var(--text); cursor: pointer; list-style: none; display: flex; align-items: center; gap: 8px; }
+.lg-more > summary::-webkit-details-marker { display: none; }
+.lg-more > summary::before { content: "▸"; color: var(--pink-ink); transition: transform 0.2s; }
+.lg-more[open] > summary::before { transform: rotate(90deg); }
+.lg-more[open] > summary { border-bottom: 2px solid var(--surface-border); }
+.lg-more > :not(summary) { margin: 12px; }
+/* Fordulók: napokra bontva */
+/* Csoportváltó a fordulók fölött */
+.gr-switch { display: inline-flex; gap: 4px; padding: 4px; margin-bottom: 18px; border-radius: 999px; background: var(--surface-soft); border: 2px solid var(--surface-border); }
+.gr-switch button { padding: 7px 16px; border: 0; border-radius: 999px; background: transparent; color: var(--muted); font: inherit; font-size: 0.86rem; font-weight: 800; cursor: pointer; }
+.gr-switch button:hover { color: var(--text); }
+/* inverz szín: világos módban sötét, sötét módban világos – mindkettőben kiugrik */
+.gr-switch button[aria-pressed="true"] { background: var(--text); color: var(--surface); }
+.gr-switch button:focus-visible { outline: 3px solid var(--ice); outline-offset: 2px; }
+.gr-day + .gr-day { margin-top: 14px; }
+.gr-day .gr-row { background: var(--surface-soft); }
+.gr-day .gr-row.is-us { background: var(--surface-soft); border-color: var(--pink); }
+.gr-day-h { margin: 0 0 6px 4px; font-size: 0.74rem; font-weight: 800; letter-spacing: 0.05em; text-transform: uppercase; color: var(--pink-ink); }
+/* Bajnoki pontverseny: a csapat a játékos neve alatt */
+.scorers .sc-name { display: block; }
+.scorers .sc-club { display: flex; align-items: center; gap: 6px; margin-top: 2px; font-size: 0.74rem; font-weight: 600; color: var(--muted); }
+.scorers .sc-club .team-logo, .scorers .sc-club .team-chip { width: 16px; height: 16px; font-size: 0.6rem; }
+
+/* Rájátszás-csík a csempék alatt: rájátszás idején ez az első, amit látsz */
+.po-status { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin: 18px 0 4px; padding: 18px 24px; border-radius: 24px; background: linear-gradient(135deg, var(--navy), #2a3670); border: 2px solid var(--gold); color: #fff; box-shadow: 0 18px 36px -20px rgba(27,36,80,0.6); }
+.po-status.is-won { border-color: #57e0a6; }
+.po-text { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.po-kicker { font-size: 0.74rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gold); }
+.po-text strong { font-family: "Baloo 2", sans-serif; font-size: 1.3rem; line-height: 1.2; }
+.po-sub { font-size: 0.88rem; font-weight: 700; color: rgba(255,255,255,0.8); }
+.nm-league.is-stage { background: var(--gold); border-color: var(--gold); color: var(--navy); }
+
+/* ---- Rájátszás: NHL-stílusú ágrajz ----
+   Bal oldalt a negyed- és elődöntők, középen a döntő (alatta a bronz),
+   jobb oldalt tükrözve a másik ág. Telefonon a körök egymás alá kerülnek. */
+.lg-panel.lg-wide { max-width: 1120px; }
+.lg-po-block + .lg-po-block { margin-top: 34px; }
+.br { display: grid; grid-template-columns: repeat(var(--rounds), minmax(0, 1fr)); gap: 22px; align-items: stretch; }
+.br-col { display: flex; flex-direction: column; min-width: 0; }
+.br-col h4 { margin-bottom: 10px; text-align: center; font-size: 0.7rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.br-list { flex: 1; display: flex; flex-direction: column; justify-content: space-around; gap: 14px; }
+.br-center .br-list { justify-content: center; }
+.br-s { position: relative; padding: 8px 10px; border-radius: 14px; background: var(--surface-soft); border: 2px solid var(--surface-border); }
+.br-s.is-us { border-color: var(--pink); box-shadow: 0 0 0 3px rgba(255, 61, 127, 0.15); }
+.br-center > .br-list > .br-s { border-color: var(--gold); }
+.br-center > .br-list > .br-s.is-us { border-color: var(--pink); }
+/* összekötő vonalak a következő kör felé */
+.br-left .br-s::after, .br-right .br-s::before { content: ""; position: absolute; top: 50%; width: 12px; border-top: 2px solid var(--surface-border); }
+.br-left .br-s::after { right: -14px; }
+.br-right .br-s::before { left: -14px; }
+.br-t { display: grid; grid-template-columns: 20px minmax(0, 1fr) auto; align-items: center; gap: 7px; padding: 3px 0; font-size: 0.82rem; font-weight: 700; color: var(--text); }
+.br-t b { font-family: "Baloo 2", sans-serif; font-size: 1rem; font-variant-numeric: tabular-nums; }
+.br-t.win { font-weight: 800; }
+.br-t.win b { color: var(--pink-ink); }
+.br-t.out { color: var(--muted); }
+.br-t.us .br-name { color: var(--pink-ink); }
+.br-name { min-width: 0; line-height: 1.15; overflow-wrap: anywhere; }
+.br-logo { display: grid; place-items: center; width: 20px; height: 20px; }
+.br-logo .team-logo, .br-logo .team-chip { width: 20px; height: 20px; font-size: 0.62rem; }
+/* halott emblémalinknél (a kép eltávolítja magát) a kezdőbetű áll a helyén */
+.br-logo:empty::before { content: attr(data-init); display: grid; place-items: center; width: 20px; height: 20px; border-radius: 50%; background: var(--silver); color: var(--navy); font-size: 0.62rem; font-weight: 800; }
+.br-legs { margin-top: 4px; padding-top: 4px; border-top: 1px dashed var(--surface-border); font-size: 0.68rem; font-weight: 700; color: var(--muted); }
+.br-tbd { display: grid; place-items: center; min-height: 74px; border-style: dashed; background: transparent; text-align: center; font-size: 0.74rem; font-weight: 700; color: var(--muted); }
+.br-bronze { margin-top: 18px; }
+@media (max-width: 760px) {
+  .br { display: flex; flex-direction: column; gap: 10px; }
+  .br-col { order: var(--r); }
+  /* a jobb ág ugyanannak a körnek a folytatása – nem kell külön cím */
+  .br-right h4 { display: none; }
+  .br-col h4 { margin-top: 10px; text-align: left; }
+  .br-list { gap: 10px; }
+  .br-left .br-s::after, .br-right .br-s::before { display: none; }
+}
+
 /* Menetrend és eredmények */
 .match-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
 .match-row { display: flex; align-items: center; gap: 14px; background: var(--surface-soft); border: 2px solid var(--surface-border); border-radius: 18px; padding: 12px 16px; cursor: pointer; transition: border-color 0.2s, transform 0.2s var(--bounce); }
@@ -332,7 +423,7 @@ a { color: inherit; text-decoration: none; }
 .match-score { font-family: "Baloo 2", sans-serif; font-weight: 800; font-size: 1.25rem; color: var(--text); font-variant-numeric: tabular-nums; white-space: nowrap; }
 .match-ot { font-family: "Nunito", sans-serif; font-size: 0.6rem; font-weight: 800; color: var(--muted); margin-left: 4px; vertical-align: super; }
 .match-time { font-weight: 800; color: var(--muted); font-variant-numeric: tabular-nums; }
-.result-pill { width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.76rem; font-weight: 800; color: #fff; }
+.result-pill { display: inline-flex; align-items: center; justify-content: center; padding: 3px 10px; border-radius: 999px; font-size: 0.7rem; font-weight: 800; letter-spacing: 0.04em; text-transform: uppercase; color: #fff; }
 .result-pill.gy { background: #1aa86b; }
 .result-pill.d { background: var(--silver); color: var(--navy); }
 .result-pill.v { background: #e8417a; }
@@ -348,11 +439,10 @@ a { color: inherit; text-decoration: none; }
 .fd.hv { border-color: #e8417a; }
 
 /* ---- A csoport eredményei ---- */
-.gr-row { display: grid; grid-template-columns: 50px 1fr auto 1fr; align-items: center; gap: 8px; padding: 9px 10px; border-radius: 14px; border: 2px solid transparent; }
+.gr-row { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 8px; padding: 9px 10px; border-radius: 14px; border: 2px solid transparent; }
 .gr-row + .gr-row { margin-top: 4px; }
 .gr-row:nth-child(odd) { background: var(--surface-soft); }
 .gr-row.is-us { border-color: var(--pink); background: var(--surface-soft); }
-.gr-date { font-size: 0.72rem; font-weight: 800; letter-spacing: 0.04em; text-transform: uppercase; color: var(--muted); white-space: nowrap; }
 .gr-team { display: flex; align-items: center; gap: 7px; min-width: 0; font-size: 0.86rem; font-weight: 700; color: var(--muted); }
 .gr-team.won { color: var(--text); font-weight: 800; }
 .gr-home { justify-content: flex-end; text-align: right; }
@@ -522,14 +612,14 @@ a { color: inherit; text-decoration: none; }
 .standings .c-pos { width: 30px; color: var(--muted); }
 .standings .c-team { text-align: left; color: var(--text); font-weight: 800; white-space: normal; min-width: 118px; }
 .team-cell { display: inline-flex; align-items: center; gap: 8px; }
+/* Telefonon a forma a csapatnév alatt jelenik meg (a külön oszlop nem férne ki) */
+.standings .team-form { display: none; }
 .team-logo { width: 22px; height: 22px; object-fit: contain; border-radius: 50%; background: #fff; border: 1px solid var(--surface-border); flex-shrink: 0; }
 /* hosszabbításos oszlopok: halványabbak, hogy a Gy és a V maradjon a fő ritmus */
 .standings .c-ot { color: var(--muted); font-weight: 600; }
 .standings thead th.c-ot { font-size: 0.62rem; }
 .standings .c-form { padding-left: 10px; padding-right: 4px; }
 .standings tbody td.c-form { line-height: 0; }
-.standings .c-club { width: 28px; padding-left: 0; padding-right: 0; }
-.standings .c-club .team-logo { vertical-align: middle; }
 .team-chip { display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 50%; background: var(--surface-soft); border: 1px solid var(--surface-border); color: var(--muted); font-size: 0.7rem; font-weight: 800; vertical-align: middle; }
 .standings .c-pts { color: var(--pink-ink); font-family: "Baloo 2", sans-serif; font-size: 1.05rem; }
 .standings tbody tr.us { background: var(--surface-soft); }
@@ -538,6 +628,7 @@ a { color: inherit; text-decoration: none; }
 
 .standings-group-title { font-size: 1rem; margin: 18px 0 8px; color: var(--text); }
 .standings-group-title:first-child { margin-top: 0; }
+.table-scroll + .standings-group-title { margin-top: 28px; }
 
 /* Házi pontvadászat – ugyanaz a tábla-stílus, dobogós helyezés-kiemeléssel */
 .scorers .c-pos { font-family: "Baloo 2", sans-serif; font-size: 1rem; }
@@ -819,7 +910,9 @@ a.card:hover .card-arrow { transform: translateX(4px); }
 
 /* Responsive */
 @media (max-width: 900px) {
-  .feature-cards, .work-grid, .quicklinks, .league-grid { grid-template-columns: 1fr; }
+  .feature-cards, .work-grid, .quicklinks, .league-grid, .lg-panel .lg-two { grid-template-columns: 1fr; }
+  .lg-tabs { margin-bottom: 22px; }
+  .lg-tab { padding: 9px 14px; font-size: 0.88rem; }
   .league-grid { gap: 44px; }
   .card-grid, .team-grid { grid-template-columns: repeat(2, 1fr); }
   .contact-wrap { grid-template-columns: 1fr; gap: 36px; }
@@ -850,11 +943,11 @@ a.card:hover .card-arrow { transform: translateX(4px); }
   .standings .c-team { min-width: 80px; font-size: 0.82rem; }
   .standings .c-pos { width: 20px; }
   .standings .c-pts { font-size: 1rem; }
-  /* a formaoszlop a ráadás – telefonon inkább a számok férjenek ki */
+  /* telefonon a formaoszlop helyett a csapatnév alatt látszik a forma */
   .standings .c-form { display: none; }
-  .gr-row { grid-template-columns: 46px 1fr auto 1fr; gap: 7px; padding: 8px 9px; }
+  .standings .team-form { display: block; margin-top: 4px; line-height: 0; }
+  .gr-row { grid-template-columns: 1fr auto 1fr; gap: 7px; padding: 8px 9px; }
   .gr-team { font-size: 0.8rem; }
-  .gr-date { font-size: 0.66rem; }
   .rink { padding: 34px 14px; border-radius: 70px / 54px; }
   .rink-zone { gap: 14px 16px; }
   .rink-stage { flex-direction: column; gap: 0; }

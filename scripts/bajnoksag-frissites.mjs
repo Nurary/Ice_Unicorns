@@ -87,6 +87,14 @@ const isPlayed = (g) =>
   g.gameStatus !== 0 && g.homeTeamScore !== null && g.awayTeamScore !== null;
 
 // Egy mérkőzés a mi szemszögünkből (a menetrendbe csak a sajátjaink kerülnek)
+// Rájátszás-szakasz: "Negyeddöntő", "Elődöntő", "Döntő", "Bronzmérkőzés",
+// "Helyosztó"… Az alapszakasz meccseinél null. (A helyosztó csoportja –
+// "5-8." – a divisionStage3Name-ben van, ugyanott, ahol az alapszakasz A/B-je.)
+const stageOf = (g) =>
+  g.divisionStage2Name && g.divisionStage2Name !== "Alapszakasz" ? g.divisionStage2Name : null;
+// A meccs sorszáma ("OBIVD 71" → 71) – ebből jön a párharcok sorrendje az ágrajzon
+const gameNo = (g) => Number((String(g.gameName || "").match(/(\d+)\s*$/) || [])[1]) || null;
+
 function toMatch(g) {
   const home = g.homeTeam.longName === OUR_TEAM;
   const opp = home ? g.awayTeam : g.homeTeam;
@@ -104,6 +112,8 @@ function toMatch(g) {
   match.us = played ? (home ? g.homeTeamScore : g.awayTeamScore) : null;
   match.them = played ? (home ? g.awayTeamScore : g.homeTeamScore) : null;
   if (played && (g.isOvertime || g.isShootout)) match.ot = true;
+  const stage = stageOf(g);
+  if (stage) match.stage = g.divisionStage3Name ? `${stage} (${g.divisionStage3Name})` : stage;
   return match;
 }
 
@@ -274,6 +284,13 @@ function toGame(g) {
     out.hs = g.homeTeamScore;
     out.as = g.awayTeamScore;
     if (g.isOvertime || g.isShootout) out.ot = true;
+  }
+  // Rájátszás: szakasz és sorszám (az ágrajzhoz)
+  const stage = stageOf(g);
+  if (stage) {
+    out.stage = stage;
+    const no = gameNo(g);
+    if (no) out.no = no;
   }
   return out;
 }

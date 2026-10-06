@@ -66,6 +66,8 @@ const LEAGUES = (typeof window !== "undefined" && window.LEAGUES) || {};
   const played = (m) => m.us !== null && m.us !== undefined &&
                         m.them !== null && m.them !== undefined;
 
+  const RESULT_WORD = { gy: "Győzelem", v: "Vereség", d: "Döntetlen" };
+
   // Győzelem / döntetlen / vereség a saját szempontunkból
   function outcome(m) {
     if (m.us > m.them) return { key: "gy", label: "Gy" };
@@ -245,8 +247,9 @@ const LEAGUES = (typeof window !== "undefined" && window.LEAGUES) || {};
 
     const u = upcoming.m;
     // Csak akkor írjuk ki a bajnokságot, ha egyébként nem derülne ki
-    const badge = key === MIND
-      ? `<span class="nm-league">${upcoming.label}</span>` : "";
+    const badge =
+      (key === MIND ? `<span class="nm-league">${upcoming.label}</span>` : "") +
+      (u.stage ? `<span class="nm-league is-stage">${u.stage}</span>` : "");
     const target = matchStart(u).getTime();
     // A gomb a helyszínhez navigál Google Maps-en – ha nincs megadva
     // helyszín, marad a kapcsolat oldal tartaléknak.
@@ -836,23 +839,19 @@ const LEAGUES = (typeof window !== "undefined" && window.LEAGUES) || {};
     const byDate = (a, b) => parseDate(a.date) - parseDate(b.date);
     const upcoming = league.matches.filter((m) => !played(m)).sort(byDate);
     const done = league.matches.filter(played).sort((a, b) => byDate(b, a));
-    const sorted = upcoming.concat(done);
-
-    const list = document.createElement("ul");
-    list.className = "match-list";
-
-    sorted.forEach((m) => {
+    const row = (m) => {
       const li = document.createElement("li");
       li.className = "match-row" + (played(m) ? "" : " upcoming");
       li.tabIndex = 0;
       li.setAttribute("role", "button");
       li.setAttribute("aria-label", "Jegyzőkönyv: Ice Unicorns – " + m.opponent);
 
+      // Az eredmény-címke szóval áll: a „V” betű a vasárnapot is jelölhetné
       const right = played(m)
         ? `<span class="match-score">${m.us}–${m.them}${
             m.ot ? '<span class="match-ot">h.u.</span>' : ""
           }</span>
-           <span class="result-pill ${outcome(m).key}">${outcome(m).label}</span>`
+           <span class="result-pill ${outcome(m).key}">${RESULT_WORD[outcome(m).key]}</span>`
         : `<span class="match-time">${m.time || "–"}</span>`;
 
       li.innerHTML = `
@@ -862,7 +861,7 @@ const LEAGUES = (typeof window !== "undefined" && window.LEAGUES) || {};
         </span>
         <span class="match-teams">
           <span class="match-opp">${teamLogo(m.logo)}${m.opponent}</span>
-          <span class="match-where">${m.home ? "hazai" : "idegenben"}</span>
+          <span class="match-where">${m.stage ? m.stage + " · " : ""}${m.home ? "hazai" : "idegenben"}</span>
         </span>
         <span class="match-right">${right}</span>`;
       li.addEventListener("click", () => openGameModal(leagueKey, m));
@@ -872,10 +871,23 @@ const LEAGUES = (typeof window !== "undefined" && window.LEAGUES) || {};
           openGameModal(leagueKey, m);
         }
       });
-      list.appendChild(li);
-    });
+      return li;
+    };
 
-    host.appendChild(list);
+    const section = (title, list) => {
+      if (!list.length) return;
+      const h = document.createElement("h3");
+      h.className = "lg-sub";
+      h.innerHTML = `${title}<span>${list.length}</span>`;
+      const ul = document.createElement("ul");
+      ul.className = "match-list";
+      list.forEach((m) => ul.appendChild(row(m)));
+      host.appendChild(h);
+      host.appendChild(ul);
+    };
+
+    section("Következő meccseink", upcoming);
+    section("Lejátszott meccsek", done);
   }
 
   // ---- Tabella ----
@@ -884,7 +896,7 @@ const LEAGUES = (typeof window !== "undefined" && window.LEAGUES) || {};
   function renderStandingsGroup(host, group, league) {
     const rows = group.standings.slice().sort(standingsSort);
     // A formaoszlop csak akkor kerül ki, ha van már lejátszott meccs.
-    const anyForm = rows.some((r) => (r.gp || 0) > 0);
+    const anyForm = !group.noForm && rows.some((r) => (r.gp || 0) > 0);
 
     if (group.name) {
       const title = document.createElement("h3");
@@ -921,7 +933,9 @@ const LEAGUES = (typeof window !== "undefined" && window.LEAGUES) || {};
       if (r.us || r.team === US) tr.className = "us";
       tr.innerHTML = `
         <td class="c-pos">${i + 1}</td>
-        <td class="c-team"><span class="team-cell">${teamLogo(r.logo)}${r.team}</span></td>
+        <td class="c-team"><span class="team-cell">${teamLogo(r.logo)}${r.team}</span>${
+          anyForm ? `<span class="team-form">${formDots(formOf(league, r.team))}</span>` : ""
+        }</td>
         <td>${r.gp ?? "–"}</td>
         <td>${r.w ?? "–"}</td>
         <td class="c-ot">${otWins(r)}</td>
@@ -937,6 +951,41 @@ const LEAGUES = (typeof window !== "undefined" && window.LEAGUES) || {};
     host.appendChild(wrap);
   }
 
+  // Csoportváltó gombsor (Tabella és Fordulók fül). A mi csoportunk áll
+  // elöl, és alapból az van kiválasztva. A gombra
+  // kattintva a draw(csoport) rajzolja újra a tartalmat.
+  function groupSwitch(host, league, groupKeys, draw) {
+    const names = {};
+    (league.groups || []).forEach((g) => (names[g.group] = g.name || g.group + " csoport"));
+    const keys = groupKeys
+      .filter((g) => g === league.ourGroup)
+      .concat(groupKeys.filter((g) => g !== league.ourGroup).sort());
+
+    const body = document.createElement("div");
+    if (keys.length > 1) {
+      const sw = document.createElement("div");
+      sw.className = "gr-switch";
+      sw.setAttribute("role", "group");
+      sw.setAttribute("aria-label", "Csoport");
+      sw.innerHTML = keys
+        .map(
+          (g, i) =>
+            `<button type="button" data-group="${g}" aria-pressed="${i === 0}">${names[g] || g + " csoport"}</button>`
+        )
+        .join("");
+      sw.addEventListener("click", (e) => {
+        const btn = e.target.closest("button[data-group]");
+        if (!btn) return;
+        sw.querySelectorAll("button").forEach((b) => b.setAttribute("aria-pressed", String(b === btn)));
+        body.innerHTML = "";
+        draw(body, btn.dataset.group);
+      });
+      host.appendChild(sw);
+    }
+    host.appendChild(body);
+    draw(body, keys[0] || league.ourGroup);
+  }
+
   function renderStandings(host, league) {
     const groups = (league.groups || []).filter((g) => g.standings && g.standings.length);
     if (!groups.length) {
@@ -944,7 +993,26 @@ const LEAGUES = (typeof window !== "undefined" && window.LEAGUES) || {};
       return;
     }
 
-    groups.forEach((g) => renderStandingsGroup(host, g, league));
+    groupSwitch(
+      host,
+      league,
+      groups.map((g) => g.group),
+      (body, key) => {
+        const g = groups.find((x) => x.group === key) || groups[0];
+        // A címet a váltó már mutatja, ezért itt nem ismételjük
+        renderStandingsGroup(body, Object.assign({}, g, { name: "" }), league);
+      }
+    );
+
+    const legend = document.createElement("p");
+    legend.className = "lg-legend";
+    legend.innerHTML =
+      "<b>M</b> meccs · <b>Gy</b> győzelem · <b>H.Gy / H.V</b> győzelem / vereség hosszabbításban vagy szétlövésben · " +
+      "<b>V</b> vereség · <b>LG–KG</b> lőtt–kapott gól · <b>P</b> pont" +
+      (groups.some((g) => g.standings.some((r) => (r.gp || 0) > 0))
+        ? " · <b>Forma</b> az utolsó öt meccs (zöld: győzelem, piros: vereség; telt: rendes játékidő, üres: hosszabbítás)"
+        : "");
+    host.appendChild(legend);
   }
 
   // ---- A csoport fordulói ----
@@ -952,49 +1020,343 @@ const LEAGUES = (typeof window !== "undefined" && window.LEAGUES) || {};
   // Elsősorban a már lejátszottak érdekesek (a legfrissebbel elöl), de amíg
   // azokból nincs elég, a soron következő fordulókkal töltjük fel a listát.
   // Így a szezon rajtja előtt is van mit mutatni.
-  const GROUP_RESULTS_LEN = 10;
+  // Hány közelgő meccs látszik alapból – a többi lenyitható
+  const GROUP_UPCOMING_LEN = 8;
+  // Hány legutóbbi meccsnap eredménye látszik alapból
+  const GROUP_RECENT_DAYS = 3;
 
   function renderGroupResults(host, league) {
-    const ours = (league.games || []).filter(
-      (g) => !league.ourGroup || g.group === league.ourGroup
-    );
-    const played = ours.filter(gamePlayed).reverse();
-    const upcoming = ours.filter((g) => !gamePlayed(g));
-    const list = played
-      .slice(0, GROUP_RESULTS_LEN)
-      .concat(upcoming.slice(0, Math.max(0, GROUP_RESULTS_LEN - played.length)));
+    // Csak az alapszakasz csoportjai (A, B) – a helyosztók a Rájátszás fülön vannak
+    const base = (league.groups || []).map((g) => g.group);
+    const present = [...new Set((league.games || []).map((g) => g.group).filter((g) => g && base.includes(g)))];
+    groupSwitch(host, league, present, (body, key) => drawGroupResults(body, league, key));
+  }
 
-    if (!list.length) {
-      (host.closest(".league-block") || host).hidden = true;
+  function drawGroupResults(host, league, group) {
+    host.innerHTML = "";
+    const ours = (league.games || []).filter((g) => (!group || g.group === group) && (!g.stage || g.stage === "Helyosztó"));
+    const byDate = (a, b) => parseDate(a.date) - parseDate(b.date);
+    const done = ours.filter(gamePlayed).sort((a, b) => byDate(b, a));
+    const upcoming = ours.filter((g) => !gamePlayed(g)).sort(byDate);
+
+    if (!done.length && !upcoming.length) {
+      host.appendChild(empty("A csoport sorsolása hamarosan érkezik. 🗓️"));
       return;
     }
 
     const teams = league.teams || {};
     const logoOf = (name) => teamLogo(teams[name] && teams[name].logo);
 
-    host.innerHTML = list
-      .map((g) => {
-        const mine = g.home === US || g.away === US;
-        const done = gamePlayed(g);
-        const homeWon = done && g.hs > g.as;
-        // Lejátszott meccsnél az eredmény, előtte a kezdés ideje áll
-        // ugyanott – ha még az sincs kiírva, egy halvány „vs”.
-        const middle = done
-          ? `${g.hs}–${g.as}${g.ot ? '<span class="match-ot">h.u.</span>' : ""}`
-          : g.time || "vs";
-        return `
-          <div class="gr-row${mine ? " is-us" : ""}${done ? "" : " upcoming"}">
-            <span class="gr-date">${fmtDate(g.date)}</span>
-            <span class="gr-team gr-home${homeWon ? " won" : ""}">
-              <span class="gr-name">${g.home}</span>${logoOf(g.home)}
-            </span>
-            <span class="gr-score">${middle}</span>
-            <span class="gr-team gr-away${done && !homeWon ? " won" : ""}">
-              ${logoOf(g.away)}<span class="gr-name">${g.away}</span>
-            </span>
-          </div>`;
+    const row = (g) => {
+      const mine = g.home === US || g.away === US;
+      const isDone = gamePlayed(g);
+      const homeWon = isDone && g.hs > g.as;
+      // Lejátszott meccsnél az eredmény, előtte a kezdés ideje áll
+      // ugyanott – ha még az sincs kiírva, egy halvány „vs”.
+      const middle = isDone
+        ? `${g.hs}–${g.as}${g.ot ? '<span class="match-ot">h.u.</span>' : ""}`
+        : g.time || "vs";
+      return `
+        <div class="gr-row${mine ? " is-us" : ""}${isDone ? "" : " upcoming"}">
+          <span class="gr-team gr-home${homeWon ? " won" : ""}">
+            <span class="gr-name">${g.home}</span>${logoOf(g.home)}
+          </span>
+          <span class="gr-score">${middle}</span>
+          <span class="gr-team gr-away${isDone && !homeWon ? " won" : ""}">
+            ${logoOf(g.away)}<span class="gr-name">${g.away}</span>
+          </span>
+        </div>`;
+    };
+
+    // Meccsnaponként egy fejléc („Szo · okt. 3.”), alatta az aznapi meccsek
+    const byDay = (list) => {
+      const days = [];
+      list.forEach((g) => {
+        const last = days[days.length - 1];
+        if (last && last.date === g.date) last.games.push(g);
+        else days.push({ date: g.date, games: [g] });
+      });
+      return days
+        .map(
+          (d) => `
+          <div class="gr-day">
+            <div class="gr-day-h">${fmtWeekday(d.date)} · ${fmtDate(d.date)}</div>
+            ${d.games.map(row).join("")}
+          </div>`
+        )
+        .join("");
+    };
+
+    let html = "";
+    if (done.length) {
+      // Alapból csak az utolsó néhány meccsnap látszik, a régebbiek lenyithatók –
+      // így a szezon végén sem lesz végtelen hosszú a lista
+      const days = [...new Set(done.map((g) => g.date))];
+      const recentDays = days.slice(0, GROUP_RECENT_DAYS);
+      const recent = done.filter((g) => recentDays.includes(g.date));
+      const older = done.filter((g) => !recentDays.includes(g.date));
+      html += `<h3 class="lg-sub">Legutóbbi eredmények<span>${done.length}</span></h3>${byDay(recent)}`;
+      if (older.length) {
+        html += `<details class="lg-more"><summary>Korábbi eredmények (${older.length} meccs)</summary>${byDay(older)}</details>`;
+      }
+    }
+    if (upcoming.length) {
+      const first = upcoming.slice(0, GROUP_UPCOMING_LEN);
+      const rest = upcoming.slice(GROUP_UPCOMING_LEN);
+      html += `<h3 class="lg-sub">Következő meccsek<span>${upcoming.length}</span></h3>${byDay(first)}`;
+      if (rest.length) {
+        html += `<details class="lg-more"><summary>A teljes hátralévő sorsolás (még ${rest.length} meccs)</summary>${byDay(rest)}</details>`;
+      }
+    }
+    host.innerHTML = html;
+  }
+
+  // ---- Rájátszás ----
+  // Az alapszakasz után az MJSZ két dolgot rendez:
+  //   • a bajnoki ágat (negyeddöntő → elődöntő → döntő + bronzmérkőzés):
+  //     a negyed- és elődöntő oda-visszavágós párharc (a két meccs
+  //     összesített gólkülönbsége dönt), a döntő és a bronz egy meccs;
+  //   • helyosztókat (5–8., 9–12., …): négycsapatos körmérkőzéses csoportok.
+  // Az API nem ad párharc-azonosítót, ezért a párokat a két csapat neve
+  // alapján rakjuk össze. Az ágrajz NHL-stílusú: bal és jobb oldalról
+  // halad a döntő felé, középen a döntő.
+  const PO_ROUNDS = ["Nyolcaddöntő", "Negyeddöntő", "Elődöntő", "Döntő"];
+
+  function poSeries(games, stage) {
+    const map = new Map();
+    games
+      .filter((g) => g.stage === stage)
+      .forEach((g) => {
+        const key = [g.home, g.away].sort().join("|");
+        if (!map.has(key)) map.set(key, []);
+        map.get(key).push(g);
+      });
+    return [...map.values()]
+      .map((list) => {
+        list.sort((x, y) => parseDate(x.date) - parseDate(y.date) || (x.no || 0) - (y.no || 0));
+        // A felső sor az első meccs hazai csapata
+        const a = list[0].home;
+        const b = list[0].away;
+        const playedGames = list.filter(gamePlayed);
+        const goals = (t) => playedGames.reduce((n, g) => n + (g.home === t ? g.hs : g.as), 0);
+        return {
+          a,
+          b,
+          games: list,
+          sa: goals(a),
+          sb: goals(b),
+          played: playedGames.length,
+          done: playedGames.length === list.length,
+          no: Math.min(...list.map((g) => g.no || 1e9)),
+        };
       })
-      .join("");
+      .sort((x, y) => x.no - y.no);
+  }
+
+  const poHas = (s, team) => s && (s.a === team || s.b === team);
+
+  // Ki jutott tovább? Ha a csapat a következő körben is szerepel, az biztos.
+  // Különben a lejátszott párharc összesítése dönt; döntetlennél az utolsó
+  // meccs (hosszabbítás / szétlövés) győztese.
+  function poWinner(s, nextRound) {
+    if (nextRound) {
+      if (nextRound.some((n) => poHas(n, s.a))) return s.a;
+      if (nextRound.some((n) => poHas(n, s.b))) return s.b;
+    }
+    if (!s.done || !s.played) return null;
+    if (s.sa !== s.sb) return s.sa > s.sb ? s.a : s.b;
+    const last = s.games[s.games.length - 1];
+    if (last.hs !== last.as) return last.hs > last.as ? last.home : last.away;
+    return null;
+  }
+
+  function poCard(s, league, nextRound) {
+    if (!s) {
+      return `<div class="br-s br-tbd"><span>A párharc még nem dőlt el</span></div>`;
+    }
+    const teams = league.teams || {};
+    const win = poWinner(s, nextRound);
+    const line = (t, goals) => `
+      <div class="br-t${win === t ? " win" : win ? " out" : ""}${t === US ? " us" : ""}">
+        <span class="br-logo" data-init="${escHtml(String(t).charAt(0))}">${teamLogo(teams[t] && teams[t].logo) || teamChip(t)}</span>
+        <span class="br-name">${t}</span>
+        <b>${s.played ? goals : ""}</b>
+      </div>`;
+    // Meccsenként az eredmény a felső csapat szemszögéből, vagy a dátum
+    const legs = s.games
+      .map((g) =>
+        gamePlayed(g)
+          ? `${g.home === s.a ? g.hs : g.as}–${g.home === s.a ? g.as : g.hs}${g.ot ? " h.u." : ""}`
+          : fmtDate(g.date)
+      )
+      .join(", ");
+    return `
+      <div class="br-s${poHas(s, US) ? " is-us" : ""}">
+        ${line(s.a, s.sa)}${line(s.b, s.sb)}
+        <div class="br-legs">${s.games.length > 1 ? "Meccsek: " : ""}${legs}</div>
+      </div>`;
+  }
+
+  function renderBracket(league) {
+    const games = league.games || [];
+    const rounds = PO_ROUNDS.filter((r) => games.some((g) => g.stage === r));
+    if (!rounds.length) return "";
+    // Az első szereplő körtől a döntőig minden kör kell (a még ki nem
+    // sorsoltak „még nem dőlt el” helyőrzővel)
+    const first = PO_ROUNDS.indexOf(rounds[0]);
+    const all = PO_ROUNDS.slice(first);
+    const series = all.map((r) => poSeries(games, r));
+    const want = all.map((r, i) => Math.max(1, Math.pow(2, all.length - 1 - i)));
+
+    // Sorrend: a döntőtől visszafelé, hogy minden párharc a „gyermekei”
+    // mellé kerüljön (azok a párharcok, ahonnan a résztvevői jöttek)
+    const ordered = series.map((x) => x.slice());
+    for (let i = all.length - 2; i >= 0; i--) {
+      const parents = ordered[i + 1];
+      if (!parents.length) continue;
+      const out = [];
+      parents.forEach((p) =>
+        series[i].forEach((c) => {
+          if (!out.includes(c) && (poHas(c, p.a) || poHas(c, p.b))) out.push(c);
+        })
+      );
+      series[i].forEach((c) => out.includes(c) || out.push(c));
+      ordered[i] = out;
+    }
+
+    const cards = (i, from, to) => {
+      const list = [];
+      for (let k = from; k < to; k++) list.push(poCard(ordered[i][k], league, series[i + 1]));
+      return list.join("");
+    };
+    const col = (i, side) => {
+      const half = want[i] / 2;
+      const [from, to] = side === "left" ? [0, half] : [half, want[i]];
+      return `
+        <div class="br-col br-${side}" style="--r:${i}">
+          <h4>${all[i]}</h4>
+          <div class="br-list">${cards(i, from, to)}</div>
+        </div>`;
+    };
+
+    const last = all.length - 1;
+    let html = "";
+    for (let i = 0; i < last; i++) html += col(i, "left");
+    const bronze = poSeries(games, "Bronzmérkőzés")[0];
+    html += `
+      <div class="br-col br-center" style="--r:${last}">
+        <h4>🏆 Döntő</h4>
+        <div class="br-list">
+          ${poCard(ordered[last][0], league)}
+          ${bronze ? `<div class="br-bronze"><h4>🥉 Bronzmérkőzés</h4>${poCard(bronze, league)}</div>` : ""}
+        </div>
+      </div>`;
+    for (let i = last - 1; i >= 0; i--) html += col(i, "right");
+
+    return `
+      <div class="lg-po-block">
+        <h3 class="lg-sub">Bajnoki ág · 1–${want[0] * 2}. hely</h3>
+        <div class="br" style="--rounds:${last * 2 + 1}">${html}</div>
+      </div>`;
+  }
+
+  // Helyosztó csoportok: tabella a meccseikből számolva (3 / 2 / 1 / 0 pont)
+  function placementRows(games, league) {
+    const teams = league.teams || {};
+    const rows = {};
+    const row = (t) =>
+      rows[t] ||
+      (rows[t] = { team: t, logo: teams[t] && teams[t].logo, us: t === US, gp: 0, w: 0, otw: 0, otl: 0, v: 0, gf: 0, ga: 0, pts: 0 });
+    games.forEach((g) => {
+      const h = row(g.home);
+      const a = row(g.away);
+      if (!gamePlayed(g)) return;
+      const [win, lose] = g.hs > g.as ? [h, a] : [a, h];
+      h.gp++, a.gp++;
+      h.gf += g.hs, h.ga += g.as, a.gf += g.as, a.ga += g.hs;
+      if (g.ot) win.otw++, win.pts += 2, lose.otl++, lose.pts += 1;
+      else win.w++, win.pts += 3, lose.v++;
+    });
+    return Object.values(rows);
+  }
+
+  // A rájátszás állása a mi szemszögünkből – a csempék alatti csíkhoz.
+  // null, ha még nincs rájátszás-meccsünk.
+  function poStatus(league) {
+    const games = league.games || [];
+    const mine = games.filter((g) => g.stage && (g.home === US || g.away === US));
+    if (!mine.length) return null;
+    mine.sort((a, b) => parseDate(a.date) - parseDate(b.date));
+    const last = mine[mine.length - 1];
+    const stage = last.stage;
+    const nextGame = mine.find((g) => !gamePlayed(g));
+    const nextTxt = nextGame
+      ? `Következő meccs: ${fmtWeekday(nextGame.date)} · ${fmtDate(nextGame.date)}${nextGame.time ? ", " + nextGame.time : ""}`
+      : "";
+
+    if (stage === "Helyosztó") {
+      const list = games.filter((g) => g.stage === "Helyosztó" && g.group === last.group);
+      const rows = placementRows(list, league).sort(standingsSort);
+      const idx = rows.findIndex((r) => r.us);
+      const done = list.every(gamePlayed);
+      const base = parseInt(last.group, 10) || 1;
+      return {
+        title: `Helyosztó · ${last.group} hely`,
+        main: done ? `Végeredmény: ${base + idx}. hely` : `Jelenleg a csoport ${idx + 1}. helyén`,
+        sub: nextTxt,
+      };
+    }
+
+    const series = poSeries(games, stage).find((x) => poHas(x, US));
+    if (!series) return null;
+    const opp = series.a === US ? series.b : series.a;
+    const ours = series.a === US ? series.sa : series.sb;
+    const theirs = series.a === US ? series.sb : series.sa;
+    const nextIdx = PO_ROUNDS.indexOf(stage) + 1;
+    const nextRound = PO_ROUNDS[nextIdx] ? poSeries(games, PO_ROUNDS[nextIdx]) : null;
+    const win = poWinner(series, nextRound);
+    const multi = series.games.length > 1;
+    const score = series.played ? ` · ${multi ? "összesítve " : ""}${ours}–${theirs}` : "";
+
+    let verdict = "";
+    if (win) {
+      const won = win === US;
+      if (stage === "Döntő") verdict = won ? "Bajnokok vagyunk! 🏆" : "Ezüstérem 🥈";
+      else if (stage === "Bronzmérkőzés") verdict = won ? "Bronzérem 🥉" : "4. hely";
+      else verdict = won ? "Továbbjutottunk" : "Itt búcsúztunk";
+    }
+    return {
+      title: stage,
+      main: `Ice Unicorns – ${opp}${score}`,
+      sub: verdict || nextTxt,
+      won: win === US,
+    };
+  }
+
+  function renderPlayoffs(host, league) {
+    const games = league.games || [];
+    const html = renderBracket(league);
+    if (html) host.insertAdjacentHTML("beforeend", html);
+
+    const placement = games.filter((g) => g.stage === "Helyosztó" && g.group);
+    const keys = [...new Set(placement.map((g) => g.group))].sort((x, y) => parseInt(x, 10) - parseInt(y, 10));
+    keys.forEach((k) => {
+      const block = document.createElement("div");
+      block.className = "lg-po-block";
+      const list = placement.filter((g) => g.group === k);
+      block.innerHTML = `<h3 class="lg-sub">Helyosztó · ${k} hely</h3>`;
+      renderStandingsGroup(block, { name: "", standings: placementRows(list, league), noForm: true }, league);
+      const det = document.createElement("details");
+      det.className = "lg-more";
+      det.innerHTML = `<summary>A helyosztó meccsei (${list.length})</summary>`;
+      const inner = document.createElement("div");
+      drawGroupResults(inner, league, k);
+      det.appendChild(inner);
+      block.appendChild(det);
+      host.appendChild(block);
+    });
+
+    return !!html || keys.length > 0;
   }
 
   // ---- Bajnoki pontverseny ----
@@ -1022,7 +1384,6 @@ const LEAGUES = (typeof window !== "undefined" && window.LEAGUES) || {};
         <tr>
           <th class="c-pos">#</th>
           <th class="c-team">Játékos</th>
-          <th class="c-club" title="Csapat">Csapat</th>
           <th title="Lejátszott meccs">M</th>
           <th title="Gól">G</th>
           <th title="Gólpassz">A</th>
@@ -1038,12 +1399,14 @@ const LEAGUES = (typeof window !== "undefined" && window.LEAGUES) || {};
       const club = teams[r.team] && teams[r.team].logo;
       tr.innerHTML = `
         <td class="c-pos">${i + 1}</td>
-        <td class="c-team">${r.name}</td>
-        <td class="c-club">${
-          club
-            ? `<img class="team-logo" src="${club}" alt="${r.team}" title="${r.team}" loading="lazy">`
-            : teamChip(r.team)
-        }</td>
+        <td class="c-team">
+          <span class="sc-name">${r.name}</span>
+          <span class="sc-club">${
+            club
+              ? `<img class="team-logo" src="${club}" alt="${r.team}" loading="lazy">`
+              : teamChip(r.team)
+          }${r.team}</span>
+        </td>
         <td>${r.gp}</td>
         <td>${r.g}</td>
         <td>${r.a}</td>
@@ -1051,9 +1414,8 @@ const LEAGUES = (typeof window !== "undefined" && window.LEAGUES) || {};
       tbody.appendChild(tr);
     });
 
-    // Itt a csapatot csak az embléma jelöli, ezért a halott linkeket
-    // kezdőbetűs koronggal pótoljuk – különben üres maradna a cella.
-    tbody.querySelectorAll(".c-club img").forEach(chipOnError);
+    // A halott emblémalinkeket kezdőbetűs koronggal pótoljuk
+    tbody.querySelectorAll(".sc-club img").forEach(chipOnError);
 
     wrap.appendChild(table);
     host.appendChild(wrap);
@@ -1158,13 +1520,22 @@ const LEAGUES = (typeof window !== "undefined" && window.LEAGUES) || {};
       </thead>
       <tbody></tbody>`;
 
+    // A táblázatba csak a pontszerzők kerülnek; aki még pont nélkül áll,
+    // az alatta egy sorban, név szerint – így nem egy hosszú nullás lista.
+    const pontos = sorok.filter((r) => Number(r.st.P) > 0);
+    const nullas = sorok.filter((r) => !(Number(r.st.P) > 0));
+    const nev = (p) => (TEAMS[key] && TEAMS[key].komoly && p.name ? p.name : p.nick);
+    if (!pontos.length) {
+      host.appendChild(empty("Még senki nem szerzett pontot – az első gól után itt a rangsor. 🥅"));
+    }
+
     const tbody = table.querySelector("tbody");
-    sorok.forEach((r, i) => {
+    pontos.forEach((r, i) => {
       const tr = document.createElement("tr");
       if (i < 3) tr.className = "rang" + (i + 1);
       tr.innerHTML = `
         <td class="c-pos">${i + 1}</td>
-        <td class="c-team">${r.p.nick}</td>
+        <td class="c-team">${nev(r.p)}</td>
         <td>${r.st.M}</td>
         <td>${r.st.G}</td>
         <td>${r.st.A}</td>
@@ -1173,7 +1544,13 @@ const LEAGUES = (typeof window !== "undefined" && window.LEAGUES) || {};
     });
 
     wrap.appendChild(table);
-    host.appendChild(wrap);
+    if (pontos.length) host.appendChild(wrap);
+    if (nullas.length) {
+      const p = document.createElement("p");
+      p.className = "lg-legend";
+      p.innerHTML = `<b>Még pont nélkül (${nullas.length}):</b> ${nullas.map((r) => nev(r.p)).join(", ")}`;
+      host.appendChild(p);
+    }
   }
 
   // ---- Strukturált adat a keresőknek (schema.org SportsEvent) ----
@@ -1258,8 +1635,77 @@ const LEAGUES = (typeof window !== "undefined" && window.LEAGUES) || {};
     const groupResults = panel.querySelector("[data-group-results]");
     if (groupResults) renderGroupResults(groupResults, league);
 
+    // Rájátszás idején a Rájátszás fül kerül előre, és az nyílik meg alapból
+    const playoffs = panel.querySelector("[data-playoffs]");
+    if (playoffs && renderPlayoffs(playoffs, league)) {
+      const tab = panel.querySelector('[data-lg-tab="rajatszas"]');
+      if (tab) {
+        tab.hidden = false;
+        tab.parentElement.prepend(tab);
+        tab.parentElement.dataset.default = "rajatszas";
+      }
+      const strip = panel.querySelector("[data-po-status]");
+      const st = poStatus(league);
+      if (strip && st) {
+        strip.innerHTML = `
+          <div class="po-text">
+            <span class="po-kicker">Rájátszás · ${st.title}</span>
+            <strong>${st.main}</strong>
+            ${st.sub ? `<span class="po-sub">${st.sub}</span>` : ""}
+          </div>
+          <button type="button" class="btn btn-primary po-go">Ágrajz megnézése</button>`;
+        strip.classList.toggle("is-won", !!st.won);
+        strip.hidden = false;
+        strip.querySelector(".po-go").addEventListener("click", () => {
+          const t = panel.querySelector('[data-lg-tab="rajatszas"]');
+          if (!t) return;
+          t.click();
+          t.parentElement.scrollIntoView({ behavior: "smooth", block: "start" });
+        });
+      }
+    }
+
     const leagueScorers = panel.querySelector("[data-league-scorers]");
     if (leagueScorers) renderLeagueScorers(leagueScorers, league);
+  });
+
+  // ---- Al-fülek (Menetrend / Tabella / Pontverseny / Fordulók) ----
+  // A választott fület megjegyezzük (csak ebben a böngészőben), hogy
+  // visszatéréskor ugyanott folytasd.
+  document.querySelectorAll(".lg-tabs").forEach((bar) => {
+    const tabs = Array.from(bar.querySelectorAll("[data-lg-tab]"));
+    const root = bar.parentElement;
+    const store = "lg-tab:" + location.pathname + (bar.dataset.default ? ":" + bar.dataset.default : "");
+    const select = (btn, focus) => {
+      tabs.forEach((t) => {
+        const on = t === btn;
+        t.setAttribute("aria-selected", String(on));
+        t.tabIndex = on ? 0 : -1;
+        const panel = root.querySelector('[data-lg-panel="' + t.dataset.lgTab + '"]');
+        if (panel) panel.hidden = !on;
+      });
+      if (focus) btn.focus();
+      try {
+        localStorage.setItem(store, btn.dataset.lgTab);
+      } catch (e) {}
+    };
+    tabs.forEach((t) => t.addEventListener("click", () => select(t)));
+    // A rejtett fül (pl. Rájátszás az alapszakaszban) kimarad a léptetésből
+    bar.addEventListener("keydown", (e) => {
+      const shown = tabs.filter((t) => !t.hidden);
+      const i = shown.indexOf(e.target);
+      if (i < 0 || (e.key !== "ArrowRight" && e.key !== "ArrowLeft")) return;
+      e.preventDefault();
+      select(shown[(i + (e.key === "ArrowRight" ? 1 : -1) + shown.length) % shown.length], true);
+    });
+    let saved = null;
+    try {
+      saved = localStorage.getItem(store);
+    } catch (e) {}
+    const start =
+      tabs.find((t) => t.dataset.lgTab === saved && !t.hidden) ||
+      tabs.find((t) => t.dataset.lgTab === bar.dataset.default && !t.hidden);
+    if (start) select(start);
   });
 
   // A következő-meccs kártyák kirajzolása után indul a visszaszámláló.

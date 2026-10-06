@@ -69,40 +69,46 @@
       <section class="section page-section">
         <div class="container">
           <div class="next-match" data-next-match></div>
+          <div class="po-status" data-po-status hidden></div>
           <div class="league-summary" data-summary></div>
         </div>
       </section>
 
       <section class="section section-alt">
         <div class="container">
-          <div class="league-grid">
-            <div class="league-col">
-              <div class="league-block">
-                <h2>Menetrend és eredmények</h2>
-                <span class="league-season" data-season>{{label}}</span>
-                <div data-matches></div>
-                <div class="cal-links">
-                  <span class="cal-title">📅 Tedd be a naptáradba – az időpont-változások is maguktól frissülnek:</span>
-                  <a class="cal-link" href="https://calendar.google.com/calendar/render?cid=webcal%3A%2F%2Ficeunicorns.hu%2Fnaptar%2F{{key}}.ics" target="_blank" rel="noopener">Google Naptár</a>
-                  <a class="cal-link" href="webcal://iceunicorns.hu/naptar/{{key}}.ics">Apple / Outlook</a>
-                  <a class="cal-link" href="naptar/{{key}}.ics" download>.ics fájl</a>
-                </div>
-              </div>
-              <div class="league-block">
-                <h2>A csoport fordulói</h2>
-                <span class="league-season">A riválisok meccsei is</span>
-                <div data-group-results></div>
-              </div>
+          <!-- Al-fülek: egyszerre egy szakasz látszik. A [data-lg-panel] szándékosan
+               nem [data-panel], mert azt a fenti Bajnokság/Csapat váltó kezeli. -->
+          <div class="lg-tabs" role="tablist" aria-label="{{label}} bajnokság">
+            <button type="button" class="lg-tab" role="tab" id="lg-tab-menetrend" aria-controls="lg-panel-menetrend" data-lg-tab="menetrend" aria-selected="true">Menetrend</button>
+            <button type="button" class="lg-tab" role="tab" id="lg-tab-tabella" aria-controls="lg-panel-tabella" data-lg-tab="tabella" aria-selected="false" tabindex="-1">Tabella</button>
+            <button type="button" class="lg-tab" role="tab" id="lg-tab-pontverseny" aria-controls="lg-panel-pontverseny" data-lg-tab="pontverseny" aria-selected="false" tabindex="-1">Pontverseny</button>
+            <button type="button" class="lg-tab" role="tab" id="lg-tab-rajatszas" aria-controls="lg-panel-rajatszas" data-lg-tab="rajatszas" aria-selected="false" tabindex="-1" hidden>Rájátszás</button>
+            <button type="button" class="lg-tab" role="tab" id="lg-tab-fordulok" aria-controls="lg-panel-fordulok" data-lg-tab="fordulok" aria-selected="false" tabindex="-1">Fordulók</button>
+          </div>
+
+          <div class="lg-panel league-block" role="tabpanel" id="lg-panel-menetrend" aria-labelledby="lg-tab-menetrend" data-lg-panel="menetrend">
+            <h2>Menetrend és eredmények</h2>
+            <span class="league-season" data-season>{{label}}</span>
+            <div data-matches></div>
+            <div class="cal-links">
+              <span class="cal-title">📅 Tedd be a naptáradba – az időpont-változások is maguktól frissülnek:</span>
+              <a class="cal-link" href="https://calendar.google.com/calendar/render?cid=webcal%3A%2F%2Ficeunicorns.hu%2Fnaptar%2F{{key}}.ics" target="_blank" rel="noopener">Google Naptár</a>
+              <a class="cal-link" href="webcal://iceunicorns.hu/naptar/{{key}}.ics">Apple / Outlook</a>
+              <a class="cal-link" href="naptar/{{key}}.ics" download>.ics fájl</a>
             </div>
-            <div class="league-col">
-              <div class="league-block">
-                <h2>Tabella</h2>
-                <span class="league-season">Állás a mezőnyben</span>
-                <div data-standings></div>
-              </div>
+          </div>
+
+          <div class="lg-panel league-block" role="tabpanel" id="lg-panel-tabella" aria-labelledby="lg-tab-tabella" data-lg-panel="tabella" hidden>
+            <h2>Tabella</h2>
+            <span class="league-season">Állás a mezőnyben</span>
+            <div data-standings></div>
+          </div>
+
+          <div class="lg-panel" role="tabpanel" id="lg-panel-pontverseny" aria-labelledby="lg-tab-pontverseny" data-lg-panel="pontverseny" hidden>
+            <div class="league-grid lg-two">
               <div class="league-block">
                 <h2>Házi pontvadászat</h2>
-                <span class="league-season">A MÉNES legeredményesebbjei</span>
+                <span class="league-season">{{hazi}}</span>
                 <div data-scorers></div>
               </div>
               <div class="league-block">
@@ -111,6 +117,18 @@
                 <div data-league-scorers></div>
               </div>
             </div>
+          </div>
+
+          <div class="lg-panel league-block lg-wide" role="tabpanel" id="lg-panel-rajatszas" aria-labelledby="lg-tab-rajatszas" data-lg-panel="rajatszas" hidden>
+            <h2>Rájátszás</h2>
+            <span class="league-season">Az alapszakasz után: bajnoki ág és helyosztók</span>
+            <div data-playoffs></div>
+          </div>
+
+          <div class="lg-panel league-block" role="tabpanel" id="lg-panel-fordulok" aria-labelledby="lg-tab-fordulok" data-lg-panel="fordulok" hidden>
+            <h2>A csoport fordulói</h2>
+            <span class="league-season">A riválisok meccsei is</span>
+            <div data-group-results></div>
           </div>
         </div>
       </section>

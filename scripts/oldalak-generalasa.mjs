@@ -26,12 +26,14 @@ export const OLDALAK = {
     description: "Az Ice Unicorns OB4D csapata: a bajnokság és a keret egy helyen.",
     h1: "bizonyítunk",
     lead: "Az Ice Unicorns az OB4D mezőnyében méri össze tudását más amatőr csapatokkal.",
+    hazi: "A MÉNES legeredményesebbjei",
   },
   ob4c: {
     label: "OB4C",
     description: "Az Ice Unicorns OB4C csapata: a bajnokság és a keret egy helyen.",
     h1: "feljebb lépünk",
     lead: "Az Ice Unicorns OB4C csapata egy szinttel feljebb méri össze tudását a mezőnnyel.",
+    hazi: "A csapat legeredményesebb játékosai",
   },
 };
 
