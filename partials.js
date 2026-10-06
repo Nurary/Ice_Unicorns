@@ -8,6 +8,7 @@
     { href: "ob4c.html", label: "OB4C" },
     { href: "ob4d.html", label: "OB4D" },
     { href: "jatek.html", label: "Játék" },
+    { href: "tamogatas.html", label: "Támogatás" },
     { href: "kapcsolat.html", label: "Kapcsolat", cta: true },
   ];
 

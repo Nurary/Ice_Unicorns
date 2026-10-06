@@ -639,6 +639,21 @@ a { color: inherit; text-decoration: none; }
 .scorers tr.rang1 { background: linear-gradient(90deg, rgba(255,207,92,0.22), transparent 70%); }
 
 /* Contact (on light band) */
+/* ---- Támogatás oldal ---- */
+.support-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; align-items: stretch; max-width: 980px; margin: 0 auto; }
+.support-card { position: relative; display: flex; flex-direction: column; align-items: flex-start; gap: 14px; padding: 34px 32px; background: var(--surface); border: 2px solid var(--surface-border); border-radius: var(--radius); box-shadow: 0 20px 40px -26px rgba(27,36,80,0.45); }
+.support-card h2 { font-size: 1.6rem; color: var(--text); }
+.support-card p { color: var(--muted); font-weight: 600; line-height: 1.6; }
+.support-card p a { color: var(--pink-ink); font-weight: 800; }
+.support-card .btn { margin-top: auto; }
+.support-num { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; background: var(--pink); color: #fff; font-family: "Baloo 2", sans-serif; font-weight: 800; font-size: 1.2rem; }
+/* A QR mindig fehér alapon áll (sötét módban is), különben nem olvasható be */
+.support-qr { align-self: center; margin: 4px 0 8px; padding: 14px 14px 10px; background: #fff; border-radius: 18px; text-align: center; box-shadow: 0 10px 24px -14px rgba(27,36,80,0.5); }
+.support-qr img { display: block; width: 200px; height: 200px; }
+.support-qr figcaption { margin-top: 6px; font-size: 0.82rem; font-weight: 800; color: #1b2450; }
+.btn-outline { background: transparent; border: 2px solid var(--pink); color: var(--pink-ink); }
+.btn-outline:hover { background: var(--surface-soft); }
+
 .contact-wrap { display: grid; grid-template-columns: 1fr 1.1fr; gap: 56px; align-items: start; }
 .contact-info .kicker { color: var(--pink-ink); }
 .contact-info h2 { font-size: clamp(2rem, 4vw, 2.9rem); color: var(--text); }
@@ -916,6 +931,8 @@ a.card:hover .card-arrow { transform: translateX(4px); }
   .league-grid { gap: 44px; }
   .card-grid, .team-grid { grid-template-columns: repeat(2, 1fr); }
   .contact-wrap { grid-template-columns: 1fr; gap: 36px; }
+  .support-grid { grid-template-columns: 1fr; }
+  .support-card { padding: 28px 22px; }
   .gallery-grid { columns: 2 200px; }
 }
 

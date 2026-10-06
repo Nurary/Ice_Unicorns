@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Támogatás – Ice Unicorns</title>
+  <meta name="description" content="Támogasd az Ice Unicorns Sportegyesületet – egyszeri vagy folyamatos felajánlással, vagy a MOHU palackvisszaváltás betétdíjával." />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Ice Unicorns" />
+  <meta property="og:locale" content="hu_HU" />
+  <meta property="og:url" content="https://iceunicorns.hu/tamogatas.html" />
+  <meta property="og:image" content="https://iceunicorns.hu/assets/logo/preview.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://iceunicorns.hu/assets/logo/preview.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicons/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/favicons/favicon-16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/favicons/apple-touch-icon.png" />
+  <link rel="manifest" href="assets/favicons/site.webmanifest" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet" />
+  <script>
+    /* A mentett téma alkalmazása még az első festés előtt – enélkül
+       egy pillanatra felvillanna a másik mód. */
+    try {
+      var t = localStorage.getItem("theme");
+      if (t === "dark" || t === "light") document.documentElement.dataset.theme = t;
+    } catch (e) {}
+  </script>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="app-header"></div>
+
+  <main>
+    <section class="page-hero">
+      <div class="container">
+        <span class="kicker">Támogatás</span>
+        <h1>Támogasd a <span class="grad">ménest</span></h1>
+        <p>Kell a pénz jégre… 🦄 Egyesületünk szívesen fogad támogatást – ennek több módja is van.</p>
+      </div>
+    </section>
+
+    <section class="section section-alt page-section">
+      <div class="container support-grid">
+        <article class="support-card">
+          <span class="support-num">1</span>
+          <h2>Felajánlás az egyesületnek</h2>
+          <p>Keress meg minket az <a href="mailto:info@iceunicorns.hu">info@iceunicorns.hu</a> címen,
+            hogy megbeszélhessük a támogatás formáját. Akár egyszeri felajánlásra, akár
+            folyamatos támogatásra is van lehetőség az egyesület felületein.</p>
+          <p>A részletekért írj nekünk a fenti email címre.</p>
+          <a class="btn btn-primary" href="mailto:info@iceunicorns.hu?subject=T%C3%A1mogat%C3%A1s">Írj nekünk</a>
+        </article>
+
+        <article class="support-card">
+          <span class="support-num">2</span>
+          <h2>Palackból jégidő</h2>
+          <p>Vidd vissza a palackokat egy MOHU REpont automatához, és ajándékozd nekünk a
+            betétdíjat: a felajánlásnál olvasd be az automatával az alábbi QR-kódot.</p>
+          <figure class="support-qr">
+            <img src="assets/tamogatas/mohu-qr.svg" width="220" height="220" alt="MOHU REpont QR-kód az Ice Unicorns Sportegyesület támogatásához" />
+            <figcaption>Ice Unicorns Sportegyesület</figcaption>
+          </figure>
+          <a class="btn btn-outline" href="https://repont.pro/kereses/?charity_name=Ice%20Unicorns%20Sportegyes%C3%BClet" target="_blank" rel="noopener">Megnézem a REpont oldalán</a>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <div id="app-footer"></div>
+  <script src="partials.js" defer></script>
+</body>
+</html>
