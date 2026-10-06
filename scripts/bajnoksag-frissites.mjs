@@ -23,7 +23,7 @@
 //   CSAPAT       – csak teszteléshez: más csapat nevével egy korábbi szezon
 //                  adatain is ki lehet próbálni a scriptet.
 
-import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 import { loadTeams, nameTokens, playersOf } from "./keret.mjs";
@@ -32,6 +32,7 @@ import { renderIcs } from "./naptar.mjs";
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const OUT_FILE = join(ROOT, "bajnoksag-adatok.js");
 const ICS_DIR = join(ROOT, "naptar");
+const ARCHIVE_DIR = join(ROOT, "szezonok");
 
 const API_BASE = "https://api.icehockey.hu/vbr/v2";
 const API_KEY = process.env.MJSZ_API_KEY || "7b4f4d1b466b5a3572990ae24452abf2a086e7ee";
@@ -712,6 +713,44 @@ function writeCalendars(leagues, generatedAt) {
 const warn = (msg) =>
   console.warn(process.env.GITHUB_ACTIONS ? `::warning::${msg}` : `FIGYELEM: ${msg}`);
 
+// ---- Szezonarchívum ----
+//
+// Az automatikus szezonváltás az új szezon adataival felülírja a
+// bajnoksag-adatok.js-t. Előtte a régi szezon fájlját változatlanul
+// félretesszük a szezonok/ mappába (pl. szezonok/2026-2027.js), így a
+// becenevek, jegyzőkönyvek és klippek akkor is megmaradnak, ha a keret közben
+// változik. A szezonok/lista.json tartja számon, mi van archiválva – erre
+// épülhet majd az oldalon a szezonváltó.
+//
+// Csak automatikus futásnál archivál (kézzel megadott SZEZON vagy CSAPAT
+// tesztelés, abból nem lehet archívum), csak előre lépő szezonváltásnál, és
+// meglévő archívumot sosem ír felül.
+function archivePrevious(previous, leagues) {
+  if (!previous || process.env.SZEZON || process.env.CSAPAT) return;
+  const oldSeasons = Object.entries(previous.leagues || {})
+    .filter(([key, l]) => l?.season && leagues[key]?.season && leagues[key].season > l.season)
+    .map(([, l]) => l.season);
+  if (!oldSeasons.length) return;
+
+  const src = readFileSync(OUT_FILE, "utf8");
+  mkdirSync(ARCHIVE_DIR, { recursive: true });
+  const listFile = join(ARCHIVE_DIR, "lista.json");
+  let list = [];
+  try {
+    list = JSON.parse(readFileSync(listFile, "utf8"));
+  } catch {}
+
+  for (const season of new Set(oldSeasons)) {
+    const file = join(ARCHIVE_DIR, `${season}.js`);
+    if (existsSync(file)) continue;
+    writeFileSync(file, src, "utf8");
+    if (!list.includes(season)) list.push(season);
+    console.log(`Archiválva: szezonok/${season}.js`);
+  }
+  list.sort().reverse(); // a legfrissebb elöl
+  writeFileSync(listFile, JSON.stringify(list, null, 2) + "\n", "utf8");
+}
+
 async function main() {
   const previous = readPrevious();
   const leagues = {};
@@ -762,6 +801,7 @@ async function main() {
   const generatedAt = changed ? new Date().toISOString() : previous.generatedAt;
 
   if (changed) {
+    archivePrevious(previous, leagues);
     writeFileSync(OUT_FILE, render(leagues, gameStats, generatedAt), "utf8");
     console.log(`Frissítve: ${OUT_FILE}`);
   } else {

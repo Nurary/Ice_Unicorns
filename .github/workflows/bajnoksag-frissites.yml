@@ -52,7 +52,7 @@ jobs:
 
       - name: Commit, ha változott
         run: |
-          FILES="bajnoksag-adatok.js naptar assets/og"
+          FILES="bajnoksag-adatok.js naptar assets/og szezonok"
           if [ -z "$(git status --porcelain -- $FILES)" ]; then
             echo "Nincs változás, nincs mit commitolni."
             exit 0
