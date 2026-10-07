@@ -6,7 +6,7 @@
 // pedig időzítve lefuttatja, és commitolja, ha változott valami.
 //
 // Szezon: 2026-2027
-// Utolsó frissítés: 2026-10-06T11:52:40.587Z
+// Utolsó frissítés: 2026-10-07T11:37:36.244Z
 //
 // A LEAGUES mezőinek jelentését a bajnoksag.js, a GAME_STATS-ét a
 // statisztika.js tetején lévő leírás mondja el.
@@ -379,20 +379,8 @@ window.LEAGUES = {
       {
         "date": "2026-10-18",
         "group": "A",
-        "home": "Angels",
-        "away": "Vénfarkasok"
-      },
-      {
-        "date": "2026-10-18",
-        "group": "A",
         "home": "DVTK Jegesmedvék",
         "away": "Ligeti Jégkásák A"
-      },
-      {
-        "date": "2026-10-18",
-        "group": "A",
-        "home": "Alba Trashers Jégkorong Klub",
-        "away": "VIP Blazing Blades"
       },
       {
         "date": "2026-10-18",
@@ -413,10 +401,17 @@ window.LEAGUES = {
         "away": "DJK SE"
       },
       {
-        "date": "2026-11-08",
+        "date": "2026-10-18",
         "group": "A",
-        "home": "Vénfarkasok",
-        "away": "Alba Trashers Jégkorong Klub"
+        "home": "Angels",
+        "away": "Vénfarkasok"
+      },
+      {
+        "date": "2026-10-18",
+        "group": "A",
+        "time": "18:20",
+        "home": "Alba Trashers Jégkorong Klub",
+        "away": "VIP Blazing Blades"
       },
       {
         "date": "2026-11-08",
@@ -455,10 +450,10 @@ window.LEAGUES = {
         "away": "Óbudai Gepárd D"
       },
       {
-        "date": "2026-11-22",
+        "date": "2026-11-08",
         "group": "A",
         "home": "Vénfarkasok",
-        "away": "DVTK Jegesmedvék"
+        "away": "Alba Trashers Jégkorong Klub"
       },
       {
         "date": "2026-11-22",
@@ -497,10 +492,10 @@ window.LEAGUES = {
         "away": "Ice Unicorns"
       },
       {
-        "date": "2026-12-06",
+        "date": "2026-11-22",
         "group": "A",
-        "home": "HKB Flashes II",
-        "away": "Vénfarkasok"
+        "home": "Vénfarkasok",
+        "away": "DVTK Jegesmedvék"
       },
       {
         "date": "2026-12-06",
@@ -539,6 +534,12 @@ window.LEAGUES = {
         "away": "Óbudai Gepárd D"
       },
       {
+        "date": "2026-12-06",
+        "group": "A",
+        "home": "HKB Flashes II",
+        "away": "Vénfarkasok"
+      },
+      {
         "date": "2026-12-20",
         "group": "B",
         "home": "DJK SE",
@@ -555,12 +556,6 @@ window.LEAGUES = {
         "group": "B",
         "home": "Ice Unicorns",
         "away": "Korongozoo VALOR"
-      },
-      {
-        "date": "2027-01-17",
-        "group": "A",
-        "home": "Ligeti Jégkásák A",
-        "away": "Vénfarkasok"
       },
       {
         "date": "2027-01-17",
@@ -599,10 +594,10 @@ window.LEAGUES = {
         "away": "DJK SE"
       },
       {
-        "date": "2027-01-31",
+        "date": "2027-01-17",
         "group": "A",
-        "home": "Vénfarkasok",
-        "away": "VIP Blazing Blades"
+        "home": "Ligeti Jégkásák A",
+        "away": "Vénfarkasok"
       },
       {
         "date": "2027-01-31",
@@ -645,6 +640,12 @@ window.LEAGUES = {
         "group": "B",
         "home": "Korongozoo VALOR",
         "away": "Ligeti Jégkásák B"
+      },
+      {
+        "date": "2027-01-31",
+        "group": "A",
+        "home": "Vénfarkasok",
+        "away": "VIP Blazing Blades"
       },
       {
         "date": "2027-02-07",
@@ -1887,4 +1888,4 @@ window.GAME_STATS = [
   }
 ];
 
-window.LEAGUES_FRISSITVE = "2026-10-06T11:52:40.587Z";
+window.LEAGUES_FRISSITVE = "2026-10-07T11:37:36.244Z";
