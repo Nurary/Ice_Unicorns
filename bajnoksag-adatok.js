@@ -6,7 +6,7 @@
 // pedig időzítve lefuttatja, és commitolja, ha változott valami.
 //
 // Szezon: 2026-2027
-// Utolsó frissítés: 2026-10-07T11:37:36.244Z
+// Utolsó frissítés: 2026-10-08T00:51:01.103Z
 //
 // A LEAGUES mezőinek jelentését a bajnoksag.js, a GAME_STATS-ét a
 // statisztika.js tetején lévő leírás mondja el.
@@ -123,6 +123,20 @@ window.LEAGUES = {
             "logo": "https://ivr-api.icehockey.hu/storage/media/116508/conversions/profile_photo-thumb-cropped.png"
           },
           {
+            "team": "Ligeti Jégkásák A",
+            "gp": 1,
+            "w": 1,
+            "otw": 0,
+            "sow": 0,
+            "otl": 0,
+            "sol": 0,
+            "v": 0,
+            "gf": 6,
+            "ga": 4,
+            "pts": 3,
+            "logo": "https://ivr-api.icehockey.hu/storage/media/117234/conversions/profile_photo-thumb-cropped.png"
+          },
+          {
             "team": "Angels",
             "gp": 1,
             "w": 1,
@@ -162,6 +176,20 @@ window.LEAGUES = {
             "ga": 9,
             "pts": 0,
             "logo": "https://ivr-api.icehockey.hu/storage/media/81640/conversions/profile_photo-thumb-cropped.png"
+          },
+          {
+            "team": "Alba Trashers Jégkorong Klub",
+            "gp": 1,
+            "w": 0,
+            "otw": 0,
+            "sow": 0,
+            "otl": 0,
+            "sol": 0,
+            "v": 1,
+            "gf": 4,
+            "ga": 6,
+            "pts": 0,
+            "logo": "https://ivr-api.icehockey.hu/storage/media/117431/conversions/profile_photo-thumb-cropped.png"
           },
           {
             "team": "DVTK Jegesmedvék",
@@ -286,11 +314,11 @@ window.LEAGUES = {
       },
       "Ligeti Jégkásák A": {
         "logo": "https://ivr-api.icehockey.hu/storage/media/117234/conversions/profile_photo-thumb-cropped.png",
-        "group": null
+        "group": "A"
       },
       "Alba Trashers Jégkorong Klub": {
         "logo": "https://ivr-api.icehockey.hu/storage/media/117431/conversions/profile_photo-thumb-cropped.png",
-        "group": null
+        "group": "A"
       },
       "Ligeti Jégkásák B": {
         "logo": "https://ivr-api.icehockey.hu/storage/media/117234/conversions/profile_photo-thumb-cropped.png",
@@ -360,7 +388,9 @@ window.LEAGUES = {
         "group": "A",
         "time": "20:30",
         "home": "Ligeti Jégkásák A",
-        "away": "Alba Trashers Jégkorong Klub"
+        "away": "Alba Trashers Jégkorong Klub",
+        "hs": 6,
+        "as": 4
       },
       {
         "date": "2026-10-10",
@@ -379,6 +409,12 @@ window.LEAGUES = {
       {
         "date": "2026-10-18",
         "group": "A",
+        "home": "Angels",
+        "away": "Vénfarkasok"
+      },
+      {
+        "date": "2026-10-18",
+        "group": "A",
         "home": "DVTK Jegesmedvék",
         "away": "Ligeti Jégkásák A"
       },
@@ -399,12 +435,6 @@ window.LEAGUES = {
         "group": "B",
         "home": "ESMTK Jégpárducok B",
         "away": "DJK SE"
-      },
-      {
-        "date": "2026-10-18",
-        "group": "A",
-        "home": "Angels",
-        "away": "Vénfarkasok"
       },
       {
         "date": "2026-10-18",
@@ -415,6 +445,12 @@ window.LEAGUES = {
       },
       {
         "date": "2026-11-08",
+        "group": "A",
+        "home": "Vénfarkasok",
+        "away": "Alba Trashers Jégkorong Klub"
+      },
+      {
+        "date": "2026-11-08",
         "group": "B",
         "home": "DJK SE",
         "away": "Ice Unicorns"
@@ -450,10 +486,10 @@ window.LEAGUES = {
         "away": "Óbudai Gepárd D"
       },
       {
-        "date": "2026-11-08",
+        "date": "2026-11-22",
         "group": "A",
         "home": "Vénfarkasok",
-        "away": "Alba Trashers Jégkorong Klub"
+        "away": "DVTK Jegesmedvék"
       },
       {
         "date": "2026-11-22",
@@ -492,10 +528,10 @@ window.LEAGUES = {
         "away": "Ice Unicorns"
       },
       {
-        "date": "2026-11-22",
+        "date": "2026-12-06",
         "group": "A",
-        "home": "Vénfarkasok",
-        "away": "DVTK Jegesmedvék"
+        "home": "HKB Flashes II",
+        "away": "Vénfarkasok"
       },
       {
         "date": "2026-12-06",
@@ -534,12 +570,6 @@ window.LEAGUES = {
         "away": "Óbudai Gepárd D"
       },
       {
-        "date": "2026-12-06",
-        "group": "A",
-        "home": "HKB Flashes II",
-        "away": "Vénfarkasok"
-      },
-      {
         "date": "2026-12-20",
         "group": "B",
         "home": "DJK SE",
@@ -556,6 +586,12 @@ window.LEAGUES = {
         "group": "B",
         "home": "Ice Unicorns",
         "away": "Korongozoo VALOR"
+      },
+      {
+        "date": "2027-01-17",
+        "group": "A",
+        "home": "Ligeti Jégkásák A",
+        "away": "Vénfarkasok"
       },
       {
         "date": "2027-01-17",
@@ -594,10 +630,10 @@ window.LEAGUES = {
         "away": "DJK SE"
       },
       {
-        "date": "2027-01-17",
+        "date": "2027-01-31",
         "group": "A",
-        "home": "Ligeti Jégkásák A",
-        "away": "Vénfarkasok"
+        "home": "Vénfarkasok",
+        "away": "VIP Blazing Blades"
       },
       {
         "date": "2027-01-31",
@@ -640,12 +676,6 @@ window.LEAGUES = {
         "group": "B",
         "home": "Korongozoo VALOR",
         "away": "Ligeti Jégkásák B"
-      },
-      {
-        "date": "2027-01-31",
-        "group": "A",
-        "home": "Vénfarkasok",
-        "away": "VIP Blazing Blades"
       },
       {
         "date": "2027-02-07",
@@ -866,6 +896,7 @@ window.LEAGUES = {
         "opponent": "Lehel HC Amatőr",
         "home": false,
         "venue": "Jászberényi Jégcsarnok",
+        "logo": "https://ivr-api.icehockey.hu/storage/media/163762/conversions/profile_photo-thumb-cropped.png",
         "us": null,
         "them": null
       },
@@ -1055,7 +1086,8 @@ window.LEAGUES = {
             "v": 0,
             "gf": 0,
             "ga": 0,
-            "pts": 0
+            "pts": 0,
+            "logo": "https://ivr-api.icehockey.hu/storage/media/163762/conversions/profile_photo-thumb-cropped.png"
           },
           {
             "team": "Séra Team",
@@ -1121,14 +1153,6 @@ window.LEAGUES = {
         "logo": "https://ivr-api.icehockey.hu/storage/media/106284/conversions/profile_photo-thumb-cropped.png",
         "group": "B"
       },
-      "Kohász": {
-        "logo": "https://ivr-api.icehockey.hu/storage/media/117416/conversions/profile_photo-thumb-cropped.png",
-        "group": "B"
-      },
-      "Lehel HC Amatőr": {
-        "logo": null,
-        "group": "B"
-      },
       "ESMTK Jégpárducok": {
         "logo": "https://ivr-api.icehockey.hu/storage/media/116508/conversions/profile_photo-thumb-cropped.png",
         "group": "A"
@@ -1136,6 +1160,14 @@ window.LEAGUES = {
       "VIP Wizards": {
         "logo": null,
         "group": "A"
+      },
+      "Kohász": {
+        "logo": "https://ivr-api.icehockey.hu/storage/media/117416/conversions/profile_photo-thumb-cropped.png",
+        "group": "B"
+      },
+      "Lehel HC Amatőr": {
+        "logo": "https://ivr-api.icehockey.hu/storage/media/163762/conversions/profile_photo-thumb-cropped.png",
+        "group": "B"
       },
       "Algyői Olajosok": {
         "logo": "https://ivr-api.icehockey.hu/storage/media/142328/conversions/profile_photo-thumb-cropped.png",
@@ -1177,16 +1209,17 @@ window.LEAGUES = {
       },
       {
         "date": "2026-10-11",
-        "group": "B",
-        "home": "Kohász",
-        "away": "Lehel HC Amatőr"
-      },
-      {
-        "date": "2026-10-11",
         "group": "A",
         "time": "11:15",
         "home": "ESMTK Jégpárducok",
         "away": "VIP Wizards"
+      },
+      {
+        "date": "2026-10-11",
+        "group": "B",
+        "time": "18:00",
+        "home": "Kohász",
+        "away": "Lehel HC Amatőr"
       },
       {
         "date": "2026-10-25",
@@ -1888,4 +1921,4 @@ window.GAME_STATS = [
   }
 ];
 
-window.LEAGUES_FRISSITVE = "2026-10-07T11:37:36.244Z";
+window.LEAGUES_FRISSITVE = "2026-10-08T00:51:01.103Z";
