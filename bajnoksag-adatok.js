@@ -6,7 +6,7 @@
 // pedig időzítve lefuttatja, és commitolja, ha változott valami.
 //
 // Szezon: 2026-2027
-// Utolsó frissítés: 2026-10-08T00:51:01.103Z
+// Utolsó frissítés: 2026-10-10T11:02:22.545Z
 //
 // A LEAGUES mezőinek jelentését a bajnoksag.js, a GAME_STATS-ét a
 // statisztika.js tetején lévő leírás mondja el.
@@ -1169,13 +1169,13 @@ window.LEAGUES = {
         "logo": "https://ivr-api.icehockey.hu/storage/media/163762/conversions/profile_photo-thumb-cropped.png",
         "group": "B"
       },
-      "Algyői Olajosok": {
-        "logo": "https://ivr-api.icehockey.hu/storage/media/142328/conversions/profile_photo-thumb-cropped.png",
-        "group": "A"
-      },
       "ESMTK Jégtörők": {
         "logo": "https://ivr-api.icehockey.hu/storage/media/116508/conversions/profile_photo-thumb-cropped.png",
         "group": "B"
+      },
+      "Algyői Olajosok": {
+        "logo": "https://ivr-api.icehockey.hu/storage/media/142328/conversions/profile_photo-thumb-cropped.png",
+        "group": "A"
       }
     },
     "games": [
@@ -1222,6 +1222,13 @@ window.LEAGUES = {
         "away": "Lehel HC Amatőr"
       },
       {
+        "date": "2026-10-17",
+        "group": "B",
+        "time": "16:15",
+        "home": "ESMTK Jégtörők",
+        "away": "Séra Team"
+      },
+      {
         "date": "2026-10-25",
         "group": "A",
         "home": "Algyői Olajosok",
@@ -1238,12 +1245,6 @@ window.LEAGUES = {
         "group": "A",
         "home": "HKB Flashes I",
         "away": "Kárpáti Farkasok"
-      },
-      {
-        "date": "2026-10-25",
-        "group": "B",
-        "home": "ESMTK Jégtörők",
-        "away": "Séra Team"
       },
       {
         "date": "2026-10-25",
@@ -1921,4 +1922,4 @@ window.GAME_STATS = [
   }
 ];
 
-window.LEAGUES_FRISSITVE = "2026-10-08T00:51:01.103Z";
+window.LEAGUES_FRISSITVE = "2026-10-10T11:02:22.545Z";
