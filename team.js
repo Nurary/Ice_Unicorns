@@ -64,7 +64,7 @@ const TEAMS = {
     ],
   },
 
-  // ⬇️ OB4C keret – ide kerülnek a játékosok, ha összeállt a névsor.
+  // ⬇️ OB4C keret – a 2026-10-10-i Séra Team elleni meccs jegyzőkönyve alapján.
   // Ugyanaz a formátum, mint fent; amíg üres, a pályán egy „hamarosan” üzenet látszik.
   // komoly: true → a C-s csapat visszafogottabb: mindenhol (pálya, kártya,
   // meccs-jegyzőkönyv) a polgári név látszik, és a kártyán nincs kedvenc
@@ -74,17 +74,35 @@ const TEAMS = {
     label: "OB4C",
     komoly: true,
     zones: [
-      { label: "Kapus", players: [] },
+      {
+        label: "Kapus",
+        players: [
+          { nick: "Kövesi Áron Péter", name: "Kövesi Áron Péter", num: 1, pos: "Kapus", grip: "–", sweet: "–", power: "–", photo: "", bio: "" }, // TODO: becenév
+        ],
+      },
       {
         label: "Védő",
         players: [
+          { nick: "Fischer Zsolt", name: "Fischer Zsolt", num: 2, pos: "Védő", captain: true, grip: "–", sweet: "–", power: "–", photo: "", bio: "" }, // TODO: becenév
+          { nick: "Pintér Mátyás", name: "Pintér Mátyás", num: 95, pos: "Védő", grip: "–", sweet: "–", power: "–", photo: "", bio: "" }, // TODO: becenév
+          { nick: "Katonka Péter", name: "Katonka Péter", num: 88, pos: "Védő", grip: "–", sweet: "–", power: "–", photo: "", bio: "" }, // TODO: becenév
           { nick: "Maszat", name: "Szymon Wlaszczyk", num: 44, pos: "Védő", grip: "Bal", sweet: "", power: "", photo: "assets/Players/Maszat.png", bio: "A lengyel srác, akivel inkább ne vitatkozz" },
+          { nick: "Csobaji Gáspár Áron", name: "Csobaji Gáspár Áron", num: 63, pos: "Védő", grip: "–", sweet: "–", power: "–", photo: "", bio: "" }, // TODO: becenév
+          { nick: "Kovács Péter", name: "Kovács Péter", num: 31, pos: "Védő", grip: "–", sweet: "–", power: "–", photo: "", bio: "" }, // TODO: becenév
         ],
       },
       {
         label: "Csatár",
         players: [
+          { nick: "Vargyasi-Dávid Áron", name: "Vargyasi-Dávid Áron", num: 24, pos: "Csatár", alternate: true, grip: "–", sweet: "–", power: "–", photo: "", bio: "" }, // TODO: becenév
+          { nick: "Hadnagy Csongor", name: "Hadnagy Csongor", num: 76, pos: "Csatár", alternate: true, grip: "–", sweet: "–", power: "–", photo: "", bio: "" }, // TODO: becenév
+          { nick: "László Zoltán", name: "László Zoltán", num: 14, pos: "Csatár", grip: "–", sweet: "–", power: "–", photo: "", bio: "" }, // TODO: becenév
           { nick: "KristályPatkó", name: "Hegyi Bálint", num: 87, pos: "Csatár", grip: "Jobb", sweet: "Rum-kóla", power: "Olyan egyedi csuklólövésem van, aminek az irányát még a fizika törvényei sem ismerik", photo: "assets/Players/KristalyPatko.png", bio: "" },
+          { nick: "Szikrácska", name: "Varga Istvan Gergely", num: 40, pos: "Csatár", grip: "Jobb", sweet: "Peroni", power: "100% találati arány a kapus fejére bemelegítéskor", photo: "assets/Players/Szikrácska.png", bio: "Tüzes láb, csillámos korcsolya – sosem áll le." },
+          { nick: "Schmidt Zsolt", name: "Schmidt Zsolt", num: 91, pos: "Csatár", grip: "–", sweet: "–", power: "–", photo: "", bio: "" }, // TODO: becenév
+          { nick: "Visnyei Balázs", name: "Visnyei Balázs", num: 38, pos: "Csatár", grip: "–", sweet: "–", power: "–", photo: "", bio: "" }, // TODO: becenév
+          { nick: "Varga Attila", name: "Varga Attila", num: 90, pos: "Csatár", grip: "–", sweet: "–", power: "–", photo: "", bio: "" }, // TODO: becenév
+          { nick: "Nagy Dorina", name: "Nagy Dorina", num: 6, pos: "Csatár", grip: "–", sweet: "–", power: "–", photo: "", bio: "" }, // TODO: becenév
         ],
       },
     ],
