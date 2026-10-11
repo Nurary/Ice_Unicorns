@@ -6,7 +6,7 @@
 // pedig időzítve lefuttatja, és commitolja, ha változott valami.
 //
 // Szezon: 2026-2027
-// Utolsó frissítés: 2026-10-10T23:11:20.885Z
+// Utolsó frissítés: 2026-10-11T11:19:16.769Z
 //
 // A LEAGUES mezőinek jelentését a bajnoksag.js, a GAME_STATS-ét a
 // statisztika.js tetején lévő leírás mondja el.
@@ -1138,7 +1138,9 @@ window.LEAGUES = {
         "group": "A",
         "time": "11:15",
         "home": "ESMTK Jégpárducok",
-        "away": "VIP Wizards"
+        "away": "VIP Wizards",
+        "hs": 6,
+        "as": 3
       },
       {
         "date": "2026-10-11",
@@ -2412,4 +2414,4 @@ window.GAME_STATS = [
   }
 ];
 
-window.LEAGUES_FRISSITVE = "2026-10-10T23:11:20.885Z";
+window.LEAGUES_FRISSITVE = "2026-10-11T11:19:16.769Z";
