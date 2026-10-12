@@ -6,7 +6,7 @@
 // pedig időzítve lefuttatja, és commitolja, ha változott valami.
 //
 // Szezon: 2026-2027
-// Utolsó frissítés: 2026-10-12T00:20:41.774Z
+// Utolsó frissítés: 2026-10-12T12:56:24.548Z
 //
 // A LEAGUES mezőinek jelentését a bajnoksag.js, a GAME_STATS-ét a
 // statisztika.js tetején lévő leírás mondja el.
@@ -437,6 +437,27 @@ window.LEAGUES = {
         "as": 5
       },
       {
+        "date": "2026-10-16",
+        "group": "A",
+        "time": "19:00",
+        "home": "DVTK Jegesmedvék",
+        "away": "Ligeti Jégkásák A"
+      },
+      {
+        "date": "2026-10-17",
+        "group": "B",
+        "time": "14:45",
+        "home": "Korongozoo VALOR",
+        "away": "Tatabányai Polipok"
+      },
+      {
+        "date": "2026-10-17",
+        "group": "A",
+        "time": "17:45",
+        "home": "ESMTK Jégkockák",
+        "away": "HKB Flashes II"
+      },
+      {
         "date": "2026-10-18",
         "group": "A",
         "home": "Angels",
@@ -444,25 +465,15 @@ window.LEAGUES = {
       },
       {
         "date": "2026-10-18",
-        "group": "A",
-        "home": "DVTK Jegesmedvék",
-        "away": "Ligeti Jégkásák A"
-      },
-      {
-        "date": "2026-10-18",
-        "group": "A",
-        "home": "ESMTK Jégkockák",
-        "away": "HKB Flashes II"
-      },
-      {
-        "date": "2026-10-18",
         "group": "B",
+        "time": "14:00",
         "home": "Óbudai Gepárd D",
         "away": "Ligeti Jégkásák B"
       },
       {
         "date": "2026-10-18",
         "group": "B",
+        "time": "17:15",
         "home": "ESMTK Jégpárducok B",
         "away": "DJK SE"
       },
@@ -1501,11 +1512,31 @@ window.LEAGUES = {
         "pim": 0
       },
       {
+        "name": "Pintér Mátyás",
+        "team": "Ice Unicorns",
+        "gp": 1,
+        "g": 1,
+        "a": 1,
+        "pts": 2,
+        "pim": 0,
+        "us": true
+      },
+      {
         "name": "Fischer Zsolt",
         "team": "Ice Unicorns",
         "gp": 1,
         "g": 1,
         "a": 1,
+        "pts": 2,
+        "pim": 0,
+        "us": true
+      },
+      {
+        "name": "Vargyasi-Dávid Áron",
+        "team": "Ice Unicorns",
+        "gp": 1,
+        "g": 0,
+        "a": 2,
         "pts": 2,
         "pim": 0,
         "us": true
@@ -1557,16 +1588,6 @@ window.LEAGUES = {
         "us": true
       },
       {
-        "name": "Varga Attila",
-        "team": "Ice Unicorns",
-        "gp": 1,
-        "g": 1,
-        "a": 0,
-        "pts": 1,
-        "pim": 0,
-        "us": true
-      },
-      {
         "name": "Hegyi Bálint",
         "team": "Ice Unicorns",
         "gp": 1,
@@ -1584,15 +1605,6 @@ window.LEAGUES = {
         "a": 0,
         "pts": 1,
         "pim": 2
-      },
-      {
-        "name": "Algács István",
-        "team": "Séra Team",
-        "gp": 1,
-        "g": 1,
-        "a": 0,
-        "pts": 1,
-        "pim": 0
       }
     ],
     "attendance": {
@@ -2097,10 +2109,10 @@ window.GAME_STATS = [
         "pm": 2
       },
       "Pintér Mátyás": {
-        "g": 0,
-        "a": 0,
+        "g": 1,
+        "a": 1,
         "pim": 0,
-        "pm": 0
+        "pm": 1
       },
       "László Zoltán": {
         "g": 0,
@@ -2110,9 +2122,9 @@ window.GAME_STATS = [
       },
       "Vargyasi-Dávid Áron": {
         "g": 0,
-        "a": 1,
+        "a": 2,
         "pim": 0,
-        "pm": 0
+        "pm": 1
       },
       "KristályPatkó": {
         "g": 1,
@@ -2134,9 +2146,9 @@ window.GAME_STATS = [
       },
       "Szikrácska": {
         "g": 0,
-        "a": 0,
+        "a": 1,
         "pim": 0,
-        "pm": 0
+        "pm": 1
       },
       "Schmidt Zsolt": {
         "g": 1,
@@ -2152,9 +2164,9 @@ window.GAME_STATS = [
       },
       "Csobaji Gáspár Áron": {
         "g": 0,
-        "a": 1,
+        "a": 0,
         "pim": 0,
-        "pm": 1
+        "pm": 0
       },
       "Kovács Péter": {
         "g": 0,
@@ -2163,7 +2175,7 @@ window.GAME_STATS = [
         "pm": 0
       },
       "Varga Attila": {
-        "g": 1,
+        "g": 0,
         "a": 0,
         "pim": 0,
         "pm": 0
@@ -2384,7 +2396,7 @@ window.GAME_STATS = [
           1
         ],
         "a": [
-          "Csobaji Gáspár Áron"
+          "Szikrácska"
         ]
       },
       {
@@ -2397,6 +2409,10 @@ window.GAME_STATS = [
         "score": [
           2,
           1
+        ],
+        "a": [
+          "Vargyasi-Dávid Áron",
+          "Pintér Mátyás"
         ]
       },
       {
@@ -2484,8 +2500,8 @@ window.GAME_STATS = [
         "t": "57:09",
         "kind": "gol",
         "us": true,
-        "who": "Varga Attila",
-        "num": 90,
+        "who": "Pintér Mátyás",
+        "num": 95,
         "score": [
           4,
           2
@@ -2499,4 +2515,4 @@ window.GAME_STATS = [
   }
 ];
 
-window.LEAGUES_FRISSITVE = "2026-10-12T00:20:41.774Z";
+window.LEAGUES_FRISSITVE = "2026-10-12T12:56:24.548Z";
