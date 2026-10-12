@@ -6,7 +6,7 @@
 // pedig időzítve lefuttatja, és commitolja, ha változott valami.
 //
 // Szezon: 2026-2027
-// Utolsó frissítés: 2026-10-11T11:19:16.769Z
+// Utolsó frissítés: 2026-10-12T00:20:41.774Z
 //
 // A LEAGUES mezőinek jelentését a bajnoksag.js, a GAME_STATS-ét a
 // statisztika.js tetején lévő leírás mondja el.
@@ -240,6 +240,34 @@ window.LEAGUES = {
             "logo": "https://ivr-api.icehockey.hu/storage/media/108705/conversions/profile_photo-thumb-cropped.png"
           },
           {
+            "team": "Lizards",
+            "gp": 1,
+            "w": 1,
+            "otw": 0,
+            "sow": 0,
+            "otl": 0,
+            "sol": 0,
+            "v": 0,
+            "gf": 5,
+            "ga": 3,
+            "pts": 3,
+            "logo": "https://ivr-api.icehockey.hu/storage/media/37406/conversions/profile_photo-thumb-cropped.png"
+          },
+          {
+            "team": "Ligeti Jégkásák B",
+            "gp": 1,
+            "w": 0,
+            "otw": 0,
+            "sow": 0,
+            "otl": 0,
+            "sol": 0,
+            "v": 1,
+            "gf": 3,
+            "ga": 5,
+            "pts": 0,
+            "logo": "https://ivr-api.icehockey.hu/storage/media/117234/conversions/profile_photo-thumb-cropped.png"
+          },
+          {
             "team": "Ice Unicorns",
             "gp": 1,
             "w": 0,
@@ -322,11 +350,11 @@ window.LEAGUES = {
       },
       "Ligeti Jégkásák B": {
         "logo": "https://ivr-api.icehockey.hu/storage/media/117234/conversions/profile_photo-thumb-cropped.png",
-        "group": null
+        "group": "B"
       },
       "Lizards": {
         "logo": "https://ivr-api.icehockey.hu/storage/media/37406/conversions/profile_photo-thumb-cropped.png",
-        "group": null
+        "group": "B"
       },
       "ESMTK Jégpárducok B": {
         "logo": "https://ivr-api.icehockey.hu/storage/media/116508/conversions/profile_photo-thumb-cropped.png",
@@ -404,7 +432,9 @@ window.LEAGUES = {
         "group": "B",
         "time": "15:45",
         "home": "Ligeti Jégkásák B",
-        "away": "Lizards"
+        "away": "Lizards",
+        "hs": 3,
+        "as": 5
       },
       {
         "date": "2026-10-18",
@@ -716,6 +746,24 @@ window.LEAGUES = {
         "pim": 0
       },
       {
+        "name": "Ertly László",
+        "team": "Lizards",
+        "gp": 1,
+        "g": 2,
+        "a": 1,
+        "pts": 3,
+        "pim": 0
+      },
+      {
+        "name": "Halász Kristóf",
+        "team": "Lizards",
+        "gp": 1,
+        "g": 2,
+        "a": 0,
+        "pts": 2,
+        "pim": 0
+      },
+      {
         "name": "Incze Péter",
         "team": "Ice Unicorns",
         "gp": 1,
@@ -724,6 +772,15 @@ window.LEAGUES = {
         "pts": 2,
         "pim": 0,
         "us": true
+      },
+      {
+        "name": "Balog Bence Máté",
+        "team": "Ligeti Jégkásák B",
+        "gp": 1,
+        "g": 2,
+        "a": 0,
+        "pts": 2,
+        "pim": 2
       },
       {
         "name": "Makszim Zsombor",
@@ -744,6 +801,15 @@ window.LEAGUES = {
         "pim": 0
       },
       {
+        "name": "Magyar László",
+        "team": "Lizards",
+        "gp": 1,
+        "g": 1,
+        "a": 0,
+        "pts": 1,
+        "pim": 0
+      },
+      {
         "name": "Tóth Dávid",
         "team": "Ice Unicorns",
         "gp": 1,
@@ -761,6 +827,15 @@ window.LEAGUES = {
         "a": 0,
         "pts": 1,
         "pim": 0
+      },
+      {
+        "name": "Mátyás Csaba",
+        "team": "Ligeti Jégkásák B",
+        "gp": 1,
+        "g": 1,
+        "a": 0,
+        "pts": 1,
+        "pim": 2
       },
       {
         "name": "Érháti Fanni",
@@ -788,51 +863,6 @@ window.LEAGUES = {
         "a": 0,
         "pts": 1,
         "pim": 0
-      },
-      {
-        "name": "Varga Dávid Ferenc",
-        "team": "Tatabányai Polipok",
-        "gp": 2,
-        "g": 1,
-        "a": 0,
-        "pts": 1,
-        "pim": 0
-      },
-      {
-        "name": "Csaplár Krisztián",
-        "team": "Tatabányai Polipok",
-        "gp": 2,
-        "g": 1,
-        "a": 0,
-        "pts": 1,
-        "pim": 0
-      },
-      {
-        "name": "Hollósi Antal",
-        "team": "Korongozoo VALOR",
-        "gp": 1,
-        "g": 0,
-        "a": 1,
-        "pts": 1,
-        "pim": 0
-      },
-      {
-        "name": "Szabados Tamás",
-        "team": "Korongozoo VALOR",
-        "gp": 2,
-        "g": 0,
-        "a": 1,
-        "pts": 1,
-        "pim": 0
-      },
-      {
-        "name": "Vancsó Arnold",
-        "team": "Tatabányai Polipok",
-        "gp": 2,
-        "g": 0,
-        "a": 1,
-        "pts": 1,
-        "pim": 2
       }
     ],
     "attendance": {
@@ -931,6 +961,20 @@ window.LEAGUES = {
             "logo": "https://ivr-api.icehockey.hu/storage/media/84113/conversions/profile_photo-thumb-cropped.png"
           },
           {
+            "team": "ESMTK Jégpárducok",
+            "gp": 1,
+            "w": 1,
+            "otw": 0,
+            "sow": 0,
+            "otl": 0,
+            "sol": 0,
+            "v": 0,
+            "gf": 6,
+            "ga": 3,
+            "pts": 3,
+            "logo": "https://ivr-api.icehockey.hu/storage/media/116508/conversions/profile_photo-thumb-cropped.png"
+          },
+          {
             "team": "HKB Flashes I",
             "gp": 1,
             "w": 0,
@@ -957,6 +1001,19 @@ window.LEAGUES = {
             "ga": 4,
             "pts": 1,
             "logo": "https://ivr-api.icehockey.hu/storage/media/151684/conversions/profile_photo-thumb-cropped.png"
+          },
+          {
+            "team": "VIP Wizards",
+            "gp": 1,
+            "w": 0,
+            "otw": 0,
+            "sow": 0,
+            "otl": 0,
+            "sol": 0,
+            "v": 1,
+            "gf": 3,
+            "ga": 6,
+            "pts": 0
           },
           {
             "team": "Kárpáti Farkasok",
@@ -992,6 +1049,20 @@ window.LEAGUES = {
             "logo": "https://ivr-api.icehockey.hu/storage/media/114727/conversions/profile_photo-thumb-cropped.png"
           },
           {
+            "team": "Lehel HC Amatőr",
+            "gp": 1,
+            "w": 1,
+            "otw": 0,
+            "sow": 0,
+            "otl": 0,
+            "sol": 0,
+            "v": 0,
+            "gf": 4,
+            "ga": 1,
+            "pts": 3,
+            "logo": "https://ivr-api.icehockey.hu/storage/media/163762/conversions/profile_photo-thumb-cropped.png"
+          },
+          {
             "team": "Ice Unicorns",
             "gp": 1,
             "w": 1,
@@ -1019,6 +1090,20 @@ window.LEAGUES = {
             "ga": 4,
             "pts": 0,
             "logo": "https://ivr-api.icehockey.hu/storage/media/155507/conversions/profile_photo-thumb-cropped.png"
+          },
+          {
+            "team": "Kohász",
+            "gp": 1,
+            "w": 0,
+            "otw": 0,
+            "sow": 0,
+            "otl": 0,
+            "sol": 0,
+            "v": 1,
+            "gf": 1,
+            "ga": 4,
+            "pts": 0,
+            "logo": "https://ivr-api.icehockey.hu/storage/media/117416/conversions/profile_photo-thumb-cropped.png"
           },
           {
             "team": "FTC-Telekom",
@@ -1072,19 +1157,19 @@ window.LEAGUES = {
       },
       "ESMTK Jégpárducok": {
         "logo": "https://ivr-api.icehockey.hu/storage/media/116508/conversions/profile_photo-thumb-cropped.png",
-        "group": null
+        "group": "A"
       },
       "VIP Wizards": {
         "logo": null,
-        "group": null
+        "group": "A"
       },
       "Kohász": {
         "logo": "https://ivr-api.icehockey.hu/storage/media/117416/conversions/profile_photo-thumb-cropped.png",
-        "group": null
+        "group": "B"
       },
       "Lehel HC Amatőr": {
         "logo": "https://ivr-api.icehockey.hu/storage/media/163762/conversions/profile_photo-thumb-cropped.png",
-        "group": null
+        "group": "B"
       },
       "ESMTK Jégtörők": {
         "logo": "https://ivr-api.icehockey.hu/storage/media/116508/conversions/profile_photo-thumb-cropped.png",
@@ -1147,7 +1232,9 @@ window.LEAGUES = {
         "group": "B",
         "time": "18:00",
         "home": "Kohász",
-        "away": "Lehel HC Amatőr"
+        "away": "Lehel HC Amatőr",
+        "hs": 1,
+        "as": 4
       },
       {
         "date": "2026-10-17",
@@ -1387,6 +1474,24 @@ window.LEAGUES = {
         "pim": 0
       },
       {
+        "name": "Rácz Róbert",
+        "team": "Lehel HC Amatőr",
+        "gp": 1,
+        "g": 1,
+        "a": 1,
+        "pts": 2,
+        "pim": 0
+      },
+      {
+        "name": "Horváth György",
+        "team": "Lehel HC Amatőr",
+        "gp": 1,
+        "g": 1,
+        "a": 1,
+        "pts": 2,
+        "pim": 0
+      },
+      {
         "name": "Biró Csaba",
         "team": "Újpesti Ragadozók",
         "gp": 1,
@@ -1404,6 +1509,33 @@ window.LEAGUES = {
         "pts": 2,
         "pim": 0,
         "us": true
+      },
+      {
+        "name": "Kovács Kornél",
+        "team": "Lehel HC Amatőr",
+        "gp": 1,
+        "g": 1,
+        "a": 0,
+        "pts": 1,
+        "pim": 2
+      },
+      {
+        "name": "Krasnyánszki István",
+        "team": "Lehel HC Amatőr",
+        "gp": 1,
+        "g": 1,
+        "a": 0,
+        "pts": 1,
+        "pim": 0
+      },
+      {
+        "name": "Juhász Ferenc Hunor",
+        "team": "Kohász",
+        "gp": 1,
+        "g": 1,
+        "a": 0,
+        "pts": 1,
+        "pim": 0
       },
       {
         "name": "Szász Tibor",
@@ -1461,53 +1593,6 @@ window.LEAGUES = {
         "a": 0,
         "pts": 1,
         "pim": 0
-      },
-      {
-        "name": "Reisz Péter",
-        "team": "Újpesti Ragadozók",
-        "gp": 1,
-        "g": 0,
-        "a": 1,
-        "pts": 1,
-        "pim": 0
-      },
-      {
-        "name": "Tanács Ferenc",
-        "team": "Újpesti Ragadozók",
-        "gp": 1,
-        "g": 0,
-        "a": 1,
-        "pts": 1,
-        "pim": 0
-      },
-      {
-        "name": "Halmágyi Roland",
-        "team": "Újpesti Ragadozók",
-        "gp": 1,
-        "g": 0,
-        "a": 1,
-        "pts": 1,
-        "pim": 0
-      },
-      {
-        "name": "Vargyasi-Dávid Áron",
-        "team": "Ice Unicorns",
-        "gp": 1,
-        "g": 0,
-        "a": 1,
-        "pts": 1,
-        "pim": 0,
-        "us": true
-      },
-      {
-        "name": "Csobaji Gáspár Áron",
-        "team": "Ice Unicorns",
-        "gp": 1,
-        "g": 0,
-        "a": 1,
-        "pts": 1,
-        "pim": 0,
-        "us": true
       }
     ],
     "attendance": {
@@ -2414,4 +2499,4 @@ window.GAME_STATS = [
   }
 ];
 
-window.LEAGUES_FRISSITVE = "2026-10-11T11:19:16.769Z";
+window.LEAGUES_FRISSITVE = "2026-10-12T00:20:41.774Z";
