@@ -6,7 +6,7 @@
 // pedig időzítve lefuttatja, és commitolja, ha változott valami.
 //
 // Szezon: 2026-2027
-// Utolsó frissítés: 2026-10-12T12:56:24.548Z
+// Utolsó frissítés: 2026-10-13T02:29:05.894Z
 //
 // A LEAGUES mezőinek jelentését a bajnoksag.js, a GAME_STATS-ét a
 // statisztika.js tetején lévő leírás mondja el.
@@ -741,7 +741,7 @@ window.LEAGUES = {
       {
         "name": "Bársony Ambrus Norbert",
         "team": "Korongozoo VALOR",
-        "gp": 2,
+        "gp": 1,
         "g": 4,
         "a": 0,
         "pts": 4,
@@ -750,7 +750,7 @@ window.LEAGUES = {
       {
         "name": "Végh Ádám",
         "team": "Tatabányai Polipok",
-        "gp": 2,
+        "gp": 1,
         "g": 3,
         "a": 0,
         "pts": 3,
@@ -785,6 +785,15 @@ window.LEAGUES = {
         "us": true
       },
       {
+        "name": "Makszim Zsombor",
+        "team": "Tatabányai Polipok",
+        "gp": 1,
+        "g": 2,
+        "a": 0,
+        "pts": 2,
+        "pim": 2
+      },
+      {
         "name": "Balog Bence Máté",
         "team": "Ligeti Jégkásák B",
         "gp": 1,
@@ -794,18 +803,9 @@ window.LEAGUES = {
         "pim": 2
       },
       {
-        "name": "Makszim Zsombor",
-        "team": "Tatabányai Polipok",
-        "gp": 2,
-        "g": 2,
-        "a": 0,
-        "pts": 2,
-        "pim": 2
-      },
-      {
         "name": "Sohajda Tamás",
         "team": "Korongozoo VALOR",
-        "gp": 2,
+        "gp": 1,
         "g": 0,
         "a": 2,
         "pts": 2,
@@ -831,6 +831,24 @@ window.LEAGUES = {
         "us": true
       },
       {
+        "name": "Müller Ákos",
+        "team": "Korongozoo VALOR",
+        "gp": 1,
+        "g": 1,
+        "a": 0,
+        "pts": 1,
+        "pim": 0
+      },
+      {
+        "name": "Réti Adrienn Judit",
+        "team": "Korongozoo VALOR",
+        "gp": 1,
+        "g": 1,
+        "a": 0,
+        "pts": 1,
+        "pim": 0
+      },
+      {
         "name": "Csepregi Attila Antal",
         "team": "Korongozoo VALOR",
         "gp": 1,
@@ -840,17 +858,8 @@ window.LEAGUES = {
         "pim": 0
       },
       {
-        "name": "Mátyás Csaba",
-        "team": "Ligeti Jégkásák B",
-        "gp": 1,
-        "g": 1,
-        "a": 0,
-        "pts": 1,
-        "pim": 2
-      },
-      {
-        "name": "Érháti Fanni",
-        "team": "Óbudai Gepárd D",
+        "name": "Varga Dávid Ferenc",
+        "team": "Tatabányai Polipok",
         "gp": 1,
         "g": 1,
         "a": 0,
@@ -858,18 +867,9 @@ window.LEAGUES = {
         "pim": 0
       },
       {
-        "name": "Müller Ákos",
-        "team": "Korongozoo VALOR",
-        "gp": 2,
-        "g": 1,
-        "a": 0,
-        "pts": 1,
-        "pim": 0
-      },
-      {
-        "name": "Réti Adrienn Judit",
-        "team": "Korongozoo VALOR",
-        "gp": 2,
+        "name": "Csaplár Krisztián",
+        "team": "Tatabányai Polipok",
+        "gp": 1,
         "g": 1,
         "a": 0,
         "pts": 1,
@@ -2515,4 +2515,4 @@ window.GAME_STATS = [
   }
 ];
 
-window.LEAGUES_FRISSITVE = "2026-10-12T12:56:24.548Z";
+window.LEAGUES_FRISSITVE = "2026-10-13T02:29:05.894Z";
