@@ -27,6 +27,7 @@
   <link rel="icon" type="image/png" sizes="16x16" href="assets/favicons/favicon-16.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="assets/favicons/apple-touch-icon.png" />
   <link rel="manifest" href="assets/favicons/site.webmanifest" />
+  <meta name="theme-color" content="#ff3d7f" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet" />
@@ -51,11 +52,12 @@
         <div data-panel="bajnoksag">
           <h1>Bajnokság, ahol <span class="grad">{{h1}}</span></h1>
           <p>{{lead}}</p>
+          <div class="season-bar" data-season-bar hidden></div>
         </div>
         <div data-panel="csapat" hidden>
           <h1>Az {{label}} <span class="grad">MÉNES</span> a jégen</h1>
           <p>Így állunk fel a pályán! Kattints bármelyik játékosra – előugrik a kártyája
-            a posztjával, adataival és (hamarosan) a statisztikáival. ✨</p>
+            a posztjával, adataival és a szezonbeli statisztikáival. ✨</p>
         </div>
 
         <div class="tab-switch" role="tablist" aria-label="{{label}} nézetek">
@@ -90,11 +92,11 @@
             <h2>Menetrend és eredmények</h2>
             <span class="league-season" data-season>{{label}}</span>
             <div data-matches></div>
-            <div class="cal-links">
+            <div class="cal-links" data-current-only>
               <span class="cal-title">📅 Tedd be a naptáradba – az időpont-változások is maguktól frissülnek:</span>
-              <a class="cal-link" href="https://calendar.google.com/calendar/render?cid=webcal%3A%2F%2Ficeunicorns.hu%2Fnaptar%2F{{key}}.ics" target="_blank" rel="noopener">Google Naptár</a>
-              <a class="cal-link" href="webcal://iceunicorns.hu/naptar/{{key}}.ics">Apple / Outlook</a>
-              <a class="cal-link" href="naptar/{{key}}.ics" download>.ics fájl</a>
+              <a class="cal-link" href="https://calendar.google.com/calendar/render?cid=webcal%3A%2F%2Ficeunicorns.hu%2Fnaptar%2F{{key}}.ics" target="_blank" rel="noopener" data-umami-event="naptar-google" data-umami-event-liga="{{key}}">Google Naptár</a>
+              <a class="cal-link" href="webcal://iceunicorns.hu/naptar/{{key}}.ics" data-umami-event="naptar-apple" data-umami-event-liga="{{key}}">Apple / Outlook</a>
+              <a class="cal-link" href="naptar/{{key}}.ics" download data-umami-event="naptar-ics" data-umami-event-liga="{{key}}">.ics fájl</a>
             </div>
           </div>
 
@@ -164,8 +166,10 @@
   <script src="partials.js" defer></script>
   <!-- az adatok elől: a statisztika.js a GAME_STATS-ot, a bajnoksag.js a
        LEAGUES-t olvassa belőle; a bajnoksag.js utolsó, mert a házi
-       pontvadászathoz kell a TEAMS és a Stats is -->
-  <script src="bajnoksag-adatok.js" defer></script>
+       pontvadászathoz kell a TEAMS és a Stats is. Az adatfájlt a szezon.js
+       választja ki (aktuális szezon vagy ?szezon=… archívum), ezért az nem
+       defer – így biztosan a többi script előtt fut le. -->
+  <script src="szezon.js"></script>
   <script src="statisztika.js" defer></script>
   <script src="team.js" defer></script>
   <script src="bajnoksag.js" defer></script>

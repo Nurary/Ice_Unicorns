@@ -16,6 +16,7 @@
   <link rel="icon" type="image/png" sizes="16x16" href="assets/favicons/favicon-16.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="assets/favicons/apple-touch-icon.png" />
   <link rel="manifest" href="assets/favicons/site.webmanifest" />
+  <meta name="theme-color" content="#ff3d7f" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet" />
@@ -65,6 +66,8 @@
             <label for="message">Üzenet</label>
             <textarea id="message" name="message" rows="4" placeholder="Miben segíthetünk?" required></textarea>
           </div>
+          <!-- Spamcsapda: rejtett mező, csak a robotok töltik ki -->
+          <input type="checkbox" name="botcheck" class="hp-field" tabindex="-1" autocomplete="off" aria-hidden="true" />
           <button type="submit" class="btn btn-primary btn-block">Üzenet küldése</button>
           <p class="form-status" id="formStatus" role="status"></p>
         </form>
