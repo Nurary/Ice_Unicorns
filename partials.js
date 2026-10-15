@@ -314,13 +314,17 @@
   }
 
   // ---- Támogatók a Támogatás oldalon ----
+  // Amíg nincs támogató, a „Itt lehetne a te logód” kártya csak felirat (a
+  // fenti „Írj nekünk” gomb úgyis ott van); ha már van, a „+ Te is” kártya
+  // kattintható, és emailt nyit.
   const sponsorsHost = document.querySelector("[data-sponsors]");
   if (sponsorsHost) {
-    sponsorsHost.innerHTML =
-      TAMOGATOK.map(sponsorHTML).join("") +
-      `<a class="sponsor sponsor-cta" href="mailto:info@iceunicorns.hu?subject=T%C3%A1mogat%C3%A1s" data-umami-event="tamogatoi-ajanlat">` +
-      `<strong>${TAMOGATOK.length ? "+ Te is" : "Itt lehetne a te logód"}</strong>` +
-      `<span>Írj nekünk, és a logód itt és az oldal láblécében is megjelenik.</span></a>`;
+    const ctaText = "<span>Írj nekünk, és a logód itt és az oldal láblécében is megjelenik.</span>";
+    sponsorsHost.innerHTML = TAMOGATOK.length
+      ? TAMOGATOK.map(sponsorHTML).join("") +
+        `<a class="sponsor sponsor-cta" href="mailto:info@iceunicorns.hu?subject=T%C3%A1mogat%C3%A1s" data-umami-event="tamogatoi-ajanlat">` +
+        `<strong>+ Te is</strong>${ctaText}</a>`
+      : `<div class="sponsor sponsor-cta"><strong>Itt lehetne a te logód</strong>${ctaText}</div>`;
   }
 
   // ---- Látogatottságmérés (Umami) ----
