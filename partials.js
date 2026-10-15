@@ -11,7 +11,7 @@
   // info@iceunicorns.hu címmel kért „Access Key” ide jön; ez nyilvános kulcs,
   // nyugodtan lehet a kódban. Amíg üres, az űrlap a látogató levelezőjét
   // nyitja meg (mailto), mint eddig.
-  const WEB3FORMS_KEY = "";
+  const WEB3FORMS_KEY = "42897af6-c0a3-43f5-845c-260152f942d8";
 
   // Támogatóink – a lábléc és a Támogatás oldal ebből építkezik. Egy sor:
   //   { name: "Cég neve", logo: "assets/tamogatok/ceg.png", url: "https://ceg.hu" }
