@@ -1,5 +1,7 @@
 // Galéria: a assets/Galery mappa összes képét betölti a manifest alapján.
 // Ami a böngészőben nem jeleníthető meg (pl. HEIC), azt csendben kihagyja.
+// Az almappák albumok: ha van legalább egy, a képek fölött albumválasztó
+// gombsor jelenik meg (a választás a címben is megmarad: galeria.html#album=…).
 (function () {
   var grid = document.getElementById("galleryGrid");
   if (!grid) return;
@@ -13,12 +15,19 @@
         if (note) note.textContent = "A galéria hamarosan feltöltésre kerül. 🦄";
         return;
       }
+      var VEGYES = "Vegyes";
+      var albums = [];
       list.forEach(function (fn) {
+        var slash = fn.lastIndexOf("/");
+        var album = slash > 0 ? fn.slice(0, slash) : VEGYES;
+        var base = fn.slice(slash + 1);
+        if (albums.indexOf(album) < 0) albums.push(album);
         var fig = document.createElement("figure");
         fig.className = "g-item";
+        fig.dataset.album = album;
         var img = document.createElement("img");
-        img.src = "assets/Galery/" + encodeURIComponent(fn);
-        img.alt = "Ice Unicorns – " + fn.replace(/\.[^.]+$/, "");
+        img.src = "assets/Galery/" + fn.split("/").map(encodeURIComponent).join("/");
+        img.alt = "Ice Unicorns – " + (album !== VEGYES ? album + " – " : "") + base.replace(/\.[^.]+$/, "");
         img.loading = "lazy";
         img.decoding = "async";
         img.style.cursor = "zoom-in";
@@ -26,8 +35,54 @@
         fig.appendChild(img);
         grid.appendChild(fig);
       });
+      if (albums.length > 1) setupAlbums(albums);
       setupLightbox();
     });
+
+  function setupAlbums(albums) {
+    var bar = document.createElement("div");
+    bar.className = "g-albums";
+    bar.setAttribute("role", "group");
+    bar.setAttribute("aria-label", "Albumok");
+    var count = function (a) {
+      return a ? grid.querySelectorAll('[data-album="' + CSS.escape(a) + '"]').length : grid.children.length;
+    };
+    [""].concat(albums).forEach(function (a) {
+      var b = document.createElement("button");
+      b.type = "button";
+      b.className = "g-album";
+      b.dataset.album = a;
+      b.appendChild(document.createTextNode(a || "Összes"));
+      var n = document.createElement("span");
+      n.textContent = count(a);
+      b.appendChild(n);
+      bar.appendChild(b);
+    });
+    grid.parentNode.insertBefore(bar, grid);
+
+    function select(a, updateHash) {
+      if (albums.indexOf(a) < 0) a = "";
+      Array.prototype.forEach.call(bar.children, function (b) {
+        b.setAttribute("aria-pressed", String(b.dataset.album === a));
+      });
+      Array.prototype.forEach.call(grid.children, function (fig) {
+        fig.hidden = !!a && fig.dataset.album !== a;
+      });
+      if (updateHash && history.replaceState) {
+        history.replaceState(null, "", a ? "#album=" + encodeURIComponent(a) : location.pathname);
+      }
+    }
+    bar.addEventListener("click", function (e) {
+      var b = e.target.closest(".g-album");
+      if (b) select(b.dataset.album, true);
+    });
+    var m = /^#album=(.*)$/.exec(location.hash);
+    var start = "";
+    if (m) {
+      try { start = decodeURIComponent(m[1]); } catch (err) {}
+    }
+    select(start, false);
+  }
 
   function setupLightbox() {
     var lb = document.createElement("div");
@@ -46,7 +101,8 @@
       lbImg.alt = imgs[idx].alt || "";
     }
     function open(target) {
-      imgs = Array.prototype.slice.call(grid.querySelectorAll("img"));
+      // Csak a kiválasztott album képei között lapozunk
+      imgs = Array.prototype.slice.call(grid.querySelectorAll(".g-item:not([hidden]) img"));
       var i = imgs.indexOf(target);
       if (i < 0) return;
       show(i);

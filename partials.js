@@ -1,5 +1,37 @@
 // Shared header/footer + behaviors for all pages.
 (function () {
+  // ===== Beállítások =====
+  //
+  // Látogatottságmérés – Umami (https://cloud.umami.is, ingyenes csomag).
+  // A „Website ID” a Umami felületén: Settings → Websites → Edit. Amíg üres,
+  // nincs mérés. Sütit nem használ, ezért cookie-banner sem kell hozzá.
+  const UMAMI_WEBSITE_ID = "";
+
+  // Kapcsolatűrlap – Web3Forms (https://web3forms.com, ingyenes). Az
+  // info@iceunicorns.hu címmel kért „Access Key” ide jön; ez nyilvános kulcs,
+  // nyugodtan lehet a kódban. Amíg üres, az űrlap a látogató levelezőjét
+  // nyitja meg (mailto), mint eddig.
+  const WEB3FORMS_KEY = "";
+
+  // Támogatóink – a lábléc és a Támogatás oldal ebből építkezik. Egy sor:
+  //   { name: "Cég neve", logo: "assets/tamogatok/ceg.png", url: "https://ceg.hu" }
+  // A logó elhagyható (akkor a név látszik), az url is. Amíg a lista üres,
+  // a láblécben nem jelenik meg semmi, a Támogatás oldalon pedig egy
+  // „Itt lehetne a te logód” kártya.
+  const TAMOGATOK = [];
+
+  const esc = (v) =>
+    String(v ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+
+  // Egy támogató: logó (ha van) vagy név, linkkel (ha van)
+  const sponsorHTML = (t) => {
+    const inner = t.logo
+      ? `<img src="${esc(t.logo)}" alt="${esc(t.name)}" loading="lazy" />`
+      : `<span>${esc(t.name)}</span>`;
+    return t.url
+      ? `<a class="sponsor" href="${esc(t.url)}" target="_blank" rel="noopener" title="${esc(t.name)}" data-umami-event="tamogato-kattintas" data-umami-event-nev="${esc(t.name)}">${inner}</a>`
+      : `<span class="sponsor" title="${esc(t.name)}">${inner}</span>`;
+  };
   const NAV = [
     { href: "index.html", label: "Kezdőlap" },
     { href: "rolunk.html", label: "Rólunk" },
@@ -57,8 +89,9 @@
           <span class="brand-text">Ice <strong>Unicorns</strong></span>
         </a>
         <p class="footer-tag">Jégkorong szeretet Székesfehérváron</p>
+        ${TAMOGATOK.length ? `<div class="footer-sponsors"><span>Támogatóink</span><div class="sponsor-row">${TAMOGATOK.map(sponsorHTML).join("")}</div></div>` : ""}
         <div class="footer-social">
-          <a href="https://facebook.com/iceunicorns" target="_blank" rel="noopener" class="social-btn" aria-label="Ice Unicorns a Facebookon">
+          <a href="https://facebook.com/iceunicorns" target="_blank" rel="noopener" class="social-btn" aria-label="Ice Unicorns a Facebookon" data-umami-event="facebook">
             <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M22 12.06C22 6.5 17.52 2 12 2S2 6.5 2 12.06c0 5.02 3.66 9.18 8.44 9.94v-7.03H7.9v-2.9h2.54V9.85c0-2.52 1.49-3.91 3.78-3.91 1.1 0 2.24.2 2.24.2v2.47h-1.26c-1.24 0-1.63.78-1.63 1.57v1.88h2.78l-.44 2.9h-2.34V22c4.78-.76 8.44-4.92 8.44-9.94Z"/></svg>
           </a>
           <a href="mailto:info@iceunicorns.hu" class="social-btn" aria-label="Email küldése">
@@ -212,10 +245,21 @@
     );
   }
 
-  // Contact form (Phase 0: mailto fallback)
+  // ---- Kapcsolatűrlap ----
+  // Web3Forms-kulccsal az üzenet közvetlenül az info@iceunicorns.hu-ra megy;
+  // kulcs nélkül (vagy ha a küldés nem sikerül) a levelezőprogram nyílik meg.
   const form = document.getElementById("contactForm");
   if (form) {
     const status = document.getElementById("formStatus");
+    const submitBtn = form.querySelector('button[type="submit"]');
+    const setStatus = (text, ok) => {
+      status.textContent = text;
+      status.className = "form-status " + (ok ? "ok" : "err");
+    };
+    const mailtoHref = (name, email, message) =>
+      `mailto:info@iceunicorns.hu?subject=${encodeURIComponent(`Üzenet az oldalról – ${name}`)}` +
+      `&body=${encodeURIComponent(`${message}\n\n— ${name} (${email})`)}`;
+
     form.addEventListener("submit", (e) => {
       e.preventDefault();
       const data = new FormData(form);
@@ -224,18 +268,79 @@
       const message = (data.get("message") || "").toString().trim();
       const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
       if (!name || !validEmail || !message) {
-        status.textContent =
-          "Kérlek tölts ki minden mezőt érvényes email címmel.";
-        status.className = "form-status err";
+        setStatus("Kérlek tölts ki minden mezőt érvényes email címmel.", false);
         return;
       }
-      const subject = encodeURIComponent(`Üzenet az oldalról – ${name}`);
-      const body = encodeURIComponent(`${message}\n\n— ${name} (${email})`);
-      window.location.href = `mailto:info@iceunicorns.hu?subject=${subject}&body=${body}`;
-      status.textContent =
-        "Köszönjük! Megnyitottuk a levelezőt az üzenet elküldéséhez.";
-      status.className = "form-status ok";
-      form.reset();
+      // Rejtett mező: ember nem látja, csak a spamrobotok töltik ki
+      if (data.get("botcheck")) return;
+
+      if (!WEB3FORMS_KEY) {
+        window.location.href = mailtoHref(name, email, message);
+        setStatus("Köszönjük! Megnyitottuk a levelezőt az üzenet elküldéséhez.", true);
+        form.reset();
+        return;
+      }
+
+      submitBtn.disabled = true;
+      setStatus("Küldés…", true);
+      fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          access_key: WEB3FORMS_KEY,
+          subject: `Üzenet az oldalról – ${name}`,
+          from_name: "iceunicorns.hu",
+          name,
+          email,
+          message,
+        }),
+      })
+        .then((r) => r.json().catch(() => ({})).then((j) => (r.ok && j.success ? j : Promise.reject(j))))
+        .then(() => {
+          setStatus("Köszönjük, megkaptuk az üzeneted! Hamarosan válaszolunk. 🦄", true);
+          form.reset();
+          if (window.umami) window.umami.track("kapcsolat-urlap");
+        })
+        .catch(() => {
+          status.className = "form-status err";
+          status.innerHTML =
+            "Hoppá, most nem sikerült elküldeni. " +
+            `<a href="${esc(mailtoHref(name, email, message))}">Küldd el emailben</a>, vagy próbáld újra később.`;
+        })
+        .finally(() => {
+          submitBtn.disabled = false;
+        });
+    });
+  }
+
+  // ---- Támogatók a Támogatás oldalon ----
+  const sponsorsHost = document.querySelector("[data-sponsors]");
+  if (sponsorsHost) {
+    sponsorsHost.innerHTML =
+      TAMOGATOK.map(sponsorHTML).join("") +
+      `<a class="sponsor sponsor-cta" href="mailto:info@iceunicorns.hu?subject=T%C3%A1mogat%C3%A1s" data-umami-event="tamogatoi-ajanlat">` +
+      `<strong>${TAMOGATOK.length ? "+ Te is" : "Itt lehetne a te logód"}</strong>` +
+      `<span>Írj nekünk, és a logód itt és az oldal láblécében is megjelenik.</span></a>`;
+  }
+
+  // ---- Látogatottságmérés (Umami) ----
+  // Csak az éles domainen mér (data-domains), a helyi tesztelés nem számít bele.
+  if (UMAMI_WEBSITE_ID) {
+    const s = document.createElement("script");
+    s.defer = true;
+    s.src = "https://cloud.umami.is/script.js";
+    s.dataset.websiteId = UMAMI_WEBSITE_ID;
+    s.dataset.domains = "iceunicorns.hu,www.iceunicorns.hu";
+    document.head.appendChild(s);
+  }
+
+  // ---- Telepíthető alkalmazás (PWA) ----
+  // A service worker (sw.js) gyorsítótárazza az oldalt: térerő nélkül is
+  // megnyílik a legutóbb látott menetrend, és a telefon kezdőképernyőjére
+  // is ki lehet tenni az oldalt.
+  if ("serviceWorker" in navigator && window.isSecureContext) {
+    window.addEventListener("load", () => {
+      navigator.serviceWorker.register("sw.js").catch(() => {});
     });
   }
 

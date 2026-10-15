@@ -21,6 +21,7 @@
   <link rel="icon" type="image/png" sizes="16x16" href="assets/favicons/favicon-16.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="assets/favicons/apple-touch-icon.png" />
   <link rel="manifest" href="assets/favicons/site.webmanifest" />
+  <meta name="theme-color" content="#ff3d7f" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet" />
@@ -79,7 +80,9 @@
           <a href="rolunk.html" class="btn btn-primary">Ismerj meg minket</a>
           <a href="kapcsolat.html" class="btn btn-ghost">Csatlakozz</a>
         </div>
-        <div class="hero-stats">
+        <!-- A bajnoksag.js a szezon valódi számaira cseréli, amint van
+             lejátszott meccs; addig ezek a játékos számok látszanak. -->
+        <div class="hero-stats" data-hero-stats>
           <div><strong>100%</strong><span>Szenvedély</span></div>
           <div><strong>1</strong><span>MÉNES</span></div>
           <div><strong>∞</strong><span>Barátság</span></div>
@@ -92,6 +95,14 @@
     <section class="section" data-league="mind">
       <div class="container">
         <div class="next-match" data-next-match data-hide-if-empty></div>
+      </div>
+    </section>
+
+    <!-- Legutóbbi eredmény – a legfrissebb lejátszott meccsünk bármelyik
+         bajnokságból. Ha még nincs ilyen, a szakasz eltűnik. -->
+    <section class="section section-tight" data-league="mind">
+      <div class="container">
+        <div class="last-match" data-last-match></div>
       </div>
     </section>
 

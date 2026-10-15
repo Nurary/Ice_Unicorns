@@ -296,8 +296,65 @@ const LEAGUES = (typeof window !== "undefined" && window.LEAGUES) || {};
       </div>
       <div class="nm-side">
         ${oppInfo}
-        <a href="${ctaHref}"${ctaTarget} class="btn btn-primary">Gyere el szurkolni</a>
+        <a href="${ctaHref}"${ctaTarget} class="btn btn-primary" data-umami-event="gyere-szurkolni">Gyere el szurkolni</a>
       </div>`;
+  }
+
+  // ---- Legutóbbi eredmény (kezdőlap) ----
+  // A legfrissebb lejátszott meccsünk – bármelyik bajnokságból. Kattintásra
+  // ugyanaz a jegyzőkönyv nyílik meg, mint a bajnoksági oldalakon. Ha még
+  // nincs lejátszott meccs, a szakasz eltűnik.
+  function renderLast(host, key) {
+    const last = matchesOf(key)
+      .filter((x) => played(x.m))
+      .sort((a, b) => matchStart(b.m) - matchStart(a.m))[0];
+    if (!last) {
+      (host.closest("section") || host).remove();
+      return;
+    }
+    const m = last.m;
+    const o = outcome(m);
+    host.classList.add("lm-" + o.key);
+    host.innerHTML = `
+      <div class="lm-top">
+        <span class="kicker">Legutóbbi eredmény <span class="nm-league">${last.label}</span></span>
+        <span class="lm-date">${[fmtWeekday(m.date), fmtDate(m.date)].join(" · ")}${m.stage ? " · " + escHtml(m.stage) : ""}</span>
+      </div>
+      <div class="lm-board">
+        <span class="lm-team">${teamLogo("assets/logo/logo.jpg", "lm-logo")}<span>Ice Unicorns</span></span>
+        <span class="lm-score"><b>${m.us}</b><i>–</i><b>${m.them}</b>${m.ot ? '<small>h.u.</small>' : ""}</span>
+        <span class="lm-team is-them">${teamLogo(m.logo, "lm-logo")}<span>${escHtml(m.opponent)}</span></span>
+      </div>
+      <div class="lm-side">
+        <span class="result-pill ${o.key}">${RESULT_WORD[o.key]}</span>
+        <button type="button" class="btn btn-ghost lm-open">Jegyzőkönyv</button>
+      </div>`;
+    host.querySelector(".lm-open").addEventListener("click", () => openGameModal(last.key, m));
+  }
+
+  // ---- Szezonszámok a kezdőlap hero-jában ----
+  // A lejátszott meccseinkből számoljuk (mindkét bajnokság együtt). Amíg a
+  // szezonban nincs lejátszott meccs, a HTML-ben lévő játékos számok
+  // (100% szenvedély stb.) maradnak.
+  function renderHeroStats(host) {
+    const done = matchesOf(MIND).filter((x) => played(x.m)).map((x) => x.m);
+    if (!done.length) return;
+    const goals = done.reduce((s, m) => s + m.us, 0);
+    const wins = done.filter((m) => m.us > m.them).length;
+    const keys = Object.keys(LEAGUES);
+    const season = keys.map((k) => LEAGUES[k].season).filter(Boolean).sort().pop() || "";
+    const labels = keys.map((k) => LEAGUES[k].label).filter(Boolean).sort().join(" + ");
+    const tiles = [
+      { v: done.length, l: "Lejátszott meccs" },
+      { v: goals, l: "Lőtt gól" },
+      { v: wins, l: "Győzelem" },
+    ];
+    host.innerHTML = tiles
+      .map((t) => `<div><strong>${t.v}</strong><span>${t.l}</span></div>`)
+      .join("");
+    if (season || labels) {
+      host.insertAdjacentHTML("beforeend", `<p class="hero-stats-note">${[season && season + " szezon", labels].filter(Boolean).join(" · ")}</p>`);
+    }
   }
 
   // ---- Élő visszaszámláló ----
@@ -1604,6 +1661,49 @@ const LEAGUES = (typeof window !== "undefined" && window.LEAGUES) || {};
     document.head.appendChild(s);
   }
 
+  // ---- Szezonválasztó ----
+  // Ha a szezonok/lista.json-ben van archivált szezon, a bajnoksági oldal
+  // tetején megjelenik egy választó. Archív szezon nézésekor (?szezon=…, lásd
+  // szezon.js) a csak az aktuális szezonra érvényes elemek (pl. naptár-
+  // feliratkozás) eltűnnek, és egy sáv jelzi, hogy régi adatot látsz.
+  const ARCHIVE = (typeof window !== "undefined" && window.ARCHIVE_SEASON) || null;
+
+  function setupSeasonBar(bar, key) {
+    if (ARCHIVE) document.querySelectorAll("[data-current-only]").forEach((el) => el.remove());
+    fetch("szezonok/lista.json", { cache: "no-cache" })
+      .then((r) => (r.ok ? r.json() : []))
+      .catch(() => [])
+      .then((list) => {
+        const current = !ARCHIVE && LEAGUES[key] ? LEAGUES[key].season : null;
+        const seasons = (Array.isArray(list) ? list : []).filter(
+          (x) => /^\d{4}-\d{4}$/.test(x) && x !== current
+        );
+        if (!seasons.length && !ARCHIVE) return;
+        if (ARCHIVE && !seasons.includes(ARCHIVE)) seasons.unshift(ARCHIVE);
+
+        const opts = [`<option value="">Aktuális szezon${current ? " (" + current + ")" : ""}</option>`]
+          .concat(seasons.map((x) => `<option value="${x}"${x === ARCHIVE ? " selected" : ""}>${x}</option>`))
+          .join("");
+        const note = ARCHIVE
+          ? LEAGUES[key]
+            ? `<p class="season-note">📚 Archív szezon: a ${ARCHIVE} szezon végeredményeit látod.</p>`
+            : `<p class="season-note">Ehhez a szezonhoz nincs archív adat ebben a bajnokságban.</p>`
+          : "";
+        bar.innerHTML =
+          `<label class="season-pick"><span>Szezon</span><select aria-label="Szezon kiválasztása">${opts}</select></label>` +
+          note;
+        bar.hidden = false;
+        bar.querySelector("select").addEventListener("change", (e) => {
+          const v = e.target.value;
+          location.href = location.pathname + (v ? "?szezon=" + encodeURIComponent(v) : "") + location.hash;
+        });
+      });
+  }
+
+  const seasonBar = document.querySelector("[data-season-bar]");
+  const barPanel = document.querySelector("[data-league]:not([data-league='mind'])");
+  if (seasonBar && barPanel) setupSeasonBar(seasonBar, barPanel.dataset.league);
+
   panels.forEach((panel) => {
     const key = panel.dataset.league;
     const league = key === MIND ? { label: "Ice Unicorns" } : LEAGUES[key];
@@ -1612,13 +1712,18 @@ const LEAGUES = (typeof window !== "undefined" && window.LEAGUES) || {};
     const seasonEl = panel.querySelector("[data-season]");
     if (seasonEl && league.season) seasonEl.textContent = league.season + " szezon";
 
+    // Archív szezonban nincs „következő meccs” – a kártya el is tűnik
     const next = panel.querySelector("[data-next-match]");
-    if (next) renderNext(next, key, league.label);
+    if (next && ARCHIVE) next.remove();
+    else if (next) renderNext(next, key, league.label);
+
+    const last = panel.querySelector("[data-last-match]");
+    if (last) renderLast(last, key);
 
     // A többi blokknak konkrét bajnokság kell – a kezdőlapon nincsenek is meg
     if (key === MIND) return;
 
-    addStructuredData(league, key);
+    if (!ARCHIVE) addStructuredData(league, key);
 
     const summary = panel.querySelector("[data-summary]");
     if (summary) renderSummary(summary, league);
@@ -1668,6 +1773,9 @@ const LEAGUES = (typeof window !== "undefined" && window.LEAGUES) || {};
     const leagueScorers = panel.querySelector("[data-league-scorers]");
     if (leagueScorers) renderLeagueScorers(leagueScorers, league);
   });
+
+  const heroStats = document.querySelector("[data-hero-stats]");
+  if (heroStats) renderHeroStats(heroStats);
 
   // ---- Al-fülek (Menetrend / Tabella / Pontverseny / Fordulók) ----
   // A választott fület megjegyezzük (csak ebben a böngészőben), hogy

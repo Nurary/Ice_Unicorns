@@ -107,7 +107,8 @@ async function main() {
     const dir = join(ROOT, rule.dir);
     let files;
     try {
-      files = readdirSync(dir);
+      // Almappákkal együtt – a galéria albumai almappákban vannak
+      files = readdirSync(dir, { recursive: true }).map(String);
     } catch {
       continue;
     }
