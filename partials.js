@@ -94,7 +94,7 @@
           <a href="https://facebook.com/iceunicorns" target="_blank" rel="noopener" class="social-btn" aria-label="Ice Unicorns a Facebookon" data-umami-event="facebook">
             <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M22 12.06C22 6.5 17.52 2 12 2S2 6.5 2 12.06c0 5.02 3.66 9.18 8.44 9.94v-7.03H7.9v-2.9h2.54V9.85c0-2.52 1.49-3.91 3.78-3.91 1.1 0 2.24.2 2.24.2v2.47h-1.26c-1.24 0-1.63.78-1.63 1.57v1.88h2.78l-.44 2.9h-2.34V22c4.78-.76 8.44-4.92 8.44-9.94Z"/></svg>
           </a>
-          <a href="mailto:info@iceunicorns.hu" class="social-btn" aria-label="Email küldése">
+          <a href="kapcsolat.html#contactForm" class="social-btn" aria-label="Írj nekünk">
             <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
           </a>
         </div>
@@ -256,8 +256,20 @@
       status.textContent = text;
       status.className = "form-status " + (ok ? "ok" : "err");
     };
+    // kapcsolat.html?tema=tamogatas – a Támogatás oldal gombjai így hoznak
+    // ide: a tárgyban látszik, hogy támogatásról van szó
+    let tema = "";
+    try {
+      tema = new URLSearchParams(location.search).get("tema") || "";
+    } catch (e) {}
+    const subjectFor = (name) =>
+      (tema === "tamogatas" ? "Támogatás" : "Üzenet az oldalról") + ` – ${name}`;
+    if (tema === "tamogatas") {
+      const msg = form.querySelector("#message");
+      if (msg) msg.placeholder = "Hogyan támogatnád a csapatot? (cég, elérhetőség, elképzelés)";
+    }
     const mailtoHref = (name, email, message) =>
-      `mailto:info@iceunicorns.hu?subject=${encodeURIComponent(`Üzenet az oldalról – ${name}`)}` +
+      `mailto:info@iceunicorns.hu?subject=${encodeURIComponent(subjectFor(name))}` +
       `&body=${encodeURIComponent(`${message}\n\n— ${name} (${email})`)}`;
 
     form.addEventListener("submit", (e) => {
@@ -288,7 +300,7 @@
         headers: { "Content-Type": "application/json", Accept: "application/json" },
         body: JSON.stringify({
           access_key: WEB3FORMS_KEY,
-          subject: `Üzenet az oldalról – ${name}`,
+          subject: subjectFor(name),
           from_name: "iceunicorns.hu",
           name,
           email,
@@ -322,7 +334,7 @@
     const ctaText = "<span>Írj nekünk, és a logód itt és az oldal láblécében is megjelenik.</span>";
     sponsorsHost.innerHTML = TAMOGATOK.length
       ? TAMOGATOK.map(sponsorHTML).join("") +
-        `<a class="sponsor sponsor-cta" href="mailto:info@iceunicorns.hu?subject=T%C3%A1mogat%C3%A1s" data-umami-event="tamogatoi-ajanlat">` +
+        `<a class="sponsor sponsor-cta" href="kapcsolat.html?tema=tamogatas#contactForm" data-umami-event="tamogatoi-ajanlat">` +
         `<strong>+ Te is</strong>${ctaText}</a>`
       : `<div class="sponsor sponsor-cta"><strong>Itt lehetne a te logód</strong>${ctaText}</div>`;
   }
