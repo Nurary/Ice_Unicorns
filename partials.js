@@ -5,7 +5,7 @@
   // Látogatottságmérés – Umami (https://cloud.umami.is, ingyenes csomag).
   // A „Website ID” a Umami felületén: Settings → Websites → Edit. Amíg üres,
   // nincs mérés. Sütit nem használ, ezért cookie-banner sem kell hozzá.
-  const UMAMI_WEBSITE_ID = "";
+  const UMAMI_WEBSITE_ID = "66e84dea-85cb-4e5f-8625-8c13d0852b34";
 
   // Kapcsolatűrlap – Web3Forms (https://web3forms.com, ingyenes). Az
   // info@iceunicorns.hu címmel kért „Access Key” ide jön; ez nyilvános kulcs,
