@@ -1055,6 +1055,9 @@ a.sponsor:hover { transform: translateY(-3px); }
 .sponsor-row .sponsor { min-height: 0; height: 52px; padding: 8px 14px; border-radius: 14px; font-size: 0.9rem; box-shadow: none; }
 .sponsor-row .sponsor img { max-height: 34px; max-width: 120px; }
 
+/* ===== Egymás elleni mérleg (következő meccs kártya) ===== */
+.nm-h2h strong.h2h-goals { color: var(--gold); }
+
 /* Kapcsolatűrlap: spamcsapda (ember nem látja) */
 .hp-field { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
 .contact-form { position: relative; }

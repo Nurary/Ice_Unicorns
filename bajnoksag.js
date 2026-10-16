@@ -272,6 +272,9 @@ const LEAGUES = (typeof window !== "undefined" && window.LEAGUES) || {};
       oppPos || oppForm.length
         ? `<p class="nm-form"><span>Az ellenfél</span>${oppPos}${formDots(oppForm)}</p>`
         : "";
+    // Egymás elleni mérleg – az aktuális szezonból azonnal, az archivált
+    // szezonokkal kiegészítve, amint azok betöltődtek (lásd h2hFill)
+    const h2hSlot = `<p class="nm-form nm-h2h" data-h2h hidden></p>`;
 
     // Ugyanaz az eredményjelző-elrendezés, mint a jegyzőkönyv fejlécében:
     // mi balra, az ellenfél jobbra, középen a „VS”
@@ -296,8 +299,83 @@ const LEAGUES = (typeof window !== "undefined" && window.LEAGUES) || {};
       </div>
       <div class="nm-side">
         ${oppInfo}
+        ${h2hSlot}
         <a href="${ctaHref}"${ctaTarget} class="btn btn-primary" data-umami-event="gyere-szurkolni">Gyere el szurkolni</a>
       </div>`;
+    h2hFill(host, u.opponent);
+  }
+
+  // ---- Egymás elleni mérleg ----
+  // Minden bajnokság minden lejátszott meccséből (league.games) összeszedi a
+  // mi meccseinket az adott ellenféllel. Az archivált szezonok
+  // (szezonok/lista.json + szezonok/<szezon>.js) a háttérben töltődnek be, így
+  // egy új szezon elején is látszik, hogy tavaly hogy ment ellenük.
+  function h2hGames(leagues, opponent) {
+    const out = [];
+    Object.keys(leagues || {}).forEach((k) => {
+      (leagues[k].games || []).forEach((g) => {
+        if (!gamePlayed(g)) return;
+        const home = g.home === US && g.away === opponent;
+        const away = g.away === US && g.home === opponent;
+        if (!home && !away) return;
+        out.push({
+          key: (leagues[k].season || "") + "|" + g.date,
+          us: home ? g.hs : g.as,
+          them: home ? g.as : g.hs,
+        });
+      });
+    });
+    return out;
+  }
+
+  let archiveCache = null;
+  function loadArchives() {
+    if (!archiveCache) {
+      archiveCache = fetch("szezonok/lista.json", { cache: "no-cache" })
+        .then((r) => (r.ok ? r.json() : []))
+        .catch(() => [])
+        .then((list) =>
+          Promise.all(
+            (Array.isArray(list) ? list : [])
+              .filter((s) => /^\d{4}-\d{4}$/.test(s) && s !== ARCHIVE)
+              .map((s) =>
+                fetch("szezonok/" + s + ".js")
+                  .then((r) => (r.ok ? r.text() : ""))
+                  .then((src) => {
+                    // A fájl a window.LEAGUES-t állítaná be – egy külön
+                    // objektumba töltjük, hogy az aktuális adat ne íródjon felül
+                    const box = {};
+                    new Function("window", src)(box);
+                    return box.LEAGUES || {};
+                  })
+                  .catch(() => ({}))
+              )
+          )
+        );
+    }
+    return archiveCache;
+  }
+
+  function h2hFill(host, opponent) {
+    const el = host.querySelector("[data-h2h]");
+    if (!el) return;
+    const draw = (games) => {
+      // Ugyanaz a meccs több helyen is szerepelhet – dátum szerint egyszer
+      const seen = {};
+      games = games.filter((g) => (seen[g.key] ? false : (seen[g.key] = true)));
+      if (!games.length) return;
+      const w = games.filter((g) => g.us > g.them).length;
+      const gf = games.reduce((s, g) => s + g.us, 0);
+      const ga = games.reduce((s, g) => s + g.them, 0);
+      el.innerHTML =
+        `<span>Egymás ellen</span><strong>${games.length} meccs · ${w} Gy · ${games.length - w} V</strong>` +
+        `<strong class="h2h-goals">${gf}–${ga}</strong>`;
+      el.title = "Az eddigi bajnoki meccseink az ellenféllel (gólkülönbség: " + gf + "–" + ga + ")";
+      el.hidden = false;
+    };
+    const current = h2hGames(LEAGUES, opponent);
+    draw(current);
+    loadArchives().then((old) => draw(old.reduce((all, l) => all.concat(h2hGames(l, opponent)), current)));
   }
 
   // ---- Legutóbbi eredmény (kezdőlap) ----
