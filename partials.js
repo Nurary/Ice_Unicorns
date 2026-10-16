@@ -13,6 +13,12 @@
   // nyitja meg (mailto), mint eddig.
   const WEB3FORMS_KEY = "42897af6-c0a3-43f5-845c-260152f942d8";
 
+  // Meccs előtti értesítés – OneSignal (https://onesignal.com, ingyenes
+  // webes push). Az „App ID” a OneSignal felületén: Settings → Keys & IDs.
+  // Amíg üres, az „Értesítést kérek” gomb sehol nem jelenik meg. Az
+  // értesítéseket a .github/workflows/meccs-ertesites.yml küldi ki.
+  const ONESIGNAL_APP_ID = "";
+
   // Támogatóink – a lábléc és a Támogatás oldal ebből építkezik. Egy sor:
   //   { name: "Cég neve", logo: "assets/tamogatok/ceg.png", url: "https://ceg.hu" }
   // A logó elhagyható (akkor a név látszik), az url is. Amíg a lista üres,
@@ -348,6 +354,66 @@
     s.dataset.websiteId = UMAMI_WEBSITE_ID;
     s.dataset.domains = "iceunicorns.hu,www.iceunicorns.hu";
     document.head.appendChild(s);
+  }
+
+  // ---- Meccs előtti értesítés (OneSignal) ----
+  // A [data-push] helyekre (kezdőlap, bajnoksági oldalak) egy gomb kerül,
+  // amivel a látogató feliratkozhat. iPhone-on a böngésző csak akkor enged
+  // értesítést, ha az oldal ki van téve a kezdőképernyőre – ott ezt írjuk ki.
+  const pushSlots = document.querySelectorAll("[data-push]");
+  const pushLive = ONESIGNAL_APP_ID && /(^|\.)iceunicorns\.hu$/.test(location.hostname);
+  if (pushSlots.length && pushLive) {
+    const ios = /iPhone|iPad|iPod/.test(navigator.userAgent);
+    const standalone =
+      window.matchMedia("(display-mode: standalone)").matches || navigator.standalone === true;
+    const supported = "Notification" in window && "serviceWorker" in navigator && "PushManager" in window;
+
+    const render = (html) => pushSlots.forEach((slot) => {
+      slot.innerHTML = html;
+      slot.hidden = false;
+    });
+
+    if (ios && !standalone) {
+      render(
+        `<p class="push-hint">🔔 Értesítést kérnél a meccsek előtt? iPhone-on előbb tedd ki az oldalt ` +
+          `a kezdőképernyőre: <strong>Megosztás → Főképernyőhöz adás</strong>, és onnan nyisd meg.</p>`
+      );
+    } else if (supported) {
+      window.OneSignalDeferred = window.OneSignalDeferred || [];
+      const s = document.createElement("script");
+      s.src = "https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js";
+      s.defer = true;
+      document.head.appendChild(s);
+      window.OneSignalDeferred.push(async (OneSignal) => {
+        await OneSignal.init({
+          appId: ONESIGNAL_APP_ID,
+          serviceWorkerPath: "push/onesignal/OneSignalSDKWorker.js",
+          serviceWorkerParam: { scope: "/push/onesignal/" },
+        });
+        const sub = OneSignal.User.PushSubscription;
+        const draw = () => {
+          const on = OneSignal.Notifications.permission && sub.optedIn;
+          render(
+            `<button type="button" class="btn push-btn${on ? " is-on" : ""}" aria-pressed="${on}">` +
+              (on ? "🔔 Értesítés bekapcsolva" : "🔔 Szólj a meccs előtt") +
+              `</button><span class="push-note">${
+                on ? "A meccs előtti napon küldünk egy emlékeztetőt. Kattints a kikapcsoláshoz." : "Meccs előtti napon egy rövid emlékeztető, más semmi."
+              }</span>`
+          );
+          pushSlots.forEach((slot) =>
+            slot.querySelector(".push-btn").addEventListener("click", async () => {
+              if (on) await sub.optOut();
+              else if (!OneSignal.Notifications.permission) await OneSignal.Notifications.requestPermission();
+              else await sub.optIn();
+              if (window.umami) window.umami.track(on ? "ertesites-ki" : "ertesites-be");
+            })
+          );
+        };
+        sub.addEventListener("change", draw);
+        OneSignal.Notifications.addEventListener("permissionChange", draw);
+        draw();
+      });
+    }
   }
 
   // ---- Telepíthető alkalmazás (PWA) ----

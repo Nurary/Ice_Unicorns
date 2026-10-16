@@ -1,0 +1,29 @@
+name: Meccs előtti értesítés
+
+# Minden nap 16:00 UTC-kor (17:00 / 18:00 budapesti idő) megnézi, van-e
+# másnap meccsünk, és ha igen, push-értesítést küld a feliratkozóknak.
+# Részletek és beállítás: scripts/meccs-ertesites.mjs
+on:
+  schedule:
+    - cron: "0 16 * * *"
+  workflow_dispatch: # kézi indítás az Actions fülről
+
+permissions:
+  contents: read
+
+jobs:
+  ertesites:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      # Külső csomag nem kell hozzá, ezért npm ci sincs
+      - name: Értesítés a holnapi meccsről
+        env:
+          ONESIGNAL_APP_ID: ${{ vars.ONESIGNAL_APP_ID }}
+          ONESIGNAL_REST_API_KEY: ${{ secrets.ONESIGNAL_REST_API_KEY }}
+        run: node scripts/meccs-ertesites.mjs
