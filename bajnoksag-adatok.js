@@ -6,7 +6,7 @@
 // pedig időzítve lefuttatja, és commitolja, ha változott valami.
 //
 // Szezon: 2026-2027
-// Utolsó frissítés: 2026-10-15T23:36:22.523Z
+// Utolsó frissítés: 2026-10-16T23:21:58.816Z
 //
 // A LEAGUES mezőinek jelentését a bajnoksag.js, a GAME_STATS-ét a
 // statisztika.js tetején lévő leírás mondja el.
@@ -95,6 +95,20 @@ window.LEAGUES = {
         "group": "A",
         "standings": [
           {
+            "team": "Ligeti Jégkásák A",
+            "gp": 2,
+            "w": 2,
+            "otw": 0,
+            "sow": 0,
+            "otl": 0,
+            "sol": 0,
+            "v": 0,
+            "gf": 22,
+            "ga": 4,
+            "pts": 6,
+            "logo": "https://ivr-api.icehockey.hu/storage/media/117234/conversions/profile_photo-thumb-cropped.png"
+          },
+          {
             "team": "HKB Flashes II",
             "gp": 1,
             "w": 1,
@@ -121,20 +135,6 @@ window.LEAGUES = {
             "ga": 7,
             "pts": 3,
             "logo": "https://ivr-api.icehockey.hu/storage/media/116508/conversions/profile_photo-thumb-cropped.png"
-          },
-          {
-            "team": "Ligeti Jégkásák A",
-            "gp": 1,
-            "w": 1,
-            "otw": 0,
-            "sow": 0,
-            "otl": 0,
-            "sol": 0,
-            "v": 0,
-            "gf": 6,
-            "ga": 4,
-            "pts": 3,
-            "logo": "https://ivr-api.icehockey.hu/storage/media/117234/conversions/profile_photo-thumb-cropped.png"
           },
           {
             "team": "Angels",
@@ -193,15 +193,15 @@ window.LEAGUES = {
           },
           {
             "team": "DVTK Jegesmedvék",
-            "gp": 1,
+            "gp": 2,
             "w": 0,
             "otw": 0,
             "sow": 0,
             "otl": 0,
             "sol": 0,
-            "v": 1,
+            "v": 2,
             "gf": 5,
-            "ga": 12,
+            "ga": 28,
             "pts": 0,
             "logo": "https://ivr-api.icehockey.hu/storage/media/116499/conversions/profile_photo-thumb-cropped.png"
           }
@@ -441,7 +441,9 @@ window.LEAGUES = {
         "group": "A",
         "time": "19:00",
         "home": "DVTK Jegesmedvék",
-        "away": "Ligeti Jégkásák A"
+        "away": "Ligeti Jégkásák A",
+        "hs": 0,
+        "as": 16
       },
       {
         "date": "2026-10-17",
@@ -2518,4 +2520,4 @@ window.GAME_STATS = [
   }
 ];
 
-window.LEAGUES_FRISSITVE = "2026-10-15T23:36:22.523Z";
+window.LEAGUES_FRISSITVE = "2026-10-16T23:21:58.816Z";
