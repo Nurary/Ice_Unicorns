@@ -6,7 +6,7 @@
 // pedig időzítve lefuttatja, és commitolja, ha változott valami.
 //
 // Szezon: 2026-2027
-// Utolsó frissítés: 2026-10-17T22:57:53.248Z
+// Utolsó frissítés: 2026-10-18T09:24:23.133Z
 //
 // A LEAGUES mezőinek jelentését a bajnoksag.js, a GAME_STATS-ét a
 // statisztika.js tetején lévő leírás mondja el.
@@ -493,6 +493,12 @@ window.LEAGUES = {
       },
       {
         "date": "2026-11-08",
+        "group": "A",
+        "home": "Vénfarkasok",
+        "away": "Alba Trashers Jégkorong Klub"
+      },
+      {
+        "date": "2026-11-08",
         "group": "B",
         "home": "DJK SE",
         "away": "Ice Unicorns"
@@ -528,10 +534,10 @@ window.LEAGUES = {
         "away": "Óbudai Gepárd D"
       },
       {
-        "date": "2026-11-08",
+        "date": "2026-11-22",
         "group": "A",
         "home": "Vénfarkasok",
-        "away": "Alba Trashers Jégkorong Klub"
+        "away": "DVTK Jegesmedvék"
       },
       {
         "date": "2026-11-22",
@@ -570,10 +576,10 @@ window.LEAGUES = {
         "away": "Ice Unicorns"
       },
       {
-        "date": "2026-11-22",
+        "date": "2026-12-06",
         "group": "A",
-        "home": "Vénfarkasok",
-        "away": "DVTK Jegesmedvék"
+        "home": "HKB Flashes II",
+        "away": "Vénfarkasok"
       },
       {
         "date": "2026-12-06",
@@ -612,12 +618,6 @@ window.LEAGUES = {
         "away": "Óbudai Gepárd D"
       },
       {
-        "date": "2026-12-06",
-        "group": "A",
-        "home": "HKB Flashes II",
-        "away": "Vénfarkasok"
-      },
-      {
         "date": "2026-12-20",
         "group": "B",
         "home": "DJK SE",
@@ -634,6 +634,12 @@ window.LEAGUES = {
         "group": "B",
         "home": "Ice Unicorns",
         "away": "Korongozoo VALOR"
+      },
+      {
+        "date": "2027-01-17",
+        "group": "A",
+        "home": "Ligeti Jégkásák A",
+        "away": "Vénfarkasok"
       },
       {
         "date": "2027-01-17",
@@ -672,10 +678,10 @@ window.LEAGUES = {
         "away": "DJK SE"
       },
       {
-        "date": "2027-01-17",
+        "date": "2027-01-31",
         "group": "A",
-        "home": "Ligeti Jégkásák A",
-        "away": "Vénfarkasok"
+        "home": "Vénfarkasok",
+        "away": "VIP Blazing Blades"
       },
       {
         "date": "2027-01-31",
@@ -718,12 +724,6 @@ window.LEAGUES = {
         "group": "B",
         "home": "Korongozoo VALOR",
         "away": "Ligeti Jégkásák B"
-      },
-      {
-        "date": "2027-01-31",
-        "group": "A",
-        "home": "Vénfarkasok",
-        "away": "VIP Blazing Blades"
       },
       {
         "date": "2027-02-07",
@@ -1052,6 +1052,20 @@ window.LEAGUES = {
         "group": "B",
         "standings": [
           {
+            "team": "ESMTK Jégtörők",
+            "gp": 1,
+            "w": 1,
+            "otw": 0,
+            "sow": 0,
+            "otl": 0,
+            "sol": 0,
+            "v": 0,
+            "gf": 9,
+            "ga": 2,
+            "pts": 3,
+            "logo": "https://ivr-api.icehockey.hu/storage/media/116508/conversions/profile_photo-thumb-cropped.png"
+          },
+          {
             "team": "Újpesti Ragadozók",
             "gp": 1,
             "w": 1,
@@ -1095,20 +1109,6 @@ window.LEAGUES = {
             "us": true
           },
           {
-            "team": "Séra Team",
-            "gp": 1,
-            "w": 0,
-            "otw": 0,
-            "sow": 0,
-            "otl": 0,
-            "sol": 0,
-            "v": 1,
-            "gf": 2,
-            "ga": 4,
-            "pts": 0,
-            "logo": "https://ivr-api.icehockey.hu/storage/media/155507/conversions/profile_photo-thumb-cropped.png"
-          },
-          {
             "team": "Kohász",
             "gp": 1,
             "w": 0,
@@ -1135,6 +1135,20 @@ window.LEAGUES = {
             "ga": 6,
             "pts": 0,
             "logo": "https://ivr-api.icehockey.hu/storage/media/106284/conversions/profile_photo-thumb-cropped.png"
+          },
+          {
+            "team": "Séra Team",
+            "gp": 2,
+            "w": 0,
+            "otw": 0,
+            "sow": 0,
+            "otl": 0,
+            "sol": 0,
+            "v": 2,
+            "gf": 4,
+            "ga": 13,
+            "pts": 0,
+            "logo": "https://ivr-api.icehockey.hu/storage/media/155507/conversions/profile_photo-thumb-cropped.png"
           }
         ]
       }
@@ -1190,7 +1204,7 @@ window.LEAGUES = {
       },
       "ESMTK Jégtörők": {
         "logo": "https://ivr-api.icehockey.hu/storage/media/116508/conversions/profile_photo-thumb-cropped.png",
-        "group": null
+        "group": "B"
       },
       "Algyői Olajosok": {
         "logo": "https://ivr-api.icehockey.hu/storage/media/142328/conversions/profile_photo-thumb-cropped.png",
@@ -2523,4 +2537,4 @@ window.GAME_STATS = [
   }
 ];
 
-window.LEAGUES_FRISSITVE = "2026-10-17T22:57:53.248Z";
+window.LEAGUES_FRISSITVE = "2026-10-18T09:24:23.133Z";
