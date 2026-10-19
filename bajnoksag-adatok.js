@@ -6,7 +6,7 @@
 // pedig időzítve lefuttatja, és commitolja, ha változott valami.
 //
 // Szezon: 2026-2027
-// Utolsó frissítés: 2026-10-18T22:53:44.827Z
+// Utolsó frissítés: 2026-10-19T10:36:29.795Z
 //
 // A LEAGUES mezőinek jelentését a bajnoksag.js, a GAME_STATS-ét a
 // statisztika.js tetején lévő leírás mondja el.
@@ -31,7 +31,8 @@ window.LEAGUES = {
       },
       {
         "id": 88942,
-        "date": "2026-11-08",
+        "date": "2026-11-07",
+        "time": "21:05",
         "opponent": "DJK SE",
         "home": false,
         "venue": "Debrecen, Centerpálya",
@@ -527,16 +528,17 @@ window.LEAGUES = {
         "as": 2
       },
       {
+        "date": "2026-11-07",
+        "group": "B",
+        "time": "21:05",
+        "home": "DJK SE",
+        "away": "Ice Unicorns"
+      },
+      {
         "date": "2026-11-08",
         "group": "A",
         "home": "Vénfarkasok",
         "away": "Alba Trashers Jégkorong Klub"
-      },
-      {
-        "date": "2026-11-08",
-        "group": "B",
-        "home": "DJK SE",
-        "away": "Ice Unicorns"
       },
       {
         "date": "2026-11-08",
@@ -1189,14 +1191,6 @@ window.LEAGUES = {
       }
     ],
     "teams": {
-      "Séra Team": {
-        "logo": "https://ivr-api.icehockey.hu/storage/media/155507/conversions/profile_photo-thumb-cropped.png",
-        "group": "B"
-      },
-      "Ice Unicorns": {
-        "logo": "assets/logo/logo.jpg",
-        "group": "B"
-      },
       "Kárpáti Farkasok": {
         "logo": null,
         "group": "A"
@@ -1204,6 +1198,14 @@ window.LEAGUES = {
       "Óbudai Gepárd C": {
         "logo": "https://ivr-api.icehockey.hu/storage/media/84113/conversions/profile_photo-thumb-cropped.png",
         "group": "A"
+      },
+      "Séra Team": {
+        "logo": "https://ivr-api.icehockey.hu/storage/media/155507/conversions/profile_photo-thumb-cropped.png",
+        "group": "B"
+      },
+      "Ice Unicorns": {
+        "logo": "assets/logo/logo.jpg",
+        "group": "B"
       },
       "VIP Crazy Zombies": {
         "logo": "https://ivr-api.icehockey.hu/storage/media/151684/conversions/profile_photo-thumb-cropped.png",
@@ -1249,21 +1251,21 @@ window.LEAGUES = {
     "games": [
       {
         "date": "2026-10-10",
-        "group": "B",
-        "time": "17:00",
-        "home": "Séra Team",
-        "away": "Ice Unicorns",
-        "hs": 2,
-        "as": 4
-      },
-      {
-        "date": "2026-10-10",
         "group": "A",
         "time": "17:00",
         "home": "Kárpáti Farkasok",
         "away": "Óbudai Gepárd C",
         "hs": 3,
         "as": 7
+      },
+      {
+        "date": "2026-10-10",
+        "group": "B",
+        "time": "17:00",
+        "home": "Séra Team",
+        "away": "Ice Unicorns",
+        "hs": 2,
+        "as": 4
       },
       {
         "date": "2026-10-10",
@@ -2573,4 +2575,4 @@ window.GAME_STATS = [
   }
 ];
 
-window.LEAGUES_FRISSITVE = "2026-10-18T22:53:44.827Z";
+window.LEAGUES_FRISSITVE = "2026-10-19T10:36:29.795Z";
