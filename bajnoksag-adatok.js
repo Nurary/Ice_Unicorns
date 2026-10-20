@@ -6,7 +6,7 @@
 // pedig időzítve lefuttatja, és commitolja, ha változott valami.
 //
 // Szezon: 2026-2027
-// Utolsó frissítés: 2026-10-20T00:10:12.763Z
+// Utolsó frissítés: 2026-10-20T23:41:43.939Z
 //
 // A LEAGUES mezőinek jelentését a bajnoksag.js, a GAME_STATS-ét a
 // statisztika.js tetején lévő leírás mondja el.
@@ -674,6 +674,12 @@ window.LEAGUES = {
       },
       {
         "date": "2027-01-17",
+        "group": "B",
+        "home": "Lizards",
+        "away": "ESMTK Jégpárducok B"
+      },
+      {
+        "date": "2027-01-17",
         "group": "A",
         "home": "Ligeti Jégkásák A",
         "away": "Vénfarkasok"
@@ -707,12 +713,6 @@ window.LEAGUES = {
         "group": "B",
         "home": "Óbudai Gepárd D",
         "away": "DJK SE"
-      },
-      {
-        "date": "2027-01-17",
-        "group": "B",
-        "home": "Lizards",
-        "away": "ESMTK Jégpárducok B"
       },
       {
         "date": "2027-01-31",
@@ -765,6 +765,12 @@ window.LEAGUES = {
       {
         "date": "2027-02-07",
         "group": "B",
+        "home": "Lizards",
+        "away": "Korongozoo VALOR"
+      },
+      {
+        "date": "2027-02-07",
+        "group": "B",
         "home": "Óbudai Gepárd D",
         "away": "Ice Unicorns"
       },
@@ -773,12 +779,6 @@ window.LEAGUES = {
         "group": "B",
         "home": "Tatabányai Polipok",
         "away": "ESMTK Jégpárducok B"
-      },
-      {
-        "date": "2027-02-07",
-        "group": "B",
-        "home": "Lizards",
-        "away": "Korongozoo VALOR"
       }
     ],
     "scorers": [
@@ -945,22 +945,22 @@ window.LEAGUES = {
         "them": 2
       },
       {
-        "id": 88419,
-        "date": "2026-10-25",
-        "opponent": "Kohász",
-        "home": true,
-        "venue": "Ifj. Ocskay Gábor Jégcsarnok, C pálya",
-        "logo": "https://ivr-api.icehockey.hu/storage/media/117416/conversions/profile_photo-thumb-cropped.png",
-        "us": null,
-        "them": null
-      },
-      {
         "id": 88422,
         "date": "2026-11-15",
         "opponent": "FTC-Telekom",
         "home": false,
         "venue": "FTC Sátras Jégpálya",
         "logo": "https://ivr-api.icehockey.hu/storage/media/106284/conversions/profile_photo-thumb-cropped.png",
+        "us": null,
+        "them": null
+      },
+      {
+        "id": 88419,
+        "date": "2026-11-22",
+        "opponent": "Kohász",
+        "home": true,
+        "venue": "Ifj. Ocskay Gábor Jégcsarnok, C pálya",
+        "logo": "https://ivr-api.icehockey.hu/storage/media/117416/conversions/profile_photo-thumb-cropped.png",
         "us": null,
         "them": null
       },
@@ -1329,12 +1329,6 @@ window.LEAGUES = {
       },
       {
         "date": "2026-10-25",
-        "group": "B",
-        "home": "Ice Unicorns",
-        "away": "Kohász"
-      },
-      {
-        "date": "2026-10-25",
         "group": "A",
         "home": "Algyői Olajosok",
         "away": "VIP Crazy Zombies"
@@ -1381,6 +1375,12 @@ window.LEAGUES = {
         "group": "B",
         "home": "FTC-Telekom",
         "away": "Ice Unicorns"
+      },
+      {
+        "date": "2026-11-22",
+        "group": "B",
+        "home": "Ice Unicorns",
+        "away": "Kohász"
       },
       {
         "date": "2026-11-29",
@@ -2575,4 +2575,4 @@ window.GAME_STATS = [
   }
 ];
 
-window.LEAGUES_FRISSITVE = "2026-10-20T00:10:12.763Z";
+window.LEAGUES_FRISSITVE = "2026-10-20T23:41:43.939Z";
