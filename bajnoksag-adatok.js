@@ -6,7 +6,7 @@
 // pedig időzítve lefuttatja, és commitolja, ha változott valami.
 //
 // Szezon: 2026-2027
-// Utolsó frissítés: 2026-10-19T10:36:29.795Z
+// Utolsó frissítés: 2026-10-20T00:10:12.763Z
 //
 // A LEAGUES mezőinek jelentését a bajnoksag.js, a GAME_STATS-ét a
 // statisztika.js tetején lévő leírás mondja el.
@@ -699,12 +699,6 @@ window.LEAGUES = {
       {
         "date": "2027-01-17",
         "group": "B",
-        "home": "Lizards",
-        "away": "ESMTK Jégpárducok B"
-      },
-      {
-        "date": "2027-01-17",
-        "group": "B",
         "home": "Ligeti Jégkásák B",
         "away": "Ice Unicorns"
       },
@@ -713,6 +707,12 @@ window.LEAGUES = {
         "group": "B",
         "home": "Óbudai Gepárd D",
         "away": "DJK SE"
+      },
+      {
+        "date": "2027-01-17",
+        "group": "B",
+        "home": "Lizards",
+        "away": "ESMTK Jégpárducok B"
       },
       {
         "date": "2027-01-31",
@@ -771,14 +771,14 @@ window.LEAGUES = {
       {
         "date": "2027-02-07",
         "group": "B",
-        "home": "Lizards",
-        "away": "Korongozoo VALOR"
+        "home": "Tatabányai Polipok",
+        "away": "ESMTK Jégpárducok B"
       },
       {
         "date": "2027-02-07",
         "group": "B",
-        "home": "Tatabányai Polipok",
-        "away": "ESMTK Jégpárducok B"
+        "home": "Lizards",
+        "away": "Korongozoo VALOR"
       }
     ],
     "scorers": [
@@ -1329,15 +1329,15 @@ window.LEAGUES = {
       },
       {
         "date": "2026-10-25",
-        "group": "A",
-        "home": "Algyői Olajosok",
-        "away": "VIP Crazy Zombies"
-      },
-      {
-        "date": "2026-10-25",
         "group": "B",
         "home": "Ice Unicorns",
         "away": "Kohász"
+      },
+      {
+        "date": "2026-10-25",
+        "group": "A",
+        "home": "Algyői Olajosok",
+        "away": "VIP Crazy Zombies"
       },
       {
         "date": "2026-10-25",
@@ -2575,4 +2575,4 @@ window.GAME_STATS = [
   }
 ];
 
-window.LEAGUES_FRISSITVE = "2026-10-19T10:36:29.795Z";
+window.LEAGUES_FRISSITVE = "2026-10-20T00:10:12.763Z";
