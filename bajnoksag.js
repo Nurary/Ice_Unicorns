@@ -125,7 +125,7 @@ const LEAGUES = (typeof window !== "undefined" && window.LEAGUES) || {};
   function formDots(entries) {
     if (!entries || !entries.length) return "";
     const dots = entries
-      .map((e) => `<i class="fd ${e.key}" title="${e.title}"></i>`)
+      .map((e) => `<i class="fd ${e.key}" title="${escHtml(e.title)}"></i>`)
       .join("");
     return `<span class="form-dots" aria-label="Legutóbbi eredmények">${dots}</span>`;
   }
@@ -169,7 +169,7 @@ const LEAGUES = (typeof window !== "undefined" && window.LEAGUES) || {};
 
   // Kezdőbetűs korong azoknak a csapatoknak, amelyeknek nincs emblémája
   function teamChip(name) {
-    return `<span class="team-chip" title="${name}">${(name || "?").charAt(0)}</span>`;
+    return `<span class="team-chip" title="${escHtml(name)}">${escHtml((name || "?").charAt(0))}</span>`;
   }
 
   // Ha egy embléma nem jön be (az MJSZ-nél akad néhány halott link), a
@@ -192,7 +192,12 @@ const LEAGUES = (typeof window !== "undefined" && window.LEAGUES) || {};
   }
 
   // Csapatembléma <img> – ha nincs logo mező, üres string (nem jelenik meg semmi)
+  // Csak helyi fájl (assets/…) vagy https-es kép mehet az oldalba – az
+  // MJSZ-ből jövő linket így egy elírás sem tudja „kitörni” az attribútumból
+  const safeImg = (url) =>
+    /^(assets\/|https:\/\/)/.test(String(url || "")) ? escHtml(url) : "";
   function teamLogo(url, extraClass) {
+    url = safeImg(url);
     if (!url) return "";
     const cls = "team-logo" + (extraClass ? " " + extraClass : "");
     return `<img class="${cls}" src="${url}" alt="" loading="lazy" onerror="this.remove()">`;
@@ -249,7 +254,7 @@ const LEAGUES = (typeof window !== "undefined" && window.LEAGUES) || {};
     // Csak akkor írjuk ki a bajnokságot, ha egyébként nem derülne ki
     const badge =
       (key === MIND ? `<span class="nm-league">${upcoming.label}</span>` : "") +
-      (u.stage ? `<span class="nm-league is-stage">${u.stage}</span>` : "");
+      (u.stage ? `<span class="nm-league is-stage">${escHtml(u.stage)}</span>` : "");
     const target = matchStart(u).getTime();
     // A gomb a helyszínhez navigál Google Maps-en – ha nincs megadva
     // helyszín, marad a kapcsolat oldal tartaléknak.
@@ -266,7 +271,7 @@ const LEAGUES = (typeof window !== "undefined" && window.LEAGUES) || {};
     const oppForm = oppLeague ? formOf(oppLeague, u.opponent) : [];
     const oppPos =
       oppStanding && (oppStanding.row.gp || 0) > 0
-        ? `<strong title="${oppStanding.group}">${oppStanding.pos}. helyezett</strong>`
+        ? `<strong title="${escHtml(oppStanding.group)}">${oppStanding.pos}. helyezett</strong>`
         : "";
     const oppInfo =
       oppPos || oppForm.length
@@ -514,7 +519,8 @@ const LEAGUES = (typeof window !== "undefined" && window.LEAGUES) || {};
     const isSave = c.type === "vedes";
     const icon = isSave ? "🧤" : "🥅";
     const title = (isSave ? "Védés" : "Gól") + (c.time ? " – " + c.time : "") + (c.note ? " (" + c.note + ")" : "");
-    return `<a class="gm-clip" href="${c.url}" target="_blank" rel="noopener" title="${title}">${icon}${c.time ? " " + c.time : ""}</a>`;
+    if (!/^https:\/\//.test(String(c.url || ""))) return "";
+    return `<a class="gm-clip" href="${escHtml(c.url)}" target="_blank" rel="noopener" title="${escHtml(title)}">${icon}${c.time ? " " + c.time : ""}</a>`;
   }
 
   function gmRow(nick, statText, clips) {
@@ -995,8 +1001,8 @@ const LEAGUES = (typeof window !== "undefined" && window.LEAGUES) || {};
           <span class="md-d">${fmtDate(m.date)}</span>
         </span>
         <span class="match-teams">
-          <span class="match-opp">${teamLogo(m.logo)}${m.opponent}</span>
-          <span class="match-where">${m.stage ? m.stage + " · " : ""}${m.home ? "hazai" : "idegenben"}</span>
+          <span class="match-opp">${teamLogo(m.logo)}${escHtml(m.opponent)}</span>
+          <span class="match-where">${m.stage ? escHtml(m.stage) + " · " : ""}${m.home ? "hazai" : "idegenben"}</span>
         </span>
         <span class="match-right">${right}</span>`;
       li.addEventListener("click", () => openGameModal(leagueKey, m));
@@ -1068,7 +1074,7 @@ const LEAGUES = (typeof window !== "undefined" && window.LEAGUES) || {};
       if (r.us || r.team === US) tr.className = "us";
       tr.innerHTML = `
         <td class="c-pos">${i + 1}</td>
-        <td class="c-team"><span class="team-cell">${teamLogo(r.logo)}${r.team}</span>${
+        <td class="c-team"><span class="team-cell">${teamLogo(r.logo)}${escHtml(r.team)}</span>${
           anyForm ? `<span class="team-form">${formDots(formOf(league, r.team))}</span>` : ""
         }</td>
         <td>${r.gp ?? "–"}</td>
@@ -1194,11 +1200,11 @@ const LEAGUES = (typeof window !== "undefined" && window.LEAGUES) || {};
       return `
         <div class="gr-row${mine ? " is-us" : ""}${isDone ? "" : " upcoming"}">
           <span class="gr-team gr-home${homeWon ? " won" : ""}">
-            <span class="gr-name">${g.home}</span>${logoOf(g.home)}
+            <span class="gr-name">${escHtml(g.home)}</span>${logoOf(g.home)}
           </span>
           <span class="gr-score">${middle}</span>
           <span class="gr-team gr-away${isDone && !homeWon ? " won" : ""}">
-            ${logoOf(g.away)}<span class="gr-name">${g.away}</span>
+            ${logoOf(g.away)}<span class="gr-name">${escHtml(g.away)}</span>
           </span>
         </div>`;
     };
@@ -1314,7 +1320,7 @@ const LEAGUES = (typeof window !== "undefined" && window.LEAGUES) || {};
     const line = (t, goals) => `
       <div class="br-t${win === t ? " win" : win ? " out" : ""}${t === US ? " us" : ""}">
         <span class="br-logo" data-init="${escHtml(String(t).charAt(0))}">${teamLogo(teams[t] && teams[t].logo) || teamChip(t)}</span>
-        <span class="br-name">${t}</span>
+        <span class="br-name">${escHtml(t)}</span>
         <b>${s.played ? goals : ""}</b>
       </div>`;
     // Meccsenként az eredmény a felső csapat szemszögéből, vagy a dátum
@@ -1369,7 +1375,7 @@ const LEAGUES = (typeof window !== "undefined" && window.LEAGUES) || {};
       const [from, to] = side === "left" ? [0, half] : [half, want[i]];
       return `
         <div class="br-col br-${side}" style="--r:${i}">
-          <h4>${all[i]}</h4>
+          <h4>${escHtml(all[i])}</h4>
           <div class="br-list">${cards(i, from, to)}</div>
         </div>`;
     };
@@ -1479,7 +1485,7 @@ const LEAGUES = (typeof window !== "undefined" && window.LEAGUES) || {};
       const block = document.createElement("div");
       block.className = "lg-po-block";
       const list = placement.filter((g) => g.group === k);
-      block.innerHTML = `<h3 class="lg-sub">Helyosztó · ${k} hely</h3>`;
+      block.innerHTML = `<h3 class="lg-sub">Helyosztó · ${escHtml(k)} hely</h3>`;
       renderStandingsGroup(block, { name: "", standings: placementRows(list, league), noForm: true }, league);
       const det = document.createElement("details");
       det.className = "lg-more";
@@ -1531,16 +1537,16 @@ const LEAGUES = (typeof window !== "undefined" && window.LEAGUES) || {};
     rows.forEach((r, i) => {
       const tr = document.createElement("tr");
       if (r.us) tr.className = "us";
-      const club = teams[r.team] && teams[r.team].logo;
+      const club = safeImg(teams[r.team] && teams[r.team].logo);
       tr.innerHTML = `
         <td class="c-pos">${i + 1}</td>
         <td class="c-team">
-          <span class="sc-name">${r.name}</span>
+          <span class="sc-name">${escHtml(r.name)}</span>
           <span class="sc-club">${
             club
-              ? `<img class="team-logo" src="${club}" alt="${r.team}" loading="lazy">`
+              ? `<img class="team-logo" src="${club}" alt="${escHtml(r.team)}" loading="lazy">`
               : teamChip(r.team)
-          }${r.team}</span>
+          }${escHtml(r.team)}</span>
         </td>
         <td>${r.gp}</td>
         <td>${r.g}</td>
@@ -1832,9 +1838,9 @@ const LEAGUES = (typeof window !== "undefined" && window.LEAGUES) || {};
       if (strip && st) {
         strip.innerHTML = `
           <div class="po-text">
-            <span class="po-kicker">Rájátszás · ${st.title}</span>
-            <strong>${st.main}</strong>
-            ${st.sub ? `<span class="po-sub">${st.sub}</span>` : ""}
+            <span class="po-kicker">Rájátszás · ${escHtml(st.title)}</span>
+            <strong>${escHtml(st.main)}</strong>
+            ${st.sub ? `<span class="po-sub">${escHtml(st.sub)}</span>` : ""}
           </div>
           <button type="button" class="btn btn-primary po-go">Ágrajz megnézése</button>`;
         strip.classList.toggle("is-won", !!st.won);
