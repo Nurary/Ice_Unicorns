@@ -12,7 +12,9 @@
 //   • az ob4c.html / ob4d.html egyezik-e a sablonnal,
 //   • a galéria manifest.json-je naprakész-e,
 //   • a JSON-LD blokkok érvényes JSON-ok-e,
-//   • a sitemap.xml minden oldala létezik-e.
+//   • a sitemap.xml minden oldala létezik-e,
+//   • a bajnoksági adatok (az aktuális és az archivált szezonok) szerkezete
+//     rendben van-e, és a szezonok/lista.json minden szezonjához van-e fájl.
 
 import { execFileSync } from "node:child_process";
 import { readdirSync, readFileSync, statSync } from "node:fs";
@@ -21,6 +23,7 @@ import { fileURLToPath } from "node:url";
 import { loadTeams, playersOf } from "./keret.mjs";
 import { OLDALAK, renderPage } from "./oldalak-generalasa.mjs";
 import { galleryList } from "./galeria-manifest.mjs";
+import { loadDataFile, validateData } from "./adat-ellenorzes.mjs";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 // Halmaz: ugyanaz a hibás útvonal több helyről is előkerülhet
@@ -154,7 +157,32 @@ if (JSON.stringify(manifest) !== JSON.stringify(galleryList())) {
 // Ami a listában szerepel, annak viszont léteznie kell
 manifest.forEach((f) => checkRef("assets/Galery/manifest.json", `assets/Galery/${f}`));
 
-// 6. Sitemap
+// 6. Bajnoksági adatok és szezonarchívum
+function checkDataFile(rel) {
+  try {
+    const { leagues, stats } = loadDataFile(readFileSync(join(ROOT, rel), "utf8"));
+    validateData(leagues, stats).slice(0, 10).forEach((e) => fail(rel, e));
+  } catch (err) {
+    fail(rel, `nem tölthető be: ${err.message}`);
+  }
+}
+checkDataFile("bajnoksag-adatok.js");
+let seasons = [];
+try {
+  seasons = JSON.parse(readFileSync(join(ROOT, "szezonok/lista.json"), "utf8"));
+  if (!Array.isArray(seasons)) throw new Error("nem tömb");
+} catch (err) {
+  fail("szezonok/lista.json", `hibás: ${err.message}`);
+  seasons = [];
+}
+seasons.forEach((s) => {
+  if (!/^\d{4}-\d{4}$/.test(s)) return fail("szezonok/lista.json", `hibás szezonnév: ${s}`);
+  const rel = `szezonok/${s}.js`;
+  if (checkPath(rel)) return fail("szezonok/lista.json", `${s}: hiányzik a ${rel}`);
+  checkDataFile(rel);
+});
+
+// 7. Sitemap
 const sitemap = readFileSync(join(ROOT, "sitemap.xml"), "utf8");
 for (const m of sitemap.matchAll(/<loc>https:\/\/iceunicorns\.hu\/([^<]*)<\/loc>/g)) {
   checkRef("sitemap.xml", m[1] || "index.html");
