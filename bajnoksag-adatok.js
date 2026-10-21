@@ -6,7 +6,7 @@
 // pedig időzítve lefuttatja, és commitolja, ha változott valami.
 //
 // Szezon: 2026-2027
-// Utolsó frissítés: 2026-10-20T23:41:43.939Z
+// Utolsó frissítés: 2026-10-21T09:54:39.183Z
 //
 // A LEAGUES mezőinek jelentését a bajnoksag.js, a GAME_STATS-ét a
 // statisztika.js tetején lévő leírás mondja el.
@@ -674,12 +674,6 @@ window.LEAGUES = {
       },
       {
         "date": "2027-01-17",
-        "group": "B",
-        "home": "Lizards",
-        "away": "ESMTK Jégpárducok B"
-      },
-      {
-        "date": "2027-01-17",
         "group": "A",
         "home": "Ligeti Jégkásák A",
         "away": "Vénfarkasok"
@@ -713,6 +707,12 @@ window.LEAGUES = {
         "group": "B",
         "home": "Óbudai Gepárd D",
         "away": "DJK SE"
+      },
+      {
+        "date": "2027-01-17",
+        "group": "B",
+        "home": "Lizards",
+        "away": "ESMTK Jégpárducok B"
       },
       {
         "date": "2027-01-31",
@@ -765,12 +765,6 @@ window.LEAGUES = {
       {
         "date": "2027-02-07",
         "group": "B",
-        "home": "Lizards",
-        "away": "Korongozoo VALOR"
-      },
-      {
-        "date": "2027-02-07",
-        "group": "B",
         "home": "Óbudai Gepárd D",
         "away": "Ice Unicorns"
       },
@@ -779,6 +773,12 @@ window.LEAGUES = {
         "group": "B",
         "home": "Tatabányai Polipok",
         "away": "ESMTK Jégpárducok B"
+      },
+      {
+        "date": "2027-02-07",
+        "group": "B",
+        "home": "Lizards",
+        "away": "Korongozoo VALOR"
       }
     ],
     "scorers": [
@@ -2575,4 +2575,4 @@ window.GAME_STATS = [
   }
 ];
 
-window.LEAGUES_FRISSITVE = "2026-10-20T23:41:43.939Z";
+window.LEAGUES_FRISSITVE = "2026-10-21T09:54:39.183Z";
