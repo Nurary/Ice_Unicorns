@@ -6,7 +6,7 @@
 // pedig időzítve lefuttatja, és commitolja, ha változott valami.
 //
 // Szezon: 2026-2027
-// Utolsó frissítés: 2026-10-21T09:54:39.183Z
+// Utolsó frissítés: 2026-10-21T23:56:38.342Z
 //
 // A LEAGUES mezőinek jelentését a bajnoksag.js, a GAME_STATS-ét a
 // statisztika.js tetején lévő leírás mondja el.
@@ -1191,14 +1191,6 @@ window.LEAGUES = {
       }
     ],
     "teams": {
-      "Kárpáti Farkasok": {
-        "logo": null,
-        "group": "A"
-      },
-      "Óbudai Gepárd C": {
-        "logo": "https://ivr-api.icehockey.hu/storage/media/84113/conversions/profile_photo-thumb-cropped.png",
-        "group": "A"
-      },
       "Séra Team": {
         "logo": "https://ivr-api.icehockey.hu/storage/media/155507/conversions/profile_photo-thumb-cropped.png",
         "group": "B"
@@ -1206,6 +1198,14 @@ window.LEAGUES = {
       "Ice Unicorns": {
         "logo": "assets/logo/logo.jpg",
         "group": "B"
+      },
+      "Kárpáti Farkasok": {
+        "logo": null,
+        "group": "A"
+      },
+      "Óbudai Gepárd C": {
+        "logo": "https://ivr-api.icehockey.hu/storage/media/84113/conversions/profile_photo-thumb-cropped.png",
+        "group": "A"
       },
       "VIP Crazy Zombies": {
         "logo": "https://ivr-api.icehockey.hu/storage/media/151684/conversions/profile_photo-thumb-cropped.png",
@@ -1251,21 +1251,21 @@ window.LEAGUES = {
     "games": [
       {
         "date": "2026-10-10",
-        "group": "A",
-        "time": "17:00",
-        "home": "Kárpáti Farkasok",
-        "away": "Óbudai Gepárd C",
-        "hs": 3,
-        "as": 7
-      },
-      {
-        "date": "2026-10-10",
         "group": "B",
         "time": "17:00",
         "home": "Séra Team",
         "away": "Ice Unicorns",
         "hs": 2,
         "as": 4
+      },
+      {
+        "date": "2026-10-10",
+        "group": "A",
+        "time": "17:00",
+        "home": "Kárpáti Farkasok",
+        "away": "Óbudai Gepárd C",
+        "hs": 3,
+        "as": 7
       },
       {
         "date": "2026-10-10",
@@ -2575,4 +2575,4 @@ window.GAME_STATS = [
   }
 ];
 
-window.LEAGUES_FRISSITVE = "2026-10-21T09:54:39.183Z";
+window.LEAGUES_FRISSITVE = "2026-10-21T23:56:38.342Z";
