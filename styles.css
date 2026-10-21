@@ -1083,6 +1083,8 @@ a.card:hover .card-arrow { transform: translateX(4px); }
   .nm-board { gap: 6px; }
   .nm-vs { font-size: 1.6rem; }
   .league-summary { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  /* páratlan számú csempénél az utolsó kitölti a sort, ne lógjon egyedül */
+  .league-summary > .ls-tile:last-child:nth-child(odd) { grid-column: 1 / -1; }
   .ls-tile { padding: 18px 10px; }
   .ls-tile strong { font-size: 1.7rem; }
   .ls-tile.is-record strong { font-size: 1.3rem; }
@@ -1146,6 +1148,11 @@ a.card:hover .card-arrow { transform: translateX(4px); }
   .lm-side { justify-content: flex-end; }
 }
 @media (max-width: 560px) {
+  /* Bajnoksági al-fülek: 2×2-es rács, hogy mind látsszon görgetés nélkül.
+     Rájátszás idején (5 fül, egyik sem rejtett) az utolsó kitölti a sort. */
+  .lg-tabs { display: grid; grid-template-columns: repeat(2, 1fr); width: 100%; border-radius: 22px; }
+  .lg-tab { text-align: center; }
+  .lg-tabs:not(:has(.lg-tab[hidden])) .lg-tab:last-child { grid-column: 1 / -1; }
   .last-match { padding: 22px 16px; }
   .lm-board { gap: 10px; }
   .lm-team, .lm-team.is-them { flex-direction: column; text-align: center; font-size: 0.92rem; }
