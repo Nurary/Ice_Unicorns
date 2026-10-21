@@ -3,17 +3,17 @@
 // A partials.js regisztrálja. Célja, hogy a telefon kezdőképernyőjére
 // kitett oldal térerő nélkül is megnyíljon a legutóbb látott tartalommal.
 //
-// Stratégia (csak a saját domain kéréseire; a külső – MJSZ-logók, Google
-// Fonts, Umami – a böngésző dolga marad):
+// Stratégia (csak a saját domain kéréseire; a külső – pl. Umami – a
+// böngésző dolga marad):
 //   • oldalak, JS, CSS, JSON, naptár: HÁLÓZAT ELŐSZÖR – mindig a friss
 //     tartalom jön (új meccseredmény, frissített menetrend), a tárolt
 //     példány csak akkor, ha nincs net;
-//   • képek, ikonok: TÁROLT ELŐSZÖR, a háttérben frissítve – ezek ritkán
-//     változnak, így az oldal gyorsabb.
+//   • képek, ikonok, betűtípusok: TÁROLT ELŐSZÖR, a háttérben frissítve –
+//     ezek ritkán változnak, így az oldal gyorsabb.
 //
 // Ha a gyorsítótárazás logikáján változtatsz, emeld a VERSION-t: a régi
 // tárolt fájlok ekkor törlődnek.
-const VERSION = "v1";
+const VERSION = "v2";
 const CACHE = "iceunicorns-" + VERSION;
 
 // Telepítéskor letöltjük a vázat, hogy az első offline megnyitás is működjön
@@ -46,7 +46,7 @@ self.addEventListener("activate", (event) => {
   );
 });
 
-const IMAGE = /\.(png|jpe?g|jfif|gif|webp|avif|svg|ico)$/i;
+const IMAGE = /\.(png|jpe?g|jfif|gif|webp|avif|svg|ico|woff2)$/i;
 
 function networkFirst(request) {
   return fetch(request)
