@@ -77,13 +77,13 @@ const TEAMS = {
       {
         label: "Kapus",
         players: [
-          { nick: "Kövesi Áron Péter", name: "Kövesi Áron Péter", num: 1, pos: "Kapus", grip: "–", sweet: "–", power: "–", photo: "", bio: "" }, // TODO: becenév
+          { nick: "Kövesi Áron Péter", name: "Kövesi Áron Péter", num: 1, pos: "Kapus", grip: "–", sweet: "–", power: "–", photo: "assets/Players/Kövesi_Áron_Péter.png", bio: "" }, // TODO: becenév
         ],
       },
       {
         label: "Védő",
         players: [
-          { nick: "Fischer Zsolt", name: "Fischer Zsolt", num: 2, pos: "Védő", captain: true, grip: "–", sweet: "–", power: "–", photo: "", bio: "" }, // TODO: becenév
+          { nick: "Fischer Zsolt", name: "Fischer Zsolt", num: 2, pos: "Védő", captain: true, grip: "–", sweet: "–", power: "–", photo: "assets/Players/Fischer_Zsolt.png", bio: "" }, // TODO: becenév
           { nick: "Pintér Mátyás", name: "Pintér Mátyás", num: 95, pos: "Védő", grip: "–", sweet: "–", power: "–", photo: "", bio: "" }, // TODO: becenév
           { nick: "Katonka Péter", name: "Katonka Péter", num: 88, pos: "Védő", grip: "–", sweet: "–", power: "–", photo: "", bio: "" }, // TODO: becenév
           { nick: "Maszat", name: "Szymon Wlaszczyk", num: 44, pos: "Védő", grip: "Bal", sweet: "", power: "", photo: "assets/Players/Maszat.png", bio: "A lengyel srác, akivel inkább ne vitatkozz" },
@@ -102,7 +102,7 @@ const TEAMS = {
           { nick: "Schmidt Zsolt", name: "Schmidt Zsolt", num: 91, pos: "Csatár", grip: "–", sweet: "–", power: "–", photo: "", bio: "" }, // TODO: becenév
           { nick: "Visnyei Balázs", name: "Visnyei Balázs", num: 38, pos: "Csatár", grip: "–", sweet: "–", power: "–", photo: "", bio: "" }, // TODO: becenév
           { nick: "Varga Attila", name: "Varga Attila", num: 90, pos: "Csatár", grip: "–", sweet: "–", power: "–", photo: "", bio: "" }, // TODO: becenév
-          { nick: "Nagy Dorina", name: "Nagy Dorina", num: 6, pos: "Csatár", grip: "–", sweet: "–", power: "–", photo: "", bio: "" }, // TODO: becenév
+          { nick: "Nagy Dorina", name: "Nagy Dorina", num: 6, pos: "Csatár", grip: "–", sweet: "–", power: "–", photo: "assets/Players/Nagy_Dorina.png", bio: "" }, // TODO: becenév
         ],
       },
     ],
