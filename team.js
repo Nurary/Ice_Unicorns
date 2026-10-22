@@ -62,7 +62,7 @@ const TEAMS = {
     ],
     staff: [
       { nick: "Árpi bácsi", name: "Sofron Árpád", icon: "🏒", pos: "Edző", photo: "assets/Players/Sofron_Árpád.png", bio: "A jég melletti higgadt fej." },
-      { nick: "Áron bácsi", name: "Merkl Áron", icon: "🏒", pos: "Edző", photo: "assets/Players/Merkl_Áron.png", bio: "Tapasztalata több, mint a játékosoké összesen." },
+      { nick: "Merkl Áron", name: "Merkl Áron", icon: "🏒", pos: "Edző", photo: "assets/Players/Merkl_Áron.png", bio: "Tapasztalata több, mint a játékosoké összesen." },
     ],
   },
 
@@ -331,8 +331,9 @@ function goalieStatsFor(p, leagueKey) {
     const civil = (p.name || "").trim();
     elName.textContent = shown(p);
     elCivil.textContent = civil ? "🪪 " + civil : "🪪 Polgári név: –";
-    // Komoly csapatnál a cím már a polgári név, nem kell még egyszer
-    elCivil.style.display = komoly && civil ? "none" : "";
+    // Ha a cím már a polgári név (komoly csapat, vagy nincs becenév), nem
+    // kell még egyszer kiírni
+    elCivil.style.display = civil && (komoly || civil === shown(p)) ? "none" : "";
     elRole.textContent = p.pos + (p.captain ? " · Kapitány" : p.alternate ? " · Kapitányhelyettes" : "");
 
     // Meta: Ütőfogás + Születési idő (csak játékosnál)
