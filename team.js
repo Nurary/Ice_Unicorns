@@ -53,7 +53,7 @@ const TEAMS = {
           { nick: "Szikrácska", name: "Varga Istvan Gergely", num: 31, pos: "Csatár", grip: "Jobb", sweet: "Peroni", power: "100% találati arány a kapus fejére bemelegítéskor", photo: "assets/Players/Szikrácska.png", bio: "Tüzes láb, csillámos korcsolya – sosem áll le." },
           { nick: "KristályPatkó", name: "Hegyi Bálint", num: 87, pos: "Csatár", grip: "Jobb", sweet: "Rum-kóla", power: "Olyan egyedi csuklólövésem van, aminek az irányát még a fizika törvényei sem ismerik", photo: "assets/Players/KristalyPatko.png", bio: "" },
           { nick: "Incze Péter", name: "Incze Péter", num: 28, pos: "Csatár", grip: "–", sweet: "–", power: "–", photo: "", bio: "" }, // TODO: becenév
-          { nick: "Tóth Dávid", name: "Tóth Dávid", num: 86, pos: "Csatár", grip: "–", sweet: "–", power: "–", photo: "", bio: "" }, // TODO: becenév
+          { nick: "Tóth Dávid", name: "Tóth Dávid", num: 86, pos: "Csatár", grip: "–", sweet: "–", power: "–", photo: "assets/Players/Tóth_Dávid.png", bio: "" }, // TODO: becenév
           { nick: "Visnyei-Beron Cecilia", name: "Visnyei-Beron Cecilia", num: 72, pos: "Csatár", grip: "–", sweet: "–", power: "–", photo: "", bio: "" }, // TODO: becenév
         ],
       },
@@ -85,7 +85,7 @@ const TEAMS = {
         players: [
           { nick: "Fischer Zsolt", name: "Fischer Zsolt", num: 2, pos: "Védő", captain: true, grip: "–", sweet: "–", power: "–", photo: "assets/Players/Fischer_Zsolt.png", bio: "" }, // TODO: becenév
           { nick: "Pintér Mátyás", name: "Pintér Mátyás", num: 95, pos: "Védő", grip: "–", sweet: "–", power: "–", photo: "", bio: "" }, // TODO: becenév
-          { nick: "Katonka Péter", name: "Katonka Péter", num: 88, pos: "Védő", grip: "–", sweet: "–", power: "–", photo: "", bio: "" }, // TODO: becenév
+          { nick: "Katonka Péter", name: "Katonka Péter", num: 88, pos: "Védő", grip: "–", sweet: "–", power: "–", photo: "assets/Players/Katonka_Péter.png", bio: "" }, // TODO: becenév
           { nick: "Maszat", name: "Szymon Wlaszczyk", num: 44, pos: "Védő", grip: "Bal", sweet: "", power: "", photo: "assets/Players/Maszat.png", bio: "A lengyel srác, akivel inkább ne vitatkozz" },
           { nick: "Csobaji Gáspár Áron", name: "Csobaji Gáspár Áron", num: 63, pos: "Védő", grip: "–", sweet: "–", power: "–", photo: "", bio: "" }, // TODO: becenév
           { nick: "Kovács Péter", name: "Kovács Péter", num: 31, pos: "Védő", grip: "–", sweet: "–", power: "–", photo: "", bio: "" }, // TODO: becenév
