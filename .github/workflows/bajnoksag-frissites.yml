@@ -25,6 +25,8 @@ concurrency:
 jobs:
   frissites:
     runs-on: ubuntu-latest
+    # Ha az MJSZ egyáltalán nem válaszol, ne lógjon órákig a futás
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
 
@@ -52,7 +54,7 @@ jobs:
 
       - name: Commit, ha változott
         run: |
-          FILES="bajnoksag-adatok.js naptar assets/og szezonok"
+          FILES="bajnoksag-adatok.js naptar assets/og assets/csapatok szezonok"
           if [ -z "$(git status --porcelain -- $FILES)" ]; then
             echo "Nincs változás, nincs mit commitolni."
             exit 0

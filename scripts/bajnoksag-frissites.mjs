@@ -28,6 +28,9 @@ import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 import { loadTeams, nameTokens, playersOf } from "./keret.mjs";
 import { renderIcs } from "./naptar.mjs";
+import { fetchRetry } from "./halozat.mjs";
+import { localizeLogos } from "./logok.mjs";
+import { validateData } from "./adat-ellenorzes.mjs";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const OUT_FILE = join(ROOT, "bajnoksag-adatok.js");
@@ -61,14 +64,18 @@ async function api(path, params) {
   const url = new URL(API_BASE + path);
   Object.entries(params || {}).forEach(([k, v]) => url.searchParams.set(k, v));
 
-  const res = await fetch(url, {
-    headers: {
-      "Content-Type": "application/json",
-      "X-API-KEY": API_KEY,
-      Origin: ORIGIN,
-      Referer: ORIGIN + "/",
+  const res = await fetchRetry(
+    url,
+    {
+      headers: {
+        "Content-Type": "application/json",
+        "X-API-KEY": API_KEY,
+        Origin: ORIGIN,
+        Referer: ORIGIN + "/",
+      },
     },
-  });
+    path
+  );
   if (!res.ok) {
     throw new Error(`${path} → HTTP ${res.status} ${res.statusText}`);
   }
@@ -212,14 +219,19 @@ async function fetchLeague(key, cfg, ctx) {
     }))
     .sort((a, b) => String(a.group).localeCompare(String(b.group), "hu"));
 
-  const games = await api("/games-list", { championshipId });
+  // Mindig ugyanabban a sorrendben (kezdés, majd MJSZ-azonosító): az API az
+  // azonos napi meccseket hol így, hol úgy adja vissza, és ettől a fájl
+  // akkor is „változott” volna, ha egyetlen adat sem lett más. Egy új
+  // időpont viszont valódi változás: azt a gameDate hozza.
+  const games = (await api("/games-list", { championshipId }))
+    .slice()
+    .sort((a, b) => String(a.gameDate).localeCompare(String(b.gameDate)) || (a.gameId || 0) - (b.gameId || 0));
 
   const matches = games
     .filter(
       (g) => g.homeTeam.longName === OUR_TEAM || g.awayTeam.longName === OUR_TEAM
     )
-    .map(toMatch)
-    .sort((a, b) => (a.date < b.date ? -1 : a.date > b.date ? 1 : 0));
+    .map(toMatch);
 
   const groups = [];
   for (const phase of phases) {
@@ -256,7 +268,7 @@ async function fetchLeague(key, cfg, ctx) {
     teams: teamIndex(games, groups),
     // MINDEN meccs, nem csak a mienk – ebből számoljuk a formát és ebből
     // lesz a „csoport eredményei” lista.
-    games: games.map(toGame).sort((a, b) => (a.date < b.date ? -1 : 1)),
+    games: games.map(toGame), // a games már rendezett (lásd fent)
     scorers: await fetchScorers(championshipId, ourPhase),
     attendance: await fetchAttendance(championshipId, ourPhase),
     // Ez nem kerül a LEAGUES-be, külön GAME_STATS tömb lesz belőle
@@ -780,7 +792,33 @@ async function main() {
         `${stats.length} jegyzőkönyv`
     );
   }
-  gameStats.sort((a, b) => (a.date < b.date ? -1 : a.date > b.date ? 1 : 0));
+  gameStats.sort((a, b) => (a.date < b.date ? -1 : a.date > b.date ? 1 : (a.id || 0) - (b.id || 0)));
+
+  // Ellenfél-logók helyben (assets/csapatok/) – részletek: scripts/logok.mjs
+  const logos = await localizeLogos(leagues, {
+    root: ROOT,
+    us: OUR_TEAM,
+    warn: (msg) => ctx.warnings.push(msg),
+  });
+  if (logos.downloaded.length) console.log(`Letöltött logók: ${logos.downloaded.join(", ")}`);
+  if (logos.missing.length) {
+    ctx.warnings.push(
+      "Ezeknek a csapatoknak nincs logója (az MJSZ-nél sincs). Ha találsz " +
+        "egyet, másold be ezen a néven, és a következő frissítéstől látszik: " +
+        logos.missing.join("; ")
+    );
+  }
+
+  // Ha az MJSZ furcsa (pl. megváltozott formátumú) adatot adott, inkább
+  // marad a régi, jó fájl – a futás hibára fut, és nyílik egy hiba-issue
+  const problems = validateData(leagues, gameStats);
+  if (problems.length) {
+    throw new Error(
+      "Az összeállított adat hibás, a bajnoksag-adatok.js nem íródik felül:\n  " +
+        problems.slice(0, 20).join("\n  ") +
+        (problems.length > 20 ? `\n  …és még ${problems.length - 20} hiba` : "")
+    );
+  }
 
   ctx.warnings.forEach(warn);
   if (ctx.unmatched.size) {

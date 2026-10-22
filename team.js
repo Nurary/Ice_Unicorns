@@ -10,7 +10,8 @@
 //            jönnek a statisztikái. Úgy írd, ahogy a szövetségnél szerepel (a sorrend
 //            és az ékezetek nem számítanak, a második keresztnév elhagyható).
 //   num    – mezszám. Ha a name üres, ez alapján próbáljuk párosítani – de csak ha
-//            a keretben egyedül ő viseli ezt a számot.
+//            a keretben egyedül ő viseli ezt a számot. Elhagyható, amíg nem
+//            tudjuk: ilyenkor a korongon és a kártyán nem látszik szám.
 //   captain   – true = kapitány (C), alternate – true = kapitányhelyettes (A)
 //   pos    – poszt: "Kapus" | "Védő" | "Csatár"
 //   grip   – ütőfogás: "bal" | "jobb"  (most "–")
@@ -39,6 +40,7 @@ const TEAMS = {
           { nick: "Gévai Ádám", name: "Gévai Ádám", num: 6, pos: "Védő", grip: "–", sweet: "–", power: "–", photo: "", bio: "" }, // TODO: becenév
           { nick: "Küzdy László", name: "Küzdy László", num: 77, pos: "Védő", grip: "–", sweet: "–", power: "–", photo: "", bio: "" }, // TODO: becenév
           { nick: "Vajda Krisztián", name: "Vajda Krisztián", num: 16, pos: "Védő", grip: "–", sweet: "–", power: "–", photo: "", bio: "" }, // TODO: becenév
+          { nick: "Buborék", name: "Tóth Ádám", pos: "Védő", grip: "–", sweet: "–", power: "–", photo: "assets/Players/Tóth_Ádám.png", bio: "" }, // TODO: mezszám
         ],
       },
       {
@@ -53,14 +55,14 @@ const TEAMS = {
           { nick: "Szikrácska", name: "Varga Istvan Gergely", num: 31, pos: "Csatár", grip: "Jobb", sweet: "Peroni", power: "100% találati arány a kapus fejére bemelegítéskor", photo: "assets/Players/Szikrácska.png", bio: "Tüzes láb, csillámos korcsolya – sosem áll le." },
           { nick: "KristályPatkó", name: "Hegyi Bálint", num: 87, pos: "Csatár", grip: "Jobb", sweet: "Rum-kóla", power: "Olyan egyedi csuklólövésem van, aminek az irányát még a fizika törvényei sem ismerik", photo: "assets/Players/KristalyPatko.png", bio: "" },
           { nick: "Incze Péter", name: "Incze Péter", num: 28, pos: "Csatár", grip: "–", sweet: "–", power: "–", photo: "", bio: "" }, // TODO: becenév
-          { nick: "Tóth Dávid", name: "Tóth Dávid", num: 86, pos: "Csatár", grip: "–", sweet: "–", power: "–", photo: "", bio: "" }, // TODO: becenév
+          { nick: "Tóth Dávid", name: "Tóth Dávid", num: 86, pos: "Csatár", grip: "–", sweet: "–", power: "–", photo: "assets/Players/Tóth_Dávid.png", bio: "" }, // TODO: becenév
           { nick: "Visnyei-Beron Cecilia", name: "Visnyei-Beron Cecilia", num: 72, pos: "Csatár", grip: "–", sweet: "–", power: "–", photo: "", bio: "" }, // TODO: becenév
         ],
       },
     ],
     staff: [
       { nick: "Árpi bácsi", name: "Sofron Árpád", icon: "🏒", pos: "Edző", photo: "assets/Players/Sofron_Árpád.png", bio: "A jég melletti higgadt fej." },
-      { nick: "Áron bácsi", name: "Merkl Áron", icon: "🏒", pos: "Edző", photo: "assets/Players/Merkl_Áron.png", bio: "Tapasztalata több, mint a játékosoké összesen." },
+      { nick: "Merkl Áron", name: "Merkl Áron", icon: "🏒", pos: "Edző", photo: "assets/Players/Merkl_Áron.png", bio: "Tapasztalata több, mint a játékosoké összesen." },
     ],
   },
 
@@ -77,32 +79,33 @@ const TEAMS = {
       {
         label: "Kapus",
         players: [
-          { nick: "Kövesi Áron Péter", name: "Kövesi Áron Péter", num: 1, pos: "Kapus", grip: "–", sweet: "–", power: "–", photo: "", bio: "" }, // TODO: becenév
+          { nick: "Kövesi Áron Péter", name: "Kövesi Áron Péter", num: 1, pos: "Kapus", grip: "–", sweet: "–", power: "–", photo: "assets/Players/Kövesi_Áron_Péter.png", bio: "" }, // TODO: becenév
         ],
       },
       {
         label: "Védő",
         players: [
-          { nick: "Fischer Zsolt", name: "Fischer Zsolt", num: 2, pos: "Védő", captain: true, grip: "–", sweet: "–", power: "–", photo: "", bio: "" }, // TODO: becenév
+          { nick: "Fischer Zsolt", name: "Fischer Zsolt", num: 2, pos: "Védő", captain: true, grip: "–", sweet: "–", power: "–", photo: "assets/Players/Fischer_Zsolt.png", bio: "" }, // TODO: becenév
           { nick: "Pintér Mátyás", name: "Pintér Mátyás", num: 95, pos: "Védő", grip: "–", sweet: "–", power: "–", photo: "", bio: "" }, // TODO: becenév
-          { nick: "Katonka Péter", name: "Katonka Péter", num: 88, pos: "Védő", grip: "–", sweet: "–", power: "–", photo: "", bio: "" }, // TODO: becenév
+          { nick: "Katonka Péter", name: "Katonka Péter", num: 88, pos: "Védő", grip: "–", sweet: "–", power: "–", photo: "assets/Players/Katonka_Péter.png", bio: "" }, // TODO: becenév
           { nick: "Maszat", name: "Szymon Wlaszczyk", num: 44, pos: "Védő", grip: "Bal", sweet: "", power: "", photo: "assets/Players/Maszat.png", bio: "A lengyel srác, akivel inkább ne vitatkozz" },
           { nick: "Csobaji Gáspár Áron", name: "Csobaji Gáspár Áron", num: 63, pos: "Védő", grip: "–", sweet: "–", power: "–", photo: "", bio: "" }, // TODO: becenév
           { nick: "Kovács Péter", name: "Kovács Péter", num: 31, pos: "Védő", grip: "–", sweet: "–", power: "–", photo: "", bio: "" }, // TODO: becenév
+          { nick: "Buborék", name: "Tóth Ádám", pos: "Védő", grip: "–", sweet: "–", power: "–", photo: "assets/Players/Tóth_Ádám.png", bio: "" }, // TODO: mezszám
         ],
       },
       {
         label: "Csatár",
         players: [
           { nick: "Vargyasi-Dávid Áron", name: "Vargyasi-Dávid Áron", num: 24, pos: "Csatár", alternate: true, grip: "–", sweet: "–", power: "–", photo: "", bio: "" }, // TODO: becenév
-          { nick: "Hadnagy Csongor", name: "Hadnagy Csongor", num: 76, pos: "Csatár", alternate: true, grip: "–", sweet: "–", power: "–", photo: "", bio: "" }, // TODO: becenév
+          { nick: "Hadnagy Csongor", name: "Hadnagy Csongor", num: 76, pos: "Csatár", alternate: true, grip: "–", sweet: "–", power: "–", photo: "assets/Players/Hadnagy_Csongor.png", bio: "" }, // TODO: becenév
           { nick: "László Zoltán", name: "László Zoltán", num: 14, pos: "Csatár", grip: "–", sweet: "–", power: "–", photo: "", bio: "" }, // TODO: becenév
           { nick: "KristályPatkó", name: "Hegyi Bálint", num: 87, pos: "Csatár", grip: "Jobb", sweet: "Rum-kóla", power: "Olyan egyedi csuklólövésem van, aminek az irányát még a fizika törvényei sem ismerik", photo: "assets/Players/KristalyPatko.png", bio: "" },
           { nick: "Szikrácska", name: "Varga Istvan Gergely", num: 40, pos: "Csatár", grip: "Jobb", sweet: "Peroni", power: "100% találati arány a kapus fejére bemelegítéskor", photo: "assets/Players/Szikrácska.png", bio: "Tüzes láb, csillámos korcsolya – sosem áll le." },
           { nick: "Schmidt Zsolt", name: "Schmidt Zsolt", num: 91, pos: "Csatár", grip: "–", sweet: "–", power: "–", photo: "", bio: "" }, // TODO: becenév
           { nick: "Visnyei Balázs", name: "Visnyei Balázs", num: 38, pos: "Csatár", grip: "–", sweet: "–", power: "–", photo: "", bio: "" }, // TODO: becenév
           { nick: "Varga Attila", name: "Varga Attila", num: 90, pos: "Csatár", grip: "–", sweet: "–", power: "–", photo: "", bio: "" }, // TODO: becenév
-          { nick: "Nagy Dorina", name: "Nagy Dorina", num: 6, pos: "Csatár", grip: "–", sweet: "–", power: "–", photo: "", bio: "" }, // TODO: becenév
+          { nick: "Nagy Dorina", name: "Nagy Dorina", num: 6, pos: "Csatár", grip: "–", sweet: "–", power: "–", photo: "assets/Players/Nagy_Dorina.png", bio: "" }, // TODO: becenév
         ],
       },
     ],
@@ -150,9 +153,9 @@ function goalieStatsFor(p, leagueKey) {
         ? `<span class="puck has-photo"><img src="${p.photo}" alt="${p.nick}" loading="lazy" decoding="async">${badge}</span>`
         : `<span class="puck">${p.icon || "🦄"}${badge}</span>`;
     } else if (p.photo) {
-      puck = `<span class="puck has-photo"><img src="${p.photo}" alt="${shown(p)}" loading="lazy" decoding="async"><span class="num">${p.num}</span>${badge}</span>`;
+      puck = `<span class="puck has-photo"><img src="${p.photo}" alt="${shown(p)}" loading="lazy" decoding="async">${p.num != null ? `<span class="num">${p.num}</span>` : ""}${badge}</span>`;
     } else {
-      puck = `<span class="puck">${p.num}${badge}</span>`;
+      puck = `<span class="puck">${p.num != null ? p.num : "🦄"}${badge}</span>`;
     }
     btn.innerHTML =
       puck +
@@ -318,18 +321,19 @@ function goalieStatsFor(p, leagueKey) {
       ? `<img src="${p.photo}" alt="${shown(p)}" loading="lazy" decoding="async">`
       : opts.staff
       ? p.icon || "🦄"
-      : komoly
+      : komoly && p.num != null
       ? "#" + p.num
       : "🦄";
 
-    elNum.textContent = opts.staff ? "" : "#" + p.num;
+    elNum.textContent = opts.staff || p.num == null ? "" : "#" + p.num;
 
     // Unikornis név (cím) + civil (polgári) név külön sorban
     const civil = (p.name || "").trim();
     elName.textContent = shown(p);
     elCivil.textContent = civil ? "🪪 " + civil : "🪪 Polgári név: –";
-    // Komoly csapatnál a cím már a polgári név, nem kell még egyszer
-    elCivil.style.display = komoly && civil ? "none" : "";
+    // Ha a cím már a polgári név (komoly csapat, vagy nincs becenév), nem
+    // kell még egyszer kiírni
+    elCivil.style.display = civil && (komoly || civil === shown(p)) ? "none" : "";
     elRole.textContent = p.pos + (p.captain ? " · Kapitány" : p.alternate ? " · Kapitányhelyettes" : "");
 
     // Meta: Ütőfogás + Születési idő (csak játékosnál)
