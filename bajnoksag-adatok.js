@@ -6,7 +6,7 @@
 // pedig időzítve lefuttatja, és commitolja, ha változott valami.
 //
 // Szezon: 2026-2027
-// Utolsó frissítés: 2026-10-21T23:56:38.342Z
+// Utolsó frissítés: 2026-10-22T08:06:59.447Z
 //
 // A LEAGUES mezőinek jelentését a bajnoksag.js, a GAME_STATS-ét a
 // statisztika.js tetején lévő leírás mondja el.
@@ -25,7 +25,7 @@ window.LEAGUES = {
         "opponent": "Tatabányai Polipok",
         "home": true,
         "venue": "Ifj. Ocskay Gábor Jégcsarnok, C pálya",
-        "logo": "https://ivr-api.icehockey.hu/storage/media/108705/conversions/profile_photo-thumb-cropped.png",
+        "logo": "assets/csapatok/tatabanyai-polipok.png",
         "us": 3,
         "them": 7
       },
@@ -37,7 +37,8 @@ window.LEAGUES = {
         "home": false,
         "venue": "Debrecen, Centerpálya",
         "us": null,
-        "them": null
+        "them": null,
+        "logo": "assets/csapatok/djk-se.png"
       },
       {
         "id": 88478,
@@ -45,7 +46,7 @@ window.LEAGUES = {
         "opponent": "ESMTK Jégpárducok B",
         "home": false,
         "venue": "Pesterzsébet Jégcsarnok",
-        "logo": "https://ivr-api.icehockey.hu/storage/media/116508/conversions/profile_photo-thumb-cropped.png",
+        "logo": "assets/csapatok/esmtk-jegparducok-b.png",
         "us": null,
         "them": null
       },
@@ -55,7 +56,7 @@ window.LEAGUES = {
         "opponent": "Korongozoo VALOR",
         "home": true,
         "venue": "Ifj. Ocskay Gábor Jégcsarnok, C pálya",
-        "logo": "https://ivr-api.icehockey.hu/storage/media/149297/conversions/profile_photo-thumb-cropped.png",
+        "logo": "assets/csapatok/korongozoo-valor.png",
         "us": null,
         "them": null
       },
@@ -65,7 +66,7 @@ window.LEAGUES = {
         "opponent": "Ligeti Jégkásák B",
         "home": false,
         "venue": "FTC Sátras Jégpálya",
-        "logo": "https://ivr-api.icehockey.hu/storage/media/117234/conversions/profile_photo-thumb-cropped.png",
+        "logo": "assets/csapatok/ligeti-jegkasak-b.png",
         "us": null,
         "them": null
       },
@@ -75,7 +76,7 @@ window.LEAGUES = {
         "opponent": "Lizards",
         "home": true,
         "venue": "Ifj. Ocskay Gábor Jégcsarnok, C pálya",
-        "logo": "https://ivr-api.icehockey.hu/storage/media/37406/conversions/profile_photo-thumb-cropped.png",
+        "logo": "assets/csapatok/lizards.png",
         "us": null,
         "them": null
       },
@@ -85,7 +86,7 @@ window.LEAGUES = {
         "opponent": "Óbudai Gepárd D",
         "home": false,
         "venue": "Óbudai Jégcsarnok - Nagypálya",
-        "logo": "https://ivr-api.icehockey.hu/storage/media/84113/conversions/profile_photo-thumb-cropped.png",
+        "logo": "assets/csapatok/obudai-gepard-d.png",
         "us": null,
         "them": null
       }
@@ -107,7 +108,7 @@ window.LEAGUES = {
             "gf": 22,
             "ga": 4,
             "pts": 6,
-            "logo": "https://ivr-api.icehockey.hu/storage/media/117234/conversions/profile_photo-thumb-cropped.png"
+            "logo": "assets/csapatok/ligeti-jegkasak-a.png"
           },
           {
             "team": "HKB Flashes II",
@@ -121,7 +122,7 @@ window.LEAGUES = {
             "gf": 18,
             "ga": 9,
             "pts": 6,
-            "logo": "https://ivr-api.icehockey.hu/storage/media/133381/conversions/profile_photo-thumb-cropped.png"
+            "logo": "assets/csapatok/hkb-flashes-ii.png"
           },
           {
             "team": "Angels",
@@ -135,7 +136,7 @@ window.LEAGUES = {
             "gf": 12,
             "ga": 5,
             "pts": 6,
-            "logo": "https://ivr-api.icehockey.hu/storage/media/116503/conversions/profile_photo-thumb-cropped.png"
+            "logo": "assets/csapatok/angels.png"
           },
           {
             "team": "ESMTK Jégkockák",
@@ -149,7 +150,7 @@ window.LEAGUES = {
             "gf": 13,
             "ga": 13,
             "pts": 3,
-            "logo": "https://ivr-api.icehockey.hu/storage/media/116508/conversions/profile_photo-thumb-cropped.png"
+            "logo": "assets/csapatok/esmtk-jegkockak.png"
           },
           {
             "team": "VIP Blazing Blades",
@@ -162,7 +163,8 @@ window.LEAGUES = {
             "v": 1,
             "gf": 5,
             "ga": 5,
-            "pts": 3
+            "pts": 3,
+            "logo": "assets/csapatok/vip-blazing-blades.png"
           },
           {
             "team": "Alba Trashers Jégkorong Klub",
@@ -176,7 +178,7 @@ window.LEAGUES = {
             "gf": 5,
             "ga": 8,
             "pts": 0,
-            "logo": "https://ivr-api.icehockey.hu/storage/media/117431/conversions/profile_photo-thumb-cropped.png"
+            "logo": "assets/csapatok/alba-trashers-jegkorong-klub.png"
           },
           {
             "team": "Vénfarkasok",
@@ -190,7 +192,7 @@ window.LEAGUES = {
             "gf": 9,
             "ga": 17,
             "pts": 0,
-            "logo": "https://ivr-api.icehockey.hu/storage/media/81640/conversions/profile_photo-thumb-cropped.png"
+            "logo": "assets/csapatok/venfarkasok.png"
           },
           {
             "team": "DVTK Jegesmedvék",
@@ -204,7 +206,7 @@ window.LEAGUES = {
             "gf": 5,
             "ga": 28,
             "pts": 0,
-            "logo": "https://ivr-api.icehockey.hu/storage/media/116499/conversions/profile_photo-thumb-cropped.png"
+            "logo": "assets/csapatok/dvtk-jegesmedvek.png"
           }
         ]
       },
@@ -224,7 +226,7 @@ window.LEAGUES = {
             "gf": 17,
             "ga": 4,
             "pts": 6,
-            "logo": "https://ivr-api.icehockey.hu/storage/media/108705/conversions/profile_photo-thumb-cropped.png"
+            "logo": "assets/csapatok/tatabanyai-polipok.png"
           },
           {
             "team": "ESMTK Jégpárducok B",
@@ -238,7 +240,7 @@ window.LEAGUES = {
             "gf": 8,
             "ga": 1,
             "pts": 3,
-            "logo": "https://ivr-api.icehockey.hu/storage/media/116508/conversions/profile_photo-thumb-cropped.png"
+            "logo": "assets/csapatok/esmtk-jegparducok-b.png"
           },
           {
             "team": "Ligeti Jégkásák B",
@@ -252,7 +254,7 @@ window.LEAGUES = {
             "gf": 13,
             "ga": 6,
             "pts": 3,
-            "logo": "https://ivr-api.icehockey.hu/storage/media/117234/conversions/profile_photo-thumb-cropped.png"
+            "logo": "assets/csapatok/ligeti-jegkasak-b.png"
           },
           {
             "team": "Lizards",
@@ -266,7 +268,7 @@ window.LEAGUES = {
             "gf": 5,
             "ga": 3,
             "pts": 3,
-            "logo": "https://ivr-api.icehockey.hu/storage/media/37406/conversions/profile_photo-thumb-cropped.png"
+            "logo": "assets/csapatok/lizards.png"
           },
           {
             "team": "Korongozoo VALOR",
@@ -280,7 +282,7 @@ window.LEAGUES = {
             "gf": 8,
             "ga": 11,
             "pts": 3,
-            "logo": "https://ivr-api.icehockey.hu/storage/media/149297/conversions/profile_photo-thumb-cropped.png"
+            "logo": "assets/csapatok/korongozoo-valor.png"
           },
           {
             "team": "Ice Unicorns",
@@ -308,7 +310,8 @@ window.LEAGUES = {
             "v": 1,
             "gf": 1,
             "ga": 8,
-            "pts": 0
+            "pts": 0,
+            "logo": "assets/csapatok/djk-se.png"
           },
           {
             "team": "Óbudai Gepárd D",
@@ -322,18 +325,18 @@ window.LEAGUES = {
             "gf": 2,
             "ga": 17,
             "pts": 0,
-            "logo": "https://ivr-api.icehockey.hu/storage/media/84113/conversions/profile_photo-thumb-cropped.png"
+            "logo": "assets/csapatok/obudai-gepard-d.png"
           }
         ]
       }
     ],
     "teams": {
       "VIP Blazing Blades": {
-        "logo": null,
+        "logo": "assets/csapatok/vip-blazing-blades.png",
         "group": "A"
       },
       "Angels": {
-        "logo": "https://ivr-api.icehockey.hu/storage/media/116503/conversions/profile_photo-thumb-cropped.png",
+        "logo": "assets/csapatok/angels.png",
         "group": "A"
       },
       "Ice Unicorns": {
@@ -341,55 +344,55 @@ window.LEAGUES = {
         "group": "B"
       },
       "Tatabányai Polipok": {
-        "logo": "https://ivr-api.icehockey.hu/storage/media/108705/conversions/profile_photo-thumb-cropped.png",
+        "logo": "assets/csapatok/tatabanyai-polipok.png",
         "group": "B"
       },
       "DVTK Jegesmedvék": {
-        "logo": "https://ivr-api.icehockey.hu/storage/media/116499/conversions/profile_photo-thumb-cropped.png",
+        "logo": "assets/csapatok/dvtk-jegesmedvek.png",
         "group": "A"
       },
       "HKB Flashes II": {
-        "logo": "https://ivr-api.icehockey.hu/storage/media/133381/conversions/profile_photo-thumb-cropped.png",
+        "logo": "assets/csapatok/hkb-flashes-ii.png",
         "group": "A"
       },
       "Vénfarkasok": {
-        "logo": "https://ivr-api.icehockey.hu/storage/media/81640/conversions/profile_photo-thumb-cropped.png",
+        "logo": "assets/csapatok/venfarkasok.png",
         "group": "A"
       },
       "ESMTK Jégkockák": {
-        "logo": "https://ivr-api.icehockey.hu/storage/media/116508/conversions/profile_photo-thumb-cropped.png",
+        "logo": "assets/csapatok/esmtk-jegkockak.png",
         "group": "A"
       },
       "Óbudai Gepárd D": {
-        "logo": "https://ivr-api.icehockey.hu/storage/media/84113/conversions/profile_photo-thumb-cropped.png",
+        "logo": "assets/csapatok/obudai-gepard-d.png",
         "group": "B"
       },
       "Korongozoo VALOR": {
-        "logo": "https://ivr-api.icehockey.hu/storage/media/149297/conversions/profile_photo-thumb-cropped.png",
+        "logo": "assets/csapatok/korongozoo-valor.png",
         "group": "B"
       },
       "Ligeti Jégkásák A": {
-        "logo": "https://ivr-api.icehockey.hu/storage/media/117234/conversions/profile_photo-thumb-cropped.png",
+        "logo": "assets/csapatok/ligeti-jegkasak-a.png",
         "group": "A"
       },
       "Alba Trashers Jégkorong Klub": {
-        "logo": "https://ivr-api.icehockey.hu/storage/media/117431/conversions/profile_photo-thumb-cropped.png",
+        "logo": "assets/csapatok/alba-trashers-jegkorong-klub.png",
         "group": "A"
       },
       "Ligeti Jégkásák B": {
-        "logo": "https://ivr-api.icehockey.hu/storage/media/117234/conversions/profile_photo-thumb-cropped.png",
+        "logo": "assets/csapatok/ligeti-jegkasak-b.png",
         "group": "B"
       },
       "Lizards": {
-        "logo": "https://ivr-api.icehockey.hu/storage/media/37406/conversions/profile_photo-thumb-cropped.png",
+        "logo": "assets/csapatok/lizards.png",
         "group": "B"
       },
       "ESMTK Jégpárducok B": {
-        "logo": "https://ivr-api.icehockey.hu/storage/media/116508/conversions/profile_photo-thumb-cropped.png",
+        "logo": "assets/csapatok/esmtk-jegparducok-b.png",
         "group": "B"
       },
       "DJK SE": {
-        "logo": null,
+        "logo": "assets/csapatok/djk-se.png",
         "group": "B"
       }
     },
@@ -537,12 +540,6 @@ window.LEAGUES = {
       {
         "date": "2026-11-08",
         "group": "A",
-        "home": "Vénfarkasok",
-        "away": "Alba Trashers Jégkorong Klub"
-      },
-      {
-        "date": "2026-11-08",
-        "group": "A",
         "home": "VIP Blazing Blades",
         "away": "DVTK Jegesmedvék"
       },
@@ -571,10 +568,10 @@ window.LEAGUES = {
         "away": "Óbudai Gepárd D"
       },
       {
-        "date": "2026-11-22",
+        "date": "2026-11-08",
         "group": "A",
         "home": "Vénfarkasok",
-        "away": "DVTK Jegesmedvék"
+        "away": "Alba Trashers Jégkorong Klub"
       },
       {
         "date": "2026-11-22",
@@ -613,10 +610,10 @@ window.LEAGUES = {
         "away": "Ice Unicorns"
       },
       {
-        "date": "2026-12-06",
+        "date": "2026-11-22",
         "group": "A",
-        "home": "HKB Flashes II",
-        "away": "Vénfarkasok"
+        "home": "Vénfarkasok",
+        "away": "DVTK Jegesmedvék"
       },
       {
         "date": "2026-12-06",
@@ -655,6 +652,12 @@ window.LEAGUES = {
         "away": "Óbudai Gepárd D"
       },
       {
+        "date": "2026-12-06",
+        "group": "A",
+        "home": "HKB Flashes II",
+        "away": "Vénfarkasok"
+      },
+      {
         "date": "2026-12-20",
         "group": "B",
         "home": "DJK SE",
@@ -671,12 +674,6 @@ window.LEAGUES = {
         "group": "B",
         "home": "Ice Unicorns",
         "away": "Korongozoo VALOR"
-      },
-      {
-        "date": "2027-01-17",
-        "group": "A",
-        "home": "Ligeti Jégkásák A",
-        "away": "Vénfarkasok"
       },
       {
         "date": "2027-01-17",
@@ -699,6 +696,12 @@ window.LEAGUES = {
       {
         "date": "2027-01-17",
         "group": "B",
+        "home": "Lizards",
+        "away": "ESMTK Jégpárducok B"
+      },
+      {
+        "date": "2027-01-17",
+        "group": "B",
         "home": "Ligeti Jégkásák B",
         "away": "Ice Unicorns"
       },
@@ -710,15 +713,9 @@ window.LEAGUES = {
       },
       {
         "date": "2027-01-17",
-        "group": "B",
-        "home": "Lizards",
-        "away": "ESMTK Jégpárducok B"
-      },
-      {
-        "date": "2027-01-31",
         "group": "A",
-        "home": "Vénfarkasok",
-        "away": "VIP Blazing Blades"
+        "home": "Ligeti Jégkásák A",
+        "away": "Vénfarkasok"
       },
       {
         "date": "2027-01-31",
@@ -763,6 +760,12 @@ window.LEAGUES = {
         "away": "Ligeti Jégkásák B"
       },
       {
+        "date": "2027-01-31",
+        "group": "A",
+        "home": "Vénfarkasok",
+        "away": "VIP Blazing Blades"
+      },
+      {
         "date": "2027-02-07",
         "group": "B",
         "home": "Óbudai Gepárd D",
@@ -771,14 +774,14 @@ window.LEAGUES = {
       {
         "date": "2027-02-07",
         "group": "B",
-        "home": "Tatabányai Polipok",
-        "away": "ESMTK Jégpárducok B"
+        "home": "Lizards",
+        "away": "Korongozoo VALOR"
       },
       {
         "date": "2027-02-07",
         "group": "B",
-        "home": "Lizards",
-        "away": "Korongozoo VALOR"
+        "home": "Tatabányai Polipok",
+        "away": "ESMTK Jégpárducok B"
       }
     ],
     "scorers": [
@@ -940,7 +943,7 @@ window.LEAGUES = {
         "opponent": "Séra Team",
         "home": false,
         "venue": "Mátyásföldi Jégcsarnok",
-        "logo": "https://ivr-api.icehockey.hu/storage/media/155507/conversions/profile_photo-thumb-cropped.png",
+        "logo": "assets/csapatok/sera-team.png",
         "us": 4,
         "them": 2
       },
@@ -950,7 +953,7 @@ window.LEAGUES = {
         "opponent": "FTC-Telekom",
         "home": false,
         "venue": "FTC Sátras Jégpálya",
-        "logo": "https://ivr-api.icehockey.hu/storage/media/106284/conversions/profile_photo-thumb-cropped.png",
+        "logo": "assets/csapatok/ftc-telekom.png",
         "us": null,
         "them": null
       },
@@ -960,7 +963,7 @@ window.LEAGUES = {
         "opponent": "Kohász",
         "home": true,
         "venue": "Ifj. Ocskay Gábor Jégcsarnok, C pálya",
-        "logo": "https://ivr-api.icehockey.hu/storage/media/117416/conversions/profile_photo-thumb-cropped.png",
+        "logo": "assets/csapatok/kohasz.png",
         "us": null,
         "them": null
       },
@@ -970,7 +973,7 @@ window.LEAGUES = {
         "opponent": "Újpesti Ragadozók",
         "home": true,
         "venue": "Ifj. Ocskay Gábor Jégcsarnok, C pálya",
-        "logo": "https://ivr-api.icehockey.hu/storage/media/114727/conversions/profile_photo-thumb-cropped.png",
+        "logo": "assets/csapatok/ujpesti-ragadozok.png",
         "us": null,
         "them": null
       },
@@ -980,7 +983,7 @@ window.LEAGUES = {
         "opponent": "Lehel HC Amatőr",
         "home": false,
         "venue": "Jászberényi Jégcsarnok",
-        "logo": "https://ivr-api.icehockey.hu/storage/media/163762/conversions/profile_photo-thumb-cropped.png",
+        "logo": "assets/csapatok/lehel-hc-amator.png",
         "us": null,
         "them": null
       },
@@ -990,7 +993,7 @@ window.LEAGUES = {
         "opponent": "ESMTK Jégtörők",
         "home": true,
         "venue": "Ifj. Ocskay Gábor Jégcsarnok, C pálya",
-        "logo": "https://ivr-api.icehockey.hu/storage/media/116508/conversions/profile_photo-thumb-cropped.png",
+        "logo": "assets/csapatok/esmtk-jegtorok.png",
         "us": null,
         "them": null
       }
@@ -1012,7 +1015,7 @@ window.LEAGUES = {
             "gf": 7,
             "ga": 3,
             "pts": 3,
-            "logo": "https://ivr-api.icehockey.hu/storage/media/84113/conversions/profile_photo-thumb-cropped.png"
+            "logo": "assets/csapatok/obudai-gepard-c.png"
           },
           {
             "team": "ESMTK Jégpárducok",
@@ -1026,7 +1029,7 @@ window.LEAGUES = {
             "gf": 6,
             "ga": 3,
             "pts": 3,
-            "logo": "https://ivr-api.icehockey.hu/storage/media/116508/conversions/profile_photo-thumb-cropped.png"
+            "logo": "assets/csapatok/esmtk-jegparducok.png"
           },
           {
             "team": "HKB Flashes I",
@@ -1040,7 +1043,7 @@ window.LEAGUES = {
             "gf": 4,
             "ga": 3,
             "pts": 2,
-            "logo": "https://ivr-api.icehockey.hu/storage/media/133381/conversions/profile_photo-thumb-cropped.png"
+            "logo": "assets/csapatok/hkb-flashes-i.png"
           },
           {
             "team": "VIP Crazy Zombies",
@@ -1054,7 +1057,7 @@ window.LEAGUES = {
             "gf": 3,
             "ga": 4,
             "pts": 1,
-            "logo": "https://ivr-api.icehockey.hu/storage/media/151684/conversions/profile_photo-thumb-cropped.png"
+            "logo": "assets/csapatok/vip-crazy-zombies.png"
           },
           {
             "team": "VIP Wizards",
@@ -1067,7 +1070,8 @@ window.LEAGUES = {
             "v": 1,
             "gf": 3,
             "ga": 6,
-            "pts": 0
+            "pts": 0,
+            "logo": "assets/csapatok/vip-wizards.png"
           },
           {
             "team": "Kárpáti Farkasok",
@@ -1080,7 +1084,8 @@ window.LEAGUES = {
             "v": 1,
             "gf": 3,
             "ga": 7,
-            "pts": 0
+            "pts": 0,
+            "logo": "assets/csapatok/karpati-farkasok.png"
           }
         ]
       },
@@ -1100,7 +1105,7 @@ window.LEAGUES = {
             "gf": 9,
             "ga": 2,
             "pts": 3,
-            "logo": "https://ivr-api.icehockey.hu/storage/media/116508/conversions/profile_photo-thumb-cropped.png"
+            "logo": "assets/csapatok/esmtk-jegtorok.png"
           },
           {
             "team": "Újpesti Ragadozók",
@@ -1114,7 +1119,7 @@ window.LEAGUES = {
             "gf": 6,
             "ga": 0,
             "pts": 3,
-            "logo": "https://ivr-api.icehockey.hu/storage/media/114727/conversions/profile_photo-thumb-cropped.png"
+            "logo": "assets/csapatok/ujpesti-ragadozok.png"
           },
           {
             "team": "Lehel HC Amatőr",
@@ -1128,7 +1133,7 @@ window.LEAGUES = {
             "gf": 4,
             "ga": 1,
             "pts": 3,
-            "logo": "https://ivr-api.icehockey.hu/storage/media/163762/conversions/profile_photo-thumb-cropped.png"
+            "logo": "assets/csapatok/lehel-hc-amator.png"
           },
           {
             "team": "Ice Unicorns",
@@ -1157,7 +1162,7 @@ window.LEAGUES = {
             "gf": 1,
             "ga": 4,
             "pts": 0,
-            "logo": "https://ivr-api.icehockey.hu/storage/media/117416/conversions/profile_photo-thumb-cropped.png"
+            "logo": "assets/csapatok/kohasz.png"
           },
           {
             "team": "FTC-Telekom",
@@ -1171,7 +1176,7 @@ window.LEAGUES = {
             "gf": 0,
             "ga": 6,
             "pts": 0,
-            "logo": "https://ivr-api.icehockey.hu/storage/media/106284/conversions/profile_photo-thumb-cropped.png"
+            "logo": "assets/csapatok/ftc-telekom.png"
           },
           {
             "team": "Séra Team",
@@ -1185,79 +1190,70 @@ window.LEAGUES = {
             "gf": 4,
             "ga": 13,
             "pts": 0,
-            "logo": "https://ivr-api.icehockey.hu/storage/media/155507/conversions/profile_photo-thumb-cropped.png"
+            "logo": "assets/csapatok/sera-team.png"
           }
         ]
       }
     ],
     "teams": {
+      "Kárpáti Farkasok": {
+        "logo": "assets/csapatok/karpati-farkasok.png",
+        "group": "A"
+      },
+      "Óbudai Gepárd C": {
+        "logo": "assets/csapatok/obudai-gepard-c.png",
+        "group": "A"
+      },
       "Séra Team": {
-        "logo": "https://ivr-api.icehockey.hu/storage/media/155507/conversions/profile_photo-thumb-cropped.png",
+        "logo": "assets/csapatok/sera-team.png",
         "group": "B"
       },
       "Ice Unicorns": {
         "logo": "assets/logo/logo.jpg",
         "group": "B"
       },
-      "Kárpáti Farkasok": {
-        "logo": null,
-        "group": "A"
-      },
-      "Óbudai Gepárd C": {
-        "logo": "https://ivr-api.icehockey.hu/storage/media/84113/conversions/profile_photo-thumb-cropped.png",
-        "group": "A"
-      },
       "VIP Crazy Zombies": {
-        "logo": "https://ivr-api.icehockey.hu/storage/media/151684/conversions/profile_photo-thumb-cropped.png",
+        "logo": "assets/csapatok/vip-crazy-zombies.png",
         "group": "A"
       },
       "HKB Flashes I": {
-        "logo": "https://ivr-api.icehockey.hu/storage/media/133381/conversions/profile_photo-thumb-cropped.png",
+        "logo": "assets/csapatok/hkb-flashes-i.png",
         "group": "A"
       },
       "Újpesti Ragadozók": {
-        "logo": "https://ivr-api.icehockey.hu/storage/media/114727/conversions/profile_photo-thumb-cropped.png",
+        "logo": "assets/csapatok/ujpesti-ragadozok.png",
         "group": "B"
       },
       "FTC-Telekom": {
-        "logo": "https://ivr-api.icehockey.hu/storage/media/106284/conversions/profile_photo-thumb-cropped.png",
+        "logo": "assets/csapatok/ftc-telekom.png",
         "group": "B"
       },
       "ESMTK Jégpárducok": {
-        "logo": "https://ivr-api.icehockey.hu/storage/media/116508/conversions/profile_photo-thumb-cropped.png",
+        "logo": "assets/csapatok/esmtk-jegparducok.png",
         "group": "A"
       },
       "VIP Wizards": {
-        "logo": null,
+        "logo": "assets/csapatok/vip-wizards.png",
         "group": "A"
       },
       "Kohász": {
-        "logo": "https://ivr-api.icehockey.hu/storage/media/117416/conversions/profile_photo-thumb-cropped.png",
+        "logo": "assets/csapatok/kohasz.png",
         "group": "B"
       },
       "Lehel HC Amatőr": {
-        "logo": "https://ivr-api.icehockey.hu/storage/media/163762/conversions/profile_photo-thumb-cropped.png",
+        "logo": "assets/csapatok/lehel-hc-amator.png",
         "group": "B"
       },
       "ESMTK Jégtörők": {
-        "logo": "https://ivr-api.icehockey.hu/storage/media/116508/conversions/profile_photo-thumb-cropped.png",
+        "logo": "assets/csapatok/esmtk-jegtorok.png",
         "group": "B"
       },
       "Algyői Olajosok": {
-        "logo": "https://ivr-api.icehockey.hu/storage/media/142328/conversions/profile_photo-thumb-cropped.png",
+        "logo": "assets/csapatok/algyoi-olajosok.png",
         "group": null
       }
     },
     "games": [
-      {
-        "date": "2026-10-10",
-        "group": "B",
-        "time": "17:00",
-        "home": "Séra Team",
-        "away": "Ice Unicorns",
-        "hs": 2,
-        "as": 4
-      },
       {
         "date": "2026-10-10",
         "group": "A",
@@ -1266,6 +1262,15 @@ window.LEAGUES = {
         "away": "Óbudai Gepárd C",
         "hs": 3,
         "as": 7
+      },
+      {
+        "date": "2026-10-10",
+        "group": "B",
+        "time": "17:00",
+        "home": "Séra Team",
+        "away": "Ice Unicorns",
+        "hs": 2,
+        "as": 4
       },
       {
         "date": "2026-10-10",
@@ -2575,4 +2580,4 @@ window.GAME_STATS = [
   }
 ];
 
-window.LEAGUES_FRISSITVE = "2026-10-21T23:56:38.342Z";
+window.LEAGUES_FRISSITVE = "2026-10-22T08:06:59.447Z";
