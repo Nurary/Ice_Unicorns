@@ -10,7 +10,8 @@
 //            jönnek a statisztikái. Úgy írd, ahogy a szövetségnél szerepel (a sorrend
 //            és az ékezetek nem számítanak, a második keresztnév elhagyható).
 //   num    – mezszám. Ha a name üres, ez alapján próbáljuk párosítani – de csak ha
-//            a keretben egyedül ő viseli ezt a számot.
+//            a keretben egyedül ő viseli ezt a számot. Elhagyható, amíg nem
+//            tudjuk: ilyenkor a korongon és a kártyán nem látszik szám.
 //   captain   – true = kapitány (C), alternate – true = kapitányhelyettes (A)
 //   pos    – poszt: "Kapus" | "Védő" | "Csatár"
 //   grip   – ütőfogás: "bal" | "jobb"  (most "–")
@@ -39,6 +40,7 @@ const TEAMS = {
           { nick: "Gévai Ádám", name: "Gévai Ádám", num: 6, pos: "Védő", grip: "–", sweet: "–", power: "–", photo: "", bio: "" }, // TODO: becenév
           { nick: "Küzdy László", name: "Küzdy László", num: 77, pos: "Védő", grip: "–", sweet: "–", power: "–", photo: "", bio: "" }, // TODO: becenév
           { nick: "Vajda Krisztián", name: "Vajda Krisztián", num: 16, pos: "Védő", grip: "–", sweet: "–", power: "–", photo: "", bio: "" }, // TODO: becenév
+          { nick: "Buborék", name: "Tóth Ádám", pos: "Védő", grip: "–", sweet: "–", power: "–", photo: "assets/Players/Tóth_Ádám.png", bio: "" }, // TODO: mezszám
         ],
       },
       {
@@ -89,13 +91,14 @@ const TEAMS = {
           { nick: "Maszat", name: "Szymon Wlaszczyk", num: 44, pos: "Védő", grip: "Bal", sweet: "", power: "", photo: "assets/Players/Maszat.png", bio: "A lengyel srác, akivel inkább ne vitatkozz" },
           { nick: "Csobaji Gáspár Áron", name: "Csobaji Gáspár Áron", num: 63, pos: "Védő", grip: "–", sweet: "–", power: "–", photo: "", bio: "" }, // TODO: becenév
           { nick: "Kovács Péter", name: "Kovács Péter", num: 31, pos: "Védő", grip: "–", sweet: "–", power: "–", photo: "", bio: "" }, // TODO: becenév
+          { nick: "Buborék", name: "Tóth Ádám", pos: "Védő", grip: "–", sweet: "–", power: "–", photo: "assets/Players/Tóth_Ádám.png", bio: "" }, // TODO: mezszám
         ],
       },
       {
         label: "Csatár",
         players: [
           { nick: "Vargyasi-Dávid Áron", name: "Vargyasi-Dávid Áron", num: 24, pos: "Csatár", alternate: true, grip: "–", sweet: "–", power: "–", photo: "", bio: "" }, // TODO: becenév
-          { nick: "Hadnagy Csongor", name: "Hadnagy Csongor", num: 76, pos: "Csatár", alternate: true, grip: "–", sweet: "–", power: "–", photo: "", bio: "" }, // TODO: becenév
+          { nick: "Hadnagy Csongor", name: "Hadnagy Csongor", num: 76, pos: "Csatár", alternate: true, grip: "–", sweet: "–", power: "–", photo: "assets/Players/Hadnagy_Csongor.png", bio: "" }, // TODO: becenév
           { nick: "László Zoltán", name: "László Zoltán", num: 14, pos: "Csatár", grip: "–", sweet: "–", power: "–", photo: "", bio: "" }, // TODO: becenév
           { nick: "KristályPatkó", name: "Hegyi Bálint", num: 87, pos: "Csatár", grip: "Jobb", sweet: "Rum-kóla", power: "Olyan egyedi csuklólövésem van, aminek az irányát még a fizika törvényei sem ismerik", photo: "assets/Players/KristalyPatko.png", bio: "" },
           { nick: "Szikrácska", name: "Varga Istvan Gergely", num: 40, pos: "Csatár", grip: "Jobb", sweet: "Peroni", power: "100% találati arány a kapus fejére bemelegítéskor", photo: "assets/Players/Szikrácska.png", bio: "Tüzes láb, csillámos korcsolya – sosem áll le." },
@@ -150,9 +153,9 @@ function goalieStatsFor(p, leagueKey) {
         ? `<span class="puck has-photo"><img src="${p.photo}" alt="${p.nick}" loading="lazy" decoding="async">${badge}</span>`
         : `<span class="puck">${p.icon || "🦄"}${badge}</span>`;
     } else if (p.photo) {
-      puck = `<span class="puck has-photo"><img src="${p.photo}" alt="${shown(p)}" loading="lazy" decoding="async"><span class="num">${p.num}</span>${badge}</span>`;
+      puck = `<span class="puck has-photo"><img src="${p.photo}" alt="${shown(p)}" loading="lazy" decoding="async">${p.num != null ? `<span class="num">${p.num}</span>` : ""}${badge}</span>`;
     } else {
-      puck = `<span class="puck">${p.num}${badge}</span>`;
+      puck = `<span class="puck">${p.num != null ? p.num : "🦄"}${badge}</span>`;
     }
     btn.innerHTML =
       puck +
@@ -318,11 +321,11 @@ function goalieStatsFor(p, leagueKey) {
       ? `<img src="${p.photo}" alt="${shown(p)}" loading="lazy" decoding="async">`
       : opts.staff
       ? p.icon || "🦄"
-      : komoly
+      : komoly && p.num != null
       ? "#" + p.num
       : "🦄";
 
-    elNum.textContent = opts.staff ? "" : "#" + p.num;
+    elNum.textContent = opts.staff || p.num == null ? "" : "#" + p.num;
 
     // Unikornis név (cím) + civil (polgári) név külön sorban
     const civil = (p.name || "").trim();
