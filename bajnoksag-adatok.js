@@ -6,7 +6,7 @@
 // pedig időzítve lefuttatja, és commitolja, ha változott valami.
 //
 // Szezon: 2026-2027
-// Utolsó frissítés: 2026-10-22T08:06:59.447Z
+// Utolsó frissítés: 2026-10-24T21:13:40.531Z
 //
 // A LEAGUES mezőinek jelentését a bajnoksag.js, a GAME_STATS-ét a
 // statisztika.js tetején lévő leírás mondja el.
@@ -1004,46 +1004,46 @@ window.LEAGUES = {
         "group": "A",
         "standings": [
           {
-            "team": "Óbudai Gepárd C",
-            "gp": 1,
-            "w": 1,
-            "otw": 0,
-            "sow": 0,
-            "otl": 0,
-            "sol": 0,
-            "v": 0,
-            "gf": 7,
-            "ga": 3,
-            "pts": 3,
-            "logo": "assets/csapatok/obudai-gepard-c.png"
-          },
-          {
             "team": "ESMTK Jégpárducok",
-            "gp": 1,
-            "w": 1,
+            "gp": 2,
+            "w": 2,
             "otw": 0,
             "sow": 0,
             "otl": 0,
             "sol": 0,
             "v": 0,
-            "gf": 6,
-            "ga": 3,
-            "pts": 3,
+            "gf": 11,
+            "ga": 6,
+            "pts": 6,
             "logo": "assets/csapatok/esmtk-jegparducok.png"
           },
           {
             "team": "HKB Flashes I",
-            "gp": 1,
-            "w": 0,
+            "gp": 2,
+            "w": 1,
             "otw": 0,
             "sow": 1,
             "otl": 0,
             "sol": 0,
             "v": 0,
-            "gf": 4,
+            "gf": 10,
             "ga": 3,
-            "pts": 2,
+            "pts": 5,
             "logo": "assets/csapatok/hkb-flashes-i.png"
+          },
+          {
+            "team": "Óbudai Gepárd C",
+            "gp": 2,
+            "w": 1,
+            "otw": 0,
+            "sow": 0,
+            "otl": 0,
+            "sol": 0,
+            "v": 1,
+            "gf": 10,
+            "ga": 8,
+            "pts": 3,
+            "logo": "assets/csapatok/obudai-gepard-c.png"
           },
           {
             "team": "VIP Crazy Zombies",
@@ -1075,15 +1075,15 @@ window.LEAGUES = {
           },
           {
             "team": "Kárpáti Farkasok",
-            "gp": 1,
+            "gp": 2,
             "w": 0,
             "otw": 0,
             "sow": 0,
             "otl": 0,
             "sol": 0,
-            "v": 1,
+            "v": 2,
             "gf": 3,
-            "ga": 7,
+            "ga": 13,
             "pts": 0,
             "logo": "assets/csapatok/karpati-farkasok.png"
           }
@@ -1323,14 +1323,18 @@ window.LEAGUES = {
         "group": "A",
         "time": "10:30",
         "home": "HKB Flashes I",
-        "away": "Kárpáti Farkasok"
+        "away": "Kárpáti Farkasok",
+        "hs": 6,
+        "as": 0
       },
       {
         "date": "2026-10-24",
         "group": "A",
         "time": "20:00",
         "home": "Óbudai Gepárd C",
-        "away": "ESMTK Jégpárducok"
+        "away": "ESMTK Jégpárducok",
+        "hs": 3,
+        "as": 5
       },
       {
         "date": "2026-10-25",
@@ -2580,4 +2584,4 @@ window.GAME_STATS = [
   }
 ];
 
-window.LEAGUES_FRISSITVE = "2026-10-22T08:06:59.447Z";
+window.LEAGUES_FRISSITVE = "2026-10-24T21:13:40.531Z";
