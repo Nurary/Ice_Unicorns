@@ -6,7 +6,7 @@
 // pedig időzítve lefuttatja, és commitolja, ha változott valami.
 //
 // Szezon: 2026-2027
-// Utolsó frissítés: 2026-10-24T21:13:40.531Z
+// Utolsó frissítés: 2026-10-25T21:13:04.032Z
 //
 // A LEAGUES mezőinek jelentését a bajnoksag.js, a GAME_STATS-ét a
 // statisztika.js tetején lévő leírás mondja el.
@@ -1094,6 +1094,20 @@ window.LEAGUES = {
         "group": "B",
         "standings": [
           {
+            "team": "Lehel HC Amatőr",
+            "gp": 2,
+            "w": 2,
+            "otw": 0,
+            "sow": 0,
+            "otl": 0,
+            "sol": 0,
+            "v": 0,
+            "gf": 15,
+            "ga": 2,
+            "pts": 6,
+            "logo": "assets/csapatok/lehel-hc-amator.png"
+          },
+          {
             "team": "ESMTK Jégtörők",
             "gp": 1,
             "w": 1,
@@ -1120,20 +1134,6 @@ window.LEAGUES = {
             "ga": 0,
             "pts": 3,
             "logo": "assets/csapatok/ujpesti-ragadozok.png"
-          },
-          {
-            "team": "Lehel HC Amatőr",
-            "gp": 1,
-            "w": 1,
-            "otw": 0,
-            "sow": 0,
-            "otl": 0,
-            "sol": 0,
-            "v": 0,
-            "gf": 4,
-            "ga": 1,
-            "pts": 3,
-            "logo": "assets/csapatok/lehel-hc-amator.png"
           },
           {
             "team": "Ice Unicorns",
@@ -1165,20 +1165,6 @@ window.LEAGUES = {
             "logo": "assets/csapatok/kohasz.png"
           },
           {
-            "team": "FTC-Telekom",
-            "gp": 1,
-            "w": 0,
-            "otw": 0,
-            "sow": 0,
-            "otl": 0,
-            "sol": 0,
-            "v": 1,
-            "gf": 0,
-            "ga": 6,
-            "pts": 0,
-            "logo": "assets/csapatok/ftc-telekom.png"
-          },
-          {
             "team": "Séra Team",
             "gp": 2,
             "w": 0,
@@ -1191,6 +1177,20 @@ window.LEAGUES = {
             "ga": 13,
             "pts": 0,
             "logo": "assets/csapatok/sera-team.png"
+          },
+          {
+            "team": "FTC-Telekom",
+            "gp": 2,
+            "w": 0,
+            "otw": 0,
+            "sow": 0,
+            "otl": 0,
+            "sol": 0,
+            "v": 2,
+            "gf": 1,
+            "ga": 17,
+            "pts": 0,
+            "logo": "assets/csapatok/ftc-telekom.png"
           }
         ]
       }
@@ -1347,7 +1347,9 @@ window.LEAGUES = {
         "group": "B",
         "time": "15:40",
         "home": "FTC-Telekom",
-        "away": "Lehel HC Amatőr"
+        "away": "Lehel HC Amatőr",
+        "hs": 1,
+        "as": 11
       },
       {
         "date": "2026-11-15",
@@ -1538,12 +1540,48 @@ window.LEAGUES = {
     ],
     "scorers": [
       {
+        "name": "Kovács Kornél",
+        "team": "Lehel HC Amatőr",
+        "gp": 2,
+        "g": 5,
+        "a": 1,
+        "pts": 6,
+        "pim": 2
+      },
+      {
+        "name": "Torma-Birgés Tibor",
+        "team": "Lehel HC Amatőr",
+        "gp": 2,
+        "g": 3,
+        "a": 2,
+        "pts": 5,
+        "pim": 2
+      },
+      {
         "name": "Gál Martin",
         "team": "ESMTK Jégtörők",
         "gp": 1,
         "g": 4,
         "a": 0,
         "pts": 4,
+        "pim": 0
+      },
+      {
+        "name": "Darázs Zoltán",
+        "team": "Lehel HC Amatőr",
+        "gp": 2,
+        "g": 0,
+        "a": 4,
+        "pts": 4,
+        "pim": 2
+      },
+      {
+        "name": "Horváth György",
+        "team": "Lehel HC Amatőr",
+        "gp": 2,
+        "g": 2,
+        "a": 1,
+        "pts": 3,
         "pim": 0
       },
       {
@@ -1554,6 +1592,15 @@ window.LEAGUES = {
         "a": 2,
         "pts": 3,
         "pim": 0
+      },
+      {
+        "name": "Ludasi Csaba",
+        "team": "Lehel HC Amatőr",
+        "gp": 2,
+        "g": 1,
+        "a": 2,
+        "pts": 3,
+        "pim": 4
       },
       {
         "name": "Algács István",
@@ -1592,16 +1639,7 @@ window.LEAGUES = {
         "pim": 0
       },
       {
-        "name": "Rácz Róbert",
-        "team": "Lehel HC Amatőr",
-        "gp": 1,
-        "g": 1,
-        "a": 1,
-        "pts": 2,
-        "pim": 0
-      },
-      {
-        "name": "Horváth György",
+        "name": "Varga Milán",
         "team": "Lehel HC Amatőr",
         "gp": 1,
         "g": 1,
@@ -1637,43 +1675,6 @@ window.LEAGUES = {
         "pts": 2,
         "pim": 0,
         "us": true
-      },
-      {
-        "name": "Varga Tamás Péter",
-        "team": "ESMTK Jégtörők",
-        "gp": 1,
-        "g": 1,
-        "a": 1,
-        "pts": 2,
-        "pim": 0
-      },
-      {
-        "name": "Hladony Károly",
-        "team": "Séra Team",
-        "gp": 2,
-        "g": 1,
-        "a": 1,
-        "pts": 2,
-        "pim": 6
-      },
-      {
-        "name": "Vargyasi-Dávid Áron",
-        "team": "Ice Unicorns",
-        "gp": 1,
-        "g": 0,
-        "a": 2,
-        "pts": 2,
-        "pim": 0,
-        "us": true
-      },
-      {
-        "name": "Martonosi Márk",
-        "team": "ESMTK Jégtörők",
-        "gp": 1,
-        "g": 0,
-        "a": 2,
-        "pts": 2,
-        "pim": 0
       }
     ],
     "attendance": {
@@ -2584,4 +2585,4 @@ window.GAME_STATS = [
   }
 ];
 
-window.LEAGUES_FRISSITVE = "2026-10-24T21:13:40.531Z";
+window.LEAGUES_FRISSITVE = "2026-10-25T21:13:04.032Z";
