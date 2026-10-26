@@ -6,7 +6,7 @@
 // pedig időzítve lefuttatja, és commitolja, ha változott valami.
 //
 // Szezon: 2026-2027
-// Utolsó frissítés: 2026-10-25T21:13:04.032Z
+// Utolsó frissítés: 2026-10-26T21:15:08.805Z
 //
 // A LEAGUES mezőinek jelentését a bajnoksag.js, a GAME_STATS-ét a
 // statisztika.js tetején lévő leírás mondja el.
@@ -1032,6 +1032,20 @@ window.LEAGUES = {
             "logo": "assets/csapatok/hkb-flashes-i.png"
           },
           {
+            "team": "Algyői Olajosok",
+            "gp": 1,
+            "w": 1,
+            "otw": 0,
+            "sow": 0,
+            "otl": 0,
+            "sol": 0,
+            "v": 0,
+            "gf": 5,
+            "ga": 0,
+            "pts": 3,
+            "logo": "assets/csapatok/algyoi-olajosok.png"
+          },
+          {
             "team": "Óbudai Gepárd C",
             "gp": 2,
             "w": 1,
@@ -1047,15 +1061,15 @@ window.LEAGUES = {
           },
           {
             "team": "VIP Crazy Zombies",
-            "gp": 1,
+            "gp": 2,
             "w": 0,
             "otw": 0,
             "sow": 0,
             "otl": 0,
             "sol": 1,
-            "v": 0,
+            "v": 1,
             "gf": 3,
-            "ga": 4,
+            "ga": 9,
             "pts": 1,
             "logo": "assets/csapatok/vip-crazy-zombies.png"
           },
@@ -1250,7 +1264,7 @@ window.LEAGUES = {
       },
       "Algyői Olajosok": {
         "logo": "assets/csapatok/algyoi-olajosok.png",
-        "group": null
+        "group": "A"
       }
     },
     "games": [
@@ -1340,7 +1354,9 @@ window.LEAGUES = {
         "date": "2026-10-25",
         "group": "A",
         "home": "Algyői Olajosok",
-        "away": "VIP Crazy Zombies"
+        "away": "VIP Crazy Zombies",
+        "hs": 5,
+        "as": 0
       },
       {
         "date": "2026-10-25",
@@ -1657,24 +1673,22 @@ window.LEAGUES = {
         "pim": 0
       },
       {
-        "name": "Pintér Mátyás",
-        "team": "Ice Unicorns",
+        "name": "Varga Tamás Péter",
+        "team": "ESMTK Jégtörők",
         "gp": 1,
         "g": 1,
         "a": 1,
         "pts": 2,
-        "pim": 0,
-        "us": true
+        "pim": 0
       },
       {
-        "name": "Fischer Zsolt",
-        "team": "Ice Unicorns",
-        "gp": 1,
+        "name": "Rácz Róbert",
+        "team": "Lehel HC Amatőr",
+        "gp": 2,
         "g": 1,
         "a": 1,
         "pts": 2,
-        "pim": 0,
-        "us": true
+        "pim": 0
       }
     ],
     "attendance": {
@@ -2173,14 +2187,14 @@ window.GAME_STATS = [
     "them": 2,
     "skaters": {
       "Fischer Zsolt": {
-        "g": 1,
-        "a": 1,
+        "g": 0,
+        "a": 2,
         "pim": 0,
         "pm": 2
       },
       "Pintér Mátyás": {
         "g": 1,
-        "a": 1,
+        "a": 0,
         "pim": 0,
         "pm": 1
       },
@@ -2317,8 +2331,8 @@ window.GAME_STATS = [
       "t": 120
     },
     "oppGk": {
-      "sv": 33,
-      "ga": 4
+      "sv": 34,
+      "ga": 3
     },
     "lines": [
       {
@@ -2474,15 +2488,14 @@ window.GAME_STATS = [
         "t": "09:21",
         "kind": "gol",
         "us": true,
-        "who": "Fischer Zsolt",
-        "num": 2,
+        "who": "",
         "score": [
           2,
           1
         ],
         "a": [
           "Vargyasi-Dávid Áron",
-          "Pintér Mátyás"
+          "Fischer Zsolt"
         ]
       },
       {
@@ -2585,4 +2598,4 @@ window.GAME_STATS = [
   }
 ];
 
-window.LEAGUES_FRISSITVE = "2026-10-25T21:13:04.032Z";
+window.LEAGUES_FRISSITVE = "2026-10-26T21:15:08.805Z";
