@@ -6,7 +6,7 @@
 // pedig időzítve lefuttatja, és commitolja, ha változott valami.
 //
 // Szezon: 2026-2027
-// Utolsó frissítés: 2026-10-26T21:15:08.805Z
+// Utolsó frissítés: 2026-10-27T21:10:30.557Z
 //
 // A LEAGUES mezőinek jelentését a bajnoksag.js, a GAME_STATS-ét a
 // statisztika.js tetején lévő leírás mondja el.
@@ -1368,16 +1368,17 @@ window.LEAGUES = {
         "as": 11
       },
       {
-        "date": "2026-11-15",
+        "date": "2026-11-14",
         "group": "A",
-        "home": "VIP Wizards",
-        "away": "Óbudai Gepárd C"
+        "time": "17:45",
+        "home": "Kárpáti Farkasok",
+        "away": "Algyői Olajosok"
       },
       {
         "date": "2026-11-15",
         "group": "A",
-        "home": "Kárpáti Farkasok",
-        "away": "Algyői Olajosok"
+        "home": "VIP Wizards",
+        "away": "Óbudai Gepárd C"
       },
       {
         "date": "2026-11-15",
@@ -2598,4 +2599,4 @@ window.GAME_STATS = [
   }
 ];
 
-window.LEAGUES_FRISSITVE = "2026-10-26T21:15:08.805Z";
+window.LEAGUES_FRISSITVE = "2026-10-27T21:10:30.557Z";
