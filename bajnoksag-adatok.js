@@ -6,7 +6,7 @@
 // pedig időzítve lefuttatja, és commitolja, ha változott valami.
 //
 // Szezon: 2026-2027
-// Utolsó frissítés: 2026-10-28T21:10:52.488Z
+// Utolsó frissítés: 2026-10-29T21:11:21.394Z
 //
 // A LEAGUES mezőinek jelentését a bajnoksag.js, a GAME_STATS-ét a
 // statisztika.js tetején lévő leírás mondja el.
@@ -1383,12 +1383,6 @@ window.LEAGUES = {
       },
       {
         "date": "2026-11-15",
-        "group": "A",
-        "home": "ESMTK Jégpárducok",
-        "away": "HKB Flashes I"
-      },
-      {
-        "date": "2026-11-15",
         "group": "B",
         "home": "Lehel HC Amatőr",
         "away": "Újpesti Ragadozók"
@@ -1406,9 +1400,23 @@ window.LEAGUES = {
         "away": "Ice Unicorns"
       },
       {
+        "date": "2026-11-15",
+        "group": "A",
+        "time": "17:45",
+        "home": "ESMTK Jégpárducok",
+        "away": "HKB Flashes I"
+      },
+      {
         "date": "2026-11-22",
         "group": "B",
         "home": "Ice Unicorns",
+        "away": "Kohász"
+      },
+      {
+        "date": "2026-11-28",
+        "group": "B",
+        "time": "19:00",
+        "home": "Séra Team",
         "away": "Kohász"
       },
       {
@@ -1428,12 +1436,6 @@ window.LEAGUES = {
         "group": "A",
         "home": "Algyői Olajosok",
         "away": "ESMTK Jégpárducok"
-      },
-      {
-        "date": "2026-11-29",
-        "group": "B",
-        "home": "Séra Team",
-        "away": "Kohász"
       },
       {
         "date": "2026-11-29",
@@ -2600,4 +2602,4 @@ window.GAME_STATS = [
   }
 ];
 
-window.LEAGUES_FRISSITVE = "2026-10-28T21:10:52.488Z";
+window.LEAGUES_FRISSITVE = "2026-10-29T21:11:21.394Z";
