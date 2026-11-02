@@ -6,7 +6,7 @@
 // pedig időzítve lefuttatja, és commitolja, ha változott valami.
 //
 // Szezon: 2026-2027
-// Utolsó frissítés: 2026-10-30T21:08:35.199Z
+// Utolsó frissítés: 2026-11-02T21:10:18.983Z
 //
 // A LEAGUES mezőinek jelentését a bajnoksag.js, a GAME_STATS-ét a
 // statisztika.js tetején lévő leírás mondja el.
@@ -43,6 +43,7 @@ window.LEAGUES = {
       {
         "id": 88478,
         "date": "2026-11-22",
+        "time": "15:15",
         "opponent": "ESMTK Jégpárducok B",
         "home": false,
         "venue": "Pesterzsébet Jégcsarnok",
@@ -532,10 +533,24 @@ window.LEAGUES = {
       },
       {
         "date": "2026-11-07",
+        "group": "B",
+        "time": "12:25",
+        "home": "Ligeti Jégkásák B",
+        "away": "Tatabányai Polipok"
+      },
+      {
+        "date": "2026-11-07",
         "group": "A",
         "time": "15:00",
         "home": "Ligeti Jégkásák A",
         "away": "ESMTK Jégkockák"
+      },
+      {
+        "date": "2026-11-07",
+        "group": "A",
+        "time": "15:45",
+        "home": "VIP Blazing Blades",
+        "away": "DVTK Jegesmedvék"
       },
       {
         "date": "2026-11-07",
@@ -547,26 +562,16 @@ window.LEAGUES = {
       {
         "date": "2026-11-08",
         "group": "A",
-        "home": "VIP Blazing Blades",
-        "away": "DVTK Jegesmedvék"
-      },
-      {
-        "date": "2026-11-08",
-        "group": "B",
-        "home": "Ligeti Jégkásák B",
-        "away": "Tatabányai Polipok"
-      },
-      {
-        "date": "2026-11-08",
-        "group": "B",
-        "home": "Lizards",
-        "away": "Óbudai Gepárd D"
-      },
-      {
-        "date": "2026-11-08",
-        "group": "A",
+        "time": "17:45",
         "home": "Vénfarkasok",
         "away": "Alba Trashers Jégkorong Klub"
+      },
+      {
+        "date": "2026-11-08",
+        "group": "B",
+        "time": "18:45",
+        "home": "Lizards",
+        "away": "Óbudai Gepárd D"
       },
       {
         "date": "2026-11-08",
@@ -607,15 +612,16 @@ window.LEAGUES = {
       },
       {
         "date": "2026-11-22",
-        "group": "B",
-        "home": "ESMTK Jégpárducok B",
-        "away": "Ice Unicorns"
-      },
-      {
-        "date": "2026-11-22",
         "group": "A",
         "home": "Vénfarkasok",
         "away": "DVTK Jegesmedvék"
+      },
+      {
+        "date": "2026-11-22",
+        "group": "B",
+        "time": "15:15",
+        "home": "ESMTK Jégpárducok B",
+        "away": "Ice Unicorns"
       },
       {
         "date": "2026-12-06",
@@ -1377,6 +1383,13 @@ window.LEAGUES = {
         "away": "Algyői Olajosok"
       },
       {
+        "date": "2026-11-14",
+        "group": "B",
+        "time": "19:45",
+        "home": "Kohász",
+        "away": "ESMTK Jégtörők"
+      },
+      {
         "date": "2026-11-15",
         "group": "A",
         "home": "VIP Wizards",
@@ -1387,12 +1400,6 @@ window.LEAGUES = {
         "group": "B",
         "home": "Lehel HC Amatőr",
         "away": "Újpesti Ragadozók"
-      },
-      {
-        "date": "2026-11-15",
-        "group": "B",
-        "home": "Kohász",
-        "away": "ESMTK Jégtörők"
       },
       {
         "date": "2026-11-15",
@@ -2603,4 +2610,4 @@ window.GAME_STATS = [
   }
 ];
 
-window.LEAGUES_FRISSITVE = "2026-10-30T21:08:35.199Z";
+window.LEAGUES_FRISSITVE = "2026-11-02T21:10:18.983Z";
