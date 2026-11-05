@@ -6,7 +6,7 @@
 // pedig időzítve lefuttatja, és commitolja, ha változott valami.
 //
 // Szezon: 2026-2027
-// Utolsó frissítés: 2026-11-02T21:10:18.983Z
+// Utolsó frissítés: 2026-11-05T21:09:03.677Z
 //
 // A LEAGUES mezőinek jelentését a bajnoksag.js, a GAME_STATS-ét a
 // statisztika.js tetején lévő leírás mondja el.
@@ -958,6 +958,7 @@ window.LEAGUES = {
       {
         "id": 88422,
         "date": "2026-11-15",
+        "time": "18:15",
         "opponent": "FTC-Telekom",
         "home": false,
         "venue": "FTC Sátras Jégpálya",
@@ -1144,20 +1145,6 @@ window.LEAGUES = {
             "logo": "assets/csapatok/esmtk-jegtorok.png"
           },
           {
-            "team": "Újpesti Ragadozók",
-            "gp": 1,
-            "w": 1,
-            "otw": 0,
-            "sow": 0,
-            "otl": 0,
-            "sol": 0,
-            "v": 0,
-            "gf": 6,
-            "ga": 0,
-            "pts": 3,
-            "logo": "assets/csapatok/ujpesti-ragadozok.png"
-          },
-          {
             "team": "Ice Unicorns",
             "gp": 1,
             "w": 1,
@@ -1202,15 +1189,15 @@ window.LEAGUES = {
           },
           {
             "team": "FTC-Telekom",
-            "gp": 2,
+            "gp": 1,
             "w": 0,
             "otw": 0,
             "sow": 0,
             "otl": 0,
             "sol": 0,
-            "v": 2,
+            "v": 1,
             "gf": 1,
-            "ga": 17,
+            "ga": 11,
             "pts": 0,
             "logo": "assets/csapatok/ftc-telekom.png"
           }
@@ -1244,7 +1231,7 @@ window.LEAGUES = {
       },
       "Újpesti Ragadozók": {
         "logo": "assets/csapatok/ujpesti-ragadozok.png",
-        "group": "B"
+        "group": null
       },
       "FTC-Telekom": {
         "logo": "assets/csapatok/ftc-telekom.png",
@@ -1404,13 +1391,14 @@ window.LEAGUES = {
       {
         "date": "2026-11-15",
         "group": "B",
+        "time": "18:15",
         "home": "FTC-Telekom",
         "away": "Ice Unicorns"
       },
       {
-        "date": "2026-11-15",
+        "date": "2026-11-21",
         "group": "A",
-        "time": "17:45",
+        "time": "19:15",
         "home": "ESMTK Jégpárducok",
         "away": "HKB Flashes I"
       },
@@ -2610,4 +2598,4 @@ window.GAME_STATS = [
   }
 ];
 
-window.LEAGUES_FRISSITVE = "2026-11-02T21:10:18.983Z";
+window.LEAGUES_FRISSITVE = "2026-11-05T21:09:03.677Z";
