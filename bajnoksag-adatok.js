@@ -6,7 +6,7 @@
 // pedig időzítve lefuttatja, és commitolja, ha változott valami.
 //
 // Szezon: 2026-2027
-// Utolsó frissítés: 2026-11-06T21:08:35.046Z
+// Utolsó frissítés: 2026-11-07T21:08:34.659Z
 //
 // A LEAGUES mezőinek jelentését a bajnoksag.js, a GAME_STATS-ét a
 // statisztika.js tetején lévő leírás mondja el.
@@ -36,8 +36,8 @@ window.LEAGUES = {
         "opponent": "DJK SE",
         "home": false,
         "venue": "Debrecen, Centerpálya",
-        "us": null,
-        "them": null,
+        "us": 1,
+        "them": 2,
         "logo": "assets/csapatok/djk-se.png"
       },
       {
@@ -99,16 +99,16 @@ window.LEAGUES = {
         "standings": [
           {
             "team": "Ligeti Jégkásák A",
-            "gp": 2,
-            "w": 2,
+            "gp": 3,
+            "w": 3,
             "otw": 0,
             "sow": 0,
             "otl": 0,
             "sol": 0,
             "v": 0,
-            "gf": 22,
-            "ga": 4,
-            "pts": 6,
+            "gf": 33,
+            "ga": 5,
+            "pts": 9,
             "logo": "assets/csapatok/ligeti-jegkasak-a.png"
           },
           {
@@ -140,32 +140,32 @@ window.LEAGUES = {
             "logo": "assets/csapatok/angels.png"
           },
           {
-            "team": "ESMTK Jégkockák",
-            "gp": 2,
-            "w": 1,
+            "team": "VIP Blazing Blades",
+            "gp": 3,
+            "w": 2,
             "otw": 0,
             "sow": 0,
             "otl": 0,
             "sol": 0,
             "v": 1,
-            "gf": 13,
-            "ga": 13,
-            "pts": 3,
-            "logo": "assets/csapatok/esmtk-jegkockak.png"
+            "gf": 10,
+            "ga": 6,
+            "pts": 6,
+            "logo": "assets/csapatok/vip-blazing-blades.png"
           },
           {
-            "team": "VIP Blazing Blades",
-            "gp": 2,
+            "team": "ESMTK Jégkockák",
+            "gp": 3,
             "w": 1,
             "otw": 0,
             "sow": 0,
             "otl": 0,
             "sol": 0,
-            "v": 1,
-            "gf": 5,
-            "ga": 5,
+            "v": 2,
+            "gf": 14,
+            "ga": 24,
             "pts": 3,
-            "logo": "assets/csapatok/vip-blazing-blades.png"
+            "logo": "assets/csapatok/esmtk-jegkockak.png"
           },
           {
             "team": "Alba Trashers Jégkorong Klub",
@@ -197,15 +197,15 @@ window.LEAGUES = {
           },
           {
             "team": "DVTK Jegesmedvék",
-            "gp": 2,
+            "gp": 3,
             "w": 0,
             "otw": 0,
             "sow": 0,
             "otl": 0,
             "sol": 0,
-            "v": 2,
-            "gf": 5,
-            "ga": 28,
+            "v": 3,
+            "gf": 6,
+            "ga": 33,
             "pts": 0,
             "logo": "assets/csapatok/dvtk-jegesmedvek.png"
           }
@@ -217,16 +217,16 @@ window.LEAGUES = {
         "standings": [
           {
             "team": "Tatabányai Polipok",
-            "gp": 2,
-            "w": 2,
+            "gp": 3,
+            "w": 3,
             "otw": 0,
             "sow": 0,
             "otl": 0,
             "sol": 0,
             "v": 0,
-            "gf": 17,
-            "ga": 4,
-            "pts": 6,
+            "gf": 22,
+            "ga": 5,
+            "pts": 9,
             "logo": "assets/csapatok/tatabanyai-polipok.png"
           },
           {
@@ -245,15 +245,15 @@ window.LEAGUES = {
           },
           {
             "team": "Ligeti Jégkásák B",
-            "gp": 2,
+            "gp": 3,
             "w": 1,
             "otw": 0,
             "sow": 0,
             "otl": 0,
             "sol": 0,
-            "v": 1,
-            "gf": 13,
-            "ga": 6,
+            "v": 2,
+            "gf": 14,
+            "ga": 11,
             "pts": 3,
             "logo": "assets/csapatok/ligeti-jegkasak-b.png"
           },
@@ -536,28 +536,36 @@ window.LEAGUES = {
         "group": "B",
         "time": "12:25",
         "home": "Ligeti Jégkásák B",
-        "away": "Tatabányai Polipok"
+        "away": "Tatabányai Polipok",
+        "hs": 1,
+        "as": 5
       },
       {
         "date": "2026-11-07",
         "group": "A",
         "time": "15:00",
         "home": "Ligeti Jégkásák A",
-        "away": "ESMTK Jégkockák"
+        "away": "ESMTK Jégkockák",
+        "hs": 11,
+        "as": 1
       },
       {
         "date": "2026-11-07",
         "group": "A",
         "time": "15:45",
         "home": "VIP Blazing Blades",
-        "away": "DVTK Jegesmedvék"
+        "away": "DVTK Jegesmedvék",
+        "hs": 5,
+        "as": 1
       },
       {
         "date": "2026-11-07",
         "group": "B",
         "time": "21:05",
         "home": "DJK SE",
-        "away": "Ice Unicorns"
+        "away": "Ice Unicorns",
+        "hs": 2,
+        "as": 1
       },
       {
         "date": "2026-11-08",
@@ -796,38 +804,47 @@ window.LEAGUES = {
       {
         "name": "Végh Ádám",
         "team": "Tatabányai Polipok",
-        "gp": 2,
+        "gp": 3,
         "g": 4,
-        "a": 3,
-        "pts": 7,
+        "a": 4,
+        "pts": 8,
         "pim": 0
       },
       {
         "name": "Varga Dávid Ferenc",
         "team": "Tatabányai Polipok",
-        "gp": 2,
-        "g": 5,
+        "gp": 3,
+        "g": 6,
         "a": 1,
+        "pts": 7,
+        "pim": 0
+      },
+      {
+        "name": "Vancsó Arnold",
+        "team": "Tatabányai Polipok",
+        "gp": 3,
+        "g": 1,
+        "a": 5,
         "pts": 6,
+        "pim": 2
+      },
+      {
+        "name": "Csaplár Krisztián",
+        "team": "Tatabányai Polipok",
+        "gp": 3,
+        "g": 4,
+        "a": 1,
+        "pts": 5,
         "pim": 0
       },
       {
         "name": "Szatmári Ferenc",
         "team": "Ligeti Jégkásák B",
-        "gp": 2,
+        "gp": 3,
         "g": 4,
         "a": 1,
         "pts": 5,
-        "pim": 2
-      },
-      {
-        "name": "Vancsó Arnold",
-        "team": "Tatabányai Polipok",
-        "gp": 2,
-        "g": 0,
-        "a": 5,
-        "pts": 5,
-        "pim": 2
+        "pim": 4
       },
       {
         "name": "Bonhardt Tibor",
@@ -848,22 +865,23 @@ window.LEAGUES = {
         "pim": 0
       },
       {
-        "name": "Csaplár Krisztián",
-        "team": "Tatabányai Polipok",
-        "gp": 2,
-        "g": 3,
-        "a": 1,
-        "pts": 4,
-        "pim": 0
-      },
-      {
         "name": "Erdei Zsolt",
         "team": "Ligeti Jégkásák B",
-        "gp": 2,
+        "gp": 3,
         "g": 1,
         "a": 3,
         "pts": 4,
         "pim": 0
+      },
+      {
+        "name": "Incze Péter",
+        "team": "Ice Unicorns",
+        "gp": 2,
+        "g": 3,
+        "a": 0,
+        "pts": 3,
+        "pim": 0,
+        "us": true
       },
       {
         "name": "Ertly László",
@@ -875,9 +893,18 @@ window.LEAGUES = {
         "pim": 0
       },
       {
+        "name": "Csóka Kristóf",
+        "team": "Tatabányai Polipok",
+        "gp": 3,
+        "g": 2,
+        "a": 1,
+        "pts": 3,
+        "pim": 0
+      },
+      {
         "name": "Csomor Norbert",
         "team": "Ligeti Jégkásák B",
-        "gp": 2,
+        "gp": 3,
         "g": 1,
         "a": 2,
         "pts": 3,
@@ -886,7 +913,7 @@ window.LEAGUES = {
       {
         "name": "Gőbel András György",
         "team": "Ligeti Jégkásák B",
-        "gp": 2,
+        "gp": 3,
         "g": 1,
         "a": 2,
         "pts": 3,
@@ -902,32 +929,13 @@ window.LEAGUES = {
         "pim": 0
       },
       {
-        "name": "Incze Péter",
-        "team": "Ice Unicorns",
-        "gp": 1,
-        "g": 2,
-        "a": 0,
-        "pts": 2,
-        "pim": 0,
-        "us": true
-      },
-      {
-        "name": "Makszim Zsombor",
-        "team": "Tatabányai Polipok",
-        "gp": 1,
-        "g": 2,
-        "a": 0,
-        "pts": 2,
-        "pim": 2
-      },
-      {
-        "name": "Müller Ákos",
-        "team": "Korongozoo VALOR",
+        "name": "Erdős Péter",
+        "team": "DJK SE",
         "gp": 2,
         "g": 2,
         "a": 0,
         "pts": 2,
-        "pim": 0
+        "pim": 2
       }
     ],
     "attendance": {
@@ -2595,7 +2603,362 @@ window.GAME_STATS = [
         "adv": "+1"
       }
     ]
+  },
+  {
+    "id": 88942,
+    "date": "2026-11-07",
+    "league": "ob4d",
+    "opponent": "DJK SE",
+    "home": false,
+    "us": 1,
+    "them": 2,
+    "skaters": {
+      "Mádi Tamás": {
+        "g": 0,
+        "a": 0,
+        "pim": 0,
+        "pm": 0
+      },
+      "Hópehely": {
+        "g": 0,
+        "a": 0,
+        "pim": 2,
+        "pm": 0
+      },
+      "Szikrácska": {
+        "g": 0,
+        "a": 0,
+        "pim": 0,
+        "pm": 0
+      },
+      "Kinda Csaba": {
+        "g": 0,
+        "a": 0,
+        "pim": 0,
+        "pm": 0
+      },
+      "KristályPatkó": {
+        "g": 0,
+        "a": 0,
+        "pim": 0,
+        "pm": 1
+      },
+      "Buborék": {
+        "g": 0,
+        "a": 0,
+        "pim": 0,
+        "pm": 0
+      },
+      "Patkószörny": {
+        "g": 0,
+        "a": 0,
+        "pim": 0,
+        "pm": 0
+      },
+      "Incze Péter": {
+        "g": 1,
+        "a": 0,
+        "pim": 0,
+        "pm": 1
+      },
+      "Fiala Liliána": {
+        "g": 0,
+        "a": 0,
+        "pim": 0,
+        "pm": 0
+      },
+      "Villámpatkó": {
+        "g": 0,
+        "a": 0,
+        "pim": 0,
+        "pm": 0
+      },
+      "Vajda Krisztián": {
+        "g": 0,
+        "a": 0,
+        "pim": 0,
+        "pm": 0
+      },
+      "Küzdy László": {
+        "g": 0,
+        "a": 0,
+        "pim": 0,
+        "pm": 0
+      },
+      "Pitypang": {
+        "g": 0,
+        "a": 0,
+        "pim": 2,
+        "pm": 0
+      },
+      "Fecske": {
+        "g": 0,
+        "a": 0,
+        "pim": 0,
+        "pm": 0
+      },
+      "Mályvacukor": {
+        "g": 0,
+        "a": 1,
+        "pim": 0,
+        "pm": 1
+      },
+      "Baróta Gábor": {
+        "g": 0,
+        "a": 0,
+        "pim": 0,
+        "pm": 0
+      }
+    },
+    "goalies": {
+      "Baróta Gábor": {
+        "ga": 2,
+        "min": 60,
+        "sv": 3
+      }
+    },
+    "periods": [
+      {
+        "p": "1",
+        "us": 1,
+        "them": 1
+      },
+      {
+        "p": "2",
+        "us": 0,
+        "them": 1
+      }
+    ],
+    "shots": {
+      "us": [
+        10,
+        0,
+        0
+      ],
+      "them": [
+        5,
+        0,
+        0
+      ]
+    },
+    "oppGk": {
+      "sv": 9,
+      "ga": 1
+    },
+    "lines": [
+      {
+        "row": "gk",
+        "players": [
+          {
+            "pos": "gk",
+            "nick": "Baróta Gábor",
+            "num": 39,
+            "pic": "https://ivr-api.icehockey.hu/storage/media/147875/conversions/profile_photo-thumb-cropped.png"
+          }
+        ]
+      },
+      {
+        "row": "1",
+        "players": [
+          {
+            "pos": "ld",
+            "nick": "Mádi Tamás",
+            "num": 1,
+            "cap": "A",
+            "pic": "https://ivr-api.icehockey.hu/storage/media/97889/conversions/profile_photo-thumb-cropped.png"
+          },
+          {
+            "pos": "rd",
+            "nick": "Hópehely",
+            "num": 20,
+            "cap": "A",
+            "pic": "https://ivr-api.icehockey.hu/storage/media/98447/conversions/profile_photo-thumb-cropped.png"
+          },
+          {
+            "pos": "lw",
+            "nick": "Szikrácska",
+            "num": 31,
+            "pic": "https://ivr-api.icehockey.hu/storage/media/147724/conversions/profile_photo-thumb-cropped.png"
+          },
+          {
+            "pos": "c",
+            "nick": "Kinda Csaba",
+            "num": 23,
+            "pic": "https://ivr-api.icehockey.hu/storage/media/97395/conversions/profile_photo-thumb-cropped.png"
+          },
+          {
+            "pos": "rw",
+            "nick": "KristályPatkó",
+            "num": 87,
+            "pic": "https://ivr-api.icehockey.hu/storage/media/148033/conversions/profile_photo-thumb-cropped.png"
+          }
+        ]
+      },
+      {
+        "row": "2",
+        "players": [
+          {
+            "pos": "ld",
+            "nick": "Buborék",
+            "num": 81,
+            "pic": "https://ivr-api.icehockey.hu/storage/media/101448/conversions/profile_photo-thumb-cropped.png"
+          },
+          {
+            "pos": "rd",
+            "nick": "Patkószörny",
+            "num": 13,
+            "pic": "https://ivr-api.icehockey.hu/storage/media/147767/conversions/profile_photo-thumb-cropped.png"
+          },
+          {
+            "pos": "lw",
+            "nick": "Incze Péter",
+            "num": 28,
+            "pic": "https://ivr-api.icehockey.hu/storage/media/81396/conversions/profile_photo-thumb-cropped.png"
+          },
+          {
+            "pos": "c",
+            "nick": "Fiala Liliána",
+            "num": 66,
+            "pic": "https://ivr-api.icehockey.hu/storage/media/161709/conversions/profile_photo-thumb-cropped.png"
+          },
+          {
+            "pos": "rw",
+            "nick": "Villámpatkó",
+            "num": 10,
+            "pic": "https://ivr-api.icehockey.hu/storage/media/147771/conversions/profile_photo-thumb-cropped.png"
+          }
+        ]
+      },
+      {
+        "row": "3",
+        "players": [
+          {
+            "pos": "ld",
+            "nick": "Vajda Krisztián",
+            "num": 16,
+            "pic": "https://ivr-api.icehockey.hu/storage/media/95307/conversions/profile_photo-thumb-cropped.png"
+          },
+          {
+            "pos": "rd",
+            "nick": "Küzdy László",
+            "num": 77,
+            "pic": "https://ivr-api.icehockey.hu/storage/media/82169/conversions/profile_photo-thumb-cropped.png"
+          },
+          {
+            "pos": "lw",
+            "nick": "Pitypang",
+            "num": 15,
+            "pic": "https://ivr-api.icehockey.hu/storage/media/147463/conversions/profile_photo-thumb-cropped.png"
+          },
+          {
+            "pos": "c",
+            "nick": "Fecske",
+            "num": 14,
+            "cap": "C",
+            "pic": "https://ivr-api.icehockey.hu/storage/media/147799/conversions/profile_photo-thumb-cropped.png"
+          },
+          {
+            "pos": "rw",
+            "nick": "Mályvacukor",
+            "num": 67,
+            "pic": "https://ivr-api.icehockey.hu/storage/media/147789/conversions/profile_photo-thumb-cropped.png"
+          }
+        ]
+      }
+    ],
+    "events": [
+      {
+        "per": "1",
+        "t": "04:41",
+        "kind": "gol",
+        "us": false,
+        "who": "Szőcs Andor",
+        "num": 83,
+        "score": [
+          0,
+          1
+        ]
+      },
+      {
+        "per": "1",
+        "t": "09:16",
+        "kind": "gol",
+        "us": true,
+        "who": "Incze Péter",
+        "num": 28,
+        "score": [
+          1,
+          1
+        ],
+        "a": [
+          "Mályvacukor"
+        ]
+      },
+      {
+        "per": "1",
+        "t": "13:41",
+        "kind": "kiall",
+        "us": false,
+        "who": "Kiss Viktor",
+        "num": 70,
+        "min": 2,
+        "cause": "akasztás"
+      },
+      {
+        "per": "2",
+        "t": "22:07",
+        "kind": "kiall",
+        "us": false,
+        "who": "Turi László",
+        "num": 86,
+        "min": 2,
+        "cause": "durvaság"
+      },
+      {
+        "per": "2",
+        "t": "25:42",
+        "kind": "kiall",
+        "us": true,
+        "who": "Pitypang",
+        "num": 15,
+        "min": 2,
+        "cause": "szabálytalan test-test elleni játék"
+      },
+      {
+        "per": "2",
+        "t": "28:35",
+        "kind": "kiall",
+        "us": false,
+        "who": "Erdős Péter",
+        "num": 4,
+        "min": 2,
+        "cause": "gáncsolás"
+      },
+      {
+        "per": "2",
+        "t": "31:00",
+        "kind": "gol",
+        "us": false,
+        "who": "Erdős Péter",
+        "num": 4,
+        "score": [
+          1,
+          2
+        ],
+        "gwg": true
+      },
+      {
+        "per": "2",
+        "t": "35:35",
+        "kind": "kiall",
+        "us": true,
+        "who": "Hópehely",
+        "num": 20,
+        "min": 2,
+        "cause": "ütés bottal"
+      }
+    ]
   }
 ];
 
-window.LEAGUES_FRISSITVE = "2026-11-06T21:08:35.046Z";
+window.LEAGUES_FRISSITVE = "2026-11-07T21:08:34.659Z";
