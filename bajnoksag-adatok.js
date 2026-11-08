@@ -6,7 +6,7 @@
 // pedig időzítve lefuttatja, és commitolja, ha változott valami.
 //
 // Szezon: 2026-2027
-// Utolsó frissítés: 2026-11-07T21:08:34.659Z
+// Utolsó frissítés: 2026-11-08T05:10:11.997Z
 //
 // A LEAGUES mezőinek jelentését a bajnoksag.js, a GAME_STATS-ét a
 // statisztika.js tetején lévő leírás mondja el.
@@ -36,8 +36,9 @@ window.LEAGUES = {
         "opponent": "DJK SE",
         "home": false,
         "venue": "Debrecen, Centerpálya",
-        "us": 1,
-        "them": 2,
+        "us": 3,
+        "them": 4,
+        "ot": true,
         "logo": "assets/csapatok/djk-se.png"
       },
       {
@@ -286,33 +287,33 @@ window.LEAGUES = {
             "logo": "assets/csapatok/korongozoo-valor.png"
           },
           {
-            "team": "Ice Unicorns",
-            "gp": 1,
+            "team": "DJK SE",
+            "gp": 2,
             "w": 0,
             "otw": 0,
-            "sow": 0,
+            "sow": 1,
             "otl": 0,
             "sol": 0,
             "v": 1,
-            "gf": 3,
-            "ga": 7,
-            "pts": 0,
-            "logo": "assets/logo/logo.jpg",
-            "us": true
+            "gf": 5,
+            "ga": 11,
+            "pts": 2,
+            "logo": "assets/csapatok/djk-se.png"
           },
           {
-            "team": "DJK SE",
-            "gp": 1,
+            "team": "Ice Unicorns",
+            "gp": 2,
             "w": 0,
             "otw": 0,
             "sow": 0,
             "otl": 0,
-            "sol": 0,
+            "sol": 1,
             "v": 1,
-            "gf": 1,
-            "ga": 8,
-            "pts": 0,
-            "logo": "assets/csapatok/djk-se.png"
+            "gf": 6,
+            "ga": 11,
+            "pts": 1,
+            "logo": "assets/logo/logo.jpg",
+            "us": true
           },
           {
             "team": "Óbudai Gepárd D",
@@ -564,8 +565,9 @@ window.LEAGUES = {
         "time": "21:05",
         "home": "DJK SE",
         "away": "Ice Unicorns",
-        "hs": 2,
-        "as": 1
+        "hs": 4,
+        "as": 3,
+        "ot": true
       },
       {
         "date": "2026-11-08",
@@ -874,6 +876,15 @@ window.LEAGUES = {
         "pim": 0
       },
       {
+        "name": "Erdős Péter",
+        "team": "DJK SE",
+        "gp": 2,
+        "g": 3,
+        "a": 0,
+        "pts": 3,
+        "pim": 2
+      },
+      {
         "name": "Incze Péter",
         "team": "Ice Unicorns",
         "gp": 2,
@@ -927,23 +938,14 @@ window.LEAGUES = {
         "a": 0,
         "pts": 2,
         "pim": 0
-      },
-      {
-        "name": "Erdős Péter",
-        "team": "DJK SE",
-        "gp": 2,
-        "g": 2,
-        "a": 0,
-        "pts": 2,
-        "pim": 2
       }
     ],
     "attendance": {
       "homeGames": 1,
       "homeAvg": 79,
-      "awayAvg": 0,
-      "total": 79,
-      "totalAvg": 79
+      "awayAvg": 45,
+      "total": 124,
+      "totalAvg": 62
     }
   },
   "ob4c": {
@@ -2610,8 +2612,8 @@ window.GAME_STATS = [
     "league": "ob4d",
     "opponent": "DJK SE",
     "home": false,
-    "us": 1,
-    "them": 2,
+    "us": 3,
+    "them": 4,
     "skaters": {
       "Mádi Tamás": {
         "g": 0,
@@ -2622,7 +2624,7 @@ window.GAME_STATS = [
       "Hópehely": {
         "g": 0,
         "a": 0,
-        "pim": 2,
+        "pim": 4,
         "pm": 0
       },
       "Szikrácska": {
@@ -2632,14 +2634,14 @@ window.GAME_STATS = [
         "pm": 0
       },
       "Kinda Csaba": {
-        "g": 0,
+        "g": 1,
         "a": 0,
         "pim": 0,
         "pm": 0
       },
       "KristályPatkó": {
         "g": 0,
-        "a": 0,
+        "a": 1,
         "pim": 0,
         "pm": 1
       },
@@ -2668,10 +2670,10 @@ window.GAME_STATS = [
         "pm": 0
       },
       "Villámpatkó": {
-        "g": 0,
+        "g": 1,
         "a": 0,
         "pim": 0,
-        "pm": 0
+        "pm": 1
       },
       "Vajda Krisztián": {
         "g": 0,
@@ -2712,9 +2714,9 @@ window.GAME_STATS = [
     },
     "goalies": {
       "Baróta Gábor": {
-        "ga": 2,
+        "ga": 4,
         "min": 60,
-        "sv": 3
+        "sv": 26
       }
     },
     "periods": [
@@ -2725,6 +2727,16 @@ window.GAME_STATS = [
       },
       {
         "p": "2",
+        "us": 1,
+        "them": 1
+      },
+      {
+        "p": "3",
+        "us": 1,
+        "them": 1
+      },
+      {
+        "p": "SO",
         "us": 0,
         "them": 1
       }
@@ -2732,18 +2744,29 @@ window.GAME_STATS = [
     "shots": {
       "us": [
         10,
-        0,
-        0
+        6,
+        1
       ],
       "them": [
         5,
-        0,
-        0
+        11,
+        13,
+        1
       ]
     },
+    "pp": {
+      "n": 4,
+      "g": 1,
+      "t": 368
+    },
+    "pk": {
+      "n": 3,
+      "ga": 1,
+      "t": 296
+    },
     "oppGk": {
-      "sv": 9,
-      "ga": 1
+      "sv": 14,
+      "ga": 3
     },
     "lines": [
       {
@@ -2944,8 +2967,7 @@ window.GAME_STATS = [
         "score": [
           1,
           2
-        ],
-        "gwg": true
+        ]
       },
       {
         "per": "2",
@@ -2956,9 +2978,82 @@ window.GAME_STATS = [
         "num": 20,
         "min": 2,
         "cause": "ütés bottal"
+      },
+      {
+        "per": "2",
+        "t": "38:51",
+        "kind": "kiall",
+        "us": false,
+        "who": "Nagy Gergely",
+        "num": 19,
+        "min": 2,
+        "cause": "akasztás"
+      },
+      {
+        "per": "2",
+        "t": "38:59",
+        "kind": "gol",
+        "us": true,
+        "who": "Kinda Csaba",
+        "num": 23,
+        "score": [
+          2,
+          2
+        ],
+        "a": [
+          "KristályPatkó"
+        ],
+        "adv": "+1"
+      },
+      {
+        "per": "3",
+        "t": "41:06",
+        "kind": "kiall",
+        "us": true,
+        "who": "Hópehely",
+        "num": 20,
+        "min": 2,
+        "cause": "akasztás"
+      },
+      {
+        "per": "3",
+        "t": "42:02",
+        "kind": "gol",
+        "us": false,
+        "who": "Erdős Péter",
+        "num": 4,
+        "score": [
+          2,
+          3
+        ],
+        "adv": "+1"
+      },
+      {
+        "per": "3",
+        "t": "58:19",
+        "kind": "gol",
+        "us": true,
+        "who": "Villámpatkó",
+        "num": 10,
+        "score": [
+          3,
+          3
+        ]
+      },
+      {
+        "per": "SO",
+        "t": "60:00",
+        "kind": "gol",
+        "us": false,
+        "who": "Csonka János",
+        "num": 12,
+        "score": [
+          3,
+          4
+        ]
       }
     ]
   }
 ];
 
-window.LEAGUES_FRISSITVE = "2026-11-07T21:08:34.659Z";
+window.LEAGUES_FRISSITVE = "2026-11-08T05:10:11.997Z";
