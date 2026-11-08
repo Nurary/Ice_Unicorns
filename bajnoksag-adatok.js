@@ -6,7 +6,7 @@
 // pedig időzítve lefuttatja, és commitolja, ha változott valami.
 //
 // Szezon: 2026-2027
-// Utolsó frissítés: 2026-11-08T05:10:11.997Z
+// Utolsó frissítés: 2026-11-08T21:08:45.343Z
 //
 // A LEAGUES mezőinek jelentését a bajnoksag.js, a GAME_STATS-ét a
 // statisztika.js tetején lévő leírás mondja el.
@@ -114,29 +114,29 @@ window.LEAGUES = {
           },
           {
             "team": "HKB Flashes II",
-            "gp": 2,
-            "w": 2,
+            "gp": 3,
+            "w": 3,
             "otw": 0,
             "sow": 0,
             "otl": 0,
             "sol": 0,
             "v": 0,
-            "gf": 18,
-            "ga": 9,
-            "pts": 6,
+            "gf": 23,
+            "ga": 10,
+            "pts": 9,
             "logo": "assets/csapatok/hkb-flashes-ii.png"
           },
           {
             "team": "Angels",
-            "gp": 2,
+            "gp": 3,
             "w": 2,
             "otw": 0,
             "sow": 0,
             "otl": 0,
             "sol": 0,
-            "v": 0,
-            "gf": 12,
-            "ga": 5,
+            "v": 1,
+            "gf": 13,
+            "ga": 10,
             "pts": 6,
             "logo": "assets/csapatok/angels.png"
           },
@@ -231,6 +231,20 @@ window.LEAGUES = {
             "logo": "assets/csapatok/tatabanyai-polipok.png"
           },
           {
+            "team": "Lizards",
+            "gp": 2,
+            "w": 2,
+            "otw": 0,
+            "sow": 0,
+            "otl": 0,
+            "sol": 0,
+            "v": 0,
+            "gf": 25,
+            "ga": 5,
+            "pts": 6,
+            "logo": "assets/csapatok/lizards.png"
+          },
+          {
             "team": "ESMTK Jégpárducok B",
             "gp": 1,
             "w": 1,
@@ -257,20 +271,6 @@ window.LEAGUES = {
             "ga": 11,
             "pts": 3,
             "logo": "assets/csapatok/ligeti-jegkasak-b.png"
-          },
-          {
-            "team": "Lizards",
-            "gp": 1,
-            "w": 1,
-            "otw": 0,
-            "sow": 0,
-            "otl": 0,
-            "sol": 0,
-            "v": 0,
-            "gf": 5,
-            "ga": 3,
-            "pts": 3,
-            "logo": "assets/csapatok/lizards.png"
           },
           {
             "team": "Korongozoo VALOR",
@@ -317,15 +317,15 @@ window.LEAGUES = {
           },
           {
             "team": "Óbudai Gepárd D",
-            "gp": 2,
+            "gp": 3,
             "w": 0,
             "otw": 0,
             "sow": 0,
             "otl": 0,
             "sol": 0,
-            "v": 2,
-            "gf": 2,
-            "ga": 17,
+            "v": 3,
+            "gf": 4,
+            "ga": 37,
             "pts": 0,
             "logo": "assets/csapatok/obudai-gepard-d.png"
           }
@@ -574,21 +574,27 @@ window.LEAGUES = {
         "group": "A",
         "time": "17:45",
         "home": "Vénfarkasok",
-        "away": "Alba Trashers Jégkorong Klub"
+        "away": "Alba Trashers Jégkorong Klub",
+        "hs": 3,
+        "as": 6
       },
       {
         "date": "2026-11-08",
         "group": "B",
         "time": "18:45",
         "home": "Lizards",
-        "away": "Óbudai Gepárd D"
+        "away": "Óbudai Gepárd D",
+        "hs": 20,
+        "as": 2
       },
       {
         "date": "2026-11-08",
         "group": "A",
         "time": "20:05",
         "home": "HKB Flashes II",
-        "away": "Angels"
+        "away": "Angels",
+        "hs": 5,
+        "as": 1
       },
       {
         "date": "2026-11-22",
@@ -822,6 +828,24 @@ window.LEAGUES = {
         "pim": 0
       },
       {
+        "name": "Neumann Patrik",
+        "team": "Lizards",
+        "gp": 1,
+        "g": 3,
+        "a": 4,
+        "pts": 7,
+        "pim": 0
+      },
+      {
+        "name": "Ertly László",
+        "team": "Lizards",
+        "gp": 2,
+        "g": 4,
+        "a": 2,
+        "pts": 6,
+        "pim": 0
+      },
+      {
         "name": "Vancsó Arnold",
         "team": "Tatabányai Polipok",
         "gp": 3,
@@ -849,6 +873,15 @@ window.LEAGUES = {
         "pim": 4
       },
       {
+        "name": "Herman Tibor",
+        "team": "Lizards",
+        "gp": 1,
+        "g": 4,
+        "a": 0,
+        "pts": 4,
+        "pim": 0
+      },
+      {
         "name": "Bonhardt Tibor",
         "team": "ESMTK Jégpárducok B",
         "gp": 1,
@@ -858,11 +891,29 @@ window.LEAGUES = {
         "pim": 0
       },
       {
+        "name": "Halász Kristóf",
+        "team": "Lizards",
+        "gp": 2,
+        "g": 4,
+        "a": 0,
+        "pts": 4,
+        "pim": 2
+      },
+      {
         "name": "Bársony Ambrus Norbert",
         "team": "Korongozoo VALOR",
         "gp": 2,
         "g": 4,
         "a": 0,
+        "pts": 4,
+        "pim": 0
+      },
+      {
+        "name": "Guti Gergely",
+        "team": "Lizards",
+        "gp": 2,
+        "g": 1,
+        "a": 3,
         "pts": 4,
         "pim": 0
       },
@@ -893,51 +944,6 @@ window.LEAGUES = {
         "pts": 3,
         "pim": 0,
         "us": true
-      },
-      {
-        "name": "Ertly László",
-        "team": "Lizards",
-        "gp": 1,
-        "g": 2,
-        "a": 1,
-        "pts": 3,
-        "pim": 0
-      },
-      {
-        "name": "Csóka Kristóf",
-        "team": "Tatabányai Polipok",
-        "gp": 3,
-        "g": 2,
-        "a": 1,
-        "pts": 3,
-        "pim": 0
-      },
-      {
-        "name": "Csomor Norbert",
-        "team": "Ligeti Jégkásák B",
-        "gp": 3,
-        "g": 1,
-        "a": 2,
-        "pts": 3,
-        "pim": 2
-      },
-      {
-        "name": "Gőbel András György",
-        "team": "Ligeti Jégkásák B",
-        "gp": 3,
-        "g": 1,
-        "a": 2,
-        "pts": 3,
-        "pim": 0
-      },
-      {
-        "name": "Halász Kristóf",
-        "team": "Lizards",
-        "gp": 1,
-        "g": 2,
-        "a": 0,
-        "pts": 2,
-        "pim": 0
       }
     ],
     "attendance": {
@@ -1388,12 +1394,6 @@ window.LEAGUES = {
       },
       {
         "date": "2026-11-15",
-        "group": "A",
-        "home": "VIP Wizards",
-        "away": "Óbudai Gepárd C"
-      },
-      {
-        "date": "2026-11-15",
         "group": "B",
         "home": "Lehel HC Amatőr",
         "away": "Újpesti Ragadozók"
@@ -1404,6 +1404,13 @@ window.LEAGUES = {
         "time": "18:15",
         "home": "FTC-Telekom",
         "away": "Ice Unicorns"
+      },
+      {
+        "date": "2026-11-15",
+        "group": "A",
+        "time": "21:00",
+        "home": "VIP Wizards",
+        "away": "Óbudai Gepárd C"
       },
       {
         "date": "2026-11-21",
@@ -3056,4 +3063,4 @@ window.GAME_STATS = [
   }
 ];
 
-window.LEAGUES_FRISSITVE = "2026-11-08T05:10:11.997Z";
+window.LEAGUES_FRISSITVE = "2026-11-08T21:08:45.343Z";
