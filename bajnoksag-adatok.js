@@ -6,7 +6,7 @@
 // pedig időzítve lefuttatja, és commitolja, ha változott valami.
 //
 // Szezon: 2026-2027
-// Utolsó frissítés: 2026-11-08T21:08:45.343Z
+// Utolsó frissítés: 2026-11-09T21:09:34.691Z
 //
 // A LEAGUES mezőinek jelentését a bajnoksag.js, a GAME_STATS-ét a
 // statisztika.js tetején lévő leírás mondja el.
@@ -155,6 +155,20 @@ window.LEAGUES = {
             "logo": "assets/csapatok/vip-blazing-blades.png"
           },
           {
+            "team": "Alba Trashers Jégkorong Klub",
+            "gp": 3,
+            "w": 1,
+            "otw": 0,
+            "sow": 0,
+            "otl": 0,
+            "sol": 0,
+            "v": 2,
+            "gf": 11,
+            "ga": 11,
+            "pts": 3,
+            "logo": "assets/csapatok/alba-trashers-jegkorong-klub.png"
+          },
+          {
             "team": "ESMTK Jégkockák",
             "gp": 3,
             "w": 1,
@@ -169,30 +183,16 @@ window.LEAGUES = {
             "logo": "assets/csapatok/esmtk-jegkockak.png"
           },
           {
-            "team": "Alba Trashers Jégkorong Klub",
-            "gp": 2,
-            "w": 0,
-            "otw": 0,
-            "sow": 0,
-            "otl": 0,
-            "sol": 0,
-            "v": 2,
-            "gf": 5,
-            "ga": 8,
-            "pts": 0,
-            "logo": "assets/csapatok/alba-trashers-jegkorong-klub.png"
-          },
-          {
             "team": "Vénfarkasok",
-            "gp": 2,
+            "gp": 3,
             "w": 0,
             "otw": 0,
             "sow": 0,
             "otl": 0,
             "sol": 0,
-            "v": 2,
-            "gf": 9,
-            "ga": 17,
+            "v": 3,
+            "gf": 12,
+            "ga": 23,
             "pts": 0,
             "logo": "assets/csapatok/venfarkasok.png"
           },
@@ -597,16 +597,17 @@ window.LEAGUES = {
         "as": 1
       },
       {
-        "date": "2026-11-22",
+        "date": "2026-11-20",
         "group": "A",
-        "home": "Alba Trashers Jégkorong Klub",
-        "away": "HKB Flashes II"
+        "time": "20:30",
+        "home": "Angels",
+        "away": "Ligeti Jégkásák A"
       },
       {
         "date": "2026-11-22",
         "group": "A",
-        "home": "Angels",
-        "away": "Ligeti Jégkásák A"
+        "home": "Alba Trashers Jégkorong Klub",
+        "away": "HKB Flashes II"
       },
       {
         "date": "2026-11-22",
@@ -1379,6 +1380,13 @@ window.LEAGUES = {
         "as": 11
       },
       {
+        "date": "2026-11-13",
+        "group": "B",
+        "time": "20:00",
+        "home": "Lehel HC Amatőr",
+        "away": "Újpesti Ragadozók"
+      },
+      {
         "date": "2026-11-14",
         "group": "A",
         "time": "18:00",
@@ -1391,12 +1399,6 @@ window.LEAGUES = {
         "time": "19:45",
         "home": "Kohász",
         "away": "ESMTK Jégtörők"
-      },
-      {
-        "date": "2026-11-15",
-        "group": "B",
-        "home": "Lehel HC Amatőr",
-        "away": "Újpesti Ragadozók"
       },
       {
         "date": "2026-11-15",
@@ -3063,4 +3065,4 @@ window.GAME_STATS = [
   }
 ];
 
-window.LEAGUES_FRISSITVE = "2026-11-08T21:08:45.343Z";
+window.LEAGUES_FRISSITVE = "2026-11-09T21:09:34.691Z";
