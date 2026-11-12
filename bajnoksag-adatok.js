@@ -6,7 +6,7 @@
 // pedig időzítve lefuttatja, és commitolja, ha változott valami.
 //
 // Szezon: 2026-2027
-// Utolsó frissítés: 2026-11-11T21:14:20.205Z
+// Utolsó frissítés: 2026-11-12T21:09:48.431Z
 //
 // A LEAGUES mezőinek jelentését a bajnoksag.js, a GAME_STATS-ét a
 // statisztika.js tetején lévő leírás mondja el.
@@ -987,6 +987,7 @@ window.LEAGUES = {
       {
         "id": 88419,
         "date": "2026-11-22",
+        "time": "18:50",
         "opponent": "Kohász",
         "home": true,
         "venue": "Ifj. Ocskay Gábor Jégcsarnok, C pálya",
@@ -1425,6 +1426,7 @@ window.LEAGUES = {
       {
         "date": "2026-11-22",
         "group": "B",
+        "time": "18:50",
         "home": "Ice Unicorns",
         "away": "Kohász"
       },
@@ -3066,4 +3068,4 @@ window.GAME_STATS = [
   }
 ];
 
-window.LEAGUES_FRISSITVE = "2026-11-11T21:14:20.205Z";
+window.LEAGUES_FRISSITVE = "2026-11-12T21:09:48.431Z";
