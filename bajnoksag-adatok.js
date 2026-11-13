@@ -6,7 +6,7 @@
 // pedig időzítve lefuttatja, és commitolja, ha változott valami.
 //
 // Szezon: 2026-2027
-// Utolsó frissítés: 2026-11-12T21:09:48.431Z
+// Utolsó frissítés: 2026-11-13T21:08:54.004Z
 //
 // A LEAGUES mezőinek jelentését a bajnoksag.js, a GAME_STATS-ét a
 // statisztika.js tetején lévő leírás mondja el.
@@ -1386,7 +1386,9 @@ window.LEAGUES = {
         "group": "B",
         "time": "20:00",
         "home": "Lehel HC Amatőr",
-        "away": "Újpesti Ragadozók"
+        "away": "Újpesti Ragadozók",
+        "hs": 2,
+        "as": 4
       },
       {
         "date": "2026-11-14",
@@ -1580,7 +1582,7 @@ window.LEAGUES = {
       {
         "name": "Kovács Kornél",
         "team": "Lehel HC Amatőr",
-        "gp": 2,
+        "gp": 3,
         "g": 5,
         "a": 1,
         "pts": 6,
@@ -1589,7 +1591,7 @@ window.LEAGUES = {
       {
         "name": "Torma-Birgés Tibor",
         "team": "Lehel HC Amatőr",
-        "gp": 2,
+        "gp": 3,
         "g": 3,
         "a": 2,
         "pts": 5,
@@ -1605,22 +1607,31 @@ window.LEAGUES = {
         "pim": 0
       },
       {
+        "name": "Horváth György",
+        "team": "Lehel HC Amatőr",
+        "gp": 3,
+        "g": 3,
+        "a": 1,
+        "pts": 4,
+        "pim": 0
+      },
+      {
+        "name": "Ludasi Csaba",
+        "team": "Lehel HC Amatőr",
+        "gp": 3,
+        "g": 2,
+        "a": 2,
+        "pts": 4,
+        "pim": 4
+      },
+      {
         "name": "Darázs Zoltán",
         "team": "Lehel HC Amatőr",
-        "gp": 2,
+        "gp": 3,
         "g": 0,
         "a": 4,
         "pts": 4,
         "pim": 2
-      },
-      {
-        "name": "Horváth György",
-        "team": "Lehel HC Amatőr",
-        "gp": 2,
-        "g": 2,
-        "a": 1,
-        "pts": 3,
-        "pim": 0
       },
       {
         "name": "Antoni Krisztián",
@@ -1632,15 +1643,6 @@ window.LEAGUES = {
         "pim": 0
       },
       {
-        "name": "Ludasi Csaba",
-        "team": "Lehel HC Amatőr",
-        "gp": 2,
-        "g": 1,
-        "a": 2,
-        "pts": 3,
-        "pim": 4
-      },
-      {
         "name": "Algács István",
         "team": "Séra Team",
         "gp": 2,
@@ -1650,21 +1652,12 @@ window.LEAGUES = {
         "pim": 0
       },
       {
-        "name": "Pudleiner Kálmán Antal",
-        "team": "Újpesti Ragadozók",
-        "gp": 1,
-        "g": 2,
-        "a": 0,
-        "pts": 2,
-        "pim": 2
-      },
-      {
-        "name": "Boros Kornél",
-        "team": "Újpesti Ragadozók",
-        "gp": 1,
-        "g": 2,
-        "a": 0,
-        "pts": 2,
+        "name": "Rácz Róbert",
+        "team": "Lehel HC Amatőr",
+        "gp": 3,
+        "g": 1,
+        "a": 2,
+        "pts": 3,
         "pim": 0
       },
       {
@@ -1677,20 +1670,29 @@ window.LEAGUES = {
         "pim": 0
       },
       {
-        "name": "Varga Milán",
-        "team": "Lehel HC Amatőr",
-        "gp": 1,
-        "g": 1,
-        "a": 1,
+        "name": "Mozsár Péter",
+        "team": "Újpesti Ragadozók",
+        "gp": 2,
+        "g": 2,
+        "a": 0,
         "pts": 2,
-        "pim": 0
+        "pim": 2
       },
       {
-        "name": "Biró Csaba",
+        "name": "Pudleiner Kálmán Antal",
         "team": "Újpesti Ragadozók",
-        "gp": 1,
-        "g": 1,
-        "a": 1,
+        "gp": 2,
+        "g": 2,
+        "a": 0,
+        "pts": 2,
+        "pim": 4
+      },
+      {
+        "name": "Boros Kornél",
+        "team": "Újpesti Ragadozók",
+        "gp": 2,
+        "g": 2,
+        "a": 0,
         "pts": 2,
         "pim": 0
       },
@@ -1704,7 +1706,7 @@ window.LEAGUES = {
         "pim": 0
       },
       {
-        "name": "Rácz Róbert",
+        "name": "Varga Milán",
         "team": "Lehel HC Amatőr",
         "gp": 2,
         "g": 1,
@@ -3068,4 +3070,4 @@ window.GAME_STATS = [
   }
 ];
 
-window.LEAGUES_FRISSITVE = "2026-11-12T21:09:48.431Z";
+window.LEAGUES_FRISSITVE = "2026-11-13T21:08:54.004Z";
