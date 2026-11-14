@@ -6,7 +6,7 @@
 // pedig időzítve lefuttatja, és commitolja, ha változott valami.
 //
 // Szezon: 2026-2027
-// Utolsó frissítés: 2026-11-14T05:10:08.920Z
+// Utolsó frissítés: 2026-11-14T21:08:40.807Z
 //
 // A LEAGUES mezőinek jelentését a bajnoksag.js, a GAME_STATS-ét a
 // statisztika.js tetején lévő leírás mondja el.
@@ -601,7 +601,9 @@ window.LEAGUES = {
         "group": "B",
         "time": "20:50",
         "home": "Tatabányai Polipok",
-        "away": "Lizards"
+        "away": "Lizards",
+        "hs": 3,
+        "as": 3
       },
       {
         "date": "2026-11-20",
@@ -812,54 +814,63 @@ window.LEAGUES = {
     ],
     "scorers": [
       {
+        "name": "Varga Dávid Ferenc",
+        "team": "Tatabányai Polipok",
+        "gp": 4,
+        "g": 8,
+        "a": 1,
+        "pts": 9,
+        "pim": 0
+      },
+      {
+        "name": "Neumann Patrik",
+        "team": "Lizards",
+        "gp": 2,
+        "g": 5,
+        "a": 4,
+        "pts": 9,
+        "pim": 0
+      },
+      {
         "name": "Végh Ádám",
         "team": "Tatabányai Polipok",
-        "gp": 3,
+        "gp": 4,
         "g": 4,
         "a": 4,
         "pts": 8,
         "pim": 0
       },
       {
-        "name": "Varga Dávid Ferenc",
+        "name": "Csaplár Krisztián",
         "team": "Tatabányai Polipok",
-        "gp": 3,
-        "g": 6,
-        "a": 1,
+        "gp": 4,
+        "g": 4,
+        "a": 3,
         "pts": 7,
         "pim": 0
       },
       {
-        "name": "Neumann Patrik",
-        "team": "Lizards",
-        "gp": 1,
-        "g": 3,
-        "a": 4,
+        "name": "Vancsó Arnold",
+        "team": "Tatabányai Polipok",
+        "gp": 4,
+        "g": 2,
+        "a": 5,
         "pts": 7,
-        "pim": 0
+        "pim": 2
       },
       {
         "name": "Ertly László",
         "team": "Lizards",
-        "gp": 2,
+        "gp": 3,
         "g": 4,
         "a": 2,
         "pts": 6,
         "pim": 0
       },
       {
-        "name": "Vancsó Arnold",
-        "team": "Tatabányai Polipok",
-        "gp": 3,
-        "g": 1,
-        "a": 5,
-        "pts": 6,
-        "pim": 2
-      },
-      {
-        "name": "Csaplár Krisztián",
-        "team": "Tatabányai Polipok",
-        "gp": 3,
+        "name": "Herman Tibor",
+        "team": "Lizards",
+        "gp": 2,
         "g": 4,
         "a": 1,
         "pts": 5,
@@ -875,15 +886,6 @@ window.LEAGUES = {
         "pim": 4
       },
       {
-        "name": "Herman Tibor",
-        "team": "Lizards",
-        "gp": 1,
-        "g": 4,
-        "a": 0,
-        "pts": 4,
-        "pim": 0
-      },
-      {
         "name": "Bonhardt Tibor",
         "team": "ESMTK Jégpárducok B",
         "gp": 1,
@@ -891,15 +893,6 @@ window.LEAGUES = {
         "a": 0,
         "pts": 4,
         "pim": 0
-      },
-      {
-        "name": "Halász Kristóf",
-        "team": "Lizards",
-        "gp": 2,
-        "g": 4,
-        "a": 0,
-        "pts": 4,
-        "pim": 2
       },
       {
         "name": "Bársony Ambrus Norbert",
@@ -911,9 +904,18 @@ window.LEAGUES = {
         "pim": 0
       },
       {
+        "name": "Halász Kristóf",
+        "team": "Lizards",
+        "gp": 3,
+        "g": 4,
+        "a": 0,
+        "pts": 4,
+        "pim": 2
+      },
+      {
         "name": "Guti Gergely",
         "team": "Lizards",
-        "gp": 2,
+        "gp": 3,
         "g": 1,
         "a": 3,
         "pts": 4,
@@ -1150,20 +1152,6 @@ window.LEAGUES = {
             "logo": "assets/csapatok/lehel-hc-amator.png"
           },
           {
-            "team": "ESMTK Jégtörők",
-            "gp": 1,
-            "w": 1,
-            "otw": 0,
-            "sow": 0,
-            "otl": 0,
-            "sol": 0,
-            "v": 0,
-            "gf": 9,
-            "ga": 2,
-            "pts": 3,
-            "logo": "assets/csapatok/esmtk-jegtorok.png"
-          },
-          {
             "team": "Újpesti Ragadozók",
             "gp": 1,
             "w": 1,
@@ -1193,17 +1181,31 @@ window.LEAGUES = {
             "us": true
           },
           {
-            "team": "Kohász",
-            "gp": 1,
-            "w": 0,
+            "team": "ESMTK Jégtörők",
+            "gp": 2,
+            "w": 1,
             "otw": 0,
             "sow": 0,
             "otl": 0,
             "sol": 0,
             "v": 1,
-            "gf": 1,
-            "ga": 4,
-            "pts": 0,
+            "gf": 12,
+            "ga": 6,
+            "pts": 3,
+            "logo": "assets/csapatok/esmtk-jegtorok.png"
+          },
+          {
+            "team": "Kohász",
+            "gp": 2,
+            "w": 1,
+            "otw": 0,
+            "sow": 0,
+            "otl": 0,
+            "sol": 0,
+            "v": 1,
+            "gf": 5,
+            "ga": 7,
+            "pts": 3,
             "logo": "assets/csapatok/kohasz.png"
           },
           {
@@ -1409,14 +1411,18 @@ window.LEAGUES = {
         "group": "A",
         "time": "18:00",
         "home": "Kárpáti Farkasok",
-        "away": "Algyői Olajosok"
+        "away": "Algyői Olajosok",
+        "hs": 3,
+        "as": 2
       },
       {
         "date": "2026-11-14",
         "group": "B",
         "time": "19:45",
         "home": "Kohász",
-        "away": "ESMTK Jégtörők"
+        "away": "ESMTK Jégtörők",
+        "hs": 4,
+        "as": 3
       },
       {
         "date": "2026-11-15",
@@ -1603,6 +1609,15 @@ window.LEAGUES = {
         "pim": 2
       },
       {
+        "name": "Gál Martin",
+        "team": "ESMTK Jégtörők",
+        "gp": 2,
+        "g": 5,
+        "a": 0,
+        "pts": 5,
+        "pim": 0
+      },
+      {
         "name": "Torma-Birgés Tibor",
         "team": "Lehel HC Amatőr",
         "gp": 3,
@@ -1612,20 +1627,20 @@ window.LEAGUES = {
         "pim": 2
       },
       {
-        "name": "Gál Martin",
-        "team": "ESMTK Jégtörők",
-        "gp": 1,
-        "g": 4,
-        "a": 0,
-        "pts": 4,
-        "pim": 0
-      },
-      {
         "name": "Horváth György",
         "team": "Lehel HC Amatőr",
         "gp": 3,
         "g": 3,
         "a": 1,
+        "pts": 4,
+        "pim": 0
+      },
+      {
+        "name": "Antoni Krisztián",
+        "team": "ESMTK Jégtörők",
+        "gp": 2,
+        "g": 2,
+        "a": 2,
         "pts": 4,
         "pim": 0
       },
@@ -1648,11 +1663,11 @@ window.LEAGUES = {
         "pim": 2
       },
       {
-        "name": "Antoni Krisztián",
+        "name": "Szőcs Balázs",
         "team": "ESMTK Jégtörők",
-        "gp": 1,
-        "g": 1,
-        "a": 2,
+        "gp": 2,
+        "g": 2,
+        "a": 1,
         "pts": 3,
         "pim": 0
       },
@@ -1675,13 +1690,22 @@ window.LEAGUES = {
         "pim": 0
       },
       {
-        "name": "Szőcs Balázs",
+        "name": "Müllner Tamás",
         "team": "ESMTK Jégtörők",
-        "gp": 1,
+        "gp": 2,
+        "g": 0,
+        "a": 3,
+        "pts": 3,
+        "pim": 0
+      },
+      {
+        "name": "Juhász Ferenc Hunor",
+        "team": "Kohász",
+        "gp": 2,
         "g": 2,
         "a": 0,
         "pts": 2,
-        "pim": 0
+        "pim": 2
       },
       {
         "name": "Mozsár Péter",
@@ -1707,24 +1731,6 @@ window.LEAGUES = {
         "gp": 2,
         "g": 2,
         "a": 0,
-        "pts": 2,
-        "pim": 0
-      },
-      {
-        "name": "Gerencsér Ambrus",
-        "team": "Újpesti Ragadozók",
-        "gp": 1,
-        "g": 1,
-        "a": 1,
-        "pts": 2,
-        "pim": 0
-      },
-      {
-        "name": "Varga Tamás Péter",
-        "team": "ESMTK Jégtörők",
-        "gp": 1,
-        "g": 1,
-        "a": 1,
         "pts": 2,
         "pim": 0
       }
@@ -3084,4 +3090,4 @@ window.GAME_STATS = [
   }
 ];
 
-window.LEAGUES_FRISSITVE = "2026-11-14T05:10:08.920Z";
+window.LEAGUES_FRISSITVE = "2026-11-14T21:08:40.807Z";
