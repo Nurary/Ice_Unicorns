@@ -6,7 +6,7 @@
 // pedig időzítve lefuttatja, és commitolja, ha változott valami.
 //
 // Szezon: 2026-2027
-// Utolsó frissítés: 2026-11-13T21:08:54.004Z
+// Utolsó frissítés: 2026-11-14T05:10:08.920Z
 //
 // A LEAGUES mezőinek jelentését a bajnoksag.js, a GAME_STATS-ét a
 // statisztika.js tetején lévő leírás mondja el.
@@ -1137,15 +1137,15 @@ window.LEAGUES = {
         "standings": [
           {
             "team": "Lehel HC Amatőr",
-            "gp": 2,
+            "gp": 3,
             "w": 2,
             "otw": 0,
             "sow": 0,
             "otl": 0,
             "sol": 0,
-            "v": 0,
-            "gf": 15,
-            "ga": 2,
+            "v": 1,
+            "gf": 17,
+            "ga": 6,
             "pts": 6,
             "logo": "assets/csapatok/lehel-hc-amator.png"
           },
@@ -1162,6 +1162,20 @@ window.LEAGUES = {
             "ga": 2,
             "pts": 3,
             "logo": "assets/csapatok/esmtk-jegtorok.png"
+          },
+          {
+            "team": "Újpesti Ragadozók",
+            "gp": 1,
+            "w": 1,
+            "otw": 0,
+            "sow": 0,
+            "otl": 0,
+            "sol": 0,
+            "v": 0,
+            "gf": 4,
+            "ga": 2,
+            "pts": 3,
+            "logo": "assets/csapatok/ujpesti-ragadozok.png"
           },
           {
             "team": "Ice Unicorns",
@@ -1250,7 +1264,7 @@ window.LEAGUES = {
       },
       "Újpesti Ragadozók": {
         "logo": "assets/csapatok/ujpesti-ragadozok.png",
-        "group": null
+        "group": "B"
       },
       "FTC-Telekom": {
         "logo": "assets/csapatok/ftc-telekom.png",
@@ -1697,8 +1711,8 @@ window.LEAGUES = {
         "pim": 0
       },
       {
-        "name": "Varga Tamás Péter",
-        "team": "ESMTK Jégtörők",
+        "name": "Gerencsér Ambrus",
+        "team": "Újpesti Ragadozók",
         "gp": 1,
         "g": 1,
         "a": 1,
@@ -1706,9 +1720,9 @@ window.LEAGUES = {
         "pim": 0
       },
       {
-        "name": "Varga Milán",
-        "team": "Lehel HC Amatőr",
-        "gp": 2,
+        "name": "Varga Tamás Péter",
+        "team": "ESMTK Jégtörők",
+        "gp": 1,
         "g": 1,
         "a": 1,
         "pts": 2,
@@ -3070,4 +3084,4 @@ window.GAME_STATS = [
   }
 ];
 
-window.LEAGUES_FRISSITVE = "2026-11-13T21:08:54.004Z";
+window.LEAGUES_FRISSITVE = "2026-11-14T05:10:08.920Z";
