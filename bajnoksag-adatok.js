@@ -6,7 +6,7 @@
 // pedig időzítve lefuttatja, és commitolja, ha változott valami.
 //
 // Szezon: 2026-2027
-// Utolsó frissítés: 2026-11-14T21:08:40.807Z
+// Utolsó frissítés: 2026-11-15T05:10:18.568Z
 //
 // A LEAGUES mezőinek jelentését a bajnoksag.js, a GAME_STATS-ét a
 // statisztika.js tetején lévő leírás mondja el.
@@ -218,30 +218,30 @@ window.LEAGUES = {
         "standings": [
           {
             "team": "Tatabányai Polipok",
-            "gp": 3,
+            "gp": 4,
             "w": 3,
             "otw": 0,
-            "sow": 0,
+            "sow": 1,
             "otl": 0,
             "sol": 0,
             "v": 0,
-            "gf": 22,
-            "ga": 5,
-            "pts": 9,
+            "gf": 29,
+            "ga": 11,
+            "pts": 11,
             "logo": "assets/csapatok/tatabanyai-polipok.png"
           },
           {
             "team": "Lizards",
-            "gp": 2,
+            "gp": 3,
             "w": 2,
             "otw": 0,
             "sow": 0,
             "otl": 0,
-            "sol": 0,
+            "sol": 1,
             "v": 0,
-            "gf": 25,
-            "ga": 5,
-            "pts": 6,
+            "gf": 31,
+            "ga": 12,
+            "pts": 7,
             "logo": "assets/csapatok/lizards.png"
           },
           {
@@ -602,8 +602,9 @@ window.LEAGUES = {
         "time": "20:50",
         "home": "Tatabányai Polipok",
         "away": "Lizards",
-        "hs": 3,
-        "as": 3
+        "hs": 7,
+        "as": 6,
+        "ot": true
       },
       {
         "date": "2026-11-20",
@@ -817,18 +818,27 @@ window.LEAGUES = {
         "name": "Varga Dávid Ferenc",
         "team": "Tatabányai Polipok",
         "gp": 4,
-        "g": 8,
-        "a": 1,
-        "pts": 9,
-        "pim": 0
+        "g": 10,
+        "a": 3,
+        "pts": 13,
+        "pim": 2
       },
       {
         "name": "Neumann Patrik",
         "team": "Lizards",
         "gp": 2,
         "g": 5,
+        "a": 5,
+        "pts": 10,
+        "pim": 0
+      },
+      {
+        "name": "Csaplár Krisztián",
+        "team": "Tatabányai Polipok",
+        "gp": 4,
+        "g": 4,
         "a": 4,
-        "pts": 9,
+        "pts": 8,
         "pim": 0
       },
       {
@@ -841,11 +851,11 @@ window.LEAGUES = {
         "pim": 0
       },
       {
-        "name": "Csaplár Krisztián",
-        "team": "Tatabányai Polipok",
-        "gp": 4,
-        "g": 4,
-        "a": 3,
+        "name": "Herman Tibor",
+        "team": "Lizards",
+        "gp": 2,
+        "g": 6,
+        "a": 1,
         "pts": 7,
         "pim": 0
       },
@@ -868,15 +878,6 @@ window.LEAGUES = {
         "pim": 0
       },
       {
-        "name": "Herman Tibor",
-        "team": "Lizards",
-        "gp": 2,
-        "g": 4,
-        "a": 1,
-        "pts": 5,
-        "pim": 0
-      },
-      {
         "name": "Szatmári Ferenc",
         "team": "Ligeti Jégkásák B",
         "gp": 3,
@@ -884,6 +885,15 @@ window.LEAGUES = {
         "a": 1,
         "pts": 5,
         "pim": 4
+      },
+      {
+        "name": "Guti Gergely",
+        "team": "Lizards",
+        "gp": 3,
+        "g": 1,
+        "a": 4,
+        "pts": 5,
+        "pim": 0
       },
       {
         "name": "Bonhardt Tibor",
@@ -911,15 +921,6 @@ window.LEAGUES = {
         "a": 0,
         "pts": 4,
         "pim": 2
-      },
-      {
-        "name": "Guti Gergely",
-        "team": "Lizards",
-        "gp": 3,
-        "g": 1,
-        "a": 3,
-        "pts": 4,
-        "pim": 0
       },
       {
         "name": "Erdei Zsolt",
@@ -3090,4 +3091,4 @@ window.GAME_STATS = [
   }
 ];
 
-window.LEAGUES_FRISSITVE = "2026-11-14T21:08:40.807Z";
+window.LEAGUES_FRISSITVE = "2026-11-15T05:10:18.568Z";
