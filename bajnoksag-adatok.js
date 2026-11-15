@@ -6,7 +6,7 @@
 // pedig időzítve lefuttatja, és commitolja, ha változott valami.
 //
 // Szezon: 2026-2027
-// Utolsó frissítés: 2026-11-15T05:10:18.568Z
+// Utolsó frissítés: 2026-11-15T21:09:07.827Z
 //
 // A LEAGUES mezőinek jelentését a bajnoksag.js, a GAME_STATS-ét a
 // statisztika.js tetején lévő leírás mondja el.
@@ -614,6 +614,13 @@ window.LEAGUES = {
         "away": "Ligeti Jégkásák A"
       },
       {
+        "date": "2026-11-21",
+        "group": "B",
+        "time": "21:05",
+        "home": "DJK SE",
+        "away": "Korongozoo VALOR"
+      },
+      {
         "date": "2026-11-22",
         "group": "A",
         "home": "Alba Trashers Jégkorong Klub",
@@ -624,12 +631,6 @@ window.LEAGUES = {
         "group": "A",
         "home": "ESMTK Jégkockák",
         "away": "VIP Blazing Blades"
-      },
-      {
-        "date": "2026-11-22",
-        "group": "B",
-        "home": "DJK SE",
-        "away": "Korongozoo VALOR"
       },
       {
         "date": "2026-11-22",
@@ -984,8 +985,8 @@ window.LEAGUES = {
         "home": false,
         "venue": "FTC Sátras Jégpálya",
         "logo": "assets/csapatok/ftc-telekom.png",
-        "us": null,
-        "them": null
+        "us": 8,
+        "them": 7
       },
       {
         "id": 88419,
@@ -1063,20 +1064,6 @@ window.LEAGUES = {
             "logo": "assets/csapatok/hkb-flashes-i.png"
           },
           {
-            "team": "Algyői Olajosok",
-            "gp": 1,
-            "w": 1,
-            "otw": 0,
-            "sow": 0,
-            "otl": 0,
-            "sol": 0,
-            "v": 0,
-            "gf": 5,
-            "ga": 0,
-            "pts": 3,
-            "logo": "assets/csapatok/algyoi-olajosok.png"
-          },
-          {
             "team": "Óbudai Gepárd C",
             "gp": 2,
             "w": 1,
@@ -1089,6 +1076,34 @@ window.LEAGUES = {
             "ga": 8,
             "pts": 3,
             "logo": "assets/csapatok/obudai-gepard-c.png"
+          },
+          {
+            "team": "Kárpáti Farkasok",
+            "gp": 3,
+            "w": 1,
+            "otw": 0,
+            "sow": 0,
+            "otl": 0,
+            "sol": 0,
+            "v": 2,
+            "gf": 6,
+            "ga": 15,
+            "pts": 3,
+            "logo": "assets/csapatok/karpati-farkasok.png"
+          },
+          {
+            "team": "Algyői Olajosok",
+            "gp": 2,
+            "w": 1,
+            "otw": 0,
+            "sow": 0,
+            "otl": 0,
+            "sol": 0,
+            "v": 1,
+            "gf": 7,
+            "ga": 3,
+            "pts": 3,
+            "logo": "assets/csapatok/algyoi-olajosok.png"
           },
           {
             "team": "VIP Crazy Zombies",
@@ -1117,20 +1132,6 @@ window.LEAGUES = {
             "ga": 6,
             "pts": 0,
             "logo": "assets/csapatok/vip-wizards.png"
-          },
-          {
-            "team": "Kárpáti Farkasok",
-            "gp": 2,
-            "w": 0,
-            "otw": 0,
-            "sow": 0,
-            "otl": 0,
-            "sol": 0,
-            "v": 2,
-            "gf": 3,
-            "ga": 13,
-            "pts": 0,
-            "logo": "assets/csapatok/karpati-farkasok.png"
           }
         ]
       },
@@ -1153,6 +1154,21 @@ window.LEAGUES = {
             "logo": "assets/csapatok/lehel-hc-amator.png"
           },
           {
+            "team": "Ice Unicorns",
+            "gp": 2,
+            "w": 2,
+            "otw": 0,
+            "sow": 0,
+            "otl": 0,
+            "sol": 0,
+            "v": 0,
+            "gf": 12,
+            "ga": 9,
+            "pts": 6,
+            "logo": "assets/logo/logo.jpg",
+            "us": true
+          },
+          {
             "team": "Újpesti Ragadozók",
             "gp": 1,
             "w": 1,
@@ -1165,21 +1181,6 @@ window.LEAGUES = {
             "ga": 2,
             "pts": 3,
             "logo": "assets/csapatok/ujpesti-ragadozok.png"
-          },
-          {
-            "team": "Ice Unicorns",
-            "gp": 1,
-            "w": 1,
-            "otw": 0,
-            "sow": 0,
-            "otl": 0,
-            "sol": 0,
-            "v": 0,
-            "gf": 4,
-            "ga": 2,
-            "pts": 3,
-            "logo": "assets/logo/logo.jpg",
-            "us": true
           },
           {
             "team": "ESMTK Jégtörők",
@@ -1225,15 +1226,15 @@ window.LEAGUES = {
           },
           {
             "team": "FTC-Telekom",
-            "gp": 1,
+            "gp": 2,
             "w": 0,
             "otw": 0,
             "sow": 0,
             "otl": 0,
             "sol": 0,
-            "v": 1,
-            "gf": 1,
-            "ga": 11,
+            "v": 2,
+            "gf": 8,
+            "ga": 19,
             "pts": 0,
             "logo": "assets/csapatok/ftc-telekom.png"
           }
@@ -1430,14 +1431,18 @@ window.LEAGUES = {
         "group": "B",
         "time": "18:15",
         "home": "FTC-Telekom",
-        "away": "Ice Unicorns"
+        "away": "Ice Unicorns",
+        "hs": 7,
+        "as": 8
       },
       {
         "date": "2026-11-15",
         "group": "A",
         "time": "21:00",
         "home": "VIP Wizards",
-        "away": "Óbudai Gepárd C"
+        "away": "Óbudai Gepárd C",
+        "hs": 2,
+        "as": 1
       },
       {
         "date": "2026-11-21",
@@ -1610,11 +1615,38 @@ window.LEAGUES = {
         "pim": 2
       },
       {
+        "name": "Zima Péter",
+        "team": "FTC-Telekom",
+        "gp": 3,
+        "g": 2,
+        "a": 4,
+        "pts": 6,
+        "pim": 0
+      },
+      {
+        "name": "Kern Ádám",
+        "team": "FTC-Telekom",
+        "gp": 3,
+        "g": 2,
+        "a": 4,
+        "pts": 6,
+        "pim": 8
+      },
+      {
         "name": "Gál Martin",
         "team": "ESMTK Jégtörők",
         "gp": 2,
         "g": 5,
         "a": 0,
+        "pts": 5,
+        "pim": 0
+      },
+      {
+        "name": "László Zoltán",
+        "team": "FTC-Telekom",
+        "gp": 3,
+        "g": 4,
+        "a": 1,
         "pts": 5,
         "pim": 0
       },
@@ -1664,6 +1696,26 @@ window.LEAGUES = {
         "pim": 2
       },
       {
+        "name": "Pintér Mátyás",
+        "team": "Ice Unicorns",
+        "gp": 2,
+        "g": 2,
+        "a": 1,
+        "pts": 3,
+        "pim": 0,
+        "us": true
+      },
+      {
+        "name": "Visnyei Balázs",
+        "team": "Ice Unicorns",
+        "gp": 2,
+        "g": 2,
+        "a": 1,
+        "pts": 3,
+        "pim": 0,
+        "us": true
+      },
+      {
         "name": "Szőcs Balázs",
         "team": "ESMTK Jégtörők",
         "gp": 2,
@@ -1673,6 +1725,16 @@ window.LEAGUES = {
         "pim": 0
       },
       {
+        "name": "Fischer Zsolt",
+        "team": "Ice Unicorns",
+        "gp": 2,
+        "g": 1,
+        "a": 2,
+        "pts": 3,
+        "pim": 0,
+        "us": true
+      },
+      {
         "name": "Algács István",
         "team": "Séra Team",
         "gp": 2,
@@ -1680,68 +1742,14 @@ window.LEAGUES = {
         "a": 2,
         "pts": 3,
         "pim": 0
-      },
-      {
-        "name": "Rácz Róbert",
-        "team": "Lehel HC Amatőr",
-        "gp": 3,
-        "g": 1,
-        "a": 2,
-        "pts": 3,
-        "pim": 0
-      },
-      {
-        "name": "Müllner Tamás",
-        "team": "ESMTK Jégtörők",
-        "gp": 2,
-        "g": 0,
-        "a": 3,
-        "pts": 3,
-        "pim": 0
-      },
-      {
-        "name": "Juhász Ferenc Hunor",
-        "team": "Kohász",
-        "gp": 2,
-        "g": 2,
-        "a": 0,
-        "pts": 2,
-        "pim": 2
-      },
-      {
-        "name": "Mozsár Péter",
-        "team": "Újpesti Ragadozók",
-        "gp": 2,
-        "g": 2,
-        "a": 0,
-        "pts": 2,
-        "pim": 2
-      },
-      {
-        "name": "Pudleiner Kálmán Antal",
-        "team": "Újpesti Ragadozók",
-        "gp": 2,
-        "g": 2,
-        "a": 0,
-        "pts": 2,
-        "pim": 4
-      },
-      {
-        "name": "Boros Kornél",
-        "team": "Újpesti Ragadozók",
-        "gp": 2,
-        "g": 2,
-        "a": 0,
-        "pts": 2,
-        "pim": 0
       }
     ],
     "attendance": {
       "homeGames": 0,
       "homeAvg": 0,
-      "awayAvg": 88,
-      "total": 88,
-      "totalAvg": 88
+      "awayAvg": 62,
+      "total": 123,
+      "totalAvg": 62
     }
   }
 };
@@ -3088,7 +3096,594 @@ window.GAME_STATS = [
         ]
       }
     ]
+  },
+  {
+    "id": 88422,
+    "date": "2026-11-15",
+    "league": "ob4c",
+    "opponent": "FTC-Telekom",
+    "home": false,
+    "us": 8,
+    "them": 7,
+    "skaters": {
+      "Fischer Zsolt": {
+        "g": 1,
+        "a": 0,
+        "pim": 0,
+        "pm": 0
+      },
+      "Pintér Mátyás": {
+        "g": 1,
+        "a": 1,
+        "pim": 0,
+        "pm": 1
+      },
+      "KristályPatkó": {
+        "g": 0,
+        "a": 0,
+        "pim": 0,
+        "pm": 0
+      },
+      "Schmidt Zsolt": {
+        "g": 1,
+        "a": 0,
+        "pim": 2,
+        "pm": 1
+      },
+      "László Zoltán": {
+        "g": 0,
+        "a": 0,
+        "pim": 0,
+        "pm": 0
+      },
+      "Katonka Péter": {
+        "g": 0,
+        "a": 0,
+        "pim": 0,
+        "pm": 0
+      },
+      "Buborék": {
+        "g": 0,
+        "a": 0,
+        "pim": 0,
+        "pm": 0
+      },
+      "Varga Attila": {
+        "g": 1,
+        "a": 1,
+        "pim": 0,
+        "pm": 2
+      },
+      "Nagy Dorina": {
+        "g": 0,
+        "a": 2,
+        "pim": 0,
+        "pm": 1
+      },
+      "Visnyei Balázs": {
+        "g": 2,
+        "a": 1,
+        "pim": 0,
+        "pm": 2
+      },
+      "Maszat": {
+        "g": 1,
+        "a": 0,
+        "pim": 0,
+        "pm": 1
+      },
+      "Wilhelm Viktor": {
+        "g": 0,
+        "a": 0,
+        "pim": 0,
+        "pm": 0
+      },
+      "Kovács Péter": {
+        "g": 0,
+        "a": 0,
+        "pim": 0,
+        "pm": 0
+      },
+      "Tobik János": {
+        "g": 1,
+        "a": 0,
+        "pim": 0,
+        "pm": 1
+      },
+      "Hadnagy Csongor": {
+        "g": 0,
+        "a": 1,
+        "pim": 0,
+        "pm": 1
+      },
+      "Szikrácska": {
+        "g": 0,
+        "a": 0,
+        "pim": 0,
+        "pm": 0
+      },
+      "Kövesi Áron Péter": {
+        "g": 0,
+        "a": 0,
+        "pim": 0,
+        "pm": 0
+      }
+    },
+    "goalies": {
+      "Kövesi Áron Péter": {
+        "ga": 7,
+        "min": 60,
+        "sv": 23,
+        "w": true
+      }
+    },
+    "periods": [
+      {
+        "p": "1",
+        "us": 0,
+        "them": 3
+      },
+      {
+        "p": "2",
+        "us": 3,
+        "them": 2
+      },
+      {
+        "p": "3",
+        "us": 5,
+        "them": 2
+      }
+    ],
+    "shots": {
+      "us": [
+        12,
+        10,
+        8
+      ],
+      "them": [
+        7,
+        8,
+        15
+      ]
+    },
+    "pp": {
+      "n": 5,
+      "g": 2,
+      "t": 437
+    },
+    "pk": {
+      "n": 2,
+      "ga": 1,
+      "t": 138
+    },
+    "oppGk": {
+      "sv": 22,
+      "ga": 8
+    },
+    "lines": [
+      {
+        "row": "gk",
+        "players": [
+          {
+            "pos": "gk",
+            "nick": "Kövesi Áron Péter",
+            "num": 1,
+            "pic": "https://ivr-api.icehockey.hu/storage/media/118050/conversions/profile_photo-thumb-cropped.png"
+          }
+        ]
+      },
+      {
+        "row": "1",
+        "players": [
+          {
+            "pos": "ld",
+            "nick": "Fischer Zsolt",
+            "num": 2,
+            "cap": "C",
+            "pic": "https://ivr-api.icehockey.hu/storage/media/98508/conversions/profile_photo-thumb-cropped.png"
+          },
+          {
+            "pos": "rd",
+            "nick": "Pintér Mátyás",
+            "num": 95,
+            "pic": "https://ivr-api.icehockey.hu/storage/media/115741/conversions/profile_photo-thumb-cropped.png"
+          },
+          {
+            "pos": "lw",
+            "nick": "KristályPatkó",
+            "num": 87,
+            "pic": "https://ivr-api.icehockey.hu/storage/media/148033/conversions/profile_photo-thumb-cropped.png"
+          },
+          {
+            "pos": "c",
+            "nick": "Schmidt Zsolt",
+            "num": 91,
+            "pic": "https://ivr-api.icehockey.hu/storage/media/96656/conversions/profile_photo-thumb-cropped.png"
+          },
+          {
+            "pos": "rw",
+            "nick": "László Zoltán",
+            "num": 14,
+            "pic": "https://ivr-api.icehockey.hu/storage/media/86713/conversions/profile_photo-thumb-cropped.png"
+          }
+        ]
+      },
+      {
+        "row": "2",
+        "players": [
+          {
+            "pos": "ld",
+            "nick": "Katonka Péter",
+            "num": 88,
+            "pic": "https://ivr-api.icehockey.hu/storage/media/92962/conversions/profile_photo-thumb-cropped.png"
+          },
+          {
+            "pos": "rd",
+            "nick": "Buborék",
+            "num": 81,
+            "pic": "https://ivr-api.icehockey.hu/storage/media/101448/conversions/profile_photo-thumb-cropped.png"
+          },
+          {
+            "pos": "lw",
+            "nick": "Varga Attila",
+            "num": 90,
+            "pic": "https://ivr-api.icehockey.hu/storage/media/97893/conversions/profile_photo-thumb-cropped.png"
+          },
+          {
+            "pos": "c",
+            "nick": "Nagy Dorina",
+            "num": 6,
+            "pic": "https://ivr-api.icehockey.hu/storage/media/102873/conversions/profile_photo-thumb-cropped.png"
+          },
+          {
+            "pos": "rw",
+            "nick": "Visnyei Balázs",
+            "num": 38,
+            "cap": "A",
+            "pic": "https://ivr-api.icehockey.hu/storage/media/95029/conversions/profile_photo-thumb-cropped.png"
+          }
+        ]
+      },
+      {
+        "row": "3",
+        "players": [
+          {
+            "pos": "ld",
+            "nick": "Maszat",
+            "num": 44,
+            "pic": "https://ivr-api.icehockey.hu/storage/media/147742/conversions/profile_photo-thumb-cropped.png"
+          },
+          {
+            "pos": "rd",
+            "nick": "Wilhelm Viktor",
+            "num": 98,
+            "pic": "https://ivr-api.icehockey.hu/storage/media/97180/conversions/profile_photo-thumb-cropped.png"
+          },
+          {
+            "pos": "lw",
+            "nick": "Kovács Péter",
+            "num": 31,
+            "pic": "https://ivr-api.icehockey.hu/storage/media/81767/conversions/profile_photo-thumb-cropped.png"
+          },
+          {
+            "pos": "c",
+            "nick": "Tobik János",
+            "num": 5,
+            "pic": "https://ivr-api.icehockey.hu/storage/media/100006/conversions/profile_photo-thumb-cropped.png"
+          },
+          {
+            "pos": "rw",
+            "nick": "Hadnagy Csongor",
+            "num": 76,
+            "cap": "A",
+            "pic": "https://ivr-api.icehockey.hu/storage/media/97892/conversions/profile_photo-thumb-cropped.png"
+          }
+        ]
+      },
+      {
+        "row": "4",
+        "players": [
+          {
+            "pos": "lw",
+            "nick": "Szikrácska",
+            "num": 40,
+            "pic": "https://ivr-api.icehockey.hu/storage/media/147724/conversions/profile_photo-thumb-cropped.png"
+          }
+        ]
+      }
+    ],
+    "events": [
+      {
+        "per": "1",
+        "t": "04:44",
+        "kind": "kiall",
+        "us": false,
+        "who": "",
+        "min": 2
+      },
+      {
+        "per": "1",
+        "t": "05:49",
+        "kind": "gol",
+        "us": false,
+        "who": "Kern Ádám",
+        "num": 17,
+        "score": [
+          0,
+          1
+        ],
+        "a": [
+          "Zima Péter"
+        ],
+        "adv": "-1"
+      },
+      {
+        "per": "1",
+        "t": "11:44",
+        "kind": "gol",
+        "us": false,
+        "who": "Zima Péter",
+        "num": 66,
+        "score": [
+          0,
+          2
+        ],
+        "a": [
+          "Kern Ádám"
+        ]
+      },
+      {
+        "per": "1",
+        "t": "18:26",
+        "kind": "gol",
+        "us": false,
+        "who": "László Zoltán",
+        "num": 9,
+        "score": [
+          0,
+          3
+        ],
+        "a": [
+          "Bodzák Ferenc"
+        ]
+      },
+      {
+        "per": "2",
+        "t": "21:37",
+        "kind": "kiall",
+        "us": true,
+        "who": "",
+        "min": 2
+      },
+      {
+        "per": "2",
+        "t": "22:58",
+        "kind": "gol",
+        "us": false,
+        "who": "Kern Ádám",
+        "num": 17,
+        "score": [
+          0,
+          4
+        ],
+        "a": [
+          "László Zoltán",
+          "Zima Péter"
+        ],
+        "adv": "+1"
+      },
+      {
+        "per": "2",
+        "t": "26:10",
+        "kind": "kiall",
+        "us": true,
+        "who": "Schmidt Zsolt",
+        "num": 91,
+        "min": 2
+      },
+      {
+        "per": "2",
+        "t": "27:07",
+        "kind": "kiall",
+        "us": false,
+        "who": "Kecső Dávid",
+        "num": 11,
+        "min": 2,
+        "cause": "gáncsolás"
+      },
+      {
+        "per": "2",
+        "t": "29:07",
+        "kind": "gol",
+        "us": true,
+        "who": "Visnyei Balázs",
+        "num": 38,
+        "score": [
+          1,
+          4
+        ],
+        "a": [
+          "Nagy Dorina"
+        ],
+        "adv": "+1"
+      },
+      {
+        "per": "2",
+        "t": "32:22",
+        "kind": "kiall",
+        "us": false,
+        "who": "Ács Ferenc Dániel",
+        "num": 46,
+        "min": 2
+      },
+      {
+        "per": "2",
+        "t": "32:42",
+        "kind": "gol",
+        "us": true,
+        "who": "Fischer Zsolt",
+        "num": 2,
+        "score": [
+          2,
+          4
+        ],
+        "a": [
+          "Pintér Mátyás"
+        ],
+        "adv": "+1"
+      },
+      {
+        "per": "2",
+        "t": "34:35",
+        "kind": "gol",
+        "us": false,
+        "who": "László Zoltán",
+        "num": 9,
+        "score": [
+          2,
+          5
+        ],
+        "a": [
+          "Zima Péter",
+          "Kern Ádám"
+        ]
+      },
+      {
+        "per": "2",
+        "t": "39:38",
+        "kind": "gol",
+        "us": true,
+        "who": "Maszat",
+        "num": 44,
+        "score": [
+          3,
+          5
+        ]
+      },
+      {
+        "per": "3",
+        "t": "40:29",
+        "kind": "gol",
+        "us": true,
+        "who": "Pintér Mátyás",
+        "num": 95,
+        "score": [
+          4,
+          5
+        ]
+      },
+      {
+        "per": "3",
+        "t": "41:20",
+        "kind": "gol",
+        "us": true,
+        "who": "Visnyei Balázs",
+        "num": 38,
+        "score": [
+          5,
+          5
+        ],
+        "a": [
+          "Nagy Dorina",
+          "Varga Attila"
+        ]
+      },
+      {
+        "per": "3",
+        "t": "43:00",
+        "kind": "gol",
+        "us": true,
+        "who": "Tobik János",
+        "num": 5,
+        "score": [
+          6,
+          5
+        ]
+      },
+      {
+        "per": "3",
+        "t": "43:43",
+        "kind": "gol",
+        "us": false,
+        "who": "László Zoltán",
+        "num": 9,
+        "score": [
+          6,
+          6
+        ],
+        "a": [
+          "Zima Péter"
+        ]
+      },
+      {
+        "per": "3",
+        "t": "46:21",
+        "kind": "kiall",
+        "us": false,
+        "who": "Farkas Gergely",
+        "num": 56,
+        "min": 2,
+        "cause": "szabálytalan test-test elleni játék"
+      },
+      {
+        "per": "3",
+        "t": "53:37",
+        "kind": "gol",
+        "us": true,
+        "who": "Varga Attila",
+        "num": 90,
+        "score": [
+          7,
+          6
+        ],
+        "a": [
+          "Visnyei Balázs"
+        ]
+      },
+      {
+        "per": "3",
+        "t": "57:09",
+        "kind": "kiall",
+        "us": false,
+        "who": "Farkas Gergely",
+        "num": 56,
+        "min": 2,
+        "cause": "szabálytalan test-test elleni játék"
+      },
+      {
+        "per": "3",
+        "t": "57:49",
+        "kind": "gol",
+        "us": false,
+        "who": "László Zoltán",
+        "num": 9,
+        "score": [
+          7,
+          7
+        ],
+        "a": [
+          "Kern Ádám"
+        ],
+        "adv": "-1"
+      },
+      {
+        "per": "3",
+        "t": "59:26",
+        "kind": "gol",
+        "us": true,
+        "who": "Schmidt Zsolt",
+        "num": 91,
+        "score": [
+          8,
+          7
+        ],
+        "a": [
+          "Hadnagy Csongor"
+        ],
+        "gwg": true
+      }
+    ]
   }
 ];
 
-window.LEAGUES_FRISSITVE = "2026-11-15T05:10:18.568Z";
+window.LEAGUES_FRISSITVE = "2026-11-15T21:09:07.827Z";
