@@ -6,7 +6,7 @@
 // pedig időzítve lefuttatja, és commitolja, ha változott valami.
 //
 // Szezon: 2026-2027
-// Utolsó frissítés: 2026-11-15T21:09:07.827Z
+// Utolsó frissítés: 2026-11-16T05:12:52.155Z
 //
 // A LEAGUES mezőinek jelentését a bajnoksag.js, a GAME_STATS-ét a
 // statisztika.js tetején lévő leírás mondja el.
@@ -1065,6 +1065,20 @@ window.LEAGUES = {
           },
           {
             "team": "Óbudai Gepárd C",
+            "gp": 3,
+            "w": 1,
+            "otw": 0,
+            "sow": 0,
+            "otl": 0,
+            "sol": 0,
+            "v": 2,
+            "gf": 12,
+            "ga": 11,
+            "pts": 3,
+            "logo": "assets/csapatok/obudai-gepard-c.png"
+          },
+          {
+            "team": "VIP Wizards",
             "gp": 2,
             "w": 1,
             "otw": 0,
@@ -1072,10 +1086,10 @@ window.LEAGUES = {
             "otl": 0,
             "sol": 0,
             "v": 1,
-            "gf": 10,
+            "gf": 6,
             "ga": 8,
             "pts": 3,
-            "logo": "assets/csapatok/obudai-gepard-c.png"
+            "logo": "assets/csapatok/vip-wizards.png"
           },
           {
             "team": "Kárpáti Farkasok",
@@ -1118,20 +1132,6 @@ window.LEAGUES = {
             "ga": 9,
             "pts": 1,
             "logo": "assets/csapatok/vip-crazy-zombies.png"
-          },
-          {
-            "team": "VIP Wizards",
-            "gp": 1,
-            "w": 0,
-            "otw": 0,
-            "sow": 0,
-            "otl": 0,
-            "sol": 0,
-            "v": 1,
-            "gf": 3,
-            "ga": 6,
-            "pts": 0,
-            "logo": "assets/csapatok/vip-wizards.png"
           }
         ]
       },
@@ -1441,8 +1441,8 @@ window.LEAGUES = {
         "time": "21:00",
         "home": "VIP Wizards",
         "away": "Óbudai Gepárd C",
-        "hs": 2,
-        "as": 1
+        "hs": 3,
+        "as": 2
       },
       {
         "date": "2026-11-21",
@@ -3686,4 +3686,4 @@ window.GAME_STATS = [
   }
 ];
 
-window.LEAGUES_FRISSITVE = "2026-11-15T21:09:07.827Z";
+window.LEAGUES_FRISSITVE = "2026-11-16T05:12:52.155Z";
