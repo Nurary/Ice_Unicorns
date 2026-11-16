@@ -6,7 +6,7 @@
 // pedig időzítve lefuttatja, és commitolja, ha változott valami.
 //
 // Szezon: 2026-2027
-// Utolsó frissítés: 2026-11-16T05:12:52.155Z
+// Utolsó frissítés: 2026-11-16T21:10:15.330Z
 //
 // A LEAGUES mezőinek jelentését a bajnoksag.js, a GAME_STATS-ét a
 // statisztika.js tetején lévő leírás mondja el.
@@ -615,16 +615,17 @@ window.LEAGUES = {
       },
       {
         "date": "2026-11-21",
+        "group": "A",
+        "time": "19:20",
+        "home": "Alba Trashers Jégkorong Klub",
+        "away": "HKB Flashes II"
+      },
+      {
+        "date": "2026-11-21",
         "group": "B",
         "time": "21:05",
         "home": "DJK SE",
         "away": "Korongozoo VALOR"
-      },
-      {
-        "date": "2026-11-22",
-        "group": "A",
-        "home": "Alba Trashers Jégkorong Klub",
-        "away": "HKB Flashes II"
       },
       {
         "date": "2026-11-22",
@@ -634,16 +635,17 @@ window.LEAGUES = {
       },
       {
         "date": "2026-11-22",
-        "group": "A",
-        "home": "Vénfarkasok",
-        "away": "DVTK Jegesmedvék"
-      },
-      {
-        "date": "2026-11-22",
         "group": "B",
         "time": "15:15",
         "home": "ESMTK Jégpárducok B",
         "away": "Ice Unicorns"
+      },
+      {
+        "date": "2026-11-22",
+        "group": "A",
+        "time": "17:45",
+        "home": "Vénfarkasok",
+        "away": "DVTK Jegesmedvék"
       },
       {
         "date": "2026-12-06",
@@ -1140,6 +1142,20 @@ window.LEAGUES = {
         "group": "B",
         "standings": [
           {
+            "team": "Újpesti Ragadozók",
+            "gp": 2,
+            "w": 2,
+            "otw": 0,
+            "sow": 0,
+            "otl": 0,
+            "sol": 0,
+            "v": 0,
+            "gf": 10,
+            "ga": 2,
+            "pts": 6,
+            "logo": "assets/csapatok/ujpesti-ragadozok.png"
+          },
+          {
             "team": "Lehel HC Amatőr",
             "gp": 3,
             "w": 2,
@@ -1169,18 +1185,18 @@ window.LEAGUES = {
             "us": true
           },
           {
-            "team": "Újpesti Ragadozók",
-            "gp": 1,
+            "team": "Kohász",
+            "gp": 2,
             "w": 1,
             "otw": 0,
             "sow": 0,
             "otl": 0,
             "sol": 0,
-            "v": 0,
-            "gf": 4,
-            "ga": 2,
+            "v": 1,
+            "gf": 5,
+            "ga": 7,
             "pts": 3,
-            "logo": "assets/csapatok/ujpesti-ragadozok.png"
+            "logo": "assets/csapatok/kohasz.png"
           },
           {
             "team": "ESMTK Jégtörők",
@@ -1195,20 +1211,6 @@ window.LEAGUES = {
             "ga": 6,
             "pts": 3,
             "logo": "assets/csapatok/esmtk-jegtorok.png"
-          },
-          {
-            "team": "Kohász",
-            "gp": 2,
-            "w": 1,
-            "otw": 0,
-            "sow": 0,
-            "otl": 0,
-            "sol": 0,
-            "v": 1,
-            "gf": 5,
-            "ga": 7,
-            "pts": 3,
-            "logo": "assets/csapatok/kohasz.png"
           },
           {
             "team": "Séra Team",
@@ -1226,15 +1228,15 @@ window.LEAGUES = {
           },
           {
             "team": "FTC-Telekom",
-            "gp": 2,
+            "gp": 3,
             "w": 0,
             "otw": 0,
             "sow": 0,
             "otl": 0,
             "sol": 0,
-            "v": 2,
+            "v": 3,
             "gf": 8,
-            "ga": 19,
+            "ga": 25,
             "pts": 0,
             "logo": "assets/csapatok/ftc-telekom.png"
           }
@@ -1461,6 +1463,13 @@ window.LEAGUES = {
       {
         "date": "2026-11-28",
         "group": "B",
+        "time": "16:15",
+        "home": "ESMTK Jégtörők",
+        "away": "FTC-Telekom"
+      },
+      {
+        "date": "2026-11-28",
+        "group": "B",
         "time": "19:00",
         "home": "Séra Team",
         "away": "Kohász"
@@ -1488,12 +1497,6 @@ window.LEAGUES = {
         "group": "B",
         "home": "Ice Unicorns",
         "away": "Újpesti Ragadozók"
-      },
-      {
-        "date": "2026-11-29",
-        "group": "B",
-        "home": "ESMTK Jégtörők",
-        "away": "FTC-Telekom"
       },
       {
         "date": "2026-12-13",
@@ -1644,7 +1647,7 @@ window.LEAGUES = {
       {
         "name": "László Zoltán",
         "team": "FTC-Telekom",
-        "gp": 3,
+        "gp": 2,
         "g": 4,
         "a": 1,
         "pts": 5,
@@ -3686,4 +3689,4 @@ window.GAME_STATS = [
   }
 ];
 
-window.LEAGUES_FRISSITVE = "2026-11-16T05:12:52.155Z";
+window.LEAGUES_FRISSITVE = "2026-11-16T21:10:15.330Z";
