@@ -6,7 +6,7 @@
 // pedig időzítve lefuttatja, és commitolja, ha változott valami.
 //
 // Szezon: 2026-2027
-// Utolsó frissítés: 2026-11-16T21:10:15.330Z
+// Utolsó frissítés: 2026-11-19T14:12:47.032Z
 //
 // A LEAGUES mezőinek jelentését a bajnoksag.js, a GAME_STATS-ét a
 // statisztika.js tetején lévő leírás mondja el.
@@ -629,12 +629,6 @@ window.LEAGUES = {
       },
       {
         "date": "2026-11-22",
-        "group": "A",
-        "home": "ESMTK Jégkockák",
-        "away": "VIP Blazing Blades"
-      },
-      {
-        "date": "2026-11-22",
         "group": "B",
         "time": "15:15",
         "home": "ESMTK Jégpárducok B",
@@ -688,6 +682,12 @@ window.LEAGUES = {
         "group": "A",
         "home": "HKB Flashes II",
         "away": "Vénfarkasok"
+      },
+      {
+        "date": "2026-12-20",
+        "group": "A",
+        "home": "ESMTK Jégkockák",
+        "away": "VIP Blazing Blades"
       },
       {
         "date": "2026-12-20",
@@ -1477,12 +1477,6 @@ window.LEAGUES = {
       {
         "date": "2026-11-29",
         "group": "A",
-        "home": "VIP Crazy Zombies",
-        "away": "Kárpáti Farkasok"
-      },
-      {
-        "date": "2026-11-29",
-        "group": "A",
         "home": "HKB Flashes I",
         "away": "VIP Wizards"
       },
@@ -1497,6 +1491,13 @@ window.LEAGUES = {
         "group": "B",
         "home": "Ice Unicorns",
         "away": "Újpesti Ragadozók"
+      },
+      {
+        "date": "2026-11-29",
+        "group": "A",
+        "time": "16:45",
+        "home": "VIP Crazy Zombies",
+        "away": "Kárpáti Farkasok"
       },
       {
         "date": "2026-12-13",
@@ -3689,4 +3690,4 @@ window.GAME_STATS = [
   }
 ];
 
-window.LEAGUES_FRISSITVE = "2026-11-16T21:10:15.330Z";
+window.LEAGUES_FRISSITVE = "2026-11-19T14:12:47.032Z";
