@@ -40,7 +40,7 @@ const TEAMS = {
           { nick: "Gévai Ádám", name: "Gévai Ádám", num: 6, pos: "Védő", grip: "–", sweet: "–", power: "–", photo: "", bio: "" }, // TODO: becenév
           { nick: "Küzdy László", name: "Küzdy László", num: 77, pos: "Védő", grip: "–", sweet: "–", power: "–", photo: "", bio: "" }, // TODO: becenév
           { nick: "Vajda Krisztián", name: "Vajda Krisztián", num: 16, pos: "Védő", grip: "–", sweet: "–", power: "–", photo: "", bio: "" }, // TODO: becenév
-          { nick: "Buborék", name: "Tóth Ádám", pos: "Védő", grip: "–", sweet: "–", power: "–", photo: "assets/Players/Tóth_Ádám.png", bio: "" }, // TODO: mezszám
+          { nick: "Buborék", name: "Tóth Ádám", num: 81, pos: "Védő", grip: "–", sweet: "–", power: "–", photo: "assets/Players/Tóth_Ádám.png", bio: "" },
         ],
       },
       {
@@ -57,6 +57,8 @@ const TEAMS = {
           { nick: "Incze Péter", name: "Incze Péter", num: 28, pos: "Csatár", grip: "–", sweet: "–", power: "–", photo: "", bio: "" }, // TODO: becenév
           { nick: "Tóth Dávid", name: "Tóth Dávid", num: 86, pos: "Csatár", grip: "–", sweet: "–", power: "–", photo: "assets/Players/Tóth_Dávid.png", bio: "" }, // TODO: becenév
           { nick: "Visnyei-Beron Cecilia", name: "Visnyei-Beron Cecilia", num: 72, pos: "Csatár", grip: "–", sweet: "–", power: "–", photo: "", bio: "" }, // TODO: becenév
+          { nick: "Kinda Csaba", name: "Kinda Csaba", num: 23, pos: "Csatár", grip: "–", sweet: "–", power: "–", photo: "", bio: "" }, // TODO: becenév
+          { nick: "Fiala Liliána", name: "Fiala Liliána", num: 66, pos: "Csatár", grip: "–", sweet: "–", power: "–", photo: "", bio: "" }, // TODO: becenév
         ],
       },
     ],
@@ -91,7 +93,8 @@ const TEAMS = {
           { nick: "Maszat", name: "Szymon Wlaszczyk", num: 44, pos: "Védő", grip: "Bal", sweet: "", power: "", photo: "assets/Players/Maszat.png", bio: "A lengyel srác, akivel inkább ne vitatkozz" },
           { nick: "Csobaji Gáspár Áron", name: "Csobaji Gáspár Áron", num: 63, pos: "Védő", grip: "–", sweet: "–", power: "–", photo: "", bio: "" }, // TODO: becenév
           { nick: "Kovács Péter", name: "Kovács Péter", num: 31, pos: "Védő", grip: "–", sweet: "–", power: "–", photo: "", bio: "" }, // TODO: becenév
-          { nick: "Buborék", name: "Tóth Ádám", pos: "Védő", grip: "–", sweet: "–", power: "–", photo: "assets/Players/Tóth_Ádám.png", bio: "" }, // TODO: mezszám
+          { nick: "Wilhelm Viktor", name: "Wilhelm Viktor", num: 98, pos: "Védő", grip: "–", sweet: "–", power: "–", photo: "", bio: "" }, // TODO: becenév
+          { nick: "Buborék", name: "Tóth Ádám", num: 81, pos: "Védő", grip: "–", sweet: "–", power: "–", photo: "assets/Players/Tóth_Ádám.png", bio: "" },
         ],
       },
       {
@@ -106,6 +109,7 @@ const TEAMS = {
           { nick: "Visnyei Balázs", name: "Visnyei Balázs", num: 38, pos: "Csatár", grip: "–", sweet: "–", power: "–", photo: "", bio: "" }, // TODO: becenév
           { nick: "Varga Attila", name: "Varga Attila", num: 90, pos: "Csatár", grip: "–", sweet: "–", power: "–", photo: "", bio: "" }, // TODO: becenév
           { nick: "Nagy Dorina", name: "Nagy Dorina", num: 6, pos: "Csatár", grip: "–", sweet: "–", power: "–", photo: "assets/Players/Nagy_Dorina.png", bio: "" }, // TODO: becenév
+          { nick: "Tobik János", name: "Tobik János", num: 5, pos: "Csatár", grip: "–", sweet: "–", power: "–", photo: "", bio: "" }, // TODO: becenév
         ],
       },
     ],
