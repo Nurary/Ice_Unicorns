@@ -6,7 +6,7 @@
 // pedig időzítve lefuttatja, és commitolja, ha változott valami.
 //
 // Szezon: 2026-2027
-// Utolsó frissítés: 2026-11-20T13:54:23.864Z
+// Utolsó frissítés: 2026-11-21T02:02:01.432Z
 //
 // A LEAGUES mezőinek jelentését a bajnoksag.js, a GAME_STATS-ét a
 // statisztika.js tetején lévő leírás mondja el.
@@ -100,16 +100,16 @@ window.LEAGUES = {
         "standings": [
           {
             "team": "Ligeti Jégkásák A",
-            "gp": 3,
-            "w": 3,
+            "gp": 4,
+            "w": 4,
             "otw": 0,
             "sow": 0,
             "otl": 0,
             "sol": 0,
             "v": 0,
-            "gf": 33,
+            "gf": 40,
             "ga": 5,
-            "pts": 9,
+            "pts": 12,
             "logo": "assets/csapatok/ligeti-jegkasak-a.png"
           },
           {
@@ -128,15 +128,15 @@ window.LEAGUES = {
           },
           {
             "team": "Angels",
-            "gp": 3,
+            "gp": 4,
             "w": 2,
             "otw": 0,
             "sow": 0,
             "otl": 0,
             "sol": 0,
-            "v": 1,
+            "v": 2,
             "gf": 13,
-            "ga": 10,
+            "ga": 17,
             "pts": 6,
             "logo": "assets/csapatok/angels.png"
           },
@@ -611,7 +611,9 @@ window.LEAGUES = {
         "group": "A",
         "time": "20:30",
         "home": "Angels",
-        "away": "Ligeti Jégkásák A"
+        "away": "Ligeti Jégkásák A",
+        "hs": 0,
+        "as": 7
       },
       {
         "date": "2026-11-21",
@@ -3692,4 +3694,4 @@ window.GAME_STATS = [
   }
 ];
 
-window.LEAGUES_FRISSITVE = "2026-11-20T13:54:23.864Z";
+window.LEAGUES_FRISSITVE = "2026-11-21T02:02:01.432Z";
