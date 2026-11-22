@@ -6,7 +6,7 @@
 // pedig időzítve lefuttatja, és commitolja, ha változott valami.
 //
 // Szezon: 2026-2027
-// Utolsó frissítés: 2026-11-21T02:02:01.432Z
+// Utolsó frissítés: 2026-11-22T01:03:48.648Z
 //
 // A LEAGUES mezőinek jelentését a bajnoksag.js, a GAME_STATS-ét a
 // statisztika.js tetején lévő leírás mondja el.
@@ -114,15 +114,15 @@ window.LEAGUES = {
           },
           {
             "team": "HKB Flashes II",
-            "gp": 3,
+            "gp": 4,
             "w": 3,
             "otw": 0,
             "sow": 0,
             "otl": 0,
             "sol": 0,
-            "v": 0,
-            "gf": 23,
-            "ga": 10,
+            "v": 1,
+            "gf": 26,
+            "ga": 18,
             "pts": 9,
             "logo": "assets/csapatok/hkb-flashes-ii.png"
           },
@@ -156,16 +156,16 @@ window.LEAGUES = {
           },
           {
             "team": "Alba Trashers Jégkorong Klub",
-            "gp": 3,
-            "w": 1,
+            "gp": 4,
+            "w": 2,
             "otw": 0,
             "sow": 0,
             "otl": 0,
             "sol": 0,
             "v": 2,
-            "gf": 11,
-            "ga": 11,
-            "pts": 3,
+            "gf": 19,
+            "ga": 14,
+            "pts": 6,
             "logo": "assets/csapatok/alba-trashers-jegkorong-klub.png"
           },
           {
@@ -245,6 +245,20 @@ window.LEAGUES = {
             "logo": "assets/csapatok/lizards.png"
           },
           {
+            "team": "DJK SE",
+            "gp": 3,
+            "w": 1,
+            "otw": 0,
+            "sow": 1,
+            "otl": 0,
+            "sol": 0,
+            "v": 1,
+            "gf": 13,
+            "ga": 13,
+            "pts": 5,
+            "logo": "assets/csapatok/djk-se.png"
+          },
+          {
             "team": "ESMTK Jégpárducok B",
             "gp": 1,
             "w": 1,
@@ -274,31 +288,17 @@ window.LEAGUES = {
           },
           {
             "team": "Korongozoo VALOR",
-            "gp": 2,
+            "gp": 3,
             "w": 1,
             "otw": 0,
             "sow": 0,
             "otl": 0,
             "sol": 0,
-            "v": 1,
-            "gf": 8,
-            "ga": 11,
+            "v": 2,
+            "gf": 10,
+            "ga": 19,
             "pts": 3,
             "logo": "assets/csapatok/korongozoo-valor.png"
-          },
-          {
-            "team": "DJK SE",
-            "gp": 2,
-            "w": 0,
-            "otw": 0,
-            "sow": 1,
-            "otl": 0,
-            "sol": 0,
-            "v": 1,
-            "gf": 5,
-            "ga": 11,
-            "pts": 2,
-            "logo": "assets/csapatok/djk-se.png"
           },
           {
             "team": "Ice Unicorns",
@@ -620,14 +620,18 @@ window.LEAGUES = {
         "group": "A",
         "time": "19:20",
         "home": "Alba Trashers Jégkorong Klub",
-        "away": "HKB Flashes II"
+        "away": "HKB Flashes II",
+        "hs": 8,
+        "as": 3
       },
       {
         "date": "2026-11-21",
         "group": "B",
         "time": "21:05",
         "home": "DJK SE",
-        "away": "Korongozoo VALOR"
+        "away": "Korongozoo VALOR",
+        "hs": 8,
+        "as": 2
       },
       {
         "date": "2026-11-22",
@@ -883,6 +887,15 @@ window.LEAGUES = {
         "pim": 0
       },
       {
+        "name": "Erdős Péter",
+        "team": "DJK SE",
+        "gp": 3,
+        "g": 5,
+        "a": 0,
+        "pts": 5,
+        "pim": 2
+      },
+      {
         "name": "Szatmári Ferenc",
         "team": "Ligeti Jégkásák B",
         "gp": 3,
@@ -910,15 +923,6 @@ window.LEAGUES = {
         "pim": 0
       },
       {
-        "name": "Bársony Ambrus Norbert",
-        "team": "Korongozoo VALOR",
-        "gp": 2,
-        "g": 4,
-        "a": 0,
-        "pts": 4,
-        "pim": 0
-      },
-      {
         "name": "Halász Kristóf",
         "team": "Lizards",
         "gp": 3,
@@ -928,6 +932,24 @@ window.LEAGUES = {
         "pim": 2
       },
       {
+        "name": "Bársony Ambrus Norbert",
+        "team": "Korongozoo VALOR",
+        "gp": 3,
+        "g": 4,
+        "a": 0,
+        "pts": 4,
+        "pim": 2
+      },
+      {
+        "name": "Balázs Levente",
+        "team": "DJK SE",
+        "gp": 1,
+        "g": 3,
+        "a": 1,
+        "pts": 4,
+        "pim": 0
+      },
+      {
         "name": "Erdei Zsolt",
         "team": "Ligeti Jégkásák B",
         "gp": 3,
@@ -935,25 +957,6 @@ window.LEAGUES = {
         "a": 3,
         "pts": 4,
         "pim": 0
-      },
-      {
-        "name": "Erdős Péter",
-        "team": "DJK SE",
-        "gp": 2,
-        "g": 3,
-        "a": 0,
-        "pts": 3,
-        "pim": 2
-      },
-      {
-        "name": "Incze Péter",
-        "team": "Ice Unicorns",
-        "gp": 2,
-        "g": 3,
-        "a": 0,
-        "pts": 3,
-        "pim": 0,
-        "us": true
       }
     ],
     "attendance": {
@@ -1041,32 +1044,32 @@ window.LEAGUES = {
         "group": "A",
         "standings": [
           {
-            "team": "ESMTK Jégpárducok",
-            "gp": 2,
-            "w": 2,
-            "otw": 0,
-            "sow": 0,
-            "otl": 0,
-            "sol": 0,
-            "v": 0,
-            "gf": 11,
-            "ga": 6,
-            "pts": 6,
-            "logo": "assets/csapatok/esmtk-jegparducok.png"
-          },
-          {
             "team": "HKB Flashes I",
-            "gp": 2,
-            "w": 1,
+            "gp": 3,
+            "w": 2,
             "otw": 0,
             "sow": 1,
             "otl": 0,
             "sol": 0,
             "v": 0,
-            "gf": 10,
-            "ga": 3,
-            "pts": 5,
+            "gf": 13,
+            "ga": 4,
+            "pts": 8,
             "logo": "assets/csapatok/hkb-flashes-i.png"
+          },
+          {
+            "team": "ESMTK Jégpárducok",
+            "gp": 3,
+            "w": 2,
+            "otw": 0,
+            "sow": 0,
+            "otl": 0,
+            "sol": 0,
+            "v": 1,
+            "gf": 12,
+            "ga": 9,
+            "pts": 6,
+            "logo": "assets/csapatok/esmtk-jegparducok.png"
           },
           {
             "team": "Óbudai Gepárd C",
@@ -1454,7 +1457,9 @@ window.LEAGUES = {
         "group": "A",
         "time": "19:15",
         "home": "ESMTK Jégpárducok",
-        "away": "HKB Flashes I"
+        "away": "HKB Flashes I",
+        "hs": 1,
+        "as": 3
       },
       {
         "date": "2026-11-22",
@@ -3694,4 +3699,4 @@ window.GAME_STATS = [
   }
 ];
 
-window.LEAGUES_FRISSITVE = "2026-11-21T02:02:01.432Z";
+window.LEAGUES_FRISSITVE = "2026-11-22T01:03:48.648Z";
