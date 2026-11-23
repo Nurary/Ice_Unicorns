@@ -6,7 +6,7 @@
 // pedig időzítve lefuttatja, és commitolja, ha változott valami.
 //
 // Szezon: 2026-2027
-// Utolsó frissítés: 2026-11-23T01:28:33.291Z
+// Utolsó frissítés: 2026-11-23T15:47:02.425Z
 //
 // A LEAGUES mezőinek jelentését a bajnoksag.js, a GAME_STATS-ét a
 // statisztika.js tetején lévő leírás mondja el.
@@ -961,7 +961,7 @@ window.LEAGUES = {
         "g": 4,
         "a": 0,
         "pts": 4,
-        "pim": 2
+        "pim": 0
       }
     ],
     "attendance": {
@@ -4321,12 +4321,6 @@ window.GAME_STATS = [
         "a": 0,
         "pim": 0,
         "pm": 0
-      },
-      "Fiala Liliána": {
-        "g": 0,
-        "a": 0,
-        "pim": 0,
-        "pm": 0
       }
     },
     "goalies": {
@@ -4388,12 +4382,6 @@ window.GAME_STATS = [
             "nick": "Baróta Gábor",
             "num": 39,
             "pic": "https://ivr-api.icehockey.hu/storage/media/147875/conversions/profile_photo-thumb-cropped.png"
-          },
-          {
-            "pos": "gk",
-            "nick": "Fiala Liliána",
-            "num": 66,
-            "pic": "https://ivr-api.icehockey.hu/storage/media/161709/conversions/profile_photo-thumb-cropped.png"
           }
         ]
       },
@@ -4705,4 +4693,4 @@ window.GAME_STATS = [
   }
 ];
 
-window.LEAGUES_FRISSITVE = "2026-11-23T01:28:33.291Z";
+window.LEAGUES_FRISSITVE = "2026-11-23T15:47:02.425Z";
